@@ -454,8 +454,8 @@
   "all_matches": 579,
   "citations": 374,
   "rfcs": 62,
-  "obsolete_rfcs": 13,
-  "obsolete_citations": 122,
+  "obsolete_rfcs": 14,
+  "obsolete_citations": 124,
   "top_obsolete": [
    [
     "RFC8446",
@@ -871,8 +871,8 @@
   "all_matches": 2551,
   "citations": 1619,
   "rfcs": 204,
-  "obsolete_rfcs": 37,
-  "obsolete_citations": 227,
+  "obsolete_rfcs": 41,
+  "obsolete_citations": 238,
   "top_obsolete": [
    [
     "RFC822",
@@ -995,8 +995,8 @@
   "all_matches": 669,
   "citations": 425,
   "rfcs": 27,
-  "obsolete_rfcs": 7,
-  "obsolete_citations": 37,
+  "obsolete_rfcs": 8,
+  "obsolete_citations": 43,
   "top_obsolete": [
    [
     "RFC2616",
@@ -1017,6 +1017,13 @@
     ]
    ],
    [
+    "RFC3447",
+    6,
+    [
+     "RFC8017"
+    ]
+   ],
+   [
     "RFC2818",
     3,
     [
@@ -1028,13 +1035,6 @@
     3,
     [
      "RFC8259"
-    ]
-   ],
-   [
-    "RFC4634",
-    3,
-    [
-     "RFC6234"
     ]
    ]
   ]

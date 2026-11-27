@@ -10,7 +10,7 @@ def test_readme_matches_facts():
     readme = (ROOT / "README.md").read_text()
     s = f["showcase"]
     for needle in [f"**{s['citations']:,}**", f"**{s['obsolete']:,} ({s['obsolete_pct']}%)**",
-                   f"**{s['affected']} of {s['projects']}**",
+                   f"**{s['affected']} of {s['projects']}**", f"{s['old_version']:,} more",
                    f"{f['nodes']['RFC']:,} `RFC`s", f"{f['nodes']['Erratum']:,} `Erratum`",
                    f"{f['relationships']['NORMATIVE_REF']:,} `NORMATIVE_REF`",
                    f"{f['relationships']['INFORMATIVE_REF']:,} `INFORMATIVE_REF`",

@@ -4,20 +4,20 @@
   "claude": {
    "update": 64,
    "legacy": 30,
-   "identifier": 5,
-   "test": 1,
+   "identifier": 6,
+   "test": 0,
    "not-a-citation": 0
   },
   "gpt": {
-   "update": 72,
-   "legacy": 17,
-   "identifier": 10,
-   "test": 1,
+   "update": 70,
+   "legacy": 28,
+   "identifier": 2,
+   "test": 0,
    "not-a-citation": 0
   }
  },
- "agreement": 0.83,
- "cohen_kappa": 0.648,
+ "agreement": 0.86,
+ "cohen_kappa": 0.7,
  "update_by_both": 62,
- "update_by_either": 74
+ "update_by_either": 72
 }

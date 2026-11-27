@@ -16,8 +16,9 @@ def main():
     rels = {r["t"]: r["c"] for r in c.execute("MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS c")}
     show = one("""MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC)
                   WITH p, sum(size(c.readerLines)) AS cites,
-                       sum(CASE WHEN r.obsolete AND NOT r.oldVersion THEN size(c.readerLines) ELSE 0 END) AS stale
-                  RETURN sum(cites) AS citations, sum(stale) AS obsolete, count(p) AS projects,
+                       sum(CASE WHEN r.obsolete AND NOT r.oldVersion THEN size(c.readerLines) ELSE 0 END) AS stale,
+                       sum(CASE WHEN r.oldVersion THEN size(c.readerLines) ELSE 0 END) AS older
+                  RETURN sum(cites) AS citations, sum(stale) AS obsolete, sum(older) AS old_version, count(p) AS projects,
                          sum(CASE WHEN stale > 0 THEN 1 ELSE 0 END) AS affected""")
     show["obsolete_pct"] = round(100 * show["obsolete"] / show["citations"])
     top = [dict(r) for r in c.execute("""

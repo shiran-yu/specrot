@@ -80,8 +80,9 @@ RETURN r.id AS id, r.title AS title, f.path AS path, c.lines AS lines, collect(D
 ORDER BY id, path`,
 };
 
-const level = (r) => r === null ? "unknown" : r.obsolete ? (r.oldVersion ? "old-version" : "obsolete") : r.status === "HISTORIC" ? "historic"
-  : (r.updates?.length || r.errata) ? "amended" : "ok";
+// same order as graph.py Verdict.level: a retired protocol version (TLS 1.0) is historic, not old-version
+const level = (r) => r === null ? "unknown" : r.obsolete && !r.oldVersion ? "obsolete" : r.status === "HISTORIC" ? "historic"
+  : r.obsolete ? "old-version" : (r.updates?.length || r.errata) ? "amended" : "ok";
 const badge = (lvl) => `<span class="badge ${lvl}">${{ obsolete: "✗ obsolete", "old-version": "↑ old version", historic: "✗ historic", amended: "! amended", ok: "✓ current", unknown: "? unknown" }[lvl]}</span>`;
 const rfcLink = (id) => `<a href="#rfc=${id.replace("RFC", "")}" class="rfc">${id}</a>`;
 const DEPRECATING = /deprecat|prohibit|obsolet|historic|retir|removing|sunset/i;
@@ -96,6 +97,7 @@ function showQuery(el) {
 }
 
 // ---------- check tab ----------
+let renderSeq = 0;  // render token: a newer check or search makes slower, older ones drop their output
 async function check(input) {
   const out = $("#check-out");
   const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})\s*$/i);
@@ -104,11 +106,14 @@ async function check(input) {
   rendered = `rfc=${n}`;
   if (location.hash.slice(1) !== rendered) location.hash = rendered;  // the hashchange handler skips it
   $("#q").value = `RFC ${n}`;
+  const my = ++renderSeq;
   const [info] = await cypher(Q.info, { n });
+  if (my !== renderSeq) return;
   if (!info) { out.innerHTML = `<div class="card">${badge("unknown")} RFC ${n} is not in the RFC index.</div>`; return; }
   const repl = info.obsolete ? await cypher(Q.replacements, { n }) : [];
   const ups = await cypher(Q.updates, { n });
-  const lvl = info.obsolete ? (info.oldVersion ? "old-version" : "obsolete") : info.status === "HISTORIC" ? "historic" : (ups.length || info.errata) ? "amended" : "ok";
+  if (my !== renderSeq) return;
+  const lvl = level({ ...info, updates: ups });
   const shortest = {};
   for (const r of repl) if (!shortest[r.current] || r.chain.length < shortest[r.current].chain.length) shortest[r.current] = { ...r, kind: pathKind(r.kinds) };
   const deps = ups.filter((u) => DEPRECATING.test(u.title));
@@ -128,8 +133,9 @@ async function check(input) {
   html += `<div class="card" id="citing"></div>`;
   out.innerHTML = html;
   showQuery($("#q-info"));
-  await drawLineage(n, info.id);
+  await drawLineage(n, info.id, my);
   const cites = await cypher(Q.projectsCiting, { n });
+  if (my !== renderSeq) return;
   const by = {};
   for (const c of cites) (by[c.project] ||= []).push(c);
   $("#citing").innerHTML = `<h3>Cited by ${Object.keys(by).length} of 26 scanned projects</h3>` + (cites.length ? `<ul>` + Object.entries(by).map(([p, cs]) =>
@@ -142,12 +148,13 @@ function ghLink(projectUrl, path, line) {
   return `<a href="${blob}/${path}#L${line}" target="_blank" rel="noopener"><code>${esc(path)}:${line}</code></a>`;
 }
 
-async function drawLineage(n, rootId) {
+async function drawLineage(n, rootId, my) {
   const rows = await cypher(Q.lineage, { n });
   showQuery($("#q-lineage"));
   const edges = rows.filter((r) => r.a);
   const ids = [...new Set([rootId, ...edges.flatMap((r) => [r.a, r.b])])];
   const nodes = await cypher(Q.nodes, { ids });
+  if (my !== renderSeq) return;
   const el = $("#cy");
   if (ids.length === 1) { el.innerHTML = `<p class="dim">No OBSOLETES or UPDATES relationships: this RFC stands alone.</p>`; el.style.height = "auto"; return; }
   el.style.height = Math.min(560, 160 + ids.length * 18) + "px";
@@ -174,10 +181,13 @@ async function drawLineage(n, rootId) {
 
 async function search(text) {
   const out = $("#check-out");
-  const q = text.trim().split(/\s+/).filter(Boolean).map((w) => w.replace(/[^\p{L}\p{N}.-]/gu, "")).filter(Boolean).join(" AND ");
+  const q = text.trim().split(/\s+/).filter(Boolean).map((w) => w.replace(/[^\p{L}\p{N}.-]/gu, "").toLowerCase()).filter(Boolean).join(" AND "); // lower case: AND/OR/NOT are operators
   if (!q) return;
-  location.hash = "q=" + encodeURIComponent(text);
+  rendered = "q=" + text;
+  if (decodeURIComponent(location.hash.slice(1)) !== rendered) location.hash = "q=" + encodeURIComponent(text);  // the hashchange handler skips it
+  const my = ++renderSeq;
   const rows = await cypher(Q.search, { q });
+  if (my !== renderSeq) return;
   out.innerHTML = `<div class="card"><h3>${rows.length} RFCs match “${esc(text)}”</h3><table><tr><th>RFC</th><th>title</th><th>date</th><th>status</th></tr>` +
     rows.map((r) => `<tr><td>${rfcLink(r.id)}</td><td>${esc(r.title)}</td><td>${r.date}</td><td>${r.obsolete ? badge("obsolete") : esc((r.status || "").toLowerCase())}</td></tr>`).join("") +
     `</table><div class="q" id="q-s"></div></div>`;
@@ -199,7 +209,7 @@ async function scanText() {
   const ns = [...new Set(cites.map((c) => c.n))];
   const rows = await cypher(Q.judge, { ns });
   const byN = Object.fromEntries(rows.map((r) => [r.n, r]));
-  const order = { obsolete: 0, "old-version": 1, historic: 2, amended: 3, ok: 4, unknown: 5 };
+  const order = { obsolete: 0, historic: 1, "old-version": 2, amended: 3, ok: 4, unknown: 5 };
   const found = ns.map((n) => ({ n, r: byN[n] ?? null, lines: cites.filter((c) => c.n === n).map((c) => c.line) }))
     .map((x) => ({ ...x, lvl: level(x.r) })).sort((a, b) => order[a.lvl] - order[b.lvl]);
   const counts = {};

@@ -20,9 +20,10 @@ uv run specrot check 8446 7540 6749        # level, replacement chain, live upda
 uv run specrot check 2616 --json           # machine-readable
 ```
 
-Levels: `obsolete` (a newer edition replaced it: cite the RFC in `current`; if `current` is empty
-it was retired without a replacement), `old-version` (only a newer protocol version exists, e.g. TLS
-1.2's RFC 5246: still right if you implement that version), `historic`, `amended` (still in force,
+Levels, most severe first: `obsolete` (a newer edition replaced it: cite the RFC in `current`; if
+`current` is empty it was retired without a replacement), `historic` (includes retired protocol
+versions such as TLS 1.0 and 1.1: do not implement), `old-version` (only a newer protocol version
+exists, e.g. TLS 1.2's RFC 5246: still right if you implement that version), `amended` (still in force,
 but read the listed updates; deprecations are flagged), `ok`, `unknown` (no such RFC).
 
 ## In a repository

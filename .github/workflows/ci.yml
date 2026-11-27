@@ -1,0 +1,23 @@
+name: ci
+on: [push, pull_request]
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv run --group dev pytest -q
+  action:
+    # self-test of action.yml: the gate must fail on a stale citation and pass on a current one
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - id: stale
+        uses: ./
+        continue-on-error: true
+        with:
+          path: tests/fixtures/stale
+      - run: test "${{ steps.stale.outcome }}" = failure
+      - uses: ./
+        with:
+          path: tests/fixtures/current

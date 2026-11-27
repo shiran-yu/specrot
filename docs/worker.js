@@ -69,14 +69,16 @@ async function load() {
 }
 
 // The console is read-only: the page's own queries never write, and a visitor's DELETE would only
-// break this tab's copy, but refusing it keeps the demo intact. String literals are ignored.
+// break this tab's copy, but refusing it keeps the demo intact. Backtick names, comments and string
+// literals are blanked in one left-to-right pass, so a quote inside one cannot hide a keyword.
 const WRITES = /\b(CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|INSERT|FOREACH|LOAD\s+CSV)\b/i;
+const OPAQUE = /`[^`]*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"/g;
 
 self.onmessage = (e) => {
   const { id, q, params, console: fromConsole } = e.data;
   const t = performance.now();
   try {
-    if (fromConsole && WRITES.test(q.replace(/'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"/g, "''")))
+    if (fromConsole && WRITES.test(q.replace(OPAQUE, " x ")))
       throw new Error("This console is read-only (it runs on the copy of the graph in your tab). Use MATCH ... RETURN; the CLI has `specrot cypher --write` for a local store.");
     const env = run(q, params);
     post({ id, rows: env.rows, columns: env.columns, ms: performance.now() - t });

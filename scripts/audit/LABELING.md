@@ -1,6 +1,6 @@
 # Labeling instructions (given verbatim to each labeler)
 
-`sample.json` holds 100 citations drawn at random (seed 2026) from the 1,626 citations the README
+`sample.json` holds 100 citations drawn at random (seed 2026) from the 1,645 citations the README
 headline counts: RFC citations in the source and docs of 26 open-source projects that point at an RFC a
 newer edition of the same specification has replaced. Each item has the code context (±3 lines), the
 cited RFC and its title, and the RFC(s) that replace it per the RFC Editor index.

@@ -12,7 +12,7 @@ DEFAULT_STORE = Path(os.environ.get("SPECROT_STORE", Path(__file__).resolve().pa
 # An update whose title says this is a deprecation, not a mere extension.
 DEPRECATING = re.compile(r"deprecat|prohibit|obsolet|historic|retir|removing|sunset", re.I)
 MAX_DEPTH = 3  # traversal depth cap for read/impact: depth 3 already reaches thousands of documents
-LEVELS = ["obsolete", "old-version", "historic", "amended", "ok", "unknown"]
+LEVELS = ["obsolete", "historic", "old-version", "amended", "ok", "unknown"]
 
 
 class InputError(ValueError):
@@ -103,18 +103,24 @@ class Verdict:
 
     @property
     def level(self) -> str:
-        """obsolete > old-version > historic > amended > ok (> unknown). Deprecations count as amendments."""
+        """obsolete > historic > old-version > amended > ok (> unknown). Deprecations count as amendments.
+        A retired protocol version (TLS 1.0, status HISTORIC) is historic, not old-version."""
         if not self.known:
             return "unknown"
-        if self.obsolete:
-            if self.replaced_by and all(r["kind"] == "version" for r in self.replaced_by):
-                return "old-version"
+        if self.obsolete and not self.version_only:
             return "obsolete"
         if self.status == "HISTORIC":
             return "historic"
+        if self.obsolete:
+            return "old-version"
         if self.updated_by or self.errata:
             return "amended"
         return "ok"
+
+    @property
+    def version_only(self) -> bool:
+        """Obsolete only because newer protocol versions exist (stored as RFC.oldVersion)."""
+        return bool(self.replaced_by) and all(r["kind"] == "version" for r in self.replaced_by)
 
     @property
     def current(self) -> list[str]:
@@ -206,7 +212,7 @@ ORDER BY score DESC
 
 def search(conn, q: str, k: int = 10) -> list[dict]:
     """Full-text search; query words are reduced to letters and digits so any input is safe."""
-    words = re.findall(r"[\w.]+", q or "")
+    words = [w.lower() for w in re.findall(r"[\w.]+", q or "")]  # lower case: AND/OR/NOT are query operators
     if not words:
         raise InputError("search needs at least one word, e.g. specrot search \"http caching\"")
     if not 1 <= int(k) <= 200:

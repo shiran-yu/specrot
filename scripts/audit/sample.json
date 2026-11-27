@@ -17,23 +17,23 @@
  {
   "i": 1,
   "project": "go-crypto-tls",
-  "file": "x509/pkcs8.go",
-  "line": 22,
-  "rfc": "RFC5208",
-  "rfc_title": "Public-Key Cryptography Standards (PKCS) #8: Private-Key Information Syntax Specification Version 1.2",
+  "file": "x509/x509.go",
+  "line": 61,
+  "rfc": "RFC3280",
+  "rfc_title": "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile",
   "replaced_by": [
-   "RFC5958"
+   "RFC5280"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\n// pkcs8 reflects an ASN.1, PKCS #8 PrivateKey. See\n// ftp://ftp.rsasecurity.com/pub/pkcs/pkcs-8/pkcs-8v1_2.asn\n// and RFC 5208.\ntype pkcs8 struct {\n\tVersion    int\n\tAlgo       pkix.AlgorithmIdentifier"
+  "context": ")\n\n// pkixPublicKey reflects a PKIX public key structure. See SubjectPublicKeyInfo\n// in RFC 3280.\ntype pkixPublicKey struct {\n\tAlgo      pkix.AlgorithmIdentifier\n\tBitString asn1.BitString"
  },
  {
   "i": 2,
   "project": "haproxy",
   "file": "include/haproxy/h2.h",
-  "line": 135,
+  "line": 128,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -42,13 +42,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "// RFC7540 #6.7\n#define H2_F_PING_ACK   0x01\n\n// RFC7540 #6.8 : GOAWAY defines no flags\n// RFC7540 #6.9 : WINDOW_UPDATE defines no flags\n\n// PADDED is the exact same among DATA, HEADERS and PUSH_PROMISE (8)"
+  "context": "// RFC7540 #6.5\n#define H2_F_SETTINGS_ACK   0x01\n\n// RFC7540 #6.6\n#define H2_F_PUSH_PROMISE_END_HEADERS 0x04\n#define H2_F_PUSH_PROMISE_PADDED      0x08\n"
  },
  {
   "i": 3,
   "project": "haproxy",
   "file": "src/mux_h2.c",
-  "line": 2706,
+  "line": 1981,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -57,13 +57,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\tgoto out;\n\t}\n\n\t/* RFC7540#5.4.2: To avoid looping, an endpoint MUST NOT send a\n\t * RST_STREAM in response to a RST_STREAM frame.\n\t *\n\t * if h2s is not assigned yet (id == 0), don't send a RST_STREAM frame."
+  "context": "\n\tw = h2_get_n64(b, o + 1);\n\th->len = *(uint8_t*)b_peek(b, o) << 16;\n\th->sid = w & 0x7FFFFFFF; /* RFC7540#4.1: R bit must be ignored */\n\th->ff = w >> 32;\n\th->ft = w >> 40;\n\th->len += w >> 48;"
  },
  {
   "i": 4,
   "project": "openssl",
-  "file": "doc/man1/openssl-fipsinstall.pod",
-  "line": 246,
+  "file": "crypto/dh/dh_key.c",
+  "line": 448,
   "rfc": "RFC8446",
   "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
   "replaced_by": [
@@ -72,7 +72,7 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\nConfigure the module to enable a run-time digest check when deriving a key by\nTLS13 KDF.\nSee RFC 8446 for details.\n\n=item B<-tls1_prf_digest_check>\n"
+  "context": "        if (pbuf == NULL)\n            return 0;\n        /*\n         * As per Section 4.2.8.1 of RFC 8446 left pad public\n         * key with zeros to the size of p\n         */\n        if (BN_bn2binpad(pubkey, pbuf, p_size) < 0) {"
  },
  {
   "i": 5,
@@ -107,23 +107,23 @@
  {
   "i": 7,
   "project": "haproxy",
-  "file": "src/http_ana.c",
-  "line": 3344,
-  "rfc": "RFC2109",
-  "rfc_title": "HTTP State Management Mechanism",
+  "file": "src/stats-json.c",
+  "line": 310,
+  "rfc": "RFC7159",
+  "rfc_title": "The JavaScript Object Notation (JSON) Data Interchange Format",
   "replaced_by": [
-   "RFC6265"
+   "RFC8259"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t * Note: RFC2965 is unclear about the processing of spaces around\n\t\t * the equal sign in the ATTR=VALUE form. A careful inspection of\n\t\t * the RFC explicitly allows spaces before it, and not within the\n\t\t * tokens (attrs or values). An inspection of RFC2109 allows that\n\t\t * too but section 10.1.3 lets one think that spaces may be allowed\n\t\t * after the equal sign too, resulting in some (rare) buggy\n\t\t * implementations trying to do that. So let's do what servers do."
+  "context": " * No state is used.\n *\n * Integer values bounded to the range [-(2**53)+1, (2**53)-1] as\n * per the recommendation for interoperable integers in section 6 of RFC 7159.\n */\nvoid stats_dump_json_schema(struct buffer *out)\n{"
  },
  {
   "i": 8,
   "project": "openssl",
-  "file": "doc/man1/openssl-x509.pod.in",
-  "line": 230,
+  "file": "doc/man1/openssl-crl.pod.in",
+  "line": 90,
   "rfc": "RFC822",
   "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
   "replaced_by": [
@@ -132,13 +132,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "=item B<-dateopt>\n\nSpecify the date output format. Values are: rfc_822 and iso_8601.\nDefaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format"
+  "context": "Specify the date output format. Values are: rfc_822 and iso_8601.\nDefaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format\n\"Mmm DD HH:MM:SS YYYY GMT\" (e.g., \"Jul 31 22:20:50 2017 GMT\"). The month\nappears before the day, unlike all three RFCs, which put the day first."
  },
  {
   "i": 9,
   "project": "haproxy",
-  "file": "include/haproxy/http.h",
-  "line": 205,
+  "file": "include/haproxy/http-t.h",
+  "line": 170,
   "rfc": "RFC7230",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
@@ -148,13 +148,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "\t  .state  = URI_PARSER_STATE_BEFORE,\n\t};\n\n\t/* RFC7230, par. 2.7 :\n\t * Request-URI = \"*\" | absuri | abspath | authority\n\t */\n"
+  "context": "\tURI_PARSER_STATE_PATH_DONE,\n};\n\n/* HTTP URI format as described in rfc 7230 5.3.\n * As the first character is used to identify the format, absolute-form and\n * authority-form are not differentiated.\n */"
  },
  {
   "i": 10,
   "project": "okhttp",
-  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/OkHttpClient.kt",
-  "line": 760,
+  "file": "docs/features/connections.md",
+  "line": 52,
   "rfc": "RFC6555",
   "rfc_title": "Happy Eyeballs: Success with Dual-Stack Hosts",
   "replaced_by": [
@@ -163,28 +163,28 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "     * Configure this client to perform fast fallbacks by attempting multiple connections\n     * concurrently, returning once any connection connects successfully.\n     *\n     * This implements Happy Eyeballs ([RFC 6555][rfc_6555]), balancing connect latency vs.\n     * wasted resources.\n     *\n     * Defaults to enabled, call with [fastFallback] = false to revert to 4.x behaviour."
+  "context": "\n### [Fast Fallback](https://lysine.dev/okhttp/5.x/okhttp/okhttp3/-ok-http-client/-builder/fast-fallback)\n\nSince version 5.0, `OkHttpClient` supports fast fallback, which is our implementation of Happy Eyeballs [RFC 6555](https://datatracker.ietf.org/doc/html/rfc6555).\n\nWith fast fallback, OkHttp attempts to connect to multiple web servers concurrently. It keeps whichever route connects first and cancels all of the others. Its rules are:\n"
  },
  {
   "i": 11,
-  "project": "miekg-dns",
-  "file": "types.go",
-  "line": 774,
-  "rfc": "RFC2672",
-  "rfc_title": "Non-Terminal DNS Name Redirection",
+  "project": "authlib",
+  "file": "authlib/oauth1/rfc5849/signature.py",
+  "line": 138,
+  "rfc": "RFC2818",
+  "rfc_title": "HTTP Over TLS",
   "replaced_by": [
-   "RFC6672"
+   "RFC9110"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t\" \" + rr.Certificate\n}\n\n// DNAME RR. See RFC 2672.\ntype DNAME struct {\n\tHdr    RR_Header\n\tTarget string `dns:\"domain-name\"`"
+  "context": "    #     All other non-default port numbers MUST be included.\n    #\n    # .. _`RFC2616`: https://tools.ietf.org/html/rfc2616\n    # .. _`RFC2818`: https://tools.ietf.org/html/rfc2818\n    default_ports = (\n        (\"http\", \"80\"),\n        (\"https\", \"443\"),"
  },
  {
   "i": 12,
   "project": "haproxy",
   "file": "src/cache.c",
-  "line": 1547,
+  "line": 1084,
   "rfc": "RFC7234",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Caching",
   "replaced_by": [
@@ -193,13 +193,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "}\n\n\n/* As per RFC 7234#4.3.2, in case of \"If-Modified-Since\" conditional request, the\n * date value should be compared to a date determined by in a previous response (for\n * the same entity). This date could either be the \"Last-Modified\" value, or the \"Date\"\n * value of the response's reception time (by decreasing order of priority). */"
+  "context": "\tint offset = 0;\n\n\t/* The Cache-Control max-age and s-maxage directives should be followed by\n\t * a positive numerical value (see RFC 7234#5.2.1.1). According to the\n\t * specs, a sender \"should not\" generate a quoted-string value but we will\n\t * still accept this format since it isn't strictly forbidden. */\n\twhile (http_find_header(htx, ist(\"cache-control\"), &ctx, 0)) {"
  },
  {
   "i": 13,
   "project": "haproxy",
   "file": "src/http_ana.c",
-  "line": 1681,
+  "line": 340,
   "rfc": "RFC7231",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
   "replaced_by": [
@@ -208,13 +208,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\tcase 501:\n\t\tbreak;\n\tdefault:\n\t\t/* RFC7231#6.1:\n\t\t *   Responses with status codes that are defined as\n\t\t *   cacheable by default (e.g., 200, 203, 204, 206,\n\t\t *   300, 301, 404, 405, 410, 414, and 501 in this"
+  "context": "\t/*\n\t * RFC7234#4:\n\t *   A cache MUST write through requests with methods\n\t *   that are unsafe (Section 4.2.1 of [RFC7231]) to\n\t *   the origin server; i.e., a cache is not allowed\n\t *   to generate a reply to such a request before\n\t *   having forwarded the request and having received"
  },
  {
   "i": 14,
   "project": "nghttp2",
-  "file": "src/nghttpd.cc",
-  "line": 224,
+  "file": "doc/sources/nghttpx-howto.rst",
+  "line": 482,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -223,75 +223,28 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "      {\"no-content-length\", no_argument, &flag, 10},\n      {\"encoder-header-table-size\", required_argument, &flag, 11},\n      {\"ktls\", no_argument, &flag, 12},\n      {\"no-rfc7540-pri\", no_argument, &flag, 13},\n      {\"groups\", required_argument, &flag, 14},\n      {nullptr, 0, nullptr, 0}};\n    int option_index = 0;"
+  "context": "order to use PSK, PSK cipher suite must be enabled by using\n:option:`--client-ciphers` option.  The desired PSK cipher suite may\nbe listed in `HTTP/2 cipher block list\n<https://tools.ietf.org/html/rfc7540#appendix-A>`_.  In order to use\nsuch PSK cipher suite with HTTP/2, disable HTTP/2 cipher block list by\nusing :option:`--client-no-http2-cipher-block-list` option.  But you\nshould understand its implications."
  },
  {
   "i": 15,
-  "project": "miekg-dns",
-  "file": "tsig.go",
-  "line": 132,
-  "rfc": "RFC2845",
-  "rfc_title": "Secret Key Transaction Authentication for DNS (TSIG)",
+  "project": "oauthlib",
+  "file": "oauthlib/oauth1/rfc5849/signature.py",
+  "line": 380,
+  "rfc": "RFC4634",
+  "rfc_title": "US Secure Hash Algorithms (SHA and HMAC-SHA)",
   "replaced_by": [
-   "RFC8945"
+   "RFC6234"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "}\n\n// The following values must be put in wireformat, so that the MAC can be calculated.\n// RFC 2845, section 3.4.2. TSIG Variables.\ntype tsigWireFmt struct {\n\t// From RR_Header\n\tName  string `dns:\"domain-name\"`"
+  "context": "\n    Per `section 3.4.2`_ of the spec.\n\n    .. _`RFC4634`: https://tools.ietf.org/html/rfc4634\n    .. _`section 3.4.2`: https://tools.ietf.org/html/rfc5849#section-3.4.2\n    \"\"\"\n"
  },
  {
   "i": 16,
   "project": "oauthlib",
-  "file": "oauthlib/uri_validate.py",
-  "line": 5,
-  "rfc": "RFC2234",
-  "rfc_title": "Augmented BNF for Syntax Specifications: ABNF",
-  "replaced_by": [
-   "RFC5234"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "Regex for URIs\n\nThese regex are directly derived from the collected ABNF in RFC3986\n(except for DIGIT, ALPHA and HEXDIG, defined by RFC2234).\n\nThey should be processed with re.VERBOSE.\n"
- },
- {
-  "i": 17,
-  "project": "nginx",
-  "file": "src/http/v2/ngx_http_v2.c",
-  "line": 1236,
-  "rfc": "RFC7540",
-  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
-  "replaced_by": [
-   "RFC9113"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "    }\n\n    if (priority) {\n        /* skip the ignored RFC 7540 priority data */\n        pos += sizeof(uint32_t) + 1;\n    }\n"
- },
- {
-  "i": 18,
-  "project": "oauthlib",
-  "file": "oauthlib/oauth1/rfc5849/signature.py",
-  "line": 151,
-  "rfc": "RFC2616",
-  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
-  "replaced_by": [
-   "RFC9110",
-   "RFC9111",
-   "RFC9112"
-  ],
-  "replacement_kinds": [
-   "split"
-  ],
-  "context": "    if not scheme:\n        raise ValueError('missing scheme')\n\n    # Per `RFC 2616 section 5.1.2`_:\n    #\n    # Note that the absolute path cannot be empty; if none is present in\n    # the original URI, it MUST be given as \"/\" (the server root)."
- },
- {
-  "i": 19,
-  "project": "authlib",
-  "file": "authlib/oauth1/rfc5849/parameters.py",
-  "line": 47,
+  "file": "oauthlib/oauth1/rfc5849/parameters.py",
+  "line": 70,
   "rfc": "RFC2617",
   "rfc_title": "HTTP Authentication: Basic and Digest Access Authentication",
   "replaced_by": [
@@ -302,28 +255,74 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "    # 4.  The OPTIONAL \"realm\" parameter MAY be added and interpreted per\n    #     `RFC2617 section 1.2`_.\n    #\n    # .. _`RFC2617 section 1.2`: https://tools.ietf.org/html/rfc2617#section-1.2\n    if realm:\n        # NOTE: realm should *not* be escaped\n        header_parameters = f'realm=\"{realm}\", ' + header_parameters"
+  "context": "        authorization_header_parameters_parts)\n\n    # 4.  The OPTIONAL \"realm\" parameter MAY be added and interpreted per\n    #     `RFC2617 section 1.2`_.\n    #\n    # .. _`RFC2617 section 1.2`: https://tools.ietf.org/html/rfc2617#section-1.2\n    if realm:"
+ },
+ {
+  "i": 17,
+  "project": "nginx",
+  "file": "src/http/modules/ngx_http_grpc_module.c",
+  "line": 1771,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "            }\n\n            /*\n             * RFC 7540 says that implementations MUST discard frames\n             * that have unknown or unsupported types.  However, extension\n             * frames that appear in the middle of a header block are\n             * not permitted.  Also, for obvious reasons CONTINUATION frames"
+ },
+ {
+  "i": 18,
+  "project": "nghttp2",
+  "file": "doc/nghttpx.h2r",
+  "line": 195,
+  "rfc": "RFC6962",
+  "rfc_title": "Certificate Transparency",
+  "replaced_by": [
+   "RFC9162"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "------------------------\n\nnghttpx supports TLS ``signed_certificate_timestamp`` extension (`RFC\n6962 <https://tools.ietf.org/html/rfc6962>`_).  The relevant options\nare :option:`--tls-sct-dir` and ``sct-dir`` parameter in\n:option:`--subcert`.  They takes a directory, and nghttpx reads all\nfiles whose extension is ``.sct`` under the directory.  The ``*.sct``"
+ },
+ {
+  "i": 19,
+  "project": "oauthlib",
+  "file": "oauthlib/oauth1/rfc5849/signature.py",
+  "line": 182,
+  "rfc": "RFC2818",
+  "rfc_title": "HTTP Over TLS",
+  "replaced_by": [
+   "RFC9110"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "    # 3.  The port MUST be included if it is not the default port for the\n    #     scheme, and MUST be excluded if it is the default.  Specifically,\n    #     the port MUST be excluded when making an HTTP request `RFC2616`_\n    #     to port 80 or when making an HTTPS request `RFC2818`_ to port 443.\n    #     All other non-default port numbers MUST be included.\n    #\n    # .. _`RFC2616`: https://tools.ietf.org/html/rfc2616"
  },
  {
   "i": 20,
   "project": "haproxy",
-  "file": "CONTRIBUTING",
-  "line": 542,
-  "rfc": "RFC5077",
-  "rfc_title": "Transport Layer Security (TLS) Session Resumption without Server-Side State",
+  "file": "src/tools.c",
+  "line": 4143,
+  "rfc": "RFC850",
+  "rfc_title": "Standard for interchange of USENET messages",
   "replaced_by": [
-   "RFC9846"
+   "RFC5536",
+   "RFC5537"
   ],
   "replacement_kinds": [
    "split"
   ],
-  "context": "       bc96534 DOC: ssl: missing LF\n       10ec214 BUG/MEDIUM: lua: the lua function Channel:close() causes a segf\n       bdc97a8 BUG/MEDIUM: lua: outgoing connection was broken since 1.6-dev2\n       ba56d9c DOC: mention support for RFC 5077 TLS Ticket extension in start\n       f1650a8 DOC: clarify some points about SSL and the proxy protocol\n       b157d73 BUG/MAJOR: peers: fix current table pointer not re-initialized\n       e1ab808 BUG/MEDIUM: peers: fix wrong message id on stick table updates"
+  "context": "\n\t/* year = 2DIGIT\n\t *\n\t * Recipients of a timestamp value in rfc850-(*date) format, which uses a\n\t * two-digit year, MUST interpret a timestamp that appears to be more\n\t * than 50 years in the future as representing the most recent year in\n\t * the past that had the same last two digits."
  },
  {
   "i": 21,
   "project": "netty-codec-http",
   "file": "src/main/java/io/netty/handler/codec/http/HttpObjectDecoder.java",
-  "line": 1214,
+  "line": 940,
   "rfc": "RFC7230",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
@@ -333,7 +332,7 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "    private static int findNonSPLenient(byte[] sb, int offset, int end) {\n        for (int result = offset; result < end; ++result) {\n            byte c = sb[result];\n            // See https://tools.ietf.org/html/rfc7230#section-3.5\n            if (isSPLenient(c)) {\n                continue;\n            }"
+  "context": "     * <strong>Note:</strong> RFC 7230 (the previous HTTP/1.1 RFC) allowed the {@code Content-Length} header to simply\n     * be ignored, in the presence of a {@code Transfer-Encoding} header, but this practice is now obsolete\n     * and considered unsafe.\n     * The RFC 7230 behavior can be restored in the following ways:\n     * <ul>\n     *     <li>\n     *         Process-wide, by setting the {@value PROP_RFC9112_TRANSFER_ENCODING} system property to {@code false}."
  },
  {
   "i": 22,
@@ -369,8 +368,8 @@
  {
   "i": 24,
   "project": "openssl",
-  "file": "crypto/x509/x509_vpm.c",
-  "line": 324,
+  "file": "crypto/x509/v3_utl.c",
+  "line": 1057,
   "rfc": "RFC822",
   "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
   "replaced_by": [
@@ -379,7 +378,7 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "}\n\n/* Default email name input validation */\nstatic int validate_email_name(const char *name, size_t len, int rfc822)\n{\n    size_t dns_len, local_len;\n    const char *at, *next, *dnsname;"
+  "context": "        --chklen;\n    /*\n     * As this is public API, historically it has supported checking\n     * whatever is supplied against both RFC822 and SMTPUTF8.\n     */\n    if (do_x509_check(x, chk, chklen, flags, GEN_EMAIL, 0, NULL) == 1)\n        return 1;"
  },
  {
   "i": 25,
@@ -445,8 +444,8 @@
  {
   "i": 29,
   "project": "netty-codec-http",
-  "file": "src/main/java/io/netty/handler/codec/http/HttpUtil.java",
-  "line": 644,
+  "file": "src/main/java/io/netty/handler/codec/http/HttpServerKeepAliveHandler.java",
+  "line": 106,
   "rfc": "RFC7230",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
@@ -456,7 +455,7 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "        }\n\n        // Guard against multiple Content-Length headers as stated in\n        // https://tools.ietf.org/html/rfc7230#section-3.3.2:\n        //\n        // If a message is received that has multiple Content-Length header\n        //   fields with field-values consisting of the same decimal value, or a"
+  "context": "     * <p>\n     * <ul>\n     *     <li>See <a href=\"https://tools.ietf.org/html/rfc7230#section-6.3\"/></li>\n     *     <li>See <a href=\"https://tools.ietf.org/html/rfc7230#section-3.3.2\"/></li>\n     *     <li>See <a href=\"https://tools.ietf.org/html/rfc7230#section-3.3.3\"/></li>\n     * </ul>\n     *"
  },
  {
   "i": 30,
@@ -478,49 +477,48 @@
  {
   "i": 31,
   "project": "openssl",
-  "file": "include/openssl/tls1.h",
-  "line": 85,
-  "rfc": "RFC4366",
-  "rfc_title": "Transport Layer Security (TLS) Extensions",
+  "file": "doc/man1/openssl-x509.pod.in",
+  "line": 233,
+  "rfc": "RFC2822",
+  "rfc_title": "Internet Message Format",
   "replaced_by": [
-   "RFC6066",
-   "RFC9846"
+   "RFC5322"
   ],
   "replacement_kinds": [
-   "split",
-   "version"
+   "edition"
   ],
-  "context": "#define TLS1_AD_ECH_REQUIRED 121 /* fatal */\n#endif\n\n/* ExtensionType values from RFC3546 / RFC4366 / RFC6066 */\n#define TLSEXT_TYPE_server_name 0\n#define TLSEXT_TYPE_max_fragment_length 1\n#define TLSEXT_TYPE_client_certificate_url 2"
+  "context": "Defaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format\n\"Mmm DD HH:MM:SS YYYY GMT\" (e.g., \"Jul 31 22:20:50 2017 GMT\"). The month\nappears before the day, unlike all three RFCs, which put the day first.\nThe 4-digit year differs from RFC 822 (which used 2-digit years), and the"
  },
  {
   "i": 32,
   "project": "nginx",
-  "file": "src/http/modules/ngx_http_proxy_v2_module.c",
-  "line": 1486,
-  "rfc": "RFC7540",
-  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "file": "src/core/ngx_parse_time.c",
+  "line": 139,
+  "rfc": "RFC850",
+  "rfc_title": "Standard for interchange of USENET messages",
   "replaced_by": [
-   "RFC9113"
+   "RFC5536",
+   "RFC5537"
   ],
   "replacement_kinds": [
-   "edition"
+   "split"
   ],
-  "context": "            }\n\n            /*\n             * RFC 7540 says that implementations MUST discard frames\n             * that have unknown or unsupported types.  However, extension\n             * frames that appear in the middle of a header block are\n             * not permitted.  Also, for obvious reasons CONTINUATION frames"
+  "context": "               + (*(p + 2) - '0') * 10 + (*(p + 3) - '0');\n        p += 4;\n\n    } else if (fmt == rfc850) {\n        if (*p < '0' || *p > '9' || *(p + 1) < '0' || *(p + 1) > '9') {\n            return NGX_ERROR;\n        }"
  },
  {
   "i": 33,
   "project": "openssl",
-  "file": "crypto/objects/objects.txt",
-  "line": 566,
-  "rfc": "RFC2560",
-  "rfc_title": "X.509 Internet Public Key Infrastructure Online Certificate Status Protocol - OCSP",
+  "file": "doc/man3/X509_check_host.pod",
+  "line": 55,
+  "rfc": "RFC8398",
+  "rfc_title": "Internationalized Email Addresses in X.509 Certificates",
   "replaced_by": [
-   "RFC6960"
+   "RFC9598"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "id-kp 7\t\t\t: ipsecUser\t\t: IPSec User\n!Cname time-stamp\nid-kp 8\t\t\t: timeStamping\t\t: Time Stamping\n# From OCSP spec RFC2560\n!Cname OCSP-sign\nid-kp 9\t\t\t: OCSPSigning\t\t: OCSP Signing\nid-kp 10\t\t: DVCS\t\t\t: dvcs"
+  "context": "email B<address>. The mailbox syntax of RFC 822 is supported,\ncomments are not allowed, and no attempt is made to normalize quoted\ncharacters. The mailbox syntax of RFC 6531 is supported for\nSmtpUTF8Mailbox address in subjectAltName according to RFC 8398,\nwith similar limitations as for RFC 822 syntax, and no attempt\nis made to convert from A-label to U-label before comparison.\nThe B<addresslen> argument must be the number of"
  },
  {
   "i": 34,
@@ -555,18 +553,20 @@
  },
  {
   "i": 36,
-  "project": "reqwest",
-  "file": "src/blocking/client.rs",
-  "line": 665,
-  "rfc": "RFC8312",
-  "rfc_title": "CUBIC for Fast Long-Distance Networks",
+  "project": "hyper",
+  "file": "src/proto/h1/role.rs",
+  "line": 329,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
   "replaced_by": [
-   "RFC9438"
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
   ],
   "replacement_kinds": [
-   "edition"
+   "split"
   ],
-  "context": "    /// default.\n    ///\n    /// [BBR]: https://datatracker.ietf.org/doc/html/draft-ietf-ccwg-bbr\n    /// [CUBIC]: https://datatracker.ietf.org/doc/html/rfc8312\n    #[cfg(feature = \"http3\")]\n    #[cfg_attr(docsrs, doc(cfg(all(reqwest_unstable, feature = \"http3\",))))]\n    pub fn http3_congestion_bbr(self) -> ClientBuilder {"
+  "context": "                    }\n                }\n                header::EXPECT => {\n                    // According to https://datatracker.ietf.org/doc/html/rfc2616#section-14.20\n                    // Comparison of expectation values is case-insensitive for unquoted tokens\n                    // (including the 100-continue token)\n                    expect_continue = value.as_bytes().eq_ignore_ascii_case(b\"100-continue\");"
  },
  {
   "i": 37,
@@ -588,8 +588,8 @@
  {
   "i": 38,
   "project": "undici",
-  "file": "lib/util/date.js",
-  "line": 12,
+  "file": "benchmarks/utils/date.mjs",
+  "line": 19,
   "rfc": "RFC850",
   "rfc_title": "Standard for interchange of USENET messages",
   "replaced_by": [
@@ -599,13 +599,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "function parseHttpDate (date) {\n  // Sun, 06 Nov 1994 08:49:37 GMT    ; IMF-fixdate\n  // Sun Nov  6 08:49:37 1994         ; ANSI C's asctime() format\n  // Sunday, 06-Nov-94 08:49:37 GMT   ; obsolete RFC 850 format\n\n  switch (date[3]) {\n    case ',': return parseImfDate(date)"
+  "context": "  .add('asctime', () => {\n    parseHttpDate(asctime)\n  })\n  .add('rfc850', () => {\n    parseHttpDate(rfc850)\n  })\n  .add('imf', () => {"
  },
  {
   "i": 39,
   "project": "node-lib",
   "file": "internal/http/server.js",
-  "line": 152,
+  "line": 146,
   "rfc": "RFC7231",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
   "replaced_by": [
@@ -614,12 +614,12 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "  208: 'Already Reported',           // RFC 5842 7.1\n  226: 'IM Used',                    // RFC 3229 10.4.1\n  300: 'Multiple Choices',           // RFC 7231 6.4.1\n  301: 'Moved Permanently',          // RFC 7231 6.4.2\n  302: 'Found',                      // RFC 7231 6.4.3\n  303: 'See Other',                  // RFC 7231 6.4.4\n  304: 'Not Modified',               // RFC 7232 4.1"
+  "context": "  202: 'Accepted',                   // RFC 7231 6.3.3\n  203: 'Non-Authoritative Information', // RFC 7231 6.3.4\n  204: 'No Content',                 // RFC 7231 6.3.5\n  205: 'Reset Content',              // RFC 7231 6.3.6\n  206: 'Partial Content',            // RFC 7233 4.1\n  207: 'Multi-Status',               // RFC 4918 11.1\n  208: 'Already Reported',           // RFC 5842 7.1"
  },
  {
   "i": 40,
   "project": "node-lib",
-  "file": "internal/http/server.js",
+  "file": "internal/http/incoming.js",
   "line": 503,
   "rfc": "RFC2616",
   "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
@@ -631,28 +631,29 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "\n  if (statusCode === 204 || statusCode === 304 ||\n      (statusCode >= 100 && statusCode <= 199)) {\n    // RFC 2616, 10.2.5:\n    // The 204 response MUST NOT include a message-body, and thus is always\n    // terminated by the first empty line after the header fields.\n    // RFC 2616, 10.3.5:"
+  "context": "}\n// Add the given (field, value) pair to the message\n//\n// Per RFC2616, section 4.2 it is acceptable to join multiple instances of the\n// same header with a ', ' if the header in question supports specification of\n// multiple values this way. The one exception to this is the Cookie header,\n// which has multiple values joined with a '; ' instead. If a header's values"
  },
  {
   "i": 41,
   "project": "nghttp2",
-  "file": "src/shrpx.cc",
-  "line": 2575,
-  "rfc": "RFC6962",
-  "rfc_title": "Certificate Transparency",
+  "file": "src/shrpx_https_upstream.cc",
+  "line": 243,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
-   "RFC9162"
+   "RFC9110",
+   "RFC9112"
   ],
   "replacement_kinds": [
-   "edition"
+   "split"
   ],
-  "context": "\n              \"sct-dir=<DIR>\"  specifies the  path to  directory which\n              contains        *.sct        files        for        TLS\n              signed_certificate_timestamp extension (RFC 6962).  This\n              feature   requires   OpenSSL   >=   1.0.2.    See   also\n              --tls-sct-dir option.)\");\n"
+  "context": "                                        std::string_view uri, urlparse_url &u) {\n  assert(u.field_set & (1 << URLPARSE_HOST));\n\n  // As per https://tools.ietf.org/html/rfc7230#section-5.4, we\n  // rewrite host header field with authority component.\n  auto authority = util::get_uri_field(uri.data(), u, URLPARSE_HOST);\n  // TODO properly check IPv6 numeric address"
  },
  {
   "i": 42,
   "project": "haproxy",
   "file": "src/mux_h2.c",
-  "line": 3033,
+  "line": 2778,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -661,13 +662,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t\t/* we need to update all existing streams with the\n\t\t\t * difference from the previous iws.\n\t\t\t */\n\t\t\tif (arg < 0) { // RFC7540#6.5.2\n\t\t\t\terror = H2_ERR_FLOW_CONTROL_ERROR;\n\t\t\t\th2c_report_glitch(h2c, 1, \"negative INITIAL_WINDOW_SIZE\");\n\t\t\t\tTRACE_STATE(\"negative INITIAL_WINDOW_SIZE\", H2_EV_RX_FRAME|H2_EV_RX_SETTINGS|H2_EV_H2C_ERR|H2_EV_PROTO_ERR, h2c->conn);"
+  "context": "\n\tTRACE_ENTER(H2_EV_TX_FRAME|H2_EV_TX_RST, h2c->conn, h2s);\n\n\t/* RFC7540#5.4.2: To avoid looping, an endpoint MUST NOT send a\n\t * RST_STREAM in response to a RST_STREAM frame.\n\t */\n\tif (h2c->dft == H2_FT_RST_STREAM) {"
  },
  {
   "i": 43,
   "project": "openssl",
-  "file": "doc/man3/ASN1_STRING_print_ex.pod",
-  "line": 44,
+  "file": "doc/man1/openssl-x509.pod.in",
+  "line": 804,
   "rfc": "RFC2253",
   "rfc_title": "Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names",
   "replaced_by": [
@@ -677,7 +678,7 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "The complete set of supported options for I<flags> is listed below.\n\nVarious characters can be escaped. If B<ASN1_STRFLGS_ESC_2253> is set the characters\ndetermined by RFC2253 are escaped. If B<ASN1_STRFLGS_ESC_CTRL> is set control\ncharacters are escaped. If B<ASN1_STRFLGS_ESC_MSB> is set characters with the\nMSB set are escaped: this option should B<not> be used if the terminal correctly\ninterprets UTF8 sequences."
+  "context": "\n openssl x509 -in cert.pem -noout -subject\n\nPrint the certificate subject name in RFC2253 form:\n\n openssl x509 -in cert.pem -noout -subject -nameopt RFC2253\n"
  },
  {
   "i": 44,
@@ -697,35 +698,33 @@
  },
  {
   "i": 45,
-  "project": "nghttp2",
-  "file": "doc/programmers-guide.rst",
-  "line": 113,
-  "rfc": "RFC7540",
-  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "project": "openssl",
+  "file": "Configurations/descrip.mms.tmpl",
+  "line": 843,
+  "rfc": "RFC4880",
+  "rfc_title": "OpenPGP Message Format",
   "replaced_by": [
-   "RFC9113"
+   "RFC9580"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\nBy default, nghttp2 library checks HTTP messaging rules described in\n`HTTP/2 specification, section 8\n<https://tools.ietf.org/html/rfc7540#section-8>`_.  Everything\ndescribed in that section is not validated however.  We briefly\ndescribe what the library does in this area.  In the following\ndescription, without loss of generality we omit CONTINUATION frame"
+  "context": "  # To resolve 2, we convert all include directory specs we get to Unix,\n  # with available File::Spec functions.\n  #\n  # We use CRC-24 from https://tools.ietf.org/html/rfc4880#section-6,\n  # reimplemented in Perl to get a workable and constant file name for each\n  # combination of include directory specs.  It is assumed that the order of\n  # these directories don't matter."
  },
  {
   "i": 46,
   "project": "undici",
-  "file": "deps/llhttp/src/http.c",
-  "line": 45,
-  "rfc": "RFC2616",
-  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "file": "lib/web/fetch/index.js",
+  "line": 2284,
+  "rfc": "RFC7231",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
   "replaced_by": [
-   "RFC9110",
-   "RFC9111",
-   "RFC9112"
+   "RFC9110"
   ],
   "replacement_kinds": [
-   "split"
+   "edition"
   ],
-  "context": "  if (\n      (parser->upgrade && (parser->method == HTTP_CONNECT ||\n                          (parser->flags & F_SKIPBODY) || !hasBody)) ||\n      /* See RFC 2616 section 4.4 - 1xx e.g. Continue */\n      (parser->type == HTTP_RESPONSE && parser->status_code == 101)\n  ) {\n    /* Exit, the rest of the message is in a different protocol. */"
+  "context": "\n            // https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Encoding\n            if (request.method !== 'HEAD' && request.method !== 'CONNECT' && !nullBodyStatus.includes(status) && !willFollow) {\n              // https://www.rfc-editor.org/rfc/rfc7231#section-3.1.2.1\n              const contentEncoding = headersList.get('content-encoding', true)\n              // \"All content-coding values are case-insensitive...\"\n              /** @type {string[]} */"
  },
  {
   "i": 47,
@@ -746,8 +745,8 @@
  {
   "i": 48,
   "project": "haproxy",
-  "file": "src/h1.c",
-  "line": 82,
+  "file": "include/haproxy/http.h",
+  "line": 205,
   "rfc": "RFC7230",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
@@ -757,13 +756,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "\t\t\tret = -1;\n\t\telse if (isteqi(word, ist(\"chunked\"))) {\n\t\t\tif (h1m->flags & H1_MF_TE_CHUNKED) {\n\t\t\t\t/* cf RFC7230#3.3.1 : A sender MUST NOT apply\n\t\t\t\t * chunked more than once to a message body\n\t\t\t\t * (i.e., chunking an already chunked message is\n\t\t\t\t * not allowed)"
+  "context": "\t  .state  = URI_PARSER_STATE_BEFORE,\n\t};\n\n\t/* RFC7230, par. 2.7 :\n\t * Request-URI = \"*\" | absuri | abspath | authority\n\t */\n"
  },
  {
   "i": 49,
   "project": "haproxy",
-  "file": "reg-tests/log/log_profiles.vtc",
-  "line": 50,
+  "file": "doc/configuration.txt",
+  "line": 34335,
   "rfc": "RFC3164",
   "rfc_title": "The BSD Syslog Protocol",
   "replaced_by": [
@@ -772,7 +771,7 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\nsyslog Slg3 -level info {\n    recv\n    #rfc3164, logprof1 and option httplog\n    expect ~ \"[^:\\\\[ ]\\\\[${h1_pid}\\\\]: close\"\n    barrier b1 sync\n"
+  "context": "      keep    If input message already contains a value for the hostname field,\n              we keep it.\n              If input message doesn't contain a value for the hostname field,\n              we set it to 'localhost' (rfc3164) or '-' (rfc5424).\n\n      append  If input message already contains a value for the hostname field,\n              we append a comma followed by the IP address from the sender."
  },
  {
   "i": 50,
@@ -808,7 +807,7 @@
   "i": 52,
   "project": "netty-codec-http",
   "file": "src/main/java/io/netty/handler/codec/http/HttpHeaders.java",
-  "line": 671,
+  "line": 616,
   "rfc": "RFC2616",
   "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
   "replaced_by": [
@@ -819,7 +818,7 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "     * If the specified value is not a {@link String}, it is converted into a\n     * {@link String} by {@link Object#toString()}, except for {@link Date}\n     * and {@link Calendar} which are formatted to the date format defined in\n     * <a href=\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1\">RFC2616</a>.\n     */\n    @Deprecated\n    public static void addHeader(HttpMessage message, CharSequence name, Object value) {"
+  "context": "     * If the specified value is not a {@link String}, it is converted into a\n     * {@link String} by {@link Object#toString()}, except for {@link Date}\n     * and {@link Calendar} which are formatted to the date format defined in\n     * <a href=\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec3.html#sec3.3.1\">RFC2616</a>.\n     */\n    @Deprecated\n    public static void setHeader(HttpMessage message, CharSequence name, Object value) {"
  },
  {
   "i": 53,
@@ -839,8 +838,8 @@
  {
   "i": 54,
   "project": "openssl",
-  "file": "apps/lib/s_cb.c",
-  "line": 797,
+  "file": "README.md",
+  "line": 224,
   "rfc": "RFC8446",
   "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
   "replaced_by": [
@@ -849,52 +848,52 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "    /* RFC 8446 4.2.3 */\n    { \"rsa_pkcs1_sha1\", 0x0201 /* TLSEXT_SIGALG_rsa_pkcs1_sha1 */ },\n    { \"ecdsa_sha1\", 0x0203 /* TLSEXT_SIGALG_ecdsa_sha1 */ },\n    /*  {\"rsa_pkcs1_sha224\",       0x0301    TLSEXT_SIGALG_rsa_pkcs1_sha224}, not in rfc8446 */\n    /*  {\"ecdsa_sha224\",           0x0303    TLSEXT_SIGALG_ecdsa_sha224}      not in rfc8446 */\n    { \"rsa_pkcs1_sha256\", 0x0401 /* TLSEXT_SIGALG_rsa_pkcs1_sha256 */ },\n    { \"ecdsa_secp256r1_sha256\", 0x0403 /* TLSEXT_SIGALG_ecdsa_secp256r1_sha256 */ },"
+  "context": "    \"OpenSSL Migration Guide\"\n\n[RFC 8446]:\n     <https://tools.ietf.org/html/rfc8446>\n\n[RFC 6347]:\n     <https://tools.ietf.org/html/rfc6347>"
  },
  {
   "i": 55,
   "project": "openssl",
-  "file": "doc/man3/MD5.pod",
-  "line": 95,
-  "rfc": "RFC1319",
-  "rfc_title": "The MD2 Message-Digest Algorithm",
+  "file": "doc/man3/X509_check_host.pod",
+  "line": 37,
+  "rfc": "RFC6125",
+  "rfc_title": "Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)",
   "replaced_by": [
-   "RFC6149"
+   "RFC9525"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\n=head1 CONFORMING TO\n\nRFC 1319, RFC 1320, RFC 1321\n\n=head1 SEE ALSO\n"
+  "context": "certificate with a SAN value of \"*.example.com\", \"w*.example.com\"\nor \"*w.example.com\".\n\nPer section 6.4.2 of RFC 6125, B<name> values representing international\ndomain names must be given in A-label form.  The B<namelen> argument\nmust be the number of characters in the name string or zero in which\ncase the length is calculated with strlen(B<name>).  When B<name> starts"
  },
  {
   "i": 56,
   "project": "openssl",
-  "file": "Configurations/descrip.mms.tmpl",
-  "line": 843,
-  "rfc": "RFC4880",
-  "rfc_title": "OpenPGP Message Format",
+  "file": "doc/man3/EVP_DigestInit.pod",
+  "line": 602,
+  "rfc": "RFC3851",
+  "rfc_title": "Secure/Multipurpose Internet Mail Extensions (S/MIME) Version 3.1 Message Specification",
   "replaced_by": [
-   "RFC9580"
+   "RFC8551"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "  # To resolve 2, we convert all include directory specs we get to Unix,\n  # with available File::Spec functions.\n  #\n  # We use CRC-24 from https://tools.ietf.org/html/rfc4880#section-6,\n  # reimplemented in Perl to get a workable and constant file name for each\n  # combination of include directory specs.  It is assumed that the order of\n  # these directories don't matter."
+  "context": "=item EVP_MD_CTRL_MICALG\n\nGets the digest Message Integrity Check algorithm string. This is used when\ncreating S/MIME multipart/signed messages, as specified in RFC 3851.\nThe string value is written to I<p2>.\n\nWhen used with a fetched B<EVP_MD>, EVP_MD_CTX_get_params() gets called with"
  },
  {
   "i": 57,
   "project": "haproxy",
-  "file": "doc/configuration.txt",
-  "line": 3722,
-  "rfc": "RFC8446",
-  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+  "file": "src/http_ana.c",
+  "line": 4145,
+  "rfc": "RFC7234",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Caching",
   "replaced_by": [
-   "RFC9846"
+   "RFC9111"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "  or the public key algorithm + digest form (\"ECDSA+SHA256\"). A list\n  can contain both forms. For more information on the format,\n  see SSL_CTX_set1_sigalgs(3). A list of signature algorithms is also\n  available in RFC8446 section 4.2.3 and in OpenSSL in the ssl/t1_lib.c file.\n  This setting is not applicable to TLSv1.1 and earlier versions of the\n  protocol as the signature algorithms aren't separately negotiated in these\n  versions. It is not recommended to change this setting unless compatibility"
+  "context": "\t}\n\n\t/* We won't store an entry that has neither a cache validator nor an\n\t * explicit expiration time, as suggested in RFC 7234#3. */\n\tif (!has_freshness_info && !has_validator)\n\t\ttxn->flags &= ~TX_CACHEABLE;\n}"
  },
  {
   "i": 58,
@@ -929,24 +928,23 @@
  {
   "i": 60,
   "project": "openssl",
-  "file": "doc/man1/openssl-namedisplay-options.pod",
-  "line": 67,
-  "rfc": "RFC2254",
-  "rfc_title": "The String Representation of LDAP Search Filters",
+  "file": "doc/man3/DH_get_1024_160.pod",
+  "line": 70,
+  "rfc": "RFC2409",
+  "rfc_title": "The Internet Key Exchange (IKE)",
   "replaced_by": [
-   "RFC4510",
-   "RFC4515"
+   "RFC7296"
   ],
   "replacement_kinds": [
-   "split"
+   "edition"
   ],
-  "context": "\n=item B<esc_2254>\n\nEscape the \"special\" characters in a field as required by RFC 2254 in a field.\nThat is, the B<NUL> character and of C<()*>.\n\n=item B<esc_ctrl>"
+  "context": "BN_get_rfc3526_prime_1536(), BN_get_rfc3526_prime_2048(),\nBN_get_rfc3526_prime_3072(), BN_get_rfc3526_prime_4096(),\nBN_get_rfc3526_prime_6144(), and BN_get_rfc3526_prime_8192() functions\nreturn a BIGNUM for the specified size from IETF RFC 2409.  If B<bn>\nis not NULL, the BIGNUM will be set into that location as well.\n\n=head1 RETURN VALUES"
  },
  {
   "i": 61,
   "project": "node-lib",
   "file": "internal/http/server.js",
-  "line": 193,
+  "line": 191,
   "rfc": "RFC7231",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
   "replaced_by": [
@@ -955,13 +953,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "  502: 'Bad Gateway',                // RFC 7231 6.6.3\n  503: 'Service Unavailable',        // RFC 7231 6.6.4\n  504: 'Gateway Timeout',            // RFC 7231 6.6.5\n  505: 'HTTP Version Not Supported', // RFC 7231 6.6.6\n  506: 'Variant Also Negotiates',    // RFC 2295 8.1\n  507: 'Insufficient Storage',       // RFC 4918 11.5\n  508: 'Loop Detected',              // RFC 5842 7.2"
+  "context": "  500: 'Internal Server Error',      // RFC 7231 6.6.1\n  501: 'Not Implemented',            // RFC 7231 6.6.2\n  502: 'Bad Gateway',                // RFC 7231 6.6.3\n  503: 'Service Unavailable',        // RFC 7231 6.6.4\n  504: 'Gateway Timeout',            // RFC 7231 6.6.5\n  505: 'HTTP Version Not Supported', // RFC 7231 6.6.6\n  506: 'Variant Also Negotiates',    // RFC 2295 8.1"
  },
  {
   "i": 62,
   "project": "node-lib",
   "file": "internal/http/server.js",
-  "line": 170,
+  "line": 168,
   "rfc": "RFC7231",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
   "replaced_by": [
@@ -970,7 +968,7 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "  408: 'Request Timeout',            // RFC 7231 6.5.7\n  409: 'Conflict',                   // RFC 7231 6.5.8\n  410: 'Gone',                       // RFC 7231 6.5.9\n  411: 'Length Required',            // RFC 7231 6.5.10\n  412: 'Precondition Failed',        // RFC 7232 4.2\n  413: 'Payload Too Large',          // RFC 7231 6.5.11\n  414: 'URI Too Long',               // RFC 7231 6.5.12"
+  "context": "  406: 'Not Acceptable',             // RFC 7231 6.5.6\n  407: 'Proxy Authentication Required', // RFC 7235 3.2\n  408: 'Request Timeout',            // RFC 7231 6.5.7\n  409: 'Conflict',                   // RFC 7231 6.5.8\n  410: 'Gone',                       // RFC 7231 6.5.9\n  411: 'Length Required',            // RFC 7231 6.5.10\n  412: 'Precondition Failed',        // RFC 7232 4.2"
  },
  {
   "i": 63,
@@ -992,17 +990,17 @@
  {
   "i": 64,
   "project": "okhttp",
-  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/Challenge.kt",
-  "line": 25,
-  "rfc": "RFC7235",
-  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Authentication",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/OkHttpClient.kt",
+  "line": 765,
+  "rfc": "RFC6555",
+  "rfc_title": "Happy Eyeballs: Success with Dual-Stack Hosts",
   "replaced_by": [
-   "RFC9110"
+   "RFC8305"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "import okhttp3.internal.unmodifiable\n\n/**\n * An [RFC 7235][rfc_7235] challenge.\n *\n * [rfc_7235]: https://tools.ietf.org/html/rfc7235\n */"
+  "context": "     *\n     * Defaults to enabled, call with [fastFallback] = false to revert to 4.x behaviour.\n     *\n     * [rfc_6555]: https://datatracker.ietf.org/doc/html/rfc6555\n     */\n    fun fastFallback(fastFallback: Boolean) =\n      apply {"
  },
  {
   "i": 65,
@@ -1025,7 +1023,7 @@
   "i": 66,
   "project": "okhttp",
   "file": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
-  "line": 250,
+  "line": 247,
   "rfc": "RFC2818",
   "rfc_title": "HTTP Over TLS",
   "replaced_by": [
@@ -1034,13 +1032,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "     * certificate, but that practice was deprecated by [RFC 2818][rfc_2818] and replaced with\n     * [addSubjectAlternativeName]. If unset a random string will be used.\n     *\n     * [rfc_2818]: https://tools.ietf.org/html/rfc2818\n     */\n    fun commonName(cn: String) =\n      apply {"
+  "context": "\n    /**\n     * Set this certificate's common name (CN). Historically this held the hostname of TLS\n     * certificate, but that practice was deprecated by [RFC 2818][rfc_2818] and replaced with\n     * [addSubjectAlternativeName]. If unset a random string will be used.\n     *\n     * [rfc_2818]: https://tools.ietf.org/html/rfc2818"
  },
  {
   "i": 67,
   "project": "haproxy",
-  "file": "src/tools.c",
-  "line": 4143,
+  "file": "src/http_conv.c",
+  "line": 35,
   "rfc": "RFC850",
   "rfc_title": "Standard for interchange of USENET messages",
   "replaced_by": [
@@ -1050,13 +1048,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "\n\t/* year = 2DIGIT\n\t *\n\t * Recipients of a timestamp value in rfc850-(*date) format, which uses a\n\t * two-digit year, MUST interpret a timestamp that appears to be more\n\t * than 50 years in the future as representing the most recent year in\n\t * the past that had the same last two digits."
+  "context": "    return smp_check_date_unit(args, err);\n}\n\n/* Take a string containing an HTTP date in IMF, RFC850 or ASCTIME\n * and converts it into a integer epoch format\n */\nstatic int sample_conv_http2epoch(const struct arg *args, struct sample *smp, void *private)"
  },
  {
   "i": 68,
   "project": "haproxy",
   "file": "doc/configuration.txt",
-  "line": 11731,
+  "line": 11374,
   "rfc": "RFC7230",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
   "replaced_by": [
@@ -1066,13 +1064,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "\n  Arguments : none\n\n  While RFC7230 explicitly states that HTTP/1.1 agents must use the\n  Connection header to indicate their wish of persistent or non-persistent\n  connections, both browsers and proxies ignore this header for proxied\n  connections and make use of the undocumented, non-standard Proxy-Connection"
+  "context": "\n  Arguments : none\n\n  There is no standard case for header names because, as stated in RFC7230,\n  they are case-insensitive. So applications must handle them in a case-\n  insensitive manner. But some bogus applications violate the standards and\n  erroneously rely on the cases most commonly used by browsers. This problem"
  },
  {
   "i": 69,
   "project": "haproxy",
   "file": "include/haproxy/h2.h",
-  "line": 81,
+  "line": 79,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -1081,7 +1079,7 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\tH2_FT_PUSH_PROMISE    = 0x05,     // RFC7540 #6.6\n\tH2_FT_PING            = 0x06,     // RFC7540 #6.7\n\tH2_FT_GOAWAY          = 0x07,     // RFC7540 #6.8\n\tH2_FT_WINDOW_UPDATE   = 0x08,     // RFC7540 #6.9\n\tH2_FT_CONTINUATION    = 0x09,     // RFC7540 #6.10\n\tH2_FT_ENTRIES /* must be last */\n} __attribute__((packed));"
+  "context": "\tH2_FT_RST_STREAM      = 0x03,     // RFC7540 #6.4\n\tH2_FT_SETTINGS        = 0x04,     // RFC7540 #6.5\n\tH2_FT_PUSH_PROMISE    = 0x05,     // RFC7540 #6.6\n\tH2_FT_PING            = 0x06,     // RFC7540 #6.7\n\tH2_FT_GOAWAY          = 0x07,     // RFC7540 #6.8\n\tH2_FT_WINDOW_UPDATE   = 0x08,     // RFC7540 #6.9\n\tH2_FT_CONTINUATION    = 0x09,     // RFC7540 #6.10"
  },
  {
   "i": 70,
@@ -1101,84 +1099,23 @@
  {
   "i": 71,
   "project": "okhttp",
-  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/Protocol.kt",
-  "line": 42,
-  "rfc": "RFC7230",
-  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
-  "replaced_by": [
-   "RFC9110",
-   "RFC9112"
-  ],
-  "replacement_kinds": [
-   "split"
-  ],
-  "context": "  /**\n   * A plaintext framing that includes persistent connections.\n   *\n   * This version of OkHttp implements [RFC 7230][rfc_7230], and tracks revisions to that spec.\n   *\n   * [rfc_7230]: https://tools.ietf.org/html/rfc7230\n   */"
- },
- {
-  "i": 72,
-  "project": "haproxy",
-  "file": "src/h2.c",
-  "line": 364,
-  "rfc": "RFC7540",
-  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
-  "replaced_by": [
-   "RFC9113"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "\t\t}\n\t\telse {\n\t\t\t/* this can be any type of header */\n\t\t\t/* RFC7540#8.1.2: upper case not allowed in header field names.\n\t\t\t * #10.3: header names must be valid (i.e. match a token).\n\t\t\t * For pseudo-headers we check from 2nd char and for other ones\n\t\t\t * from the first char, because HTTP_IS_TOKEN() also excludes"
- },
- {
-  "i": 73,
-  "project": "nghttp2",
-  "file": "src/shrpx_config.h",
-  "line": 689,
-  "rfc": "RFC5077",
-  "rfc_title": "Transport Layer Security (TLS) Session Resumption without Server-Side State",
-  "replaced_by": [
-   "RFC9846"
-  ],
-  "replacement_kinds": [
-   "split"
-  ],
-  "context": "};\n\nstruct TLSConfig {\n  // RFC 5077 Session ticket related configurations\n  struct {\n    struct {\n      Address addr;"
- },
- {
-  "i": 74,
-  "project": "haproxy",
-  "file": "src/http_ana.c",
-  "line": 3328,
-  "rfc": "RFC2109",
-  "rfc_title": "HTTP State Management Mechanism",
-  "replaced_by": [
-   "RFC6265"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "\t\tdel_from = NULL;  /* nothing to be deleted */\n\t\tpreserve_hdr = 0; /* assume we may kill the whole header */\n\n\t\t/* Now look for cookies. Conforming to RFC2109, we have to support\n\t\t * attributes whose name begin with a '$', and associate them with\n\t\t * the right cookie, if we want to delete this cookie.\n\t\t * So there are 3 cases for each cookie read :"
- },
- {
-  "i": 75,
-  "project": "okhttp",
-  "file": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
-  "line": 247,
-  "rfc": "RFC2818",
-  "rfc_title": "HTTP Over TLS",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/internal/http/HttpHeaders.kt",
+  "line": 40,
+  "rfc": "RFC7235",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Authentication",
   "replaced_by": [
    "RFC9110"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\n    /**\n     * Set this certificate's common name (CN). Historically this held the hostname of TLS\n     * certificate, but that practice was deprecated by [RFC 2818][rfc_2818] and replaced with\n     * [addSubjectAlternativeName]. If unset a random string will be used.\n     *\n     * [rfc_2818]: https://tools.ietf.org/html/rfc2818"
+  "context": "private val TOKEN_DELIMITERS = \"\\t ,=\".encodeUtf8()\n\n/**\n * Parse RFC 7235 challenges. This is awkward because we need to look ahead to know how to\n * interpret a token.\n *\n * For example, the first line has a parameter name/value pair and the second line has a single"
  },
  {
-  "i": 76,
+  "i": 72,
   "project": "haproxy",
-  "file": "src/mux_h2.c",
-  "line": 4531,
+  "file": "src/h2.c",
+  "line": 158,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -1187,10 +1124,85 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t\t}\n\n\t\t\tif ((int)hdr.len < 0 || (int)hdr.len > b_size(&h2c->dbuf)) {\n\t\t\t\t/* RFC7540#3.5: a GOAWAY frame MAY be omitted */\n\t\t\t\th2c_report_glitch(h2c, 1, \"invalid settings frame length\");\n\t\t\t\tTRACE_ERROR(\"invalid settings frame length\", H2_EV_RX_FRAME|H2_EV_RX_FHDR|H2_EV_RX_SETTINGS|H2_EV_PROTO_ERR, h2c->conn);\n\t\t\t\th2c_error(h2c, H2_ERR_FRAME_SIZE_ERROR);"
+  "context": "\t}\n\telse if ((fields & (H2_PHDR_FND_METH|H2_PHDR_FND_SCHM|H2_PHDR_FND_PATH|H2_PHDR_FND_PROT)) !=\n\t         (H2_PHDR_FND_METH|H2_PHDR_FND_SCHM|H2_PHDR_FND_PATH)) {\n\t\t/* RFC 7540 #8.1.2.3 : all requests MUST include exactly one\n\t\t * valid value for the \":method\", \":scheme\" and \":path\" phdr\n\t\t * and no \":protocol\" phdr unless it is a CONNECT request..\n\t\t */"
+ },
+ {
+  "i": 73,
+  "project": "dnspython",
+  "file": "dns/rdtypes/ANY/HIP.py",
+  "line": 33,
+  "rfc": "RFC5205",
+  "rfc_title": "Host Identity Protocol (HIP) Domain Name System (DNS) Extensions",
+  "replaced_by": [
+   "RFC8005"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "class HIP(dns.rdata.Rdata):\n    \"\"\"HIP record\"\"\"\n\n    # see: RFC 5205\n\n    __slots__ = [\"hit\", \"algorithm\", \"key\", \"servers\"]\n"
+ },
+ {
+  "i": 74,
+  "project": "nghttp2",
+  "file": "doc/nghttpx.1.rst",
+  "line": 1994,
+  "rfc": "RFC6962",
+  "rfc_title": "Certificate Transparency",
+  "replaced_by": [
+   "RFC9162"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "------------------------\n\nnghttpx supports TLS ``signed_certificate_timestamp`` extension (`RFC\n6962 <https://tools.ietf.org/html/rfc6962>`_).  The relevant options\nare :option:`--tls-sct-dir` and ``sct-dir`` parameter in\n:option:`--subcert`.  They takes a directory, and nghttpx reads all\nfiles whose extension is ``.sct`` under the directory.  The ``*.sct``"
+ },
+ {
+  "i": 75,
+  "project": "haproxy",
+  "file": "src/stats-json.c",
+  "line": 61,
+  "rfc": "RFC7159",
+  "rfc_title": "The JavaScript Object Notation (JSON) Data Interchange Format",
+  "replaced_by": [
+   "RFC8259"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "}\n\n/* Limit JSON integer values to the range [-(2**53)+1, (2**53)-1] as per\n * the recommendation for interoperable integers in section 6 of RFC 7159.\n */\n#define JSON_INT_MAX ((1LL << 53) - 1)\n#define JSON_INT_MIN (0 - JSON_INT_MAX)"
+ },
+ {
+  "i": 76,
+  "project": "reqwest",
+  "file": "src/blocking/client.rs",
+  "line": 665,
+  "rfc": "RFC8312",
+  "rfc_title": "CUBIC for Fast Long-Distance Networks",
+  "replaced_by": [
+   "RFC9438"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "    /// default.\n    ///\n    /// [BBR]: https://datatracker.ietf.org/doc/html/draft-ietf-ccwg-bbr\n    /// [CUBIC]: https://datatracker.ietf.org/doc/html/rfc8312\n    #[cfg(feature = \"http3\")]\n    #[cfg_attr(docsrs, doc(cfg(all(reqwest_unstable, feature = \"http3\",))))]\n    pub fn http3_congestion_bbr(self) -> ClientBuilder {"
  },
  {
   "i": 77,
+  "project": "haproxy",
+  "file": "src/mux_h2.c",
+  "line": 4506,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "\t\t\t */\n\t\t\tTRACE_STATE(\"expecting settings\", H2_EV_RX_FRAME|H2_EV_RX_FHDR|H2_EV_RX_SETTINGS, h2c->conn);\n\t\t\tif (!h2_get_frame_hdr(&h2c->dbuf, &hdr)) {\n\t\t\t\t/* RFC7540#3.5: a GOAWAY frame MAY be omitted */\n\t\t\t\th2c->flags |= H2_CF_DEM_SHORT_READ;\n\t\t\t\tif (h2c->st0 == H2_CS_ERROR) {\n\t\t\t\t\th2c_report_glitch(h2c, 1, \"failed to receive settings\");"
+ },
+ {
+  "i": 78,
   "project": "go-net",
   "file": "addrselect.go",
   "line": 317,
@@ -1205,10 +1217,10 @@
   "context": "\tif ipv6 && ip.IsMulticast() {\n\t\treturn scope(ipv6AsBytes[1] & 0xf)\n\t}\n\t// Site-local addresses are defined in RFC 3513 section 2.5.6\n\t// (and deprecated in RFC 3879).\n\tif ipv6 && ipv6AsBytes[0] == 0xfe && ipv6AsBytes[1]&0xc0 == 0xc0 {\n\t\treturn scopeSiteLocal"
  },
  {
-  "i": 78,
+  "i": 79,
   "project": "okhttp",
-  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/OkHttpClient.kt",
-  "line": 760,
+  "file": "docs/features/connections.md",
+  "line": 52,
   "rfc": "RFC6555",
   "rfc_title": "Happy Eyeballs: Success with Dual-Stack Hosts",
   "replaced_by": [
@@ -1217,13 +1229,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "     * Configure this client to perform fast fallbacks by attempting multiple connections\n     * concurrently, returning once any connection connects successfully.\n     *\n     * This implements Happy Eyeballs ([RFC 6555][rfc_6555]), balancing connect latency vs.\n     * wasted resources.\n     *\n     * Defaults to enabled, call with [fastFallback] = false to revert to 4.x behaviour."
+  "context": "\n### [Fast Fallback](https://lysine.dev/okhttp/5.x/okhttp/okhttp3/-ok-http-client/-builder/fast-fallback)\n\nSince version 5.0, `OkHttpClient` supports fast fallback, which is our implementation of Happy Eyeballs [RFC 6555](https://datatracker.ietf.org/doc/html/rfc6555).\n\nWith fast fallback, OkHttp attempts to connect to multiple web servers concurrently. It keeps whichever route connects first and cancels all of the others. Its rules are:\n"
  },
  {
-  "i": 79,
+  "i": 80,
   "project": "haproxy",
   "file": "doc/configuration.txt",
-  "line": 28006,
+  "line": 27988,
   "rfc": "RFC2253",
   "rfc_title": "Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names",
   "replaced_by": [
@@ -1233,13 +1245,13 @@
   "replacement_kinds": [
    "split"
   ],
-  "context": "  consumption by different protocols. Currently supported is rfc2253 for\n  LDAP v3.\n  If you'd like to modify the format only you can specify an empty string\n  and zero for the first two parameters. Example: ssl_c_s_dn(,0,rfc2253)\n  If the requested entry's ASN.1 value (or, when no <entry> is specified,\n  any entry in the DN) contains an embedded NUL byte followed by other\n  data, it is considered malformed and no data is returned."
+  "context": "  <format> parameter allows you to receive the DN suitable for consumption by\n  different protocols. Currently supported is rfc2253 for LDAP v3. If you'd like\n  to modify the format only you can specify an empty string and zero for the\n  first two parameters. Example: ssl_c_r_dn(,0,rfc2253)\n  If the requested entry's ASN.1 value (or, when no <entry> is specified,\n  any entry in the DN) contains an embedded NUL byte followed by other\n  data, it is considered malformed and no data is returned."
  },
  {
-  "i": 80,
+  "i": 81,
   "project": "nginx",
   "file": "src/http/ngx_http_priority.c",
-  "line": 70,
+  "line": 25,
   "rfc": "RFC8941",
   "rfc_title": "Structured Field Values for HTTP",
   "replaced_by": [
@@ -1248,28 +1260,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "/*\n * Parse an RFC 9218 Priority field, a Structured Fields Dictionary\n * (RFC 8941).  The dictionary is parsed strictly: any syntax error fails\n * the whole field (RFC 8941, Section 4.2), and only then are the RFC 9218\n * rules applied, ignoring unknown members, out-of-range urgency and members\n * of an unexpected type.  On error the field is treated as absent and p is\n * left at defaults; callers keep any previously signalled priority."
- },
- {
-  "i": 81,
-  "project": "haproxy",
-  "file": "src/mux_h2.c",
-  "line": 3000,
-  "rfc": "RFC7540",
-  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
-  "replaced_by": [
-   "RFC9113"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "/* processes a SETTINGS frame whose payload is <payload> for <plen> bytes, and\n * ACKs it if needed. Returns > 0 on success or zero on missing data. It may\n * return an error in h2c. The caller must have already verified frame length\n * and stream ID validity. Described in RFC7540#6.5.\n */\nstatic int h2c_handle_settings(struct h2c *h2c)\n{"
+  "context": "\n\n/*\n * Parse limits.  RFC 8941 requires parsers to support at least these many\n * elements and characters; bounding the counts and individual item lengths\n * keeps parse time proportional to a well-formed field rather than to what a\n * peer chooses to send."
  },
  {
   "i": 82,
   "project": "haproxy",
   "file": "src/mux_h2.c",
-  "line": 3925,
+  "line": 2706,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -1278,10 +1275,25 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "}\n\n/* processes a HEADERS frame. Returns h2s on success or NULL on missing data.\n * It may return an error in h2c or h2s. Described in RFC7540#6.2. Most of the\n * errors here are reported as connection errors since it's impossible to\n * recover from such errors after the compression context has been altered.\n */"
+  "context": "\t\tgoto out;\n\t}\n\n\t/* RFC7540#5.4.2: To avoid looping, an endpoint MUST NOT send a\n\t * RST_STREAM in response to a RST_STREAM frame.\n\t *\n\t * if h2s is not assigned yet (id == 0), don't send a RST_STREAM frame."
  },
  {
   "i": 83,
+  "project": "haproxy",
+  "file": "src/mux_h2.c",
+  "line": 3665,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "/* processes a HEADERS frame. Returns h2s on success or NULL on missing data.\n * It may return an error in h2c or h2s. The caller must consider that the\n * return value is the new h2s in case one was allocated (most common case).\n * Described in RFC7540#6.2. Most of the\n * errors here are reported as connection errors since it's impossible to\n * recover from such errors after the compression context has been altered.\n */"
+ },
+ {
+  "i": 84,
   "project": "curl",
   "file": "lib/rtsp.c",
   "line": 896,
@@ -1296,10 +1308,10 @@
   "context": "    if(!rtspc->in_header) {\n      /* If header parsing is done, extract interleaved RTP messages */\n      if(data->req.size <= -1) {\n        /* Respect section 4.4 of rfc2326: If the Content-Length header is\n           absent, a length 0 must be assumed. */\n        data->req.size = 0;\n        data->req.download_done = TRUE;"
  },
  {
-  "i": 84,
+  "i": 85,
   "project": "haproxy",
-  "file": "src/http_ana.c",
-  "line": 1688,
+  "file": "src/cache.c",
+  "line": 2747,
   "rfc": "RFC7234",
   "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Caching",
   "replaced_by": [
@@ -1308,10 +1320,10 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t *   specification) can be reused by a cache with\n\t\t *   heuristic expiration unless otherwise indicated\n\t\t *   by the method definition or explicit cache\n\t\t *   controls [RFC7234]; all other status codes are\n\t\t *   not cacheable by default.\n\t\t */\n\t\ttxn->flags &= ~(TX_CACHEABLE | TX_CACHE_COOK);"
+  "context": "\t/* The request's hash has to be calculated for all requests, even POSTs\n\t * or PUTs for instance because RFC7234 specifies that a successful\n\t * \"unsafe\" method on a stored resource must invalidate it\n\t * (see RFC7234#4.4). */\n\tif (!sha1_hosturi(s))\n\t\treturn ACT_RET_CONT;\n"
  },
  {
-  "i": 85,
+  "i": 86,
   "project": "go-net",
   "file": "http/httptest/httptest.go",
   "line": 26,
@@ -1327,22 +1339,24 @@
   "context": "// NewRequestWithContext returns a new incoming server Request, suitable\n// for passing to an [http.Handler] for testing.\n//\n// The target is the RFC 7230 \"request-target\": it may be either a\n// path or an absolute URL. If target is an absolute URL, the host name\n// from the URL is used. Otherwise, \"example.com\" is used.\n//"
  },
  {
-  "i": 86,
+  "i": 87,
   "project": "oauthlib",
-  "file": "oauthlib/oauth2/rfc6749/parameters.py",
-  "line": 417,
-  "rfc": "RFC4627",
-  "rfc_title": "The application/json Media Type for JavaScript Object Notation (JSON)",
+  "file": "oauthlib/oauth1/rfc5849/parameters.py",
+  "line": 40,
+  "rfc": "RFC2617",
+  "rfc_title": "HTTP Authentication: Basic and Digest Access Authentication",
   "replaced_by": [
-   "RFC8259"
+   "RFC7616",
+   "RFC7617",
+   "RFC9110"
   ],
   "replacement_kinds": [
-   "edition"
+   "split"
   ],
-  "context": "    .. _`Section 7.1`: https://tools.ietf.org/html/rfc6749#section-7.1\n    .. _`Section 6`: https://tools.ietf.org/html/rfc6749#section-6\n    .. _`Section 3.3`: https://tools.ietf.org/html/rfc6749#section-3.3\n    .. _`RFC4627`: https://tools.ietf.org/html/rfc4627\n    \"\"\"\n    try:\n        params = json.loads(body)"
+  "context": "\n\n    .. _`section 3.5.1`: https://tools.ietf.org/html/rfc5849#section-3.5.1\n    .. _`RFC2617`: https://tools.ietf.org/html/rfc2617\n    \"\"\"\n    headers = headers or {}\n"
  },
  {
-  "i": 87,
+  "i": 88,
   "project": "cpython-Lib",
   "file": "email/header.py",
   "line": 338,
@@ -1357,7 +1371,7 @@
   "context": "\n        Optional splitchars is a string containing characters which should be\n        given extra weight by the splitting algorithm during normal header\n        wrapping.  This is in very rough support of RFC 2822's 'higher level\n        syntactic breaks':  split points preceded by a splitchar are preferred\n        during line splitting, with the characters preferred in the order in\n        which they appear in the string.  Space and tab may be included in the"
  },
  {
-  "i": 88,
+  "i": 89,
   "project": "curl",
   "file": "docs/libcurl/curl_unescape.md",
   "line": 8,
@@ -1372,25 +1386,25 @@
   "context": "Section: 3\nSource: libcurl\nSee-also:\n  - RFC 2396\n  - curl_easy_escape (3)\n  - curl_easy_unescape (3)\n  - curl_free (3)"
  },
  {
-  "i": 89,
+  "i": 90,
   "project": "openssl",
-  "file": "doc/man3/EVP_md4.pod",
-  "line": 42,
-  "rfc": "RFC1320",
-  "rfc_title": "The MD4 Message-Digest Algorithm",
+  "file": "doc/man3/PBMAC1_get1_pbkdf2_param.pod",
+  "line": 27,
+  "rfc": "RFC9579",
+  "rfc_title": "Use of Password-Based Message Authentication Code 1 (PBMAC1) in PKCS #12 Syntax",
   "replaced_by": [
-   "RFC6150"
+   "RFC9879"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\n=head1 CONFORMING TO\n\nIETF RFC 1320.\n\n=head1 SEE ALSO\n"
+  "context": "\n=head1 CONFORMING TO\n\nIETF RFC 9579 (L<https://tools.ietf.org/html/rfc9579>)\n\n=head1 SEE ALSO\n"
  },
  {
-  "i": 90,
+  "i": 91,
   "project": "haproxy",
   "file": "src/mux_h2.c",
-  "line": 4479,
+  "line": 4309,
   "rfc": "RFC7540",
   "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
   "replaced_by": [
@@ -1399,13 +1413,13 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "\t\t\t}\n\n\t\t\tif (unlikely(h2c_frt_recv_preface(h2c) <= 0)) {\n\t\t\t\t/* RFC7540#3.5: a GOAWAY frame MAY be omitted */\n\t\t\t\tif (h2c->st0 == H2_CS_ERROR) {\n\t\t\t\t\tif (b_data(&h2c->dbuf) ||\n\t\t\t\t\t    !(((const struct session *)h2c->conn->owner)->fe->options & (PR_O_NULLNOLOG|PR_O_IGNORE_PRB)))"
+  "context": "\t\t\treturn 0;\n\t\t}\n\n\t\t/* RFC7540#5.1:closed: if this state is reached as a\n\t\t * result of sending a RST_STREAM frame, the peer that\n\t\t * receives the RST_STREAM might have already sent\n\t\t * frames on the stream that cannot be withdrawn. An"
  },
  {
-  "i": 91,
+  "i": 92,
   "project": "openssl",
-  "file": "doc/designs/rfc4514.md",
-  "line": 132,
+  "file": "crypto/x509/v3_utl.c",
+  "line": 1117,
   "rfc": "RFC3280",
   "rfc_title": "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile",
   "replaced_by": [
@@ -1414,28 +1428,28 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "| RFC822Mailbox              | 0.9.2342.19200300.100.1.3  | [RFC4524] |\n| DC                         | 0.9.2342.19200300.100.1.25 | [RFC4519] |\n| domainComponent            | 0.9.2342.19200300.100.1.25 | [RFC4519] |\n| email                      | 1.2.840.113549.1.9.1       | [RFC3280] |\n| emailAddress               | 1.2.840.113549.1.9.1       | [RFC3280] |\n| cn                         | 2.5.4.3                    | [RFC4519] |\n| commonName                 | 2.5.4.3                    | [RFC4519] |"
- },
- {
-  "i": 92,
-  "project": "openssl",
-  "file": "include/internal/json_enc.h",
-  "line": 20,
-  "rfc": "RFC7159",
-  "rfc_title": "The JavaScript Object Notation (JSON) Data Interchange Format",
-  "replaced_by": [
-   "RFC8259"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": " * JSON Encoder\n * ============\n *\n * This JSON encoder is used for qlog. It supports ordinary JSON (RFC 7159),\n * JSON-SEQ (RFC 7464) and I-JSON (RFC 7493). It supports only basic ASCII.\n */\n"
+  "context": "\n/*\n * Convert IP addresses both IPv4 and IPv6 into an OCTET STRING compatible\n * with RFC3280.\n */\n\nASN1_OCTET_STRING *a2i_IPADDRESS(const char *ipasc)"
  },
  {
   "i": 93,
   "project": "openssl",
+  "file": "doc/man7/openssl-glossary.pod",
+  "line": 171,
+  "rfc": "RFC5208",
+  "rfc_title": "Public-Key Cryptography Standards (PKCS) #8: Private-Key Information Syntax Specification Version 1.2",
+  "replaced_by": [
+   "RFC5958"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": "\nThis is specified in RFC 5208:\n\nL<https://tools.ietf.org/html/rfc5208>\n\n=item Property\n"
+ },
+ {
+  "i": 94,
+  "project": "openssl",
   "file": "doc/man1/openssl-x509.pod.in",
-  "line": 232,
+  "line": 230,
   "rfc": "RFC822",
   "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
   "replaced_by": [
@@ -1444,40 +1458,42 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "Specify the date output format. Values are: rfc_822 and iso_8601.\nDefaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format\n\"Mmm DD HH:MM:SS YYYY GMT\" (e.g., \"Jul 31 22:20:50 2017 GMT\"). The month\nappears before the day, unlike all three RFCs, which put the day first."
- },
- {
-  "i": 94,
-  "project": "okhttp",
-  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/internal/http/HttpStatusCodes.kt",
-  "line": 50,
-  "rfc": "RFC7538",
-  "rfc_title": "The Hypertext Transfer Protocol Status Code 308 (Permanent Redirect)",
-  "replaced_by": [
-   "RFC9110"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "/** `307 Temporary Redirect` (HTTP/1.1 - RFC 7231)  */\nconst val HTTP_TEMP_REDIRECT = 307\n\n/** `308 Permanent Redirect` (HTTP/1.1 - RFC 7538)  */\nconst val HTTP_PERM_REDIRECT = 308\n\n/** `421 Misdirected Request` (HTTP/2 - RFC 7540)  */"
+  "context": "=item B<-dateopt>\n\nSpecify the date output format. Values are: rfc_822 and iso_8601.\nDefaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format"
  },
  {
   "i": 95,
-  "project": "netty-codec-http",
-  "file": "src/main/java/io/netty/handler/codec/http/cookie/ServerCookieDecoder.java",
-  "line": 32,
-  "rfc": "RFC2965",
-  "rfc_title": "HTTP State Management Mechanism",
+  "project": "okhttp",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/internal/http/HttpStatusCodes.kt",
+  "line": 41,
+  "rfc": "RFC2518",
+  "rfc_title": "HTTP Extensions for Distributed Authoring -- WEBDAV",
   "replaced_by": [
-   "RFC6265"
+   "RFC4918"
   ],
   "replacement_kinds": [
    "edition"
   ],
-  "context": " *\n * Only name and value fields are expected, so old fields are not populated (path, domain, etc).\n *\n * Old <a href=\"https://tools.ietf.org/html/rfc2965\">RFC2965</a> cookies are still supported,\n * old fields will simply be ignored.\n *\n * @see ServerCookieEncoder"
+  "context": "/** `101 Switching Protocols` (HTTP/1.1 - RFC 9110)  */\nconst val HTTP_SWITCHING_PROTOCOLS = 101\n\n/** `102 Processing` (WebDAV - RFC 2518)  */\nconst val HTTP_PROCESSING = 102\n\n/** `103 Early Hints (Early Hints - RFC 8297)` */"
  },
  {
   "i": 96,
+  "project": "netty-codec-http",
+  "file": "src/main/java/io/netty/handler/codec/http/HttpServerExpectContinueHandler.java",
+  "line": 29,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "replacement_kinds": [
+   "split"
+  ],
+  "context": "import static io.netty.handler.codec.http.HttpVersion.HTTP_1_1;\n\n/**\n * Sends a <a href=\"https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html#sec8.2.3\">100 CONTINUE</a>\n * {@link HttpResponse} to {@link HttpRequest}s which contain a 'expect: 100-continue' header. It\n * should only be used for applications which do <b>not</b> install the {@link HttpObjectAggregator}.\n * <p>"
+ },
+ {
+  "i": 97,
   "project": "cpython-Lib",
   "file": "imaplib.py",
   "line": 2388,
@@ -1492,10 +1508,10 @@
   "context": "            uid = dat[-1].split()\n            if not uid: continue\n            run('uid', ('FETCH', '%s' % uid[-1],\n                    '(FLAGS INTERNALDATE RFC822.SIZE RFC822.HEADER RFC822.TEXT)'))\n\n        print('\\nAll tests OK.')\n"
  },
  {
-  "i": 97,
+  "i": 98,
   "project": "nginx",
   "file": "src/http/ngx_http_priority.c",
-  "line": 293,
+  "line": 217,
   "rfc": "RFC8941",
   "rfc_title": "Structured Field Values for HTTP",
   "replaced_by": [
@@ -1504,10 +1520,10 @@
   "replacement_kinds": [
    "edition"
   ],
-  "context": "}\n\n\n/* RFC 8941, Section 4.2.3.2 */\n\nstatic ngx_int_t\nngx_http_priority_parse_params(u_char **pos, u_char *end)"
+  "context": "}\n\n\n/* RFC 8941, Section 4.2.1.1: an Item or an Inner List, each with Parameters */\n\nstatic ngx_int_t\nngx_http_priority_parse_value(u_char **pos, u_char *end, ngx_int_t *type,"
  },
  {
-  "i": 98,
+  "i": 99,
   "project": "go-net",
   "file": "http/internal/http2/server.go",
   "line": 3455,
@@ -1521,20 +1537,5 @@
    "split"
   ],
   "context": "}\n\n// foreachHeaderElement splits v according to the \"#rule\" construction\n// in RFC 7230 section 7 and calls fn for each non-empty element.\nfunc foreachHeaderElement(v string, fn func(string)) {\n\tv = textproto.TrimString(v)\n\tif v == \"\" {"
- },
- {
-  "i": 99,
-  "project": "cpython-Lib",
-  "file": "email/_parseaddr.py",
-  "line": 150,
-  "rfc": "RFC2822",
-  "rfc_title": "Internet Message Format",
-  "replaced_by": [
-   "RFC5322"
-  ],
-  "replacement_kinds": [
-   "edition"
-  ],
-  "context": "    # Check for a yy specified in two-digit format, then convert it to the\n    # appropriate four-digit format, according to the POSIX standard. RFC 822\n    # calls for a two-digit yy, but RFC 2822 (which obsoletes RFC 822) already\n    # mandated a 4-digit yy, and RFC 5322 (which obsoletes RFC 2822) continues\n    # this requirement. For more information, see the documentation for\n    # the time module.\n    if yy < 100:"
  }
 ]

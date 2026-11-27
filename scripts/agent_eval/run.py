@@ -1,6 +1,8 @@
-"""Do coding agents name an obsolete RFC as "the current spec"? Model alone vs. model + specrot MCP.
+"""Do coding agents name an obsolete RFC as "the current spec"? Model alone, with web search, with the specrot MCP.
 
-    uv run python scripts/agent_eval/run.py --models haiku sonnet
+    uv run python scripts/agent_eval/run.py --models haiku sonnet --conditions alone web specrot
+
+Rows of conditions not run this time are kept from the existing results.json.
 
 Each question asks for the current RFC for a topic. The answer key is computed from the graph: the
 documents still in force at the end of the OBSOLETES chain that starts at the topic's classic RFC.
@@ -30,14 +32,20 @@ def answer_key(conn, seed: str) -> list[str]:
     return v.current if v.obsolete else [v.id]
 
 
-def ask(model: str, topic: str, with_tool: bool, mcp_config: Path, empty_config: Path, cwd: str) -> dict:
+CONDITIONS = ("alone", "web", "specrot")  # no tools; WebSearch + WebFetch; the specrot MCP server only
+
+
+def ask(model: str, topic: str, condition: str, mcp_config: Path, empty_config: Path, cwd: str) -> dict:
     cmd = ["claude", "-p", PROMPT.format(topic=topic), "--model", model, "--output-format", "json",
-           "--tools", "", "--strict-mcp-config", "--setting-sources", "", "--no-session-persistence"]
-    if with_tool:
+           "--tools", "WebSearch,WebFetch" if condition == "web" else "",
+           "--strict-mcp-config", "--setting-sources", "", "--no-session-persistence"]
+    if condition == "specrot":
         cmd += ["--mcp-config", str(mcp_config), "--allowedTools", "mcp__specrot__check_rfcs",
                 "mcp__specrot__search_rfcs", "mcp__specrot__read_cypher", "mcp__specrot__get_schema"]
     else:
         cmd += ["--mcp-config", str(empty_config)]
+        if condition == "web":
+            cmd += ["--allowedTools", "WebSearch", "WebFetch"]
     p = subprocess.run(cmd, capture_output=True, text=True, timeout=300, cwd=cwd)
     try:
         out = json.loads(p.stdout)
@@ -59,6 +67,7 @@ def score(conn, text: str, key: list[str]) -> dict:
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--models", nargs="+", default=["haiku", "sonnet"])
+    ap.add_argument("--conditions", nargs="+", choices=CONDITIONS, default=list(CONDITIONS))
     ap.add_argument("--workers", type=int, default=4)
     a = ap.parse_args()
     conn = graph.connect()
@@ -71,24 +80,28 @@ def main():
         "command": "uv", "args": ["run", "--directory", str(ROOT), "specrot", "mcp"]}}}))
     empty = tmp / "empty.json"
     empty.write_text(json.dumps({"mcpServers": {}}))
-    jobs = [(m, q, t) for m in a.models for t in (False, True) for q in qs]
+    jobs = [(m, q, c) for m in a.models for c in a.conditions for q in qs]
     with ThreadPoolExecutor(a.workers) as ex:
         answers = list(ex.map(lambda j: ask(j[0], j[1]["topic"], j[2], mcp, empty, str(tmp)), jobs))
-    rows = []
-    for (m, q, t), ans in zip(jobs, answers):
-        rows.append({"model": m, "with_specrot": t, "topic": q["topic"], "seed": q["seed"], "key": q["key"],
+    old = json.loads((HERE / "results.json").read_text()) if (HERE / "results.json").exists() else {"rows": []}
+    rows = [r for r in old["rows"] if (r["model"], r["condition"]) not in {(m, c) for m, _, c in jobs}]
+    for (m, q, c), ans in zip(jobs, answers):
+        rows.append({"model": m, "condition": c, "topic": q["topic"], "seed": q["seed"], "key": q["key"],
+                     "date": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                      **ans, **score(conn, ans["text"], q["key"])})
     summary = {}
-    for m in a.models:
-        for t in (False, True):
-            rs = [r for r in rows if r["model"] == m and r["with_specrot"] == t]
+    for m in sorted({r["model"] for r in rows}):
+        for c in CONDITIONS:
+            rs = [r for r in rows if r["model"] == m and r["condition"] == c]
+            if not rs:
+                continue
             changed = [r for r in rs if r["seed"] not in r["key"]]
-            summary[f"{m}{' + specrot' if t else ''}"] = {
+            summary[f"{m} {c}"] = {
                 "correct": sum(r["correct"] for r in rs), "of": len(rs),
                 "named_an_obsolete_rfc": sum(bool(r["obsolete_named"]) for r in rs),
+                "named_only_obsolete_rfcs": sum(bool(r["obsolete_named"]) and not set(r["named"]) & set(r["key"]) for r in rs),
                 "correct_where_spec_was_replaced": f"{sum(r['correct'] for r in changed)}/{len(changed)}"}
-    out = {"date": datetime.now(timezone.utc).isoformat(timespec="seconds"), "prompt": PROMPT,
-           "summary": summary, "rows": rows}
+    out = {"prompt": PROMPT, "summary": summary, "rows": rows}
     (HERE / "results.json").write_text(json.dumps(out, indent=1) + "\n")
     print(json.dumps(summary, indent=1))
 

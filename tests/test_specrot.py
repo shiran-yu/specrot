@@ -143,3 +143,59 @@ def test_cli_errors_exit_2(tmp_path):
     assert run("scan", str(tmp_path), "--fail-on", "obsolte").returncode == 2
     r = run("cypher", "MATCH (n) DETACH DELETE n")
     assert r.returncode == 2 and "read-only" in r.stdout
+
+
+# MCP tools, called as plain functions (the server decorator returns them unchanged)
+def test_mcp_check_rfcs_per_item_errors():
+    from specrot import mcp_server as m
+    out = m.check_rfcs(["abc", "2616", "BCP 14"])
+    assert "error" in out[0] and out[1]["level"] == "obsolete" and out[2]["members"] == ["RFC2119", "RFC8174"]
+
+
+def test_mcp_errors_are_tool_errors_with_hints():
+    from mcp.server.mcpserver.exceptions import ToolError
+    from specrot import mcp_server as m
+    for call in (lambda: m.dependents("2119", depth=0), lambda: m.search_rfcs("!!!"),
+                 lambda: m.read_cypher("MATCH (n) DETACH DELETE n"), lambda: m.read_cypher("RETURN 1", limit=-1),
+                 lambda: m.scan_path("/no/such/path")):
+        with pytest.raises(ToolError):
+            call()
+
+
+def test_mcp_read_cypher_returns_node_properties():
+    from specrot import mcp_server as m
+    [row] = m.read_cypher("MATCH (r:RFC {id: 'RFC2616'}) RETURN r")
+    assert row["r"]["labels"] == ["RFC"] and row["r"]["properties"]["id"] == "RFC2616"
+
+
+def test_search_operator_words():
+    from specrot import mcp_server as m
+    assert m.search_rfcs("MUST NOT") is not None  # NOT is a query operator unless lower-cased
+
+
+def test_mcp_stdio_round_trip():
+    """Start `specrot mcp` as a real stdio server and call a tool through the MCP client."""
+    import anyio
+    from mcp import ClientSession, StdioServerParameters
+    from mcp.client.stdio import stdio_client
+
+    async def go():
+        params = StdioServerParameters(command=sys.executable, args=["-m", "specrot.cli", "mcp"], cwd=str(ROOT))
+        async with stdio_client(params) as (r, w), ClientSession(r, w) as s:
+            await s.initialize()
+            names = {t.name for t in (await s.list_tools()).tools}
+            res = await s.call_tool("check_rfcs", {"rfcs": ["8446"]})
+            return names, res
+    names, res = anyio.run(go)
+    assert {"check_rfcs", "scan_path", "read_cypher"} <= names
+    assert "RFC9846" in json.dumps([c.model_dump() for c in res.content])
+
+
+def test_retired_protocol_versions_are_historic_and_document_revisions_are_editions(conn, tmp_path):
+    levels = {x: graph.check(conn, x).level for x in ("2246", "4346", "5246", "5849", "3447", "2898")}
+    assert levels == {"2246": "historic", "4346": "historic", "5246": "old-version", "5849": "old-version",
+                      "3447": "obsolete", "2898": "obsolete"}
+    (tmp_path / "tls.c").write_text("/* TLS 1.0 record layer, RFC 2246 section 6.2 */\n")
+    p = subprocess.run([sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--fail-on", "historic"],
+                       cwd=ROOT, capture_output=True, text=True)
+    assert p.returncode == 1

@@ -34,8 +34,8 @@ def explained(fn):
         except graph.InputError as e:
             raise ToolError(str(e)) from e
         except relate.Error as e:
-            raise ToolError(f"Relate rejected the query: {e}. The store is read-only; call get_schema for "
-                            f"labels and relationship types.") from e
+            raise ToolError(f"Relate rejected the query: {e}. (The store is read-only; get_schema lists "
+                            f"labels, relationship types and properties.)") from e
     return wrapper
 
 
@@ -107,7 +107,8 @@ def get_schema() -> dict:
     return {
         "nodes": {
             "RFC": "id 'RFC9110', number, title, date 'YYYY-MM', year, status, stream, area, wg, pages, abstract, "
-                   "keywords, url, obsolete (bool), verifiedTechnicalErrata (int)",
+                   "keywords, url, obsolete (bool), oldVersion (bool: obsolete only by newer protocol "
+                   "versions), verifiedTechnicalErrata (int)",
             "Series": "id 'BCP14' | 'STD66', kind, number",
             "Erratum": "id, type (Technical/Editorial), status (Verified/Reported/...), section, date, url",
             "WorkingGroup": "acronym", "Area": "name",
@@ -126,16 +127,27 @@ def get_schema() -> dict:
     }
 
 
+def _plain(v):
+    """JSON-safe value: nodes and relationships become {labels or type, properties}."""
+    if hasattr(v, "to_dict"):
+        d = v.to_dict()
+        return {k: d[k] for k in ("labels", "type", "properties") if k in d}
+    if isinstance(v, list):
+        return [_plain(x) for x in v]
+    return v if isinstance(v, (str, int, float, bool, dict, type(None))) else str(v)
+
+
 @server.tool()
 @explained
 def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200) -> list[dict]:
     """Run a read-only Cypher 25 statement against the store (Relate dialect, no APOC)."""
+    if not 1 <= int(limit) <= 5000:
+        raise graph.InputError(f"limit must be 1..5000, got {limit}")
     rows = []
     for i, r in enumerate(_conn().execute(statement, parameters or {})):
         if i >= limit:
             break
-        rows.append({k: (v if isinstance(v, (str, int, float, bool, list, dict, type(None))) else str(v))
-                     for k, v in dict(r).items()})
+        rows.append({k: _plain(v) for k, v in dict(r).items()})
     return rows
 
 

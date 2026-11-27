@@ -22,10 +22,11 @@
   },
   "showcase": {
     "citations": 7596,
-    "obsolete": 1626,
+    "obsolete": 1645,
+    "old_version": 272,
     "projects": 26,
     "affected": 24,
-    "obsolete_pct": 21
+    "obsolete_pct": 22
   },
   "top_obsolete": [
     {

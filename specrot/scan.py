@@ -176,11 +176,15 @@ def load_ignore(root: Path) -> list[tuple[str, str | None, str]]:
     p = (root if root.is_dir() else root.parent) / IGNORE_FILE
     rules = []
     if p.exists():
-        for raw in p.read_text().splitlines():
+        for n, raw in enumerate(p.read_text().splitlines(), 1):
             line, _, reason = raw.partition("#")
             parts = line.split()
             if parts:
-                rules.append((graph.rfc_id(parts[0]), parts[1] if len(parts) > 1 else None, reason.strip()))
+                try:
+                    rid = graph.rfc_id(parts[0])
+                except graph.InputError as e:
+                    raise graph.InputError(f"{p}:{n}: {e}") from e
+                rules.append((rid, parts[1] if len(parts) > 1 else None, reason.strip()))
     return rules
 
 

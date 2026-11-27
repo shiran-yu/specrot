@@ -28,29 +28,36 @@ and coding agents, whose training data predates recent replacements.
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
 OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,596** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,626 (21%)** point at an RFC
+and docs (tests and identifiers such as `time.RFC1123` excluded), **1,645 (22%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
-an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849; 291 more) are reported
-separately as `old-version` and not counted. The most common: RFC 2616 (17 projects), RFC 7230
+an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
+272 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+itself retired. The most common: RFC 2616 (17 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. We drew 100 of the 1,626 at random (seed 2026,
+Not every one of these is a mistake. We drew 100 of the 1,645 at random (seed 2026,
 [`scripts/audit/draw.py`](scripts/audit/draw.py)) and had two models label each from its code
-context, independently and with the same [instructions](scripts/audit/LABELING.md): Claude and a GPT
-model (through GitHub Copilot). Both labelled **62 of 100** as citing the old RFC as the
-specification the code follows, worth updating; Claude labelled 30 and GPT 17 as deliberate
-references to the old text (compatibility, history, a list of supported RFCs); none was a false
-match. The labelers agree on 83% of items (Cohen's κ 0.65). These are model labels, not human
-ones; [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports;
-a person decides, and `.specrot-ignore` records the decision.
+context, independently, with the same [instructions](scripts/audit/LABELING.md) and no tools:
+Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **62 of 100** as citing
+the old RFC as the specification the code follows, worth updating; 30 (Claude) and 28 (GPT) as
+deliberate references to the old text (compatibility, history, a list of supported RFCs); none as a
+false match. The labelers agree on 86% of items (Cohen's κ 0.70). These are model labels, not
+human ones. [`scripts/audit/label.py`](scripts/audit/label.py) reruns a labeler, `raw/` keeps each
+full prompt and reply, and [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the
+summary. specrot reports; a person decides, and `.specrot-ignore` records the decision.
 
 **How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
-`claude -p`, no tools) "which RFC is the current specification for X?" for 34 protocols. Haiku named
-an obsolete RFC as current for **10 of 34**; Sonnet for **2 of 34**, exactly the two whose
-replacement was published in 2026 (TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). With the specrot MCP
-server attached, both answered **34 of 34** correctly. One sample per question, answer key computed
-from the graph; questions, transcripts and script in [`scripts/agent_eval/`](scripts/agent_eval/).
+`claude -p`) "which RFC is the current specification for X? If several RFCs together form it, list
+them" for 34 protocols, under three conditions. **No tools:** Haiku included an obsolete RFC in its
+answer for **10 of 34** (2 times alone, 8 times listed beside the current one, e.g. "RFC 8259, RFC
+7159" for JSON); Sonnet gave only the obsolete RFC for **2 of 34**, exactly the two replaced in 2026
+(TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). **Web search allowed:** the models searched on 16 (Haiku)
+and 4 (Sonnet) of the 34 questions and still missed 1 and 2, each time answering from memory
+without searching. **specrot MCP server attached:** they consulted it on every question and
+answered **34 of 34**. One sample per question. The answer key is the RFC Editor's own `OBSOLETES`
+data read from the graph (the documents in force at the end of the chain from each topic's classic
+RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
 **Which relationships matter:**
 
@@ -198,8 +205,10 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
 ## Limits
 
 - "Obsolete" is the RFC Editor's relation, not a judgement of the code. The edge `kind` (edition,
-  version, split, retired) is inferred from the two titles at build time (version numbers in the
-  titles, deprecation wording, number of successors), so it can be wrong for an unusual title.
+  version, split, retired) is inferred from the two titles at build time (deprecation wording;
+  differing version numbers in a *protocol's* title, as in TLS 1.2 → 1.3, while PKCS #1 v2.1 → v2.2
+  is a new edition; number of successors), so it can be wrong for an unusual title. All 19
+  `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
   Citations that deliberately describe legacy behaviour are reported like any other; list them in
   `.specrot-ignore`.
 - Citations are found with a regular expression. Media types such as `message/rfc822` are skipped;
@@ -209,9 +218,10 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   mostly have none).
 - The store reflects the sources on the day it was built (see `git log store/rfc.rl`).
 
-Levels used everywhere (CLI, MCP, CI, browser): `obsolete` (a newer edition replaced it, or it was
-retired), `old-version` (only a newer protocol version exists), `historic`, `amended` (in force,
-updated or with verified technical errata), `ok`, `unknown` (not in the index).
+Levels used everywhere (CLI, MCP, CI, browser), most severe first: `obsolete` (a newer edition
+replaced it, or it was retired), `historic` (including retired protocol versions such as TLS 1.0
+and 1.1), `old-version` (only a newer protocol version exists, the old one is still in use: TLS 1.2),
+`amended` (in force, updated or with verified technical errata), `ok`, `unknown` (not in the index).
 
 ## Built with
 

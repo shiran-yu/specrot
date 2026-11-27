@@ -170,7 +170,8 @@ def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
     if DEPRECATING_TITLE.search(new_title or ""):
         return "retired"
     vo, vn = _versions(old_title), _versions(new_title)
-    if vo and vn and vo != vn and not (vo & vn):
+    # a version number in a protocol's title names a wire version (TLS 1.2, NTPv3); elsewhere a document revision (PKCS #1 v2.2)
+    if vo and vn and vo != vn and not (vo & vn) and PROTOCOL_TITLE.search(f"{old_title} {new_title}"):
         return "version"
     if n_successors > 1:
         return "split"
@@ -178,6 +179,7 @@ def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
 
 
 DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to historic|\bobsoleting\b|\bretir")
+PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b")
 
 
 def classify_obsoletes(conn) -> None:
@@ -190,7 +192,7 @@ def classify_obsoletes(conn) -> None:
     # oldVersion: obsolete only because a newer protocol version exists (TLS 1.2, OAuth 1.0)
     from . import graph
     old = [r["id"] for r in conn.execute("MATCH (r:RFC) WHERE r.obsolete RETURN r.id AS id")]
-    flags = [{"id": i, "v": graph.check(conn, i).level == "old-version"} for i in old]
+    flags = [{"id": i, "v": graph.check(conn, i).version_only} for i in old]
     conn.execute("MATCH (r:RFC) SET r.oldVersion = false")
     conn.execute("UNWIND $rows AS x MATCH (r:RFC {id: x.id}) SET r.oldVersion = x.v", {"rows": flags})
 
