@@ -101,7 +101,8 @@ def cmd_scan(a, conn):
     fail = {x.strip() for x in (a.fail_on or "").split(",") if x.strip()}
     if fail - set(graph.LEVELS):
         raise graph.InputError(f"--fail-on takes {', '.join(graph.LEVELS)}; got {', '.join(sorted(fail - set(graph.LEVELS)))}")
-    found = scan.find_citations(root, a.include_history)
+    too_big: list[str] = []
+    found = scan.find_citations(root, a.include_history, too_big, a.max_bytes)
     citations = found if a.all_kinds else [c for c in found if c.actionable]
     rules = scan.load_ignore(root)
     n_accepted = sum(1 for c in citations if scan.accepted(c, rules))
@@ -115,6 +116,7 @@ def cmd_scan(a, conn):
         wconn.close()
     if a.json:
         print(json.dumps({"root": str(root), "citations": len(citations), "accepted": n_accepted, "counts": counts,
+                          "skipped_large_files": too_big,
                           "findings": [f.to_dict() for f in findings]}, indent=2))
     elif a.markdown:
         print(_markdown(findings, root))
@@ -140,6 +142,9 @@ def cmd_scan(a, conn):
             where = f"{f.citations[0].path}:{f.citations[0].line}" + (f" +{len(f.citations) - 1}" if len(f.citations) > 1 else "")
             tab.add_row(_label(v), v.id, (v.title or "")[:60], fix, where)
         console.print(tab)
+        if too_big:
+            console.print(f"[yellow]skipped {len(too_big)} file(s) over {a.max_bytes:,} bytes[/] (--max-bytes to include): "
+                          + ", ".join(too_big[:5]) + (" …" if len(too_big) > 5 else ""))
         if a.save:
             console.print(f"saved as (:Project {{name: '{a.save}'}}) in {a.store}")
     if fail and any(counts.get(k) for k in fail):
@@ -251,6 +256,7 @@ def main(argv=None):
     s.add_argument("--fail-on", default="", help="comma list of levels that exit 1, e.g. obsolete,historic")
     s.add_argument("--save", metavar="NAME", help="write the scan into the graph as (:Project {name: NAME})")
     s.add_argument("--url", help="project URL stored with --save")
+    s.add_argument("--max-bytes", type=int, default=scan.MAX_BYTES, help="skip (and report) larger files")
     s.set_defaults(fn=cmd_scan)
 
     s = sub.add_parser("fix", help="rewrite unambiguous obsolete citations (RFC and section) as a diff to review")

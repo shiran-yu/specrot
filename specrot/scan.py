@@ -61,7 +61,8 @@ class Finding:
         return d
 
 
-def _files(root: Path, include_history: bool = False) -> list[Path]:
+def _files(root: Path, include_history: bool = False, skipped: list | None = None,
+           max_bytes: int = MAX_BYTES) -> list[Path]:
     """Tracked files when root is a git checkout (respects .gitignore), else a filtered walk."""
     try:
         # tracked and untracked-but-not-ignored files, so code an agent just wrote is scanned too
@@ -70,17 +71,21 @@ def _files(root: Path, include_history: bool = False) -> list[Path]:
         files = [root / p for p in out.stdout.decode(errors="replace").split("\0") if p]
     except (subprocess.CalledProcessError, FileNotFoundError):
         files = [p for p in root.rglob("*") if p.is_file()]
-    return [p for p in files
+    keep = [p for p in files
             if p.is_file() and not (set(p.relative_to(root).parts[:-1]) & SKIP_DIRS)
-            and (include_history or not HISTORY_FILES.match(p.name)) and p.name != ".specrot-ignore"
-            and p.stat().st_size <= MAX_BYTES]
+            and (include_history or not HISTORY_FILES.match(p.name)) and p.name != ".specrot-ignore"]
+    big = [p for p in keep if p.stat().st_size > max_bytes]
+    if skipped is not None:
+        skipped += [str(p.relative_to(root)) for p in big]  # reported, so a scan never looks complete when it is not
+    return [p for p in keep if p not in big]
 
 
-def find_citations(root: Path, include_history: bool = False) -> list[Citation]:
+def find_citations(root: Path, include_history: bool = False, skipped: list | None = None,
+                   max_bytes: int = MAX_BYTES) -> list[Citation]:
     if not root.exists():
         raise graph.InputError(f"no such file or directory: {root}")
     root = root.resolve()
-    targets = [root] if root.is_file() else _files(root, include_history)
+    targets = [root] if root.is_file() else _files(root, include_history, skipped, max_bytes)
     base = root.parent if root.is_file() else root
     out = []
     for p in targets:

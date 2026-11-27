@@ -66,10 +66,11 @@ def check_rfcs(rfcs: list[str]) -> list[dict]:
 def scan_path(path: str, include_ok: bool = False, include_tests_and_identifiers: bool = False) -> dict:
     """Find RFC citations in a file or directory (git-tracked files) and judge each cited RFC.
     By default skips citations in test files and identifiers such as time.RFC1123."""
-    cites = [c for c in scan.find_citations(Path(path)) if include_tests_and_identifiers or c.actionable]
+    too_big: list[str] = []
+    cites = [c for c in scan.find_citations(Path(path), skipped=too_big) if include_tests_and_identifiers or c.actionable]
     findings = scan.judge(_conn(), cites)
     keep = [f for f in findings if include_ok or f.verdict.level != "ok"]
-    return {"citations": len(cites), "rfcs": len(findings),
+    return {"citations": len(cites), "rfcs": len(findings), "skipped_large_files": too_big,
             "counts": {k: sum(1 for f in findings if f.verdict.level == k) for k in scan.LEVELS},
             "findings": [_brief(f) for f in keep]}
 

@@ -285,3 +285,10 @@ def test_section_match_prefers_the_same_number():
     from specrot import sections as S
     m = S.match([("4", "Handshake Protocol")], {9846: [("4", "Handshake Protocol"), ("B.3", "Handshake Protocol")]})
     assert m["4"]["section"] == "4"
+
+
+def test_scan_reports_skipped_large_files(tmp_path):
+    (tmp_path / "big.txt").write_text("RFC 2616\n" * 300)
+    p = subprocess.run([sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--json", "--max-bytes", "100"],
+                       cwd=ROOT, capture_output=True, text=True)
+    assert json.loads(p.stdout)["skipped_large_files"] == ["big.txt"]
