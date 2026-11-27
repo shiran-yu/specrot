@@ -164,7 +164,9 @@ def test_mcp_errors_are_tool_errors_with_hints():
 
 def test_mcp_read_cypher_returns_node_properties():
     from specrot import mcp_server as m
-    [row] = m.read_cypher("MATCH (r:RFC {id: 'RFC2616'}) RETURN r")
+    out = m.read_cypher("MATCH (r:RFC {id: 'RFC2616'}) RETURN r")
+    [row] = out["rows"]
+    assert out["truncated"] is False and m.read_cypher("MATCH (r:RFC) RETURN r.id", limit=5)["truncated"] is True
     assert row["r"]["labels"] == ["RFC"] and row["r"]["properties"]["id"] == "RFC2616"
 
 
@@ -275,6 +277,12 @@ def test_fix_keeps_code_names_protocol_strings_and_bytes(conn, tmp_path):
     ("The Internet Key Exchange (IKE)", "Internet Key Exchange (IKEv2) Protocol", "version"),
     ("INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4rev1", "Internet Message Access Protocol (IMAP) - Version 4rev2", "version"),
     ("The TLS Protocol Version 1.2", "The Transport Layer Security (TLS) Protocol Version 1.3", "version"),
+    # a TLS 1.2 extension folded into TLS 1.3 is a version change; consolidations and glossaries are not
+    ("Transport Layer Security (TLS) Session Hash and Extended Master Secret Extension",
+     "The Transport Layer Security (TLS) Protocol Version 1.3", "version"),
+    ("Internet Printing Protocol (IPP): Job Progress Attributes",
+     "Internet Printing Protocol/1.1: Model and Semantics", "edition"),
+    ("Internet Security Glossary", "Internet Security Glossary, Version 2", "edition"),
 ])
 def test_obsoletes_kind(old, new, kind):
     from specrot.build import obsoletes_kind
@@ -329,6 +337,29 @@ def test_fix_leaves_quotations_spanning_lines(conn, tmp_path):
                                    '# [RFC3513] or later, is distinguished by enclosing it"\n# see RFC 3513\n')
     edits, _ = fix.plan(conn, tmp_path)
     assert [e.line for e in edits] == [5]
+
+
+def test_scan_walks_a_folder_the_enclosing_repo_ignores(tmp_path):
+    import subprocess
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    (tmp_path / ".gitignore").write_text("vendored/\n")
+    (tmp_path / "vendored").mkdir()
+    (tmp_path / "vendored" / "h11.py").write_text("# per RFC 7230\n")
+    assert [c.rfc for c in scan.find_citations(tmp_path / "vendored")] == ["RFC7230"]
+
+
+def test_ignore_star_accepts_any_rfc_under_a_path(tmp_path):
+    (tmp_path / ".specrot-ignore").write_text("* data/*  # evaluation data\n")
+    rules = scan.load_ignore(tmp_path)
+    c = scan.Citation("data/x.json", 1, "RFC2616", None, "")
+    assert scan.accepted(c, rules) and not scan.accepted(scan.Citation("src/a.py", 1, "RFC2616", None, ""), rules)
+
+
+def test_rfc850_date_is_a_format_name():
+    kinds = lambda t: [c.kind for c in scan.find_in_text(t)]
+    assert kinds("# accept RFC 850 dates too") == ["identifier"]
+    assert kinds("RFC 850-date and asctime") == ["identifier"]
+    assert kinds("see RFC 850 for USENET") == ["prose"]
 
 
 def test_import_rule_matches_only_import_lines():

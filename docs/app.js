@@ -1,24 +1,43 @@
 // specrot explorer: every query below is Cypher run by Relate (WASM) in worker.js.
-const worker = new Worker("worker.js", { type: "module" });
+let worker = null, workerReady = false;
+const queued = [];        // messages sent while a (re)started worker is still building the graph
 const pending = new Map();
 let seq = 0;
+const CONSOLE_MS = 20000; // a console query running longer is stopped and the tab's graph rebuilt
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
 function cypher(q, params, fromConsole = false, needs = null) {
   return new Promise((resolve, reject) => {
     const id = ++seq;
-    pending.set(id, { resolve, reject, q });
-    worker.postMessage({ id, q, params, console: fromConsole, needs });
+    const timer = fromConsole ? setTimeout(() => restart(`Stopped after ${CONSOLE_MS / 1000} s. Add a LIMIT or bound the path length (e.g. *1..3).`), CONSOLE_MS) : null;
+    pending.set(id, { resolve, reject, q, timer });
+    const msg = { id, q, params, console: fromConsole, needs };
+    workerReady ? worker.postMessage(msg) : queued.push(msg);
   });
 }
 
-worker.onmessage = (e) => {
+// A runaway query (or a WASM trap, which leaves Relate unusable) ends the worker; a new one rebuilds the graph.
+function restart(reason) {
+  worker.terminate();
+  for (const [, p] of pending) { clearTimeout(p.timer); p.reject(new Error(reason + " The graph is being rebuilt in this tab (a few seconds).")); }
+  pending.clear();
+  startWorker();
+}
+
+function startWorker() {
+  workerReady = false;
+  worker = new Worker("worker.js", { type: "module" });
+  worker.onmessage = onWorkerMessage;
+}
+
+function onWorkerMessage(e) {
   const m = e.data;
   if (m.type === "progress") {
     $("#progress-text").textContent = m.text;
     $("#progress-bar").style.width = m.pct + "%";
   } else if (m.type === "ready") {
+    if (!workerReady) { workerReady = true; queued.splice(0).forEach((x) => worker.postMessage(x)); }
     $("#loading").hidden = true;
     $("#stats").textContent = `${m.n.toLocaleString()} nodes · ${m.r.toLocaleString()} relationships (RFCs, series, projects; obsoletes, updates, normative references) · RFC index of ${m.built} · built in this tab by Relate (WASM)` + (m.partial ? " · loading 50k normative references…" : "");
     if (!document.body.classList.contains("ready")) { document.body.classList.add("ready"); route(); }
@@ -27,10 +46,15 @@ worker.onmessage = (e) => {
   } else if (pending.has(m.id)) {
     const p = pending.get(m.id);
     pending.delete(m.id);
+    clearTimeout(p.timer);
     lastQuery = { q: p.q, ms: m.ms };
-    m.error ? p.reject(new Error(m.error)) : p.resolve(m.rows);
+    if (m.error && /unreachable|recursive use of an object|RuntimeError|memory access out of bounds/i.test(m.error)) {
+      p.reject(new Error("Relate (WASM) stopped on this query: " + m.error + "."));
+      restart("");
+    } else m.error ? p.reject(new Error(m.error)) : p.resolve(m.rows);
   }
-};
+}
+startWorker();
 let lastQuery = null;
 
 // ---------- queries (same as specrot/graph.py) ----------
@@ -301,6 +325,12 @@ async function project(name, meta) {
 
 // ---------- cypher tab ----------
 const EXAMPLES = {
+  "Blast radius of RFC 9110 (why a graph)": `// every document RFC 9110 replaces, any number of hops back, still cited in the 26 projects
+MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project)
+RETURN old.id AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS lines
+ORDER BY lines DESC`,
+  "Section lineage: RFC 2616 §14.20 today": `MATCH p = (:Section {id: 'RFC2616#14.20'})-[:CONTINUES_AS]->+(t:Section)
+RETURN [x IN nodes(p) | x.id + ' ' + x.title] AS lineage`,
   "Longest replacement chains": `MATCH p = (old:RFC)<-[:OBSOLETES]-+(new:RFC)
 WHERE NOT new.obsolete AND NOT EXISTS { (old)-[:OBSOLETES]->() }
 RETURN length(p) AS hops, old.id, new.id, new.title ORDER BY hops DESC LIMIT 5`,
@@ -315,7 +345,8 @@ RETURN d.id, d.title, d.obsolete ORDER BY d.number`,
 async function runCypher() {
   const out = $("#cypher-out");
   try {
-    const rows = await cypher($("#cy-q").value, null, true);
+    const q = $("#cy-q").value;
+    const rows = await cypher(q, null, true, /Section|CONTINUES_AS|HAS_SECTION/.test(q) ? "sections" : null);  // sections load on demand
     const cols = rows.length ? Object.keys(rows[0]) : [];
     out.innerHTML = `<p class="dim">${rows.length} rows · ${lastQuery.ms.toFixed(1)} ms</p><table><tr>${cols.map((c) => `<th>${esc(c)}</th>`).join("")}</tr>` +
       rows.slice(0, 500).map((r) => `<tr>${cols.map((c) => `<td>${esc(typeof r[c] === "object" ? JSON.stringify(r[c]) : r[c])}</td>`).join("")}</tr>`).join("") + `</table>`;
@@ -355,4 +386,4 @@ for (const [k, v] of Object.entries(EXAMPLES)) {
   b.onclick = () => { $("#cy-q").value = v; runCypher(); };
   ex.appendChild(b);
 }
-$("#cy-q").value = EXAMPLES["Longest replacement chains"];
+$("#cy-q").value = EXAMPLES["Blast radius of RFC 9110 (why a graph)"];

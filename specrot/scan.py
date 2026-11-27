@@ -73,6 +73,8 @@ def _files(root: Path, include_history: bool = False, skipped: list | None = Non
                              capture_output=True, check=True)
         files = [root / p for p in out.stdout.decode(errors="replace").split("\0") if p]
     except (subprocess.CalledProcessError, FileNotFoundError):
+        files = None
+    if not files:  # not a checkout, or a folder the enclosing repo ignores (.venv/..., data/): walk it
         files = [p for p in root.rglob("*") if p.is_file()]
     keep = [p for p in files
             if p.is_file() and not (set(p.relative_to(root).parts[:-1]) & SKIP_DIRS)
@@ -120,6 +122,8 @@ def _in_line(path: str, i: int, line: str) -> list[Citation]:
             continue
         if before.endswith("/"):
             kind = "link"
+        elif n == 850 and re.match(r"(?i)[\s-]*(date|format|style|time)", line[m.end(1):]):
+            kind = "identifier"  # "RFC 850 date": the obsolete HTTP-date format RFC 9110 still makes parsers accept
         elif ((before and before[-1] in "._") or after.isalpha() or after == "_" or IMPORT.match(line)
               or "_" in line[m.start() + 3:m.start(1)] or re.match(r"\.[A-Za-z]", line[m.end(1):])):
             # also RFC_4122 / rfc_822 (names) and RFC822.TEXT (an IMAP protocol item)
@@ -209,14 +213,16 @@ IGNORE_FILE = ".specrot-ignore"
 
 
 def load_ignore(root: Path) -> list[tuple[str, str | None, str]]:
-    """Rules from <root>/.specrot-ignore: `RFC5849 [path-glob] [# reason]`, one per line."""
+    """Rules from <root>/.specrot-ignore: `RFC5849 [path-glob] [# reason]`, one per line; `*` for any RFC."""
     p = (root if root.is_dir() else root.parent) / IGNORE_FILE
     rules = []
     if p.exists():
         for n, raw in enumerate(p.read_text().splitlines(), 1):
             line, _, reason = raw.partition("#")
             parts = line.split()
-            if parts:
+            if parts and parts[0] == "*":  # every RFC under a path: data files, docs about RFCs themselves
+                rules.append((None, parts[1] if len(parts) > 1 else None, reason.strip()))
+            elif parts:
                 try:
                     rid = graph.rfc_id(parts[0])
                 except graph.InputError as e:
@@ -227,4 +233,4 @@ def load_ignore(root: Path) -> list[tuple[str, str | None, str]]:
 
 def accepted(c: Citation, rules) -> bool:
     from fnmatch import fnmatch
-    return any(c.rfc == rid and (glob is None or fnmatch(c.path, glob)) for rid, glob, _ in rules)
+    return any(rid in (None, c.rfc) and (glob is None or fnmatch(c.path, glob)) for rid, glob, _ in rules)

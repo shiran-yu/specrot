@@ -113,6 +113,14 @@ def cmd_scan(a, conn):
     citations = [c for c in citations if not scan.accepted(c, rules)]
     findings = scan.judge(conn, citations)
     counts = {lvl: sum(1 for f in findings if f.verdict.level == lvl) for lvl in graph.LEVELS}
+    if a.baseline:  # accept today's findings so a CI gate fails only on new ones
+        levels = fail or {"obsolete"}
+        keep = sorted({(f.verdict.id, c.path) for f in findings if f.verdict.level in levels for c in f.citations})
+        base = root if root.is_dir() else root.parent
+        with open(base / scan.IGNORE_FILE, "a") as fh:
+            fh.writelines(f"{rid} {path}  # baseline\n" for rid, path in keep)
+        console.print(f"added {len(keep)} (RFC, file) pair(s) to {base / scan.IGNORE_FILE}; review them, then commit")
+        return 0
     if a.save:
         conn.close()
         wconn = graph.connect(a.store, read_only=False)
@@ -261,6 +269,8 @@ def main(argv=None):
     s.add_argument("--save", metavar="NAME", help="write the scan into the graph as (:Project {name: NAME})")
     s.add_argument("--url", help="project URL stored with --save")
     s.add_argument("--max-bytes", type=int, default=scan.MAX_BYTES, help="skip (and report) larger files")
+    s.add_argument("--baseline", action="store_true",
+                   help="append today's findings (levels from --fail-on, default obsolete) to .specrot-ignore, so CI fails only on new ones")
     s.set_defaults(fn=cmd_scan)
 
     s = sub.add_parser("fix", help="rewrite unambiguous obsolete citations (RFC and section) as a diff to review")

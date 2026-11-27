@@ -143,16 +143,18 @@ def _plain(v):
 
 @server.tool()
 @explained
-def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200) -> list[dict]:
-    """Run a read-only Cypher 25 statement against the store (Relate dialect, no APOC)."""
+def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200) -> dict:
+    """Run a read-only Cypher 25 statement against the store (Relate dialect, no APOC). Returns {rows,
+    truncated}: truncated is true when the query had more than `limit` rows (raise limit, or aggregate)."""
     if not 1 <= int(limit) <= 5000:
         raise graph.InputError(f"limit must be 1..5000, got {limit}")
-    rows = []
+    rows, truncated = [], False
     for i, r in enumerate(_conn().execute(statement, parameters or {})):
         if i >= limit:
+            truncated = True
             break
         rows.append({k: _plain(v) for k, v in dict(r).items()})
-    return rows
+    return {"rows": rows, "truncated": truncated}
 
 
 def _brief(f: scan.Finding) -> dict:

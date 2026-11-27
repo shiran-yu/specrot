@@ -1,7 +1,19 @@
 {
+  "blast_radius": {
+    "RFC9110": {
+      "replaced": 13,
+      "projects": 20,
+      "lines": 1183
+    },
+    "RFC9846": {
+      "replaced": 13,
+      "projects": 8,
+      "lines": 518
+    }
+  },
   "sections": {
-    "cited": 297,
-    "mapped": 223,
+    "cited": 288,
+    "mapped": 222,
     "exact": 208
   },
   "nodes": {
@@ -29,12 +41,12 @@
     "CITES": 4795
   },
   "showcase": {
-    "citations": 8044,
-    "obsolete": 1687,
-    "old_version": 303,
+    "citations": 8034,
+    "obsolete": 1604,
+    "old_version": 376,
     "projects": 26,
     "affected": 24,
-    "obsolete_pct": 21
+    "obsolete_pct": 20
   },
   "top_obsolete": [
     {

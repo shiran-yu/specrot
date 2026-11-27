@@ -16,5 +16,9 @@ def test_readme_matches_facts():
                    f"{f['relationships']['INFORMATIVE_REF']:,} `INFORMATIVE_REF`",
                    f"{f['nodes']['File']:,} `File`s"]:
         assert needle in readme, needle
+    b = f["blast_radius"]["RFC9110"]
+    assert f"**{b['lines']:,}** lines in **{b['projects']}** of the 26" in readme and f"replaces {b['replaced']} documents" in readme
+    b = f["blast_radius"]["RFC9846"]
+    assert f"gives {b['lines']:,} lines in {b['projects']} projects" in readme
     t = f["top_obsolete"]
     assert f"RFC 2616 ({t[0]['projects']} projects)" in readme and t[0]["rfc"] == "RFC2616"

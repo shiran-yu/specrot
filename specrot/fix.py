@@ -161,17 +161,18 @@ def plan(conn, root: Path, include_history: bool = False) -> tuple[list[Edit], l
         path = path_ if root.is_dir() else root.name
         lines = lines_of.setdefault(path, _read(base / path))
         old = new = lines[line_no - 1] if lines and line_no <= len(lines) else None
-        why, notes = None, []
+        why, notes, reasons = None, [], {}
         for c, v in pairs:
             t = _target(c, v)
             if isinstance(t, str):
-                why = why or t
+                why, reasons[id(c)] = why or t, t
                 continue
             r = _rewrite(new, c.col, t[0], t[1]) if new is not None else None
             if r is not None and _in_quotation(lines, line_no):
-                why, r = why or "inside a quotation that starts on an earlier line", None
+                reasons[id(c)], r = "inside a quotation that starts on an earlier line", None
             if r is None:
-                why = why or ("file is not UTF-8" if lines is None else "citation form not safe to rewrite")
+                reasons[id(c)] = reasons.get(id(c)) or ("file is not UTF-8" if lines is None else "citation form not safe to rewrite")
+                why = why or reasons[id(c)]
                 continue
             new = r
             notes.append(f"{c.rfc}{'§' + c.section if c.section else ''} → {t[0]}{'§' + t[1] if t[1] else ''}")
@@ -180,7 +181,8 @@ def plan(conn, root: Path, include_history: bool = False) -> tuple[list[Edit], l
         if len(olds) > len(news) and not why:
             why = "two cited RFCs would become the same one"
         if why or new == old:
-            skipped += [(c, why or "unchanged") for c, _ in pairs]
+            skipped += [(c, reasons.get(id(c)) or (f"another citation on the line: {why}" if why else "unchanged"))
+                        for c, _ in pairs]
             continue
         lines[line_no - 1] = new
         edits.append(Edit(path, line_no, old, new, "; ".join(notes)))

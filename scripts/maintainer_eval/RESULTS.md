@@ -18,7 +18,7 @@ include Sphinx `:rfc:` roles. Today's graph is used, so a 2014 PR is judged agai
 | PR | Merged | Replaced citations | Obsolete per specrot | `fix` proposed | Same RFC as the maintainers | `fix` edits on lines the PR left |
 |---|---|---|---|---|---|---|
 | [aio-libs/aiohttp#7661](https://github.com/aio-libs/aiohttp/pull/7661) Update Python parser for RFCs 9110/9112 | 2023-10 | 2 | 2 | 1 | 0 | 3 |
-| [django/django#16257](https://github.com/django/django/pull/16257) Updated documentation and comments for RFC updates | 2022-11 | 54 | 53 | 21 | 21 | 0 |
+| [django/django#16257](https://github.com/django/django/pull/16257) Updated documentation and comments for RFC updates | 2022-11 | 54 | 53 | 22 | 22 | 0 |
 | [django/django#12142](https://github.com/django/django/pull/12142) Used more specific links to RFCs | 2019-11 | 1 | 1 | 1 | 1 | 3 |
 | [django/django#11132](https://github.com/django/django/pull/11132) Updated spelling and RFCs in HttpOnly cookie docs | 2019-03 | 2 | 2 | 0 | 0 | 0 |
 | [nghttp2/nghttp2#2855](https://github.com/nghttp2/nghttp2/pull/2855) CertLookupTree based on RFC 9525 rules | 2026-09 | 1 | 1 | 1 | 0 | 2 |
@@ -34,15 +34,15 @@ include Sphinx `:rfc:` roles. Today's graph is used, so a 2014 PR is judged agai
 | [python/cpython#173](https://github.com/python/cpython/pull/173) Update urllib quoting to RFC 3986 | 2017-02 | 2 | 2 | 1 | 1 | 10 |
 | [python/cpython#148](https://github.com/python/cpython/pull/148) Updated reference for RFC 1750 and RFC 3280 | 2017-06 | 6 | 6 | 1 | 1 | 3 |
 | [urllib3/urllib3#409](https://github.com/urllib3/urllib3/pull/409) Update references to RFC 2616 | 2014-06 | 3 | 3 | 1 | 0 | 0 |
-| **Total (17 PRs)** | | **113** | **106** | **49** | **46** | **49** |
+| **Total (17 PRs)** | | **113** | **106** | **50** | **47** | **49** |
 
 - **Detection.** specrot calls 106 of the 113 replaced citations obsolete. The other 7 are not obsolescence:
   6 correct a wrong RFC number (RFC 8466 for 8446, 5233 for 5322, 1993 in node) and 1 swaps RFC 1123, in
   force, for RFC 5322 (Django). Every replaced citation of an obsolete RFC is flagged.
-- **Proposals.** `fix` proposes an edit for 49 of the 106 (46%); `specrot scan` reports the rest. The others
+- **Proposals.** `fix` proposes an edit for 50 of the 106 (47%); `specrot scan` reports the rest. The others
   are forms it does not rewrite (quoted text, history wording, sections it cannot map), test files,
   RFCs split across several documents (RFC 2616, 7230) and chains with a version change.
-- **Agreement.** In 46 of the 49 proposals `fix` names the RFC the maintainers chose. The 3 others: a 2014
+- **Agreement.** In 47 of the 50 proposals `fix` names the RFC the maintainers chose. The 3 others: a 2014
   PR whose target, RFC 7231, has been replaced since (fix: RFC 9110 §15.4.4, the same "303 See Other"
   section); aiohttp moved RFC 7230 §3.1.1 "Request Line" to RFC 9110 where fix proposes RFC 9112 §3
   "Request Line"; nghttp2 deleted the line instead. Of 19 proposals with a section number, 16 name the
@@ -53,5 +53,5 @@ include Sphinx `:rfc:` roles. Today's graph is used, so a 2014 PR is judged agai
 - **Changes made while building this** (each with a test): `fix` skips a second section after the first
   ("section 14.4 and 3.9"), plural sections before the citation ("sections 2.2 and 2.3 of RFC 2396"), and
   `scan`/`fix` now read Sphinx `:rfc:` roles, which a judge found missing (the first version of this table
-  counted 62 replacements because roles were invisible). The table is the result after these changes.
+  counted 62 replacements because roles were invisible), and `scan` reads "RFC 850 date" as the name of a date format, not a citation (Django then gets one more proposal, the line it changed to RFC 9110). The table is the result after these changes.
 - Rerun: `cohort.py` and `run.py` need a `GITHUB_TOKEN` (60 unauthenticated API calls an hour are not enough).

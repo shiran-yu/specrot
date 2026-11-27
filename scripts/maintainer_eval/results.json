@@ -2,8 +2,8 @@
  "total": {
   "replaced_citations": 113,
   "obsolete": 106,
-  "fix_proposed": 49,
-  "same_rfc": 46,
+  "fix_proposed": 50,
+  "same_rfc": 47,
   "same_section": 16,
   "fix_on_untouched_lines": 49
  },
@@ -334,8 +334,8 @@
      "old": "# RFC7231 makes it mandatory to support RFC850 dates too. So we roll",
      "maintainer": "# email.utils.parsedate() does the job for RFC 1123 dates; unfortunately / # RFC 9110 makes it mandatory to support RFC 850 dates too. So we roll",
      "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
+     "fix": "# RFC9110 makes it mandatory to support RFC850 dates too. So we roll",
+     "same_rfc": true,
      "same_section": false
     },
     {
@@ -717,8 +717,8 @@
    "summary": {
     "replaced_citations": 54,
     "obsolete": 53,
-    "fix_proposed": 21,
-    "same_rfc": 21,
+    "fix_proposed": 22,
+    "same_rfc": 22,
     "same_section": 16,
     "fix_on_untouched_lines": 0
    }

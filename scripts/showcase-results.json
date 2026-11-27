@@ -7,8 +7,8 @@
   "all_matches": 971,
   "citations": 741,
   "rfcs": 145,
-  "obsolete_rfcs": 34,
-  "obsolete_citations": 108,
+  "obsolete_rfcs": 33,
+  "obsolete_citations": 106,
   "top_obsolete": [
    [
     "RFC1738",
@@ -313,10 +313,10 @@
   "path": "",
   "commit": "f0e7bd90884b5da0a7418f3c78d1fd309c905014",
   "all_matches": 287,
-  "citations": 153,
-  "rfcs": 40,
-  "obsolete_rfcs": 8,
-  "obsolete_citations": 15,
+  "citations": 152,
+  "rfcs": 39,
+  "obsolete_rfcs": 7,
+  "obsolete_citations": 14,
   "top_obsolete": [
    [
     "RFC7231",
@@ -363,10 +363,10 @@
   "path": "Lib",
   "commit": "5dbe2ac850b7b180685ed6008d5b9d459fd4934f",
   "all_matches": 1177,
-  "citations": 440,
+  "citations": 437,
   "rfcs": 111,
   "obsolete_rfcs": 42,
-  "obsolete_citations": 197,
+  "obsolete_citations": 194,
   "top_obsolete": [
    [
     "RFC1738",
@@ -463,19 +463,12 @@
   "all_matches": 579,
   "citations": 382,
   "rfcs": 63,
-  "obsolete_rfcs": 16,
-  "obsolete_citations": 137,
+  "obsolete_rfcs": 13,
+  "obsolete_citations": 116,
   "top_obsolete": [
    [
     "RFC8446",
     81,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC7627",
-    10,
     [
      "RFC9846"
     ]
@@ -488,17 +481,26 @@
     ]
    ],
    [
-    "RFC5077",
-    6,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
     "RFC6125",
     5,
     [
      "RFC9525"
+    ]
+   ],
+   [
+    "RFC4366",
+    4,
+    [
+     "RFC6066",
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC2253",
+    3,
+    [
+     "RFC4510",
+     "RFC4514"
     ]
    ]
   ]
@@ -509,10 +511,10 @@
   "path": "",
   "commit": "245306dc31b22316600bc963120f34714ebcdd0a",
   "all_matches": 269,
-  "citations": 220,
+  "citations": 219,
   "rfcs": 38,
   "obsolete_rfcs": 9,
-  "obsolete_citations": 65,
+  "obsolete_citations": 64,
   "top_obsolete": [
    [
     "RFC1738",
@@ -548,7 +550,7 @@
    ],
    [
     "RFC850",
-    7,
+    6,
     [
      "RFC5536",
      "RFC5537"
@@ -828,10 +830,10 @@
   "path": "",
   "commit": "47521745280e2570f68b8a1ef1153a26acc5cb81",
   "all_matches": 1126,
-  "citations": 891,
+  "citations": 886,
   "rfcs": 112,
-  "obsolete_rfcs": 25,
-  "obsolete_citations": 237,
+  "obsolete_rfcs": 23,
+  "obsolete_citations": 224,
   "top_obsolete": [
    [
     "RFC7540",
@@ -880,8 +882,8 @@
   "all_matches": 2551,
   "citations": 1728,
   "rfcs": 226,
-  "obsolete_rfcs": 44,
-  "obsolete_citations": 247,
+  "obsolete_rfcs": 39,
+  "obsolete_citations": 215,
   "top_obsolete": [
    [
     "RFC2253",
@@ -906,17 +908,17 @@
     ]
    ],
    [
-    "RFC6962",
-    21,
-    [
-     "RFC9162"
-    ]
-   ],
-   [
     "RFC3280",
     19,
     [
      "RFC5280"
+    ]
+   ],
+   [
+    "RFC4492",
+    9,
+    [
+     "RFC9846"
     ]
    ]
   ]
@@ -929,8 +931,8 @@
   "all_matches": 383,
   "citations": 221,
   "rfcs": 28,
-  "obsolete_rfcs": 8,
-  "obsolete_citations": 87,
+  "obsolete_rfcs": 6,
+  "obsolete_citations": 77,
   "top_obsolete": [
    [
     "RFC7540",
@@ -948,13 +950,6 @@
     ]
    ],
    [
-    "RFC6962",
-    9,
-    [
-     "RFC9162"
-    ]
-   ],
-   [
     "RFC2616",
     3,
     [
@@ -968,6 +963,13 @@
     3,
     [
      "RFC9110"
+    ]
+   ],
+   [
+    "RFC8446",
+    2,
+    [
+     "RFC9846"
     ]
    ]
   ]

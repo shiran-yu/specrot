@@ -1,0 +1,8 @@
+# specrot's own repository: these files cite old RFCs on purpose (examples, evaluation data, the RFC graph)
+* docs/*            # explorer data and its demo text
+* scripts/*         # evaluation inputs, labels and results
+* facts.json        # numbers about the graph
+* README.md         # examples and results about obsolete RFCs
+* skills/*          # agent instructions with examples
+* specrot/*         # code comments and help text naming the RFCs it handles
+* action.yml        # example citations

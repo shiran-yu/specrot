@@ -21,3 +21,7 @@ jobs:
       - uses: ./
         with:
           path: tests/fixtures/current
+      # dogfood: specrot's own repo must pass its own gate (deliberate citations are listed in .specrot-ignore)
+      - uses: ./
+        with:
+          path: .

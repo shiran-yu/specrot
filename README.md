@@ -1,14 +1,16 @@
 # specrot
 
-Find the dead RFCs your code still cites. specrot puts every IETF RFC and how they relate into one
+Find the obsolete RFCs your code still cites. specrot puts every IETF RFC and how they relate into one
 Relate graph file, so a developer, a CI job or a coding agent can ask "is this still the spec, and
 if not, what replaced it?"
 
 **Try it:** [live explorer](https://shiran-yu.github.io/specrot/) (Relate WASM in the browser, no install) ·
 `git clone https://github.com/shiran-yu/specrot && cd specrot && uv run specrot check 2616` (the graph ships
-in the repo) · **Evidence:** 1,687 of 8,044 RFC citations in 26 major projects point at obsolete RFCs;
-replaying 17 maintainer PRs, `fix` picks the maintainers' replacement in 46 of 49; upstream PRs open at
-[nginx](https://github.com/nginx/nginx/pull/2051) and [httpx](https://github.com/encode/httpx/pull/3874).
+in the repo) · **Evidence:** 1,604 of 8,034 RFC citations in 26 major projects point at obsolete RFCs
+(about half worth updating, half deliberate, by a two-model audit); in 17 merged maintainer PRs that
+replaced 106 obsolete citations, specrot flags all 106 and `fix` proposes 50 edits, 47 with the
+maintainers' RFC; upstream PRs open at [nginx](https://github.com/nginx/nginx/pull/2051) and
+[httpx](https://github.com/encode/httpx/pull/3874).
 
 ```console
 $ uv run specrot check 8446
@@ -33,23 +35,25 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **8,044** RFC citations in source
-and docs (Sphinx `:rfc:` roles included; tests and identifiers such as `time.RFC1123` excluded), **1,687 (21%)** point at an RFC
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **8,034** RFC citations in source
+and docs (Sphinx `:rfc:` roles included; tests and identifiers such as `time.RFC1123` excluded), **1,604 (20%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
-an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
-303 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+an older *protocol version* (TLS 1.2's RFC 5246 and its extensions, OAuth 1.0's RFC 5849, Certificate
+Transparency v1, the retired TLS 1.0 and 1.1; 376 more) are not counted: they are reported as `old-version`, or `historic` when that version was
 itself retired. The most common: RFC 2616 (18 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. We took 100 of the 1,687, the first by a seeded hash
+Not every one of these is a mistake. We took 100 of them (then 1,687), the first by a seeded hash
 ([`scripts/audit/draw.py`](scripts/audit/draw.py)), and had two models label each from its code
 context, independently, with the same [instructions](scripts/audit/LABELING.md) and no tools:
 Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **49 of 100** as citing
 the old RFC as the specification the code follows, worth updating (58 Claude, 53 GPT); 34 and 42 as
 deliberate references to the old text (compatibility, history, a list of supported RFCs); 8 and 5
 as scanner errors (an identifier or not a citation at all). The labelers agree on 78% of items
-(Cohen's κ 0.60). These are model labels, not human ones, and they vary between runs: earlier runs on samples
+(Cohen's κ 0.60). Three of the 100, Certificate Transparency v1 (RFC 6962) cited by HAProxy and Go,
+are no longer counted: both labelers had called them deliberate, and CT 2.0 is now a `version` edge,
+so the labelled sample is kept as drawn. These are model labels, not human ones, and they vary between runs: earlier runs on samples
 sharing 95 or more of these items gave 62 and 54 (git history of `scripts/audit/`). [`scripts/audit/label.py`](scripts/audit/label.py)
 reruns a labeler into new files, `raw/` keeps each full prompt, reply and model (the instructions
 still name the earlier population, 1,645, as given to the labelers), and
@@ -62,7 +66,7 @@ GitHub search over the 26 projects, with a rule that does not use specrot, finds
 replace RFC citations ([`scripts/maintainer_eval/`](scripts/maintainer_eval/RESULTS.md), every candidate
 and reason in `cohort.json`). Replaying them: maintainers replaced **113** citations; specrot calls **106**
 obsolete, and the other 7 correct a wrong RFC number or swap an RFC that is in force. `fix` proposes an
-edit for 49 of the 106 (`scan` reports all of them) and names the maintainers' RFC in **46 of 49**; of 19
+edit for 50 of the 106 (`scan` reports all of them) and names the maintainers' RFC in **47 of 50**; of 19
 proposals with a section, 16 match the maintainers' section (RFC 7232 §3.1 → RFC 9110 §13.1.1). Nobody
 on this project chose these edits; two `fix` rules and Sphinx `:rfc:` support were added while building
 the comparison, which RESULTS.md lists.
@@ -100,6 +104,31 @@ seed RFC not in its key is. It does not check that a key lists every part of a s
 | Who is affected if it changes? | `NORMATIVE_REF` backwards from documents still in force |
 | Where does section 6.5.1 of RFC 7231 live now? | `(:Section)-[:CONTINUES_AS]->+(:Section)` to a section of a document still in force: §6.5.1 *400 Bad Request* → RFC 9110 §15.5.1; 2616 §14.20 → 7231 → 9110 §10.1.1 |
 | Which projects still cite it? | `(:Project)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC)` |
+
+## Why a graph, not a table
+
+Every answer specrot gives is a walk of unknown length across several kinds of node, which a lookup table
+cannot hold and SQL needs a recursive CTE plus a join per hop for:
+
+```cypher
+// Blast radius of a new RFC: every document it replaces, any number of hops back, still cited in the projects
+MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project)
+RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS lines
+```
+
+RFC 9110 (HTTP Semantics, 2022) replaces 13 documents through chains such as 2616 → 7231 → 9110; they are
+still cited on **1,183** lines in **20** of the 26 projects. The same query for TLS 1.3's new RFC 9846 (July
+2026) gives 518 lines in 8 projects, older TLS versions included. One edge type answers "what replaced it",
+another "which section", a third "who cites it", and the question chains them:
+
+```cypher
+// Where does RFC 2616 §14.20 live today? Section lineage across two rewrites
+MATCH p = (:Section {id: 'RFC2616#14.20'})-[:CONTINUES_AS]->+(t:Section)
+RETURN [x IN nodes(p) | x.id + ' ' + x.title]    // RFC2616#14.20 Expect → RFC7231#5.1.1 → RFC9110#10.1.1
+```
+
+Adding a scanned project, a new RFC or an erratum adds nodes and edges; no query changes. The CLI, the MCP
+server and the browser explorer all run these Cypher queries against the same `store/rfc.rl`.
 
 ## How it uses Relate
 
@@ -146,7 +175,8 @@ Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -e . &&
 `python3 -m http.server -d docs 8000` in a clone). It runs the Relate WebAssembly build in the tab
 and rebuilds a subset of the graph there in about 3 s: RFCs, series, `OBSOLETES` with kinds,
 `UPDATES`, the 50,842 RFC-level normative references and the 26 projects (no errata, working groups
-or informative references), from [`docs/data/graph.json`](docs/data/graph.json), which
+or informative references; only files with reader-facing citations, so 1,705 `File`s rather than 2,442,
+and only series with a member RFC), from [`docs/data/graph.json`](docs/data/graph.json), which
 `scripts/export_web.py` exports because the WASM build cannot open a `.rl` file. The sections and
 `CONTINUES_AS` load from `docs/data/sections.json` on the first section lookup
 ([`#rfc=7231&s=6.5.1`](https://shiran-yu.github.io/specrot/#rfc=7231&s=6.5.1)). It offers check
@@ -186,7 +216,12 @@ Citations that deliberately describe legacy behaviour go in a `.specrot-ignore` 
 ```
 RFC5849  oauthlib/oauth1/*   # this module implements OAuth 1.0
 RFC5246                      # we still ship TLS 1.2
+*        docs/rfc-notes/*    # notes about old RFCs, any RFC
 ```
+
+`specrot scan . --baseline` appends today's findings as such lines, so a CI gate added to an existing
+project fails only on new stale citations. specrot's own repository passes its own gate in CI this way ([`.specrot-ignore`](.specrot-ignore)): its
+examples and evaluation data cite old RFCs on purpose.
 
 ### For coding agents
 
@@ -245,8 +280,9 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
 - "Obsolete" is the RFC Editor's relation, not a judgement of the code. The edge `kind` (edition,
   version, split, retired) is inferred from the two titles at build time (deprecation wording;
   differing version numbers in a *protocol's* title, as in TLS 1.2 → 1.3, IMAP 4rev1 → 4rev2,
+  a TLS 1.2 extension folded into a TLS 1.3 document, CT → CT 2.0,
   RTSP → RTSP 2.0, while PKCS #1 v2.1 → v2.2 is a new edition and IPv6 or HTTP/1.1 in a title is not
-  a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 45
+  a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 55
   `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
   Six edges are marked `redesign` by hand, each with its reason (`build.REDESIGN`: RFC 6874 → 9844,
   TCP MD5 → TCP-AO, HTML 2.0 and form upload → text/html, BSD syslog → RFC 5424, Cookie2 → RFC 6265):

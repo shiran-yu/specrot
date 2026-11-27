@@ -163,6 +163,12 @@ def _versions(title: str) -> set[str]:
     return {re.sub(r"\.0$", "", next(g for g in m.groups() if g)) for m in VERSION.finditer(title or "")}
 
 
+def _names(title: str | None) -> set[str]:
+    """Protocol names in a title: an acronym in parentheses ("(TLS)") or a run of capitalised words."""
+    t = title or ""
+    return set(re.findall(r"\(([A-Z]{2,})\)", t)) | {m.lower() for m in re.findall(r"(?:[A-Z][a-z]+ )+[A-Z][a-z]+", re.sub(r"\(.*?\)", "", t))}
+
+
 def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
     """Why an RFC was obsoleted, from the two titles: 'retired' (a deprecation notice, no replacement),
     'version' (a different protocol version: TLS 1.2 -> 1.3, OAuth 1.0 -> 2.0), 'split' (content moved
@@ -174,7 +180,11 @@ def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
     # also a version named only by the new title (RTSP -> RTSP 2.0, IKE -> IKEv2) and revisions (IMAP 4rev1 -> 4rev2)
     major = max(int(re.match(r"\d+", x).group()) for x in vn) if vn else 0
     new_only = not vo and major >= 2 and not re.search(rf"[A-Za-z]{major}\b", old_title or "")  # not "POP3 ..." -> "POP3 ..."
-    if vn and not (vo & vn) and (vo or new_only) and PROTOCOL_TITLE.search(f"{old_title} {new_title}"):
+    # an extension of an older version folded into a new protocol version (TLS session hash -> TLS 1.3)
+    folded = (not vo and PROTOCOL_TITLE.search(new_title or "") and re.search(r"(?i)\bversion\b", new_title or "")
+              and not re.search(rf"[A-Za-z]{major}\b", old_title or "")
+              and bool(_names(old_title) & _names(new_title)))
+    if vn and not (vo & vn) and (vo or new_only or folded) and PROTOCOL_TITLE.search(f"{old_title} {new_title}"):
         return "version"
     if n_successors > 1:
         return "split"
@@ -185,6 +195,8 @@ DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to histo
 PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b|S/MIME")
 # Hand-reviewed: the replacement is a different design, not a new edition (titles cannot tell). Reviewed for
 # every OBSOLETES pair that `specrot fix` proposes on the 26 showcase projects (76 pairs); reason from the new RFC.
+# Hand-reviewed protocol version changes the titles do not show as such (no "Protocol" in the title).
+VERSION_PAIRS = {("RFC6962", "RFC9162"): "CT 2.0 is a new, incompatible protocol version; CT v1 logs still run 6962"}
 REDESIGN = {
     ("RFC6874", "RFC9844"): "removes zone identifiers from URI syntax; only user-interface entry remains",
     ("RFC2385", "RFC5925"): "TCP-AO is a new option with its own keys and MACs, not a revision of TCP MD5",
@@ -200,7 +212,8 @@ def classify_obsoletes(conn) -> None:
         MATCH (n:RFC)-[:OBSOLETES]->(o:RFC)
         RETURN o.id AS old, o.title AS ot, n.id AS new, n.title AS nt, COUNT { (o)<-[:OBSOLETES]-() } AS k""")]
     edits = [{"old": r["old"], "new": r["new"],
-              "kind": "redesign" if (r["old"], r["new"]) in REDESIGN else obsoletes_kind(r["ot"], r["nt"], r["k"])}
+              "kind": "redesign" if (r["old"], r["new"]) in REDESIGN else "version" if (r["old"], r["new"]) in VERSION_PAIRS
+                      else obsoletes_kind(r["ot"], r["nt"], r["k"])}
              for r in rows]
     conn.execute("""UNWIND $rows AS x MATCH (:RFC {id: x.new})-[e:OBSOLETES]->(:RFC {id: x.old})
                     SET e.kind = x.kind""", {"rows": edits})
