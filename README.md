@@ -63,7 +63,8 @@ others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per questio
 answers vary between runs (5 of Haiku's 10 no-tool misses were right, without a tool call, in the web
 arm); turns, not tool traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
 data read from the graph (the documents in force at the end of the chain from each topic's classic
-RFC). Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/agent_eval/).
+RFC); [`check_key.py`](scripts/agent_eval/check_key.py) confirms all 34 keys against the RFC Editor's
+per-RFC records (`obsoleted_by`), outside the graph. Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
 **Which relationships matter:**
 

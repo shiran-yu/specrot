@@ -1,0 +1,406 @@
+{
+ "summary": {
+  "questions": 34,
+  "agree": 34,
+  "source": "https://www.rfc-editor.org/rfc/rfcN.json (obsoleted_by)"
+ },
+ "rows": [
+  {
+   "seed": "RFC2460",
+   "key": [
+    "RFC8200"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8200"
+   ]
+  },
+  {
+   "seed": "RFC2617",
+   "key": [
+    "RFC7616",
+    "RFC7617",
+    "RFC9110"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC7235",
+    "RFC7615",
+    "RFC7616",
+    "RFC7617"
+   ]
+  },
+  {
+   "seed": "RFC2821",
+   "key": [
+    "RFC5321"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC5321"
+   ]
+  },
+  {
+   "seed": "RFC2822",
+   "key": [
+    "RFC5322"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC5322"
+   ]
+  },
+  {
+   "seed": "RFC2965",
+   "key": [
+    "RFC6265"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC6265"
+   ]
+  },
+  {
+   "seed": "RFC3315",
+   "key": [
+    "RFC9915"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8415"
+   ]
+  },
+  {
+   "seed": "RFC3501",
+   "key": [
+    "RFC9051"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9051"
+   ]
+  },
+  {
+   "seed": "RFC3986",
+   "key": [
+    "RFC3986"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC4122",
+   "key": [
+    "RFC9562"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9562"
+   ]
+  },
+  {
+   "seed": "RFC4288",
+   "key": [
+    "RFC6838"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC6838"
+   ]
+  },
+  {
+   "seed": "RFC4566",
+   "key": [
+    "RFC8866"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8866"
+   ]
+  },
+  {
+   "seed": "RFC4648",
+   "key": [
+    "RFC4648"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC5226",
+   "key": [
+    "RFC8126"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8126"
+   ]
+  },
+  {
+   "seed": "RFC5234",
+   "key": [
+    "RFC5234"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC5905",
+   "key": [
+    "RFC5905"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC5988",
+   "key": [
+    "RFC8288"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8288"
+   ]
+  },
+  {
+   "seed": "RFC6125",
+   "key": [
+    "RFC9525"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9525"
+   ]
+  },
+  {
+   "seed": "RFC6455",
+   "key": [
+    "RFC6455"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC6749",
+   "key": [
+    "RFC6749"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC6962",
+   "key": [
+    "RFC9162"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9162"
+   ]
+  },
+  {
+   "seed": "RFC7159",
+   "key": [
+    "RFC8259"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC8259"
+   ]
+  },
+  {
+   "seed": "RFC7230",
+   "key": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9110",
+    "RFC9112"
+   ]
+  },
+  {
+   "seed": "RFC7231",
+   "key": [
+    "RFC9110"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9110"
+   ]
+  },
+  {
+   "seed": "RFC7233",
+   "key": [
+    "RFC9110"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9110"
+   ]
+  },
+  {
+   "seed": "RFC7234",
+   "key": [
+    "RFC9111"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9111"
+   ]
+  },
+  {
+   "seed": "RFC7519",
+   "key": [
+    "RFC7519"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC7540",
+   "key": [
+    "RFC9113"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9113"
+   ]
+  },
+  {
+   "seed": "RFC7807",
+   "key": [
+    "RFC9457"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9457"
+   ]
+  },
+  {
+   "seed": "RFC793",
+   "key": [
+    "RFC9293"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9293"
+   ]
+  },
+  {
+   "seed": "RFC8312",
+   "key": [
+    "RFC9438"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9438"
+   ]
+  },
+  {
+   "seed": "RFC8446",
+   "key": [
+    "RFC9846"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9846"
+   ]
+  },
+  {
+   "seed": "RFC8941",
+   "key": [
+    "RFC9651"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": true,
+   "agrees": true,
+   "seed_obsoleted_by": [
+    "RFC9651"
+   ]
+  },
+  {
+   "seed": "RFC9000",
+   "key": [
+    "RFC9000"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  },
+  {
+   "seed": "RFC9114",
+   "key": [
+    "RFC9114"
+   ],
+   "key_not_obsoleted": true,
+   "seed_obsoleted": false,
+   "agrees": true,
+   "seed_obsoleted_by": []
+  }
+ ]
+}
