@@ -5,11 +5,11 @@ let seq = 0;
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-function cypher(q, params) {
+function cypher(q, params, fromConsole = false) {
   return new Promise((resolve, reject) => {
     const id = ++seq;
     pending.set(id, { resolve, reject, q });
-    worker.postMessage({ id, q, params });
+    worker.postMessage({ id, q, params, console: fromConsole });
   });
 }
 
@@ -249,7 +249,7 @@ RETURN d.id, d.title, d.obsolete ORDER BY d.number`,
 async function runCypher() {
   const out = $("#cypher-out");
   try {
-    const rows = await cypher($("#cy-q").value);
+    const rows = await cypher($("#cy-q").value, null, true);
     const cols = rows.length ? Object.keys(rows[0]) : [];
     out.innerHTML = `<p class="dim">${rows.length} rows · ${lastQuery.ms.toFixed(1)} ms</p><table><tr>${cols.map((c) => `<th>${esc(c)}</th>`).join("")}</tr>` +
       rows.slice(0, 500).map((r) => `<tr>${cols.map((c) => `<td>${esc(typeof r[c] === "object" ? JSON.stringify(r[c]) : r[c])}</td>`).join("")}</tr>`).join("") + `</table>`;

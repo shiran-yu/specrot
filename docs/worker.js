@@ -68,10 +68,16 @@ async function load() {
   post({ type: "ready", ...count(), built: G.built, partial: false });
 }
 
+// The console is read-only: the page's own queries never write, and a visitor's DELETE would only
+// break this tab's copy, but refusing it keeps the demo intact. String literals are ignored.
+const WRITES = /\b(CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|INSERT|FOREACH|LOAD\s+CSV)\b/i;
+
 self.onmessage = (e) => {
-  const { id, q, params } = e.data;
+  const { id, q, params, console: fromConsole } = e.data;
   const t = performance.now();
   try {
+    if (fromConsole && WRITES.test(q.replace(/'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"/g, "''")))
+      throw new Error("This console is read-only (it runs on the copy of the graph in your tab). Use MATCH ... RETURN; the CLI has `specrot cypher --write` for a local store.");
     const env = run(q, params);
     post({ id, rows: env.rows, columns: env.columns, ms: performance.now() - t });
   } catch (err) {
