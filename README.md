@@ -50,6 +50,16 @@ still name the earlier population, 1,645, as given to the labelers), and
 [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports; a person
 decides, and `.specrot-ignore` records the decision.
 
+**Do maintainers make these changes?** Yes, by hand. CPython merged "Update selected RFC 2822 references
+to RFC 5322" in 2025 and moved `base64` to RFC 4648 in 2021 and 2026; Django merged "Updated documentation
+and comments for RFC updates" in 2022. We ran `specrot fix` on the base files of eight such merged PRs in
+the scanned projects and compared ([`scripts/maintainer_eval/`](scripts/maintainer_eval/RESULTS.md)):
+specrot calls **61 of the 62** citations the maintainers replaced obsolete (the 62nd, RFC 1123, is in force),
+and where `fix` proposes an edit (26), it names the RFC the maintainers chose in **25**, the 26th being a
+2014 PR whose target, RFC 7231, has itself been replaced since. Of 9 proposals with a section number, 7
+match the section the maintainers wrote (RFC 7232 §3.1 → RFC 9110 §13.1.1). Nobody on this project chose
+these edits.
+
 **How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
 `claude -p`) "which RFC is the current specification for X? If several RFCs together form it, list
 them" for 34 protocols, under three conditions. **No tools:** Haiku included an obsolete RFC in its

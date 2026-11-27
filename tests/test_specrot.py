@@ -333,7 +333,11 @@ def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
              "[RFC 8446]:",                                           # link definition, URL on the next line
              "see RFC 8446 D.4 for middlebox",                        # bare appendix (E.4 in RFC 9846)
              "urllib3 is RFC 3986 and RFC 6874 compliant",            # 6874 -> 9844 is a different design
-             "# see RFC 8941"]
+             "# Accept-Language. From RFC 2616, section 14.4 and 3.9",  # second section (Django, PR 16257)
+             "# sections 2.2 and 2.3 of RFC 2396:",                   # plural sections before the citation
+             "# see RFC 8941",
+             "as defined in section 3.1 of RFC 7232."]                # singular: mapped (RFC 9110 §13.1.1)
     (tmp_path / "x.md").write_text("\n".join(lines) + "\n")
     edits, _ = fix.plan(conn, tmp_path)
-    assert [e.line for e in edits] == [11]
+    assert [e.line for e in edits] == [13, 14]
+    assert "section 13.1.1 of RFC 9110" in edits[1].new

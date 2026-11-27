@@ -75,6 +75,10 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
             return None  # inside a quoted example or quotation
         if re.match(r"\s*[:#,/]?\s*\d+(\.\d+)+", tail) and not m.group(2):
             return None  # a section number the pattern did not capture ("RFC 7231: 6.3.6", "7231/6.4.4") would go stale
+        if not m.group(2) and m.start() not in before_sections and re.search(r"(?i)(sections?|§)\s*[A-Z\d][\d.]*(\s*(,|and|or|&)\s*[A-Z\d][\d.]*)*,?\s+of\s*\[?$", head):
+            return None  # "sections 2.2 and 2.3 of RFC 2396": sections before the citation that SECTION_OF did not take
+        if m.group(2) and re.match(r"(?i)\s*(,|and|or|&)\s*(sections?\s*)?[A-Z\d](\.\d+)*\b", tail):
+            return None  # a second section after the captured one ("section 14.4 and 3.9") would go stale
         if not m.group(2) and re.match(r"(?i)\s*,?\s*((sections?|sec\.?|§|appendix)\b.*)?$", tail) and tail.strip():
             return None  # "RFC 8446, sections 4.1.3 and 4.2.1" or a section wrapped onto the next line
         if head.rfind("[") > head.rfind("]") and re.match(r"[^\]]*\]:", tail):

@@ -1,0 +1,1027 @@
+{
+ "total": {
+  "replaced_citations": 62,
+  "obsolete": 61,
+  "fix_proposed": 26,
+  "same_rfc": 25,
+  "same_section": 7,
+  "fix_on_untouched_lines": 16
+ },
+ "prs": [
+  {
+   "repo": "python/cpython",
+   "pr": 139435,
+   "title": "gh-139434: Update selected RFC 2822 references to RFC 5322",
+   "merged_at": "2025-11-04T19:46:08Z",
+   "merged_by": "bitdancer",
+   "base": "248ce9fa8c7a1ed1912e0db31172c8cd2c298b37",
+   "merge": "ce1bb85d286130f44b7e874430b0b12990d61dc1",
+   "files": [
+    "Doc/library/http.client.rst",
+    "Doc/library/http.server.rst",
+    "Doc/library/mailbox.rst",
+    "Doc/library/time.rst",
+    "Doc/tutorial/stdlib.rst",
+    "Lib/email/_parseaddr.py",
+    "Lib/email/_policybase.py",
+    "Lib/email/feedparser.py",
+    "Lib/email/generator.py",
+    "Lib/email/message.py",
+    "Lib/email/parser.py",
+    "Lib/http/client.py",
+    "Lib/smtplib.py",
+    "Lib/test/test_email/data/msg_35.txt",
+    "Lib/test/test_email/test_email.py"
+   ],
+   "rows": [
+    {
+     "file": "Lib/email/_policybase.py",
+     "line": 383,
+     "rfc": "RFC2822",
+     "old": "# default value of 78, as recommended by RFC 2822.",
+     "maintainer": "# default value of 78, as recommended by RFC 5322 section 2.1.1.",
+     "level": "obsolete",
+     "fix": "# default value of 78, as recommended by RFC 5322.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/feedparser.py",
+     "line": 35,
+     "rfc": "RFC2822",
+     "old": "# RFC 2822 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "maintainer": "# RFC 5322 section 3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "level": "obsolete",
+     "fix": "# RFC 5322 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/feedparser.py",
+     "line": 297,
+     "rfc": "RFC2822",
+     "old": "# another RFC 2822 message.",
+     "maintainer": "# another RFC 5322 message.",
+     "level": "obsolete",
+     "fix": "# another RFC 5322 message.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/generator.py",
+     "line": 53,
+     "rfc": "RFC2822",
+     "old": "by RFC 2822.",
+     "maintainer": "by RFC 5322 section 2.1.1.",
+     "level": "obsolete",
+     "fix": "by RFC 5322.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/message.py",
+     "line": 144,
+     "rfc": "RFC2822",
+     "old": "A message object is defined as something that has a bunch of RFC 2822",
+     "maintainer": "A message object is defined as something that has a bunch of RFC 5322",
+     "level": "obsolete",
+     "fix": "A message object is defined as something that has a bunch of RFC 5322",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 5,
+     "rfc": "RFC2822",
+     "old": "\"\"\"A parser of RFC 2822 and MIME email messages.\"\"\"",
+     "maintainer": "\"\"\"A parser of RFC 5322 and MIME email messages.\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 18,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parser of RFC 2822 and MIME email messages.",
+     "maintainer": "\"\"\"Parser of RFC 5322 and MIME email messages.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 24,
+     "rfc": "RFC2822",
+     "old": "The string must be formatted as a block of RFC 2822 headers and header",
+     "maintainer": "The string must be formatted as a block of RFC 5322 headers and header",
+     "level": "obsolete",
+     "fix": "The string must be formatted as a block of RFC 5322 headers and header",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 78,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parser of binary RFC 2822 and MIME email messages.",
+     "maintainer": "\"\"\"Parser of binary RFC 5322 and MIME email messages.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 84,
+     "rfc": "RFC2822",
+     "old": "The input must be formatted as a block of RFC 2822 headers and header",
+     "maintainer": "The input must be formatted as a block of RFC 5322 headers and header",
+     "level": "obsolete",
+     "fix": "The input must be formatted as a block of RFC 5322 headers and header",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 234,
+     "rfc": "RFC2822",
+     "old": "Parses only RFC2822 headers from header lines.",
+     "maintainer": "Parses only RFC 5322 headers from header lines.",
+     "level": "obsolete",
+     "fix": "Parses only RFC5322 headers from header lines.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 247,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parses only RFC2822 headers from a file pointer.\"\"\"",
+     "maintainer": "\"\"\"Parses only RFC 5322 headers from a file pointer.\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 920,
+     "rfc": "RFC2822",
+     "old": "described in RFC 2822 (a ValueError is raised if there is more than",
+     "maintainer": "described in RFC 5322 (a ValueError is raised if there is more than",
+     "level": "obsolete",
+     "fix": "described in RFC 5322 (a ValueError is raised if there is more than",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 934,
+     "rfc": "RFC2822",
+     "old": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 2822",
+     "maintainer": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
+     "level": "obsolete",
+     "fix": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 953,
+     "rfc": "RFC2822",
+     "old": "# Prefer the sender field per RFC 2822:3.6.2.",
+     "maintainer": "# Prefer the sender field per RFC 5322 section 3.6.2.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/test/test_email/data/msg_35.txt",
+     "line": 4,
+     "rfc": "RFC2822",
+     "old": "counter to RFC 2822, there's no separating newline here",
+     "maintainer": "counter to RFC 5322, there's no separating newline here",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/test/test_email/test_email.py",
+     "line": 2376,
+     "rfc": "RFC2822",
+     "old": "counter to RFC 2822, there's no separating newline here",
+     "maintainer": "counter to RFC 5322, there's no separating newline here",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Doc/library/http.client.rst",
+     "line": 371,
+     "old": "<https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6>`_, a HTTP ``Host:``",
+     "fix": "<https://datatracker.ietf.org/doc/html/rfc9110#section-9.3.6>`_, a HTTP ``Host:``"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 31,
+     "old": "# in RFC822, other than Z.  According to RFC1123, the description in",
+     "fix": "# in RFC5322, other than Z.  According to RFC1123, the description in"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 32,
+     "old": "# RFC822 gets the signs wrong, so we can't rely on any such time",
+     "fix": "# RFC5322 gets the signs wrong, so we can't rely on any such time"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 148,
+     "old": "# appropriate four-digit format, according to the POSIX standard. RFC 822",
+     "fix": "# appropriate four-digit format, according to the POSIX standard. RFC 5322"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 217,
+     "old": "To understand what this class does, it helps to have a copy of RFC 2822 in",
+     "fix": "To understand what this class does, it helps to have a copy of RFC 5322 in"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 433,
+     "old": "If 'allowcomments' is non-zero, embedded RFC 2822 comments are allowed",
+     "fix": "If 'allowcomments' is non-zero, embedded RFC 5322 comments are allowed"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 495,
+     "old": "A phrase is a sequence of words, which are in turn either RFC 2822",
+     "fix": "A phrase is a sequence of words, which are in turn either RFC 5322"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 114,
+     "old": "# Header name/value ABNF (http://tools.ietf.org/html/rfc7230#section-3.2)",
+     "fix": "# Header name/value ABNF (http://tools.ietf.org/html/rfc9110#section-6.3)"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 843,
+     "old": "a body (RFC 7230, Section 3.3.2). We also set the Content-Length for",
+     "fix": "a body (RFC 9112, Section 6.2). We also set the Content-Length for"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 909,
+     "old": "(https://tools.ietf.org/html/rfc7231#section-4.3.6), a HTTP Host:",
+     "fix": "(https://tools.ietf.org/html/rfc9110#section-9.3.6), a HTTP Host:"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 4,
+     "old": "Authentication) and RFC 2487 (Secure SMTP over TLS).",
+     "fix": "Authentication) and RFC 3207 (Secure SMTP over TLS)."
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 36,
+     "old": "# Better RFC 821 compliance (MAIL and RCPT, and CRLF in data)",
+     "fix": "# Better RFC 5321 compliance (MAIL and RCPT, and CRLF in data)"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 38,
+     "old": "# RFC 2554 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>.",
+     "fix": "# RFC 4954 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>."
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 269,
+     "old": "# RFC 2821 says we should use the fqdn in the EHLO/HELO verb, and",
+     "fix": "# RFC 5321 says we should use the fqdn in the EHLO/HELO verb, and"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 460,
+     "old": "# According to RFC1869 some (badly written)",
+     "fix": "# According to RFC5321 some (badly written)"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 488,
+     "old": "# RFC 1869 requires a space between ehlo keyword and parameters.",
+     "fix": "# RFC 5321 requires a space between ehlo keyword and parameters."
+    }
+   ],
+   "summary": {
+    "replaced_citations": 17,
+    "obsolete": 17,
+    "fix_proposed": 10,
+    "same_rfc": 10,
+    "same_section": 0,
+    "fix_on_untouched_lines": 16
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151275,
+   "title": "gh-77328: Update `base64` module docstring to reference RFC 4648",
+   "merged_at": "2026-06-13T12:21:54Z",
+   "merged_by": "StanFromIreland",
+   "base": "3a8bebd86f36be05442fa2f3adcc83c2a4b00ef2",
+   "merge": "e9339876883f96af2e406a92a05be647b7fbe5d5",
+   "files": [
+    "Lib/base64.py"
+   ],
+   "rows": [
+    {
+     "file": "Lib/base64.py",
+     "line": 1,
+     "rfc": "RFC3548",
+     "old": "\"\"\"Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 data encodings\"\"\"",
+     "maintainer": "\"\"\"Base16, Base32, Base64 (RFC 4648), Base85 and Ascii85 data encodings\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/base64.py",
+     "line": 222,
+     "rfc": "RFC3548",
+     "old": "RFC 3548 allows for optional mapping of the digit 0 (zero) to the",
+     "maintainer": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
+     "level": "obsolete",
+     "fix": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/base64.py",
+     "line": 269,
+     "rfc": "RFC3548",
+     "old": "# RFC 3548, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "maintainer": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "level": "obsolete",
+     "fix": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 3,
+    "obsolete": 3,
+    "fix_proposed": 2,
+    "same_rfc": 2,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27700,
+   "title": "bpo-36700: updated RFC references",
+   "merged_at": "2021-08-13T10:58:56Z",
+   "merged_by": "ambv",
+   "base": "a2ce538e16d5e3a6168704366bdd7a8c5af29881",
+   "merge": "e43b9bbc31c22a0d97dc4fc420300e40c2d74166",
+   "files": [
+    "Doc/library/base64.rst",
+    "Doc/library/security_warnings.rst"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/base64.rst",
+     "line": 5,
+     "rfc": "RFC3548",
+     "old": ":synopsis: RFC 3548: Base16, Base32, Base64 Data Encodings;",
+     "maintainer": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
+     "level": "obsolete",
+     "fix": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 1,
+    "obsolete": 1,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 148,
+   "title": "bpo-19180: Updated reference for RFC 1750 and RFC 3280",
+   "merged_at": "2017-06-09T09:43:59Z",
+   "merged_by": "ncoghlan",
+   "base": "ae8750bca8234a9af9382b9d7e457b57f810ad64",
+   "merge": "63c2c8ac17750ba2be2cfc4e339cae1f4edee54f",
+   "files": [
+    "Doc/library/ssl.rst",
+    "Modules/_ssl.c",
+    "Modules/clinic/_ssl.c.h"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2316,
+     "rfc": "RFC1750",
+     "old": "`RFC 1750: Randomness Recommendations for Security <https://www.ietf.org/rfc/rfc1750>`_",
+     "maintainer": "`RFC 4086: Randomness Requirements for Security <http://datatracker.ietf.org/doc/rfc4086/>`_ / Donald E., Jeffrey I. Schiller",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2319,
+     "rfc": "RFC3280",
+     "old": "`RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile <https://www.ietf.org/rfc/rfc3280>`_",
+     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2322,
+     "rfc": "RFC4366",
+     "old": "`RFC 4366: Transport Layer Security (TLS) Extensions <https://www.ietf.org/rfc/rfc4366>`_",
+     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Modules/_ssl.c",
+     "line": 4470,
+     "rfc": "RFC1750",
+     "old": "string.  See RFC 1750.",
+     "maintainer": "string.  See RFC 4086.",
+     "level": "obsolete",
+     "fix": "string.  See RFC 4086.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Modules/clinic/_ssl.c.h",
+     "line": 850,
+     "rfc": "RFC1750",
+     "old": "\"string.  See RFC 1750.\");",
+     "maintainer": "\"string.  See RFC 4086.\");",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 5,
+    "obsolete": 5,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 16257,
+   "title": "Updated documentation and comments for RFC updates.",
+   "merged_at": "2022-11-10T13:22:12Z",
+   "merged_by": "felixxm",
+   "base": "fad070b07b8c5f5022c2867d291cb6968709f2a1",
+   "merge": "9bd174b9a75299dce33e673a559f2b673399b971",
+   "files": [
+    "django/core/handlers/wsgi.py",
+    "django/core/mail/message.py",
+    "django/http/multipartparser.py",
+    "django/middleware/csrf.py",
+    "django/middleware/gzip.py",
+    "django/test/client.py",
+    "django/utils/cache.py",
+    "django/utils/encoding.py",
+    "django/utils/html.py",
+    "django/utils/http.py",
+    "django/utils/translation/trans_real.py",
+    "django/views/defaults.py",
+    "docs/ref/csrf.txt",
+    "docs/ref/middleware.txt",
+    "docs/ref/models/instances.txt",
+    "docs/ref/models/querysets.txt",
+    "docs/ref/request-response.txt",
+    "docs/ref/unicode.txt",
+    "docs/ref/utils.txt",
+    "docs/ref/views.txt",
+    "docs/topics/cache.txt",
+    "docs/topics/conditional-view-processing.txt",
+    "docs/topics/testing/tools.txt",
+    "tests/auth_tests/test_models.py",
+    "tests/conditional_processing/tests.py",
+    "tests/file_uploads/tests.py",
+    "tests/httpwrappers/tests.py",
+    "tests/mail/tests.py",
+    "tests/middleware/tests.py",
+    "tests/requests/tests.py",
+    "tests/test_client/views.py",
+    "tests/utils_tests/test_http.py",
+    "tests/utils_tests/test_ipv6.py",
+    "tests/view_tests/tests/test_static.py"
+   ],
+   "rows": [
+    {
+     "file": "django/core/handlers/wsgi.py",
+     "line": 79,
+     "rfc": "RFC2396",
+     "old": "# stated in https://www.ietf.org/rfc/rfc2396.txt",
+     "maintainer": "# stated in RFC 3986.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/http/multipartparser.py",
+     "line": 46,
+     "rfc": "RFC2388",
+     "old": "A rfc2388 multipart/form-data parser.",
+     "maintainer": "An RFC 7578 multipart/form-data parser.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/middleware/csrf.py",
+     "line": 429,
+     "rfc": "RFC7231",
+     "old": "# Assume that anything not defined as 'safe' by RFC7231 needs protection",
+     "maintainer": "# Assume that anything not defined as 'safe' by RFC 9110 needs protection",
+     "level": "obsolete",
+     "fix": "# Assume that anything not defined as 'safe' by RFC9110 needs protection",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "django/middleware/gzip.py",
+     "line": 45,
+     "rfc": "RFC7232",
+     "old": "# of RFC 7232 section-2.1 while also allowing conditional request",
+     "maintainer": "# of RFC 9110 Section 8.8.1 while also allowing conditional request",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/test/client.py",
+     "line": 113,
+     "rfc": "RFC7230",
+     "old": "compliance with RFC 7230, section 3.3.3.",
+     "maintainer": "compliance with RFC 9112 Section 6.3.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/test/client.py",
+     "line": 990,
+     "rfc": "RFC2616",
+     "old": "# RFC 2616: bare domains without path are treated as the root.",
+     "maintainer": "# RFC 3986 Section 6.2.3: Empty path should be normalized to \"/\".",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 9,
+     "rfc": "RFC7231",
+     "old": "https://tools.ietf.org/html/rfc7231#section-7.1.4",
+     "maintainer": "For information on the Vary header, see RFC 9110 Section 12.5.5.",
+     "level": "obsolete",
+     "fix": "https://tools.ietf.org/html/rfc9110#section-12.5.5",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 142,
+     "rfc": "RFC7232",
+     "old": "# Preserve the headers required by Section 4.1 of RFC 7232, as well as",
+     "maintainer": "# Preserve the headers required by RFC 9110 Section 15.4.5, as well as",
+     "level": "obsolete",
+     "fix": "# Preserve the headers required by Section 15.4.5 of RFC 9110, as well as",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 180,
+     "rfc": "RFC7232",
+     "old": "# Step 1 of section 6 of RFC 7232: Test the If-Match precondition.",
+     "maintainer": "# Evaluation of request preconditions below follows RFC 9110 Section / # 13.2.2. / # Step 1: Test the If-Match precondition.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 215,
+     "rfc": "RFC7232",
+     "old": "Test the If-Match comparison as defined in section 3.1 of RFC 7232.",
+     "maintainer": "Test the If-Match comparison as defined in RFC 9110 Section 13.1.1.",
+     "level": "obsolete",
+     "fix": "Test the If-Match comparison as defined in section 13.1.1 of RFC 9110.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 237,
+     "rfc": "RFC7232",
+     "old": "RFC 7232.",
+     "maintainer": "Test the If-Unmodified-Since comparison as defined in RFC 9110 Section / 13.1.4.",
+     "level": "obsolete",
+     "fix": "RFC 9110.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 244,
+     "rfc": "RFC7232",
+     "old": "Test the If-None-Match comparison as defined in section 3.2 of RFC 7232.",
+     "maintainer": "Test the If-None-Match comparison as defined in RFC 9110 Section 13.1.2.",
+     "level": "obsolete",
+     "fix": "Test the If-None-Match comparison as defined in section 13.1.2 of RFC 9110.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/cache.py",
+     "line": 263,
+     "rfc": "RFC7232",
+     "old": "Test the If-Modified-Since comparison as defined in section 3.3 of RFC 7232.",
+     "maintainer": "Test the If-Modified-Since comparison as defined in RFC 9110 Section / 13.1.3.",
+     "level": "obsolete",
+     "fix": "Test the If-Modified-Since comparison as defined in section 13.1.3 of RFC 9110.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/encoding.py",
+     "line": 201,
+     "rfc": "RFC2396",
+     "old": "# sections 2.2 and 2.3 of RFC 2396:",
+     "maintainer": "# These are the \"reserved\" and \"unreserved\" characters specified in RFC / # 3986 Sections 2.2 and 2.3:",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/encoding.py",
+     "line": 206,
+     "rfc": "RFC2396",
+     "old": "# and \"?\" according to section 3.3 of RFC 2396.",
+     "maintainer": "# and \"?\" according to RFC 3986 Section 3.3.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 22,
+     "rfc": "RFC7232",
+     "old": "# based on RFC 7232, Appendix C",
+     "maintainer": "# Based on RFC 9110 Appendix A.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 97,
+     "rfc": "RFC1123",
+     "old": "Format the time to match the RFC1123 date format as specified by HTTP",
+     "maintainer": "Format the time to match the RFC 5322 date format as specified by RFC 9110 / Section 5.6.7.",
+     "level": "amended",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 98,
+     "rfc": "RFC7231",
+     "old": "RFC7231 section 7.1.1.1.",
+     "maintainer": "Format the time to match the RFC 5322 date format as specified by RFC 9110 / Section 5.6.7.",
+     "level": "obsolete",
+     "fix": "RFC9110 section 5.6.7.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 111,
+     "rfc": "RFC7231",
+     "old": "Parse a date format as specified by HTTP RFC7231 section 7.1.1.1.",
+     "maintainer": "Parse a date format as specified by HTTP RFC 9110 Section 5.6.7.",
+     "level": "obsolete",
+     "fix": "Parse a date format as specified by HTTP RFC9110 section 5.6.7.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 119,
+     "rfc": "RFC7231",
+     "old": "# RFC7231 makes it mandatory to support RFC850 dates too. So we roll",
+     "maintainer": "# email.utils.parsedate() does the job for RFC 1123 dates; unfortunately / # RFC 9110 makes it mandatory to support RFC 850 dates too. So we roll",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/http.py",
+     "line": 213,
+     "rfc": "RFC7232",
+     "old": "defined by RFC 7232. Return a list of quoted ETags, or ['*'] if all ETags",
+     "maintainer": "defined by RFC 9110. Return a list of quoted ETags, or ['*'] if all ETags",
+     "level": "obsolete",
+     "fix": "defined by RFC 9110. Return a list of quoted ETags, or ['*'] if all ETags",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/translation/trans_real.py",
+     "line": 33,
+     "rfc": "RFC2616",
+     "old": "# Format of Accept-Language header values. From RFC 2616, section 14.4 and 3.9",
+     "maintainer": "# Format of Accept-Language header values. From RFC 9110 Sections 12.4.2 and / # 12.5.4, and RFC 5646 Section 2.1.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/utils/translation/trans_real.py",
+     "line": 34,
+     "rfc": "RFC3066",
+     "old": "# and RFC 3066, section 2.1",
+     "maintainer": "# Format of Accept-Language header values. From RFC 9110 Sections 12.4.2 and / # 12.5.4, and RFC 5646 Section 2.1.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "django/views/defaults.py",
+     "line": 136,
+     "rfc": "RFC7231",
+     "old": "\"403 Forbidden\" (as per RFC 7231) will be returned.",
+     "maintainer": "\"403 Forbidden\" (as per RFC 9110 Section 15.5.4) will be returned.",
+     "level": "obsolete",
+     "fix": "\"403 Forbidden\" (as per RFC 9110) will be returned.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 108,
+     "rfc": "RFC7232",
+     "old": "because :rfc:`RFC 7232 <7232#section-4.1>` requires that the headers they",
+     "maintainer": "because :rfc:`RFC 9110 <9110#section-15.4.5>` requires that the headers / they set be present on 304 responses.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "tests/conditional_processing/tests.py",
+     "line": 146,
+     "rfc": "RFC7232",
+     "old": "# see https://tools.ietf.org/html/rfc7232#section-6",
+     "maintainer": "# See RFC 9110 Section 13.2.2.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "tests/middleware/tests.py",
+     "line": 643,
+     "rfc": "RFC7232",
+     "old": "by section 4.1 of RFC 7232, Last-Modified, and the cookies.",
+     "maintainer": "by RFC 9110 Section 15.4.5, Last-Modified, and the cookies.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "tests/requests/tests.py",
+     "line": 429,
+     "rfc": "RFC2616",
+     "old": "# https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.13",
+     "maintainer": "# According to RFC 9110 Section 8.6 every POST with Content-Length >= 0 / # is a valid request, so ensure that we handle Content-Length == 0.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "tests/test_client/views.py",
+     "line": 398,
+     "rfc": "RFC2616",
+     "old": "RFC 2616 3.2.2: A bare domain without any abs_path element should be",
+     "maintainer": "RFC 3986 Section 6.2.3: Empty path should be normalized to \"/\".",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "tests/utils_tests/test_http.py",
+     "line": 332,
+     "rfc": "RFC7232",
+     "old": "# Ignore RFC 2616 ETags that are invalid according to RFC 7232.",
+     "maintainer": "# Ignore RFC 2616 ETags that are invalid according to RFC 9110.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 30,
+    "obsolete": 29,
+    "fix_proposed": 11,
+    "same_rfc": 11,
+    "same_section": 7,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1809,
+   "title": "Update README to mention new HTTP/2 RFC",
+   "merged_at": "2022-10-02T03:53:13Z",
+   "merged_by": "tatsuhiro-t",
+   "base": "634e65df64b9dc62208e7d3304f01d85c2b715fa",
+   "merge": "7380ff35514f304c466768cc959c6cc881618070",
+   "files": [
+    "README.rst"
+   ],
+   "rows": [],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 0,
+    "obsolete": 0,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "psf/requests",
+   "pr": 2087,
+   "title": "Update trivial mentions to RFC 2616.",
+   "merged_at": "2014-06-08T14:44:26Z",
+   "merged_by": "sigmavirus24",
+   "base": "702283093a9a39325cc1825b2376d88b0c5cdfd2",
+   "merge": "a2ebee60d17583e6bea425572e51ab71b700f553",
+   "files": [
+    "docs/user/quickstart.rst",
+    "requests/sessions.py"
+   ],
+   "rows": [
+    {
+     "file": "docs/user/quickstart.rst",
+     "line": 328,
+     "rfc": "RFC2616",
+     "old": "`RFC 2616 <http://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html>`_, HTTP",
+     "maintainer": "`RFC 7230 <http://tools.ietf.org/html/rfc7230#section-3.2>`_, HTTP Header names / are case-insensitive.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "requests/sessions.py",
+     "line": 121,
+     "rfc": "RFC2616",
+     "old": "# Facilitate non-RFC2616-compliant 'location' headers",
+     "maintainer": "# Facilitate relative 'location' headers, as allowed by RFC 7231.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "requests/sessions.py",
+     "line": 131,
+     "rfc": "RFC2616",
+     "old": "# http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html#sec10.3.4",
+     "maintainer": "# http://tools.ietf.org/html/rfc7231#section-6.4.4",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 3,
+    "obsolete": 3,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 409,
+   "title": "Update references to RFC 2616",
+   "merged_at": "2014-06-07T17:25:30Z",
+   "merged_by": "shazow",
+   "base": "9ca3f3f9a4bdc505fd23da2264ef268e66f1d88a",
+   "merge": "11dca7d478268655f5aacf694c873f4ca77ef1c4",
+   "files": [
+    "urllib3/_collections.py",
+    "urllib3/poolmanager.py",
+    "urllib3/response.py"
+   ],
+   "rows": [
+    {
+     "file": "urllib3/_collections.py",
+     "line": 119,
+     "rfc": "RFC2616",
+     "old": "RFC 2616. Iteration provides the first case-sensitive key seen for each",
+     "maintainer": "RFC 7230. Iteration provides the first case-sensitive key seen for each",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "urllib3/poolmanager.py",
+     "line": 164,
+     "rfc": "RFC2616",
+     "old": "# RFC 2616, Section 10.3.4",
+     "maintainer": "# RFC 7231, Section 6.4.4",
+     "level": "obsolete",
+     "fix": "# RFC 9110, Section 15.4.4",
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "urllib3/response.py",
+     "line": 163,
+     "rfc": "RFC2616",
+     "old": "# Note: content-encoding value should be case-insensitive, per RFC 2616",
+     "maintainer": "# Note: content-encoding value should be case-insensitive, per RFC 7230 / # Section 3.2",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 3,
+    "obsolete": 3,
+    "fix_proposed": 1,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  }
+ ]
+}
