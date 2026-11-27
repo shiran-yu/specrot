@@ -20,6 +20,8 @@ $ uv run specrot check 8446
 └── 11 verified technical errata  https://www.rfc-editor.org/errata/rfc8446
 ```
 
+[![The live explorer: RFC 2616, obsolete, and the chains to RFC 9110, 9111 and 9112 that replace it](docs/img/check-2616.png)](https://shiran-yu.github.io/specrot/#rfc=2616)
+
 ## Use case
 
 Protocol code is full of comments like `// see RFC 7230, section 3.3.2`. RFCs are never edited
@@ -109,6 +111,8 @@ seed RFC not in its key is. It does not check that a key lists every part of a s
 
 Every answer specrot gives is a walk of unknown length across several kinds of node, which a lookup table
 cannot hold and SQL needs a recursive CTE plus a join per hop for:
+
+[![The blast-radius query running in the browser's Cypher tab, 13 replaced documents with projects and lines](docs/img/blast-radius.png)](https://shiran-yu.github.io/specrot/#cypher)
 
 ```cypher
 // Blast radius of a new RFC: every document it replaces, any number of hops back, still cited in the projects
