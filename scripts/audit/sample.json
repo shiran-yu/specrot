@@ -1,0 +1,1235 @@
+[
+ {
+  "i": 0,
+  "project": "go-crypto-tls",
+  "file": "tls/handshake_client_tls13.go",
+  "line": 882,
+  "rfc": "RFC8446",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "\t\treturn nil\n\t}\n\n\t// See RFC 8446, Section 4.6.1.\n\tif msg.lifetime == 0 {\n\t\treturn nil\n\t}"
+ },
+ {
+  "i": 1,
+  "project": "cpython-Lib",
+  "file": "http/cookiejar.py",
+  "line": 641,
+  "rfc": "RFC2965",
+  "rfc_title": "HTTP State Management Mechanism",
+  "replaced_by": [
+   "RFC6265"
+  ],
+  "context": "def eff_request_host(request):\n    \"\"\"Return a tuple (request-host, effective request-host name).\n\n    As defined by RFC 2965, except both are lowercased.\n\n    \"\"\"\n    erhn = req_host = request_host(request)"
+ },
+ {
+  "i": 2,
+  "project": "node-lib",
+  "file": "url.js",
+  "line": 547,
+  "rfc": "RFC2396",
+  "rfc_title": "Uniform Resource Identifiers (URI): Generic Syntax",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "  /* 120 - 125 */ '', '', '', '%7B', '%7C', '%7D',\n];\n\n// Automatically escape all delimiters and unwise characters from RFC 2396.\n// Also escape single quotes in case of an XSS attack.\n// Return the escaped string.\nfunction autoEscapeStr(rest) {"
+ },
+ {
+  "i": 3,
+  "project": "openssl",
+  "file": "doc/designs/rfc4514.md",
+  "line": 242,
+  "rfc": "RFC2256",
+  "rfc_title": "A Summary of the X.500(96) User Schema for use with LDAPv3",
+  "replaced_by": [
+   "RFC4510",
+   "RFC4512",
+   "RFC4517",
+   "RFC4519",
+   "RFC4523"
+  ],
+  "context": "[RFC2253]:\n    <https://www.rfc-editor.org/rfc/rfc2253.html>\n\n[RFC2256]:\n    <https://www.rfc-editor.org/rfc/rfc2256.html>\n\n[RFC3280]:"
+ },
+ {
+  "i": 4,
+  "project": "curl",
+  "file": "docs/libcurl/opts/CURLOPT_RANGE.md",
+  "line": 50,
+  "rfc": "RFC2326",
+  "rfc_title": "Real Time Streaming Protocol (RTSP)",
+  "replaced_by": [
+   "RFC7826"
+  ],
+  "context": "ignore range requests so even when you set CURLOPT_RANGE(3) for a request, you\nmay end up getting the full response sent back.\n\nFor RTSP, the formatting of a range should follow RFC 2326 Section 12.29. For\nRTSP, byte ranges are **not** permitted. Instead, ranges should be given in\n**npt**, **utc**, or **smpte** formats.\n"
+ },
+ {
+  "i": 5,
+  "project": "urllib3",
+  "file": "src/urllib3/util/url.py",
+  "line": 487,
+  "rfc": "RFC6874",
+  "rfc_title": "Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers",
+  "replaced_by": [
+   "RFC9844"
+  ],
+  "context": "    \"\"\"\n    Given a url, return a parsed :class:`.Url` namedtuple. Best-effort is\n    performed to parse incomplete urls. Fields not provided will be None.\n    This parser is RFC 3986 and RFC 6874 compliant.\n\n    The parser logic and helper functions are based heavily on\n    work done in the ``rfc3986`` module."
+ },
+ {
+  "i": 6,
+  "project": "openssl",
+  "file": "providers/implementations/kdfs/tls1_prf.c",
+  "line": 14,
+  "rfc": "RFC5246",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.2",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": " * Refer to \"The TLS Protocol Version 1.0\" Section 5\n * (https://tools.ietf.org/html/rfc2246#section-5) and\n * \"The Transport Layer Security (TLS) Protocol Version 1.2\" Section 5\n * (https://tools.ietf.org/html/rfc5246#section-5).\n *\n * For TLS v1.0 and TLS v1.1 the TLS PRF algorithm is given by:\n *"
+ },
+ {
+  "i": 7,
+  "project": "werkzeug",
+  "file": "src/werkzeug/utils.py",
+  "line": 476,
+  "rfc": "RFC5987",
+  "rfc_title": "Character Set and Language Encoding for Hypertext Transfer Protocol (HTTP) Header Field Parameters",
+  "replaced_by": [
+   "RFC8187"
+  ],
+  "context": "        else:\n            simple = unicodedata.normalize(\"NFKD\", download_name)\n            simple = simple.encode(\"ascii\", \"ignore\").decode(\"ascii\")\n            # safe = RFC 5987 attr-char\n            quoted = quote(download_name, safe=\"!#$&+-.^_`|~\")\n            names = {\"filename\": simple, \"filename*\": f\"UTF-8''{quoted}\"}\n"
+ },
+ {
+  "i": 8,
+  "project": "undici",
+  "file": "lib/dispatcher/client-h1.js",
+  "line": 1291,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "  }\n\n  if (contentLength === 0 && !expectsPayload) {\n    // https://tools.ietf.org/html/rfc7230#section-3.3.2\n    // A user agent SHOULD NOT send a Content-Length header field when\n    // the request message does not contain a payload body and the method\n    // semantics do not anticipate such a body."
+ },
+ {
+  "i": 9,
+  "project": "openssl",
+  "file": "test/verify_extra_test.c",
+  "line": 610,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "        goto err;\n    if (!TEST_true(X509_VERIFY_PARAM_set1_smtputf8(vpm, utf8mail, 0)))\n        goto err;\n    if (!TEST_true(X509_VERIFY_PARAM_set1_email(vpm, rfc822mail, 0)))\n        goto err;\n    if (!TEST_true(X509_VERIFY_PARAM_set1_email(vpm, utf8mail, 0)))\n        goto err;"
+ },
+ {
+  "i": 10,
+  "project": "curl",
+  "file": "lib/smtp.c",
+  "line": 1000,
+  "rfc": "RFC2554",
+  "rfc_title": "SMTP Service Extension for Authentication",
+  "replaced_by": [
+   "RFC4954"
+  ],
+  "context": "      curlx_free(address);\n    }\n    else\n      /* Empty AUTH, RFC-2554, sect. 5 */\n      auth = curlx_strdup(\"<>\");\n\n    if(!auth) {"
+ },
+ {
+  "i": 11,
+  "project": "haproxy",
+  "file": "doc/configuration.txt",
+  "line": 28113,
+  "rfc": "RFC2253",
+  "rfc_title": "Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names",
+  "replaced_by": [
+   "RFC4510",
+   "RFC4514"
+  ],
+  "context": "  consumption by different protocols. Currently supported is rfc2253 for\n  LDAP v3.\n  If you'd like to modify the format only you can specify an empty string\n  and zero for the first two parameters. Example: ssl_f_s_dn(,0,rfc2253)\n  If the requested entry's ASN.1 value (or, when no <entry> is specified,\n  any entry in the DN) contains an embedded NUL byte followed by other\n  data, it is considered malformed and no data is returned."
+ },
+ {
+  "i": 12,
+  "project": "cpython-Lib",
+  "file": "test/test_urlparse.py",
+  "line": 469,
+  "rfc": "RFC2396",
+  "rfc_title": "Uniform Resource Identifiers (URI): Generic Syntax",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "        self.checkJoin(RFC2396_BASE, 'g#s', 'http://a/b/c/g#s')\n        self.checkJoin(RFC2396_BASE, 'g?y#s', 'http://a/b/c/g?y#s')\n        self.checkJoin(RFC2396_BASE, 'g;x', 'http://a/b/c/g;x')\n        self.checkJoin(RFC2396_BASE, 'g;x?y#s', 'http://a/b/c/g;x?y#s')\n        self.checkJoin(RFC2396_BASE, '.', 'http://a/b/c/')\n        self.checkJoin(RFC2396_BASE, './', 'http://a/b/c/')\n        self.checkJoin(RFC2396_BASE, '..', 'http://a/b/')"
+ },
+ {
+  "i": 13,
+  "project": "curl",
+  "file": "tests/data/test823",
+  "line": 8,
+  "rfc": "RFC2831",
+  "rfc_title": "Using Digest Authentication as a SASL Mechanism",
+  "replaced_by": [
+   "RFC6331"
+  ],
+  "context": "IMAP\nSASL\nSASL AUTH DIGEST-MD5\nRFC2831\n</keywords>\n</info>\n"
+ },
+ {
+  "i": 14,
+  "project": "aiohttp",
+  "file": "tests/test_cookie_helpers.py",
+  "line": 1086,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    \"\"\"\n    Test that parse_set_cookie_headers handles various date formats per RFC 6265.\n\n    This tests the fix for issue #4327 - support for RFC 822, RFC 850,\n    and ANSI C asctime() date formats in cookie expiration.\n    \"\"\"\n    # Test various date formats"
+ },
+ {
+  "i": 15,
+  "project": "netty-codec-http",
+  "file": "src/main/java/io/netty/handler/codec/http/HttpObjectDecoder.java",
+  "line": 1255,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "    }\n\n    private static boolean isSPLenient(byte c) {\n        // See https://tools.ietf.org/html/rfc7230#section-3.5\n        return SP_LENIENT_BYTES[c + 128];\n    }\n"
+ },
+ {
+  "i": 16,
+  "project": "okhttp",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/internal/http/DateFormatting.kt",
+  "line": 47,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "private val BROWSER_COMPATIBLE_DATE_FORMAT_STRINGS =\n  arrayOf(\n    // HTTP formats required by RFC2616 but with any timezone:\n    // RFC 822, updated by RFC 1123 with any TZ.\n    \"EEE, dd MMM yyyy HH:mm:ss zzz\",\n    // RFC 850, obsoleted by RFC 1036 with any TZ.\n    \"EEEE, dd-MMM-yy HH:mm:ss zzz\","
+ },
+ {
+  "i": 17,
+  "project": "urllib3",
+  "file": "src/urllib3/response.py",
+  "line": 891,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "                log.warning(\n                    \"Received response with both Content-Length and \"\n                    \"Transfer-Encoding set. This is expressly forbidden \"\n                    \"by RFC 7230 sec 3.3.2. Ignoring Content-Length and \"\n                    \"attempting to process response as Transfer-Encoding: \"\n                    \"chunked.\"\n                )"
+ },
+ {
+  "i": 18,
+  "project": "cpython-Lib",
+  "file": "test/test_http_cookiejar.py",
+  "line": 82,
+  "rfc": "RFC850",
+  "rfc_title": "Standard for interchange of USENET messages",
+  "replaced_by": [
+   "RFC5536",
+   "RFC5537"
+  ],
+  "context": "         'Thursday, 03-Feb-1994 00:00:00 GMT',  # broken rfc850 HTTP format\n\n         '03 Feb 1994 00:00:00 GMT',  # HTTP format (no weekday)\n         '03-Feb-94 00:00:00 GMT',  # old rfc850 (no weekday)\n         '03-Feb-1994 00:00:00 GMT',  # broken rfc850 (no weekday)\n         '03-Feb-1994 00:00 GMT',  # broken rfc850 (no weekday, no seconds)\n         '03-Feb-1994 00:00',  # broken rfc850 (no weekday, no seconds, no tz)"
+ },
+ {
+  "i": 19,
+  "project": "aiohttp",
+  "file": "tests/test_cookie_helpers.py",
+  "line": 1086,
+  "rfc": "RFC850",
+  "rfc_title": "Standard for interchange of USENET messages",
+  "replaced_by": [
+   "RFC5536",
+   "RFC5537"
+  ],
+  "context": "    \"\"\"\n    Test that parse_set_cookie_headers handles various date formats per RFC 6265.\n\n    This tests the fix for issue #4327 - support for RFC 822, RFC 850,\n    and ANSI C asctime() date formats in cookie expiration.\n    \"\"\"\n    # Test various date formats"
+ },
+ {
+  "i": 20,
+  "project": "openssl",
+  "file": "crypto/x509/v3_ncons.c",
+  "line": 589,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "        return nc_dns(gen->d.dNSName, base->d.dNSName);\n\n    case GEN_EMAIL:\n        return nc_email(gen->d.rfc822Name, base->d.rfc822Name);\n\n    case GEN_URI:\n        return nc_uri(gen->d.uniformResourceIdentifier,"
+ },
+ {
+  "i": 21,
+  "project": "okhttp",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/internal/http/DateFormatting.kt",
+  "line": 49,
+  "rfc": "RFC1036",
+  "rfc_title": "Standard for interchange of USENET messages",
+  "replaced_by": [
+   "RFC5536",
+   "RFC5537"
+  ],
+  "context": "    // HTTP formats required by RFC2616 but with any timezone:\n    // RFC 822, updated by RFC 1123 with any TZ.\n    \"EEE, dd MMM yyyy HH:mm:ss zzz\",\n    // RFC 850, obsoleted by RFC 1036 with any TZ.\n    \"EEEE, dd-MMM-yy HH:mm:ss zzz\",\n    // ANSI C's asctime() format\n    \"EEE MMM d HH:mm:ss yyyy\","
+ },
+ {
+  "i": 22,
+  "project": "curl",
+  "file": "docs/cmdline-opts/happy-eyeballs-timeout-ms.md",
+  "line": 27,
+  "rfc": "RFC6555",
+  "rfc_title": "Happy Eyeballs: Success with Dual-Stack Hosts",
+  "replaced_by": [
+   "RFC8305"
+  ],
+  "context": "time, then a connection attempt is made to the IPv4 address in parallel. The\nfirst connection to be established is the one that is used.\n\nThe range of suggested useful values is limited. Happy Eyeballs RFC 6555 says\n\"It is RECOMMENDED that connection attempts be paced 150-250 ms apart to\nbalance human factors against network load.\" libcurl currently defaults to\n200 ms. Firefox and Chrome currently default to 300 ms."
+ },
+ {
+  "i": 23,
+  "project": "openssl",
+  "file": "doc/man3/ASN1_TIME_set.pod",
+  "line": 184,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "\nUsers familiar with RFC822 should note that when specifying the flag\nB<ASN1_DTFLGS_RFC822> the year will be formatted as documented above,\ni.e., using 4 digits, not 2 as specified in RFC822.\n\n=head1 BUGS\n"
+ },
+ {
+  "i": 24,
+  "project": "cpython-Lib",
+  "file": "test/test_email/data/msg_42.txt",
+  "line": 12,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "Stuff\n\n--AAA\nContent-Type: message/rfc822\n\nFrom: webmaster@python.org\nTo: zzz@example.com"
+ },
+ {
+  "i": 25,
+  "project": "cpython-Lib",
+  "file": "http/cookiejar.py",
+  "line": 773,
+  "rfc": "RFC2109",
+  "rfc_title": "HTTP State Management Mechanism",
+  "replaced_by": [
+   "RFC6265"
+  ],
+  "context": "                 comment,\n                 comment_url,\n                 rest,\n                 rfc2109=False,\n                 ):\n\n        if version is not None: version = int(version)"
+ },
+ {
+  "i": 26,
+  "project": "openssl",
+  "file": "test/recipes/30-test_evp_data/evpciph_chacha.txt",
+  "line": 158,
+  "rfc": "RFC7539",
+  "rfc_title": "ChaCha20 and Poly1305 for IETF Protocols",
+  "replaced_by": [
+   "RFC8439"
+  ],
+  "context": "Ciphertext = f798a189f195e66982105ffb640bb7757f579da31602fc93ec01ac56f85ac3c134a4547b733b46413042c9440049176905d3be59ea1c53f15916155c2be8241a38008b9a26bc35941e2444177c8ade6689de95264986d95889fb60e84629c9bd9a5acb1cc118be563eb9b3a4a472f82e09a7e778492b562ef7130e88dfe031c79db9d4f7c7a899151b9a475032b63fc385245fe054e3dd5a97a5f576fe064025d3ce042c566ab2c507b138db853e3d6959660996546cc9c4a6eafdc777c040d70eaf46f76dad3979e5c5360c3317166a1c894c94a371876a94df7628fe4eaaf2ccb27d5aaae0ad7ad0f9d4b6ad3b54098746d4524d38407a6deb3ab78fab78c94213668bbbd394c5de93b853178addd6b97f9fa1ec3e56c00c9ddff0a44a204241175a4cab0f961ba53ede9bdf960b94f9829b1f3414726429b362c5b538e391520f489b7ed8d20ae3fd49e9e259e44397514d618c96c4846be3c680bdc11c71dcbbe29ccf80d62a0938fa549391e6ea57ecbe2606790ec15d2224ae307c144226b7c4e8c2f97d2a1d67852d29beba110edd445197012062a393a9c92803ad3b4f31d7bc6033ccf7932cfed3f019044d25905916777286f82f9a4cc1ffe430ffd1dcfc27deed327b9f9630d2fa969fb6f0603cd19dd9a9519e673bcfcd9014125291a44669ef7285e74ed3729b677f801c3cdf058c50963168b496043716c7307cd9e0cdd137fccb0f05b47cdbb95c5f54831622c3652a32b2531fe326bcd6e2bbf56a194fa196fbd1a54952110f51c73433865f7664b836685e3664b3d8444aF89A242805E18C975F1146324996FDE17007CF3E6E8F4E764022533EDBFE07D4733E48BB372D75B0EF48EC983EB78532161CC529E5ABB89837DFCCA6261DBB37C7C5E6A87478BF41EE85A518C0F4EFA9BDE828C5A71B8E46597B634AFD204D3C501334239C3414285ED72D3A9169EABBD4DC25D52BB7516D3BA712D75AD8C0AE5D493C19E38A77939E7A058D713E9CCCCA58045F436B434B1C80D365472406E392951987DB6905C80D431DA18451135BE7E82BCAB358CB3971E61405B2FF17980D6E7E67E861E28201C1EE30B441040FD06878D65042C95582A4318207BFC700BE0CE32889AEC2FFE5085E8967910D879FA0E8C0FF85FDC510B9FF2FBF87CFCB29577D68099E04FFA05F752A73D377C70D3A8BC2DA80E6E780EC057182C33AD1DE387252258A1E18E6FAD910327CE7F42FD1E1E0515F9586E2F2EFCB9F472B1DBDBAC354A4162151E9D92C79FB08BB4DDC56F19448C0175A46E2E6C491FEC71419AA43A349BEA768A92C75DE68FD9591E68067F3197094D3FB87ED81785EA075E4B65E3E4C78F81DA9B751C5EFE024152301C48E63245B556C4C67AFF857E5EA15A908D83A1D9704F8E55E7352B20B694BF9970298E6B5AAD33EA2155D105D4E637D1E87C40A8E5F4E8C5A16A4B8F3DC27B31721D77A65FD1ED6F86BE25FB95DB29B1988493770A7C60E451FF97DD241A236851FC425691979FE30226559AD95\nNextIV = 11000000000000000001020304050607\n\n# RFC7539\nCipher = chacha20-poly1305\nKey = 808182838485868788898a8b8c8d8e8f909192939495969798999a9b9c9d9e9f\nIV = 070000004041424344454647"
+ },
+ {
+  "i": 27,
+  "project": "openssl",
+  "file": "include/openssl/tls1.h",
+  "line": 534,
+  "rfc": "RFC4492",
+  "rfc_title": "Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS)",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "#define TLS1_CK_DHE_RSA_WITH_CAMELLIA_256_CBC_SHA256 0x030000C4\n#define TLS1_CK_ADH_WITH_CAMELLIA_256_CBC_SHA256 0x030000C5\n\n/* ECC ciphersuites from RFC4492 */\n#define TLS1_CK_ECDH_ECDSA_WITH_NULL_SHA 0x0300C001\n#define TLS1_CK_ECDH_ECDSA_WITH_RC4_128_SHA 0x0300C002\n#define TLS1_CK_ECDH_ECDSA_WITH_DES_192_CBC3_SHA 0x0300C003"
+ },
+ {
+  "i": 28,
+  "project": "curl",
+  "file": "tests/data/test237",
+  "line": 29,
+  "rfc": "RFC3330",
+  "rfc_title": "Special-Use IPv4 Addresses",
+  "replaced_by": [
+   "RFC6890"
+  ],
+  "context": "\n# The bogus address used here is chosen specifically so that when processed on\n# certain hosts with buggy resolver code, the resulting address (192.0.2.127)\n# is from an address block that is guaranteed never to be assigned (RFC3330).\n<verify>\n# 14 = CURLE_FTP_WEIRD_227_FORMAT\n<errorcode>"
+ },
+ {
+  "i": 29,
+  "project": "openssl",
+  "file": "test/pkits-test.pl",
+  "line": 659,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    [ \"4.13.19\", \"Valid Self-Issued DN nameConstraints Test19\",   0 ],\n    [ \"4.13.20\", \"Invalid Self-Issued DN nameConstraints Test20\", 47 ],\n    [ \"4.13.21\", \"Valid RFC822 nameConstraints Test21\",           0 ],\n    [ \"4.13.22\", \"Invalid RFC822 nameConstraints Test22\",         47 ],\n    [ \"4.13.23\", \"Valid RFC822 nameConstraints Test23\",           0 ],\n    [ \"4.13.24\", \"Invalid RFC822 nameConstraints Test24\",         47 ],\n    [ \"4.13.25\", \"Valid RFC822 nameConstraints Test25\",           0 ],"
+ },
+ {
+  "i": 30,
+  "project": "openssl",
+  "file": "util/libcrypto.num",
+  "line": 5161,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "X509_VERIFY_PARAM_set1_email            5156\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_set1_rfc822           5157\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_add1_rfc822           5158\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_set1_rfc822_input_validation 5159\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_set1_smtputf8         5160\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_add1_smtputf8         5161\t4_0_0\tEXIST::FUNCTION:\nX509_VERIFY_PARAM_set1_smtputf8_input_validation 5162\t4_0_0\tEXIST::FUNCTION:"
+ },
+ {
+  "i": 31,
+  "project": "node-lib",
+  "file": "tls.js",
+  "line": 384,
+  "rfc": "RFC6125",
+  "rfc_title": "Representation and Verification of Domain-Based Application Service Identity within Internet Public Key Infrastructure Using X.509 (PKIX) Certificates in the Context of Transport Layer Security (TLS)",
+  "replaced_by": [
+   "RFC9525"
+  ],
+  "context": "  const patternSubdomainParts = patternSubdomain.split('*', 3);\n\n  // Short-circuit when the subdomain does not contain a wildcard.\n  // RFC 6125 does not allow wildcard substitution for components\n  // containing IDNA A-labels (Punycode) so match those verbatim.\n  if (patternSubdomainParts.length === 1 ||\n      patternSubdomain.includes('xn--'))"
+ },
+ {
+  "i": 32,
+  "project": "curl",
+  "file": "src/tool_getparam.c",
+  "line": 1642,
+  "rfc": "RFC2068",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "context": "    config->timecond = CURL_TIMECOND_IFMODSINCE;\n    break;\n  case '-':\n    /* If-Unmodified-Since: (section 14.24 in RFC2068) */\n    config->timecond = CURL_TIMECOND_IFUNMODSINCE;\n    nextarg++;\n    break;"
+ },
+ {
+  "i": 33,
+  "project": "cpython-Lib",
+  "file": "test/test_urlparse.py",
+  "line": 496,
+  "rfc": "RFC2396",
+  "rfc_title": "Uniform Resource Identifiers (URI): Generic Syntax",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "\n        # XXX: The following tests are no longer compatible with RFC3986\n        # self.checkJoin(RFC2396_BASE, '../../../g', 'http://a/../g')\n        # self.checkJoin(RFC2396_BASE, '../../../../g', 'http://a/../../g')\n        # self.checkJoin(RFC2396_BASE, '/./g', 'http://a/./g')\n        # self.checkJoin(RFC2396_BASE, '/../g', 'http://a/../g')\n"
+ },
+ {
+  "i": 34,
+  "project": "curl",
+  "file": "docs/libcurl/opts/CURLMOPT_PUSHDATA.md",
+  "line": 11,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "context": "  - CURLMOPT_PIPELINING (3)\n  - CURLMOPT_PUSHFUNCTION (3)\n  - CURLOPT_PIPEWAIT (3)\n  - RFC 7540\nProtocol:\n  - HTTP\nAdded-in: 7.44.0"
+ },
+ {
+  "i": 35,
+  "project": "openssl",
+  "file": "crypto/x509/x509_vpm.c",
+  "line": 502,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "        if (!replace_buffer_stack_string(&dest->rfc822s, &src->rfc822s))\n            return 0;\n    }\n    x509_verify_param_copy(validate_rfc822, NULL);\n\n    if (test_x509_verify_param_copy(smtputf8s, NULL)) {\n        if (!replace_buffer_stack_string(&dest->smtputf8s, &src->smtputf8s))"
+ },
+ {
+  "i": 36,
+  "project": "cpython-Lib",
+  "file": "test/test_email/test_email.py",
+  "line": 218,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "                              'multipart/form-data; boundary=\"==')\n        # XXX: there ought to be tests of the uniqueness of the boundary, too.\n\n    def test_message_rfc822_only(self):\n        # Issue 7970: message/rfc822 not in multipart parsed by\n        # HeaderParser caused an exception when flattened.\n        with openfile('msg_46.txt', encoding=\"utf-8\") as fp:"
+ },
+ {
+  "i": 37,
+  "project": "go-net",
+  "file": "http/server.go",
+  "line": 5,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "// Use of this source code is governed by a BSD-style\n// license that can be found in the LICENSE file.\n\n// HTTP server. See RFC 7230 through 7235.\n\npackage http\n"
+ },
+ {
+  "i": 38,
+  "project": "okhttp",
+  "file": "okhttp-tls/src/main/kotlin/okhttp3/tls/HeldCertificate.kt",
+  "line": 157,
+  "rfc": "RFC5208",
+  "rfc_title": "Public-Key Cryptography Standards (PKCS) #8: Private-Key Information Syntax Specification Version 1.2",
+  "replaced_by": [
+   "RFC5958"
+  ],
+  "context": "  fun certificatePem(): String = certificate.certificatePem()\n\n  /**\n   * Returns the private key encoded in [PKCS #8][rfc_5208] [PEM format][rfc_7468].\n   *\n   * [rfc_5208]: https://tools.ietf.org/html/rfc5208\n   * [rfc_7468]: https://tools.ietf.org/html/rfc7468"
+ },
+ {
+  "i": 39,
+  "project": "cpython-Lib",
+  "file": "test/test_email/test_email.py",
+  "line": 4064,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "        eq(msg.is_multipart(), 1)\n        eq(len(msg.get_payload()), 2)\n        part1 = msg.get_payload(0)\n        eq(part1.get_content_type(), 'message/rfc822')\n        eq(part1.is_multipart(), 1)\n        eq(len(part1.get_payload()), 1)\n        part1a = part1.get_payload(0)"
+ },
+ {
+  "i": 40,
+  "project": "openssl",
+  "file": "ssl/statem/statem_srvr.c",
+  "line": 502,
+  "rfc": "RFC2246",
+  "rfc_title": "The TLS Protocol Version 1.0",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "        /*\n         * never request cert in anonymous ciphersuites (see\n         * section \"Certificate request\" in SSL 3 drafts and in\n         * RFC 2246):\n         */\n        && (!(s->s3.tmp.new_cipher->algorithm_auth & SSL_aNULL)\n            /*"
+ },
+ {
+  "i": 41,
+  "project": "cpython-Lib",
+  "file": "email/utils.py",
+  "line": 366,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    return addrs[0]\n\n\n# rfc822.unquote() doesn't properly de-backslash-ify in Python pre-2.3.\ndef unquote(str):\n    \"\"\"Remove quotes from a string.\"\"\"\n    if len(str) > 1:"
+ },
+ {
+  "i": 42,
+  "project": "openssl",
+  "file": "doc/man3/X509_VERIFY_PARAM_set1_host.pod",
+  "line": 146,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "\nX509_VERIFY_PARAM_add1_rfc822() adds I<email> as an additional reference\nidentifier that can match a B<rfc822Name> SAN entry in the peer's\ncertificate. Any previous names set via X509_VERIFY_PARAM_set1_rfc822(),\nX509_VERIFY_PARAM_add1_rfc822(), or X509_VERIFY_PARAM_set1_email() are\nretained on success; no change is made on failure. I<email> must not be\nNULL, and the empty string is rejected as a failure."
+ },
+ {
+  "i": 43,
+  "project": "go-crypto-tls",
+  "file": "tls/auth.go",
+  "line": 282,
+  "rfc": "RFC5246",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.2",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "\t}\n\tif len(peerAlgs) == 0 && vers == VersionTLS12 {\n\t\t// For TLS 1.2, if the client didn't send signature_algorithms then we\n\t\t// can assume that it supports SHA1. See RFC 5246, Section 7.4.1.4.1.\n\t\t// RFC 9155 made signature_algorithms mandatory in TLS 1.2, and we gated\n\t\t// it behind the tlssha1 GODEBUG setting.\n\t\tif tlssha1.Value() != \"1\" {"
+ },
+ {
+  "i": 44,
+  "project": "openssl",
+  "file": "crypto/x509/x509_vpm.c",
+  "line": 823,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "}\n\nvoid X509_VERIFY_PARAM_set1_rfc822_input_validation(X509_VERIFY_PARAM *param,\n    int (*validate_rfc822)(const char *name, size_t len))\n{\n    param->validate_rfc822 = validate_rfc822;\n}"
+ },
+ {
+  "i": 45,
+  "project": "nghttp2",
+  "file": "src/shrpx_http2_session.cc",
+  "line": 1607,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "context": "  entry[1].settings_id = NGHTTP2_SETTINGS_INITIAL_WINDOW_SIZE;\n  entry[1].value = as_unsigned(http2conf.downstream.window_size);\n\n  entry[2].settings_id = NGHTTP2_SETTINGS_NO_RFC7540_PRIORITIES;\n  entry[2].value = 1;\n\n  entry[3].settings_id = NGHTTP2_SETTINGS_ENABLE_PUSH;"
+ },
+ {
+  "i": 46,
+  "project": "cpython-Lib",
+  "file": "test/test_urlparse.py",
+  "line": 423,
+  "rfc": "RFC1808",
+  "rfc_title": "Relative Uniform Resource Locators",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "        self.checkJoin(RFC1808_BASE, '../g', 'http://a/b/g')\n        self.checkJoin(RFC1808_BASE, '../..', 'http://a/')\n        self.checkJoin(RFC1808_BASE, '../../', 'http://a/')\n        self.checkJoin(RFC1808_BASE, '../../g', 'http://a/g')\n\n        # \"abnormal\" cases from RFC 1808:\n        self.checkJoin(RFC1808_BASE, None, 'http://a/b/c/d;p?q#f')"
+ },
+ {
+  "i": 47,
+  "project": "django",
+  "file": "tests/syndication_tests/tests.py",
+  "line": 846,
+  "rfc": "RFC2822",
+  "rfc_title": "Internet Message Format",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "                \"link\": \"http://example.com/blog/%s/article/%s/\"\n                % (self.e1.pk, self.a1.pk),\n                \"title\": \"Title: My first article\",\n                \"pubDate\": rfc2822_date(timezone.make_aware(self.a1.published, TZ)),\n            },\n        )\n"
+ },
+ {
+  "i": 48,
+  "project": "openssl",
+  "file": "test/verify_extra_test.c",
+  "line": 595,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "static int test_vpm_input_validation(void)\n{\n    const char *utf8mail = \"\u5b66\u751f@muppetry.ca\";\n    const char *rfc822mail = \"beaker@muppetry.ca\";\n    X509_VERIFY_PARAM *vpm = NULL;\n    int ret = 0;\n"
+ },
+ {
+  "i": 49,
+  "project": "openssl",
+  "file": "doc/man3/X509_VERIFY_PARAM_set1_host.pod",
+  "line": 147,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "X509_VERIFY_PARAM_add1_rfc822() adds I<email> as an additional reference\nidentifier that can match a B<rfc822Name> SAN entry in the peer's\ncertificate. Any previous names set via X509_VERIFY_PARAM_set1_rfc822(),\nX509_VERIFY_PARAM_add1_rfc822(), or X509_VERIFY_PARAM_set1_email() are\nretained on success; no change is made on failure. I<email> must not be\nNULL, and the empty string is rejected as a failure.\n"
+ },
+ {
+  "i": 50,
+  "project": "openssl",
+  "file": "test/dtls12psk.c",
+  "line": 250,
+  "rfc": "RFC5077",
+  "rfc_title": "Transport Layer Security (TLS) Session Resumption without Server-Side State",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "}\n\n/*\n * RFC 5077 3.4 requires the server to echo the session ID from ClientHello\n * in the ServerHello when accepting a session ticket. Some clients rely on\n * this echo to confirm that resumption succeeded. The ticket decryption path\n * in tls_decrypt_ticket() guarantees the restored SSL_SESSION carries the"
+ },
+ {
+  "i": 51,
+  "project": "cpython-Lib",
+  "file": "test/test_urlparse.py",
+  "line": 619,
+  "rfc": "RFC1808",
+  "rfc_title": "Relative Uniform Resource Locators",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "        self.checkJoin(RFC1808_BASE, ';?y', 'http://a/b/c/;?y')\n        self.checkJoin(RFC1808_BASE, ';#z', 'http://a/b/c/;#z')\n        self.checkJoin(RFC1808_BASE, ';x', 'http://a/b/c/;x')\n        self.checkJoin(RFC1808_BASE, '/w', 'http://a/w')\n        self.checkJoin(RFC1808_BASE, '//', 'http://a/b/c/d;p?q#f')\n        self.checkJoin(RFC1808_BASE, '//#z', 'http://a/b/c/d;p?q#z')\n        self.checkJoin(RFC1808_BASE, '//?y', 'http://a/b/c/d;p?y')"
+ },
+ {
+  "i": 52,
+  "project": "undici",
+  "file": "lib/handler/redirect-handler.js",
+  "line": 225,
+  "rfc": "RFC7231",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
+  "replaced_by": [
+   "RFC9110"
+  ],
+  "context": "  return false\n}\n\n// https://tools.ietf.org/html/rfc7231#section-6.4\nfunction normalizeStripHeaders (headers, optionName) {\n  if (headers == null) {\n    return null"
+ },
+ {
+  "i": 53,
+  "project": "django",
+  "file": "tests/mail/tests.py",
+  "line": 1284,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    def test_attach_rfc822_message(self):\n        \"\"\"\n        EmailMessage.attach() docs: \"If you specify a mimetype of\n        message/rfc822, it will also accept django.core.mail.EmailMessage and\n        email.message.Message.\"\n        \"\"\"\n        # django.core.mail.EmailMessage"
+ },
+ {
+  "i": 54,
+  "project": "openssl",
+  "file": "crypto/asn1/tbl_standard.h",
+  "line": 57,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    { NID_dnQualifier, -1, -1, B_ASN1_PRINTABLESTRING, STABLE_NO_MASK },\n    { NID_domainComponent, 1, -1, B_ASN1_IA5STRING, STABLE_NO_MASK },\n    { NID_ms_csp_name, -1, -1, B_ASN1_BMPSTRING, STABLE_NO_MASK },\n    { NID_rfc822Mailbox, 1, ub_rfc822_mailbox, B_ASN1_IA5STRING,\n        STABLE_NO_MASK },\n    { NID_jurisdictionCountryName, 2, 2, B_ASN1_PRINTABLESTRING, STABLE_NO_MASK },\n    { NID_INN, 1, 12, B_ASN1_NUMERICSTRING, STABLE_NO_MASK },"
+ },
+ {
+  "i": 55,
+  "project": "oauthlib",
+  "file": "oauthlib/oauth1/rfc5849/signature.py",
+  "line": 89,
+  "rfc": "RFC5849",
+  "rfc_title": "The OAuth 1.0 Protocol",
+  "replaced_by": [
+   "RFC6749"
+  ],
+  "context": "    # 3.  The base string URI from `Section 3.4.1.2`_, after being encoded\n    #     (`Section 3.6`_).\n    #\n    # .. _`Section 3.4.1.2`: https://tools.ietf.org/html/rfc5849#section-3.4.1.2\n    # .. _`Section 3.6`: https://tools.ietf.org/html/rfc5849#section-3.6\n    base_string += utils.escape(base_str_uri)\n"
+ },
+ {
+  "i": 56,
+  "project": "curl",
+  "file": "docs/TODO.md",
+  "line": 515,
+  "rfc": "RFC8740",
+  "rfc_title": "Using TLS 1.3 with HTTP/2",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "context": "\n## Make sure we forbid TLS 1.3 post-handshake authentication\n\nRFC 8740 explains how using HTTP/2 must forbid the use of TLS 1.3\npost-handshake authentication. We should make sure to live up to that.\n\nSee [curl issue 5396](https://github.com/curl/curl/issues/5396)"
+ },
+ {
+  "i": 57,
+  "project": "openssl",
+  "file": "doc/man1/openssl-x509.pod.in",
+  "line": 232,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "Specify the date output format. Values are: rfc_822 and iso_8601.\nDefaults to rfc_822.\n\nNote that despite its name, the rfc_822 format does not conform to RFC 822\nor its successors RFC 2822 and RFC 5322. It outputs dates in the format\n\"Mmm DD HH:MM:SS YYYY GMT\" (e.g., \"Jul 31 22:20:50 2017 GMT\"). The month\nappears before the day, unlike all three RFCs, which put the day first."
+ },
+ {
+  "i": 58,
+  "project": "curl",
+  "file": "lib/peer.c",
+  "line": 490,
+  "rfc": "RFC6874",
+  "rfc_title": "Representing IPv6 Zone Identifiers in Address Literals and Uniform Resource Identifiers",
+  "replaced_by": [
+   "RFC9844"
+  ],
+  "context": "\n  pp.scheme = dest->scheme;\n\n  /* detect and extract RFC6874-style IPv6-addresses */\n  if(connect_to[0] == '[') {\n    const char *s = strchr(connect_to + 1, ']');\n    if(!s) {"
+ },
+ {
+  "i": 59,
+  "project": "openssl",
+  "file": "doc/designs/rfc4514.md",
+  "line": 133,
+  "rfc": "RFC3280",
+  "rfc_title": "Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile",
+  "replaced_by": [
+   "RFC5280"
+  ],
+  "context": "| DC                         | 0.9.2342.19200300.100.1.25 | [RFC4519] |\n| domainComponent            | 0.9.2342.19200300.100.1.25 | [RFC4519] |\n| email                      | 1.2.840.113549.1.9.1       | [RFC3280] |\n| emailAddress               | 1.2.840.113549.1.9.1       | [RFC3280] |\n| cn                         | 2.5.4.3                    | [RFC4519] |\n| commonName                 | 2.5.4.3                    | [RFC4519] |\n| sn                         | 2.5.4.4                    | [RFC4519] |"
+ },
+ {
+  "i": 60,
+  "project": "cpython-Lib",
+  "file": "uuid.py",
+  "line": 207,
+  "rfc": "RFC4122",
+  "rfc_title": "A Universally Unique IDentifier (UUID) URN Namespace",
+  "replaced_by": [
+   "RFC9562"
+  ],
+  "context": "        urn         the UUID as a URN as specified in RFC 4122/9562\n\n        variant     the UUID variant (one of the constants RESERVED_NCS,\n                    RFC_4122, RESERVED_MICROSOFT, or RESERVED_FUTURE)\n\n        version     the UUID version number (1 through 8, meaningful only\n                    when the variant is RFC_4122)"
+ },
+ {
+  "i": 61,
+  "project": "haproxy",
+  "file": "include/haproxy/h1.h",
+  "line": 71,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "\n\t/* Body processing. */\n\n\tH1_MSG_CHUNK_SIZE   = 26, // parsing the chunk size (RFC7230 #4.1)\n\tH1_MSG_DATA         = 27, // skipping data chunk / content-length data\n\tH1_MSG_CHUNK_CRLF   = 28, // skipping CRLF after data chunk\n\tH1_MSG_TRAILERS     = 29, // trailers (post-data entity headers)"
+ },
+ {
+  "i": 62,
+  "project": "nghttp2",
+  "file": "src/nghttpd.cc",
+  "line": 224,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "context": "      {\"no-content-length\", no_argument, &flag, 10},\n      {\"encoder-header-table-size\", required_argument, &flag, 11},\n      {\"ktls\", no_argument, &flag, 12},\n      {\"no-rfc7540-pri\", no_argument, &flag, 13},\n      {\"groups\", required_argument, &flag, 14},\n      {nullptr, 0, nullptr, 0}};\n    int option_index = 0;"
+ },
+ {
+  "i": 63,
+  "project": "haproxy",
+  "file": "src/ssl_clienthello.c",
+  "line": 426,
+  "rfc": "RFC7507",
+  "rfc_title": "TLS Fallback Signaling Cipher Suite Value (SCSV) for Preventing Protocol Downgrade Attacks",
+  "replaced_by": [
+   "RFC8996"
+  ],
+  "context": "#endif\n\n\t\t\tcipher_id = SSL_CIPHER_get_id(cipher);\n\t\t\t/* skip the SCSV \"fake\" signaling ciphersuites because they are NID_auth_any (RFC 7507) */\n\t\t\tif (cipher_id == SSL3_CK_SCSV || cipher_id == SSL3_CK_FALLBACK_SCSV)\n\t\t\t\tcontinue;\n"
+ },
+ {
+  "i": 64,
+  "project": "netty-codec-http",
+  "file": "src/main/java/io/netty/handler/codec/http/multipart/HttpPostRequestEncoder.java",
+  "line": 76,
+  "rfc": "RFC1738",
+  "rfc_title": "Uniform Resource Locators (URL)",
+  "replaced_by": [
+   "RFC4248",
+   "RFC4266"
+  ],
+  "context": "         * Legacy mode which should work for most. It is known to not work with OAUTH. For OAUTH use\n         * {@link EncoderMode#RFC3986}. The W3C form recommendations this for submitting post form data.\n         */\n        RFC1738,\n\n        /**\n         * Mode which is more new and is used for OAUTH"
+ },
+ {
+  "i": 65,
+  "project": "go-crypto-tls",
+  "file": "internal/fips140/aes/gcm/gcm_nonces.go",
+  "line": 193,
+  "rfc": "RFC8446",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "}\n\n// NewGCMForTLS13 returns a new AEAD that works like GCM, but enforces the\n// construction of nonces as specified in RFC 8446, Section 5.3.\n//\n// This complies with FIPS 140-3 IG C.H Scenario 1.a.\nfunc NewGCMForTLS13(cipher *aes.Block) (*GCMWithXORCounterNonce, error) {"
+ },
+ {
+  "i": 66,
+  "project": "nginx",
+  "file": "src/event/ngx_event_openssl.c",
+  "line": 6441,
+  "rfc": "RFC2253",
+  "rfc_title": "Lightweight Directory Access Protocol (v3): UTF-8 String Representation of Distinguished Names",
+  "replaced_by": [
+   "RFC4510",
+   "RFC4514"
+  ],
+  "context": "        return NGX_ERROR;\n    }\n\n    if (X509_NAME_print_ex(bio, name, 0, XN_FLAG_RFC2253) < 0) {\n        ngx_ssl_error(NGX_LOG_ALERT, c->log, 0, \"X509_NAME_print_ex() failed\");\n        goto failed;\n    }"
+ },
+ {
+  "i": 67,
+  "project": "netty-codec-http",
+  "file": "src/main/java/io/netty/handler/codec/http/cookie/ServerCookieDecoder.java",
+  "line": 101,
+  "rfc": "RFC2965",
+  "rfc_title": "HTTP State Management Mechanism",
+  "replaced_by": [
+   "RFC6265"
+  ],
+  "context": "        if (header.regionMatches(true, 0, RFC2965_VERSION, 0, RFC2965_VERSION.length())) {\n            // RFC 2965 style cookie, move to after version value\n            i = header.indexOf(';') + 1;\n            rfc2965Style = true;\n        }\n\n        loop: for (;;) {"
+ },
+ {
+  "i": 68,
+  "project": "go-crypto-tls",
+  "file": "x509/verify.go",
+  "line": 283,
+  "rfc": "RFC2822",
+  "rfc_title": "Internet Message Format",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "\t\t// quoted-pair = (\"\\\" text) / obs-qp\n\t\t// text = %d1-9 / %d11 / %d12 / %d14-127 / obs-text\n\t\t//\n\t\t// (Names beginning with \u201cobs-\u201d are the obsolete syntax from RFC 2822,\n\t\t// Section 4. Since it has been 16 years, we no longer accept that.)\n\t\tin = in[1:]\n\tQuotedString:"
+ },
+ {
+  "i": 69,
+  "project": "go-net",
+  "file": "http/fs.go",
+  "line": 477,
+  "rfc": "RFC7232",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests",
+  "replaced_by": [
+   "RFC9110"
+  ],
+  "context": "}\n\n// condResult is the result of an HTTP request precondition check.\n// See https://tools.ietf.org/html/rfc7232 section 3.\ntype condResult int\n\nconst ("
+ },
+ {
+  "i": 70,
+  "project": "cpython-Lib",
+  "file": "test/test_ssl.py",
+  "line": 6845,
+  "rfc": "RFC8446",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "        class Checked_TLSMessageType(enum.IntEnum):\n            \"\"\"Message types (handshake protocol)\n\n            See RFC 8446, section B.3\n            \"\"\"\n            HELLO_REQUEST = 0\n            CLIENT_HELLO = 1"
+ },
+ {
+  "i": 71,
+  "project": "cpython-Lib",
+  "file": "test/test_urlparse.py",
+  "line": 419,
+  "rfc": "RFC1808",
+  "rfc_title": "Relative Uniform Resource Locators",
+  "replaced_by": [
+   "RFC3986"
+  ],
+  "context": "        self.checkJoin(RFC1808_BASE, '.', 'http://a/b/c/')\n        self.checkJoin(RFC1808_BASE, './', 'http://a/b/c/')\n        self.checkJoin(RFC1808_BASE, '..', 'http://a/b/')\n        self.checkJoin(RFC1808_BASE, '../', 'http://a/b/')\n        self.checkJoin(RFC1808_BASE, '../g', 'http://a/b/g')\n        self.checkJoin(RFC1808_BASE, '../..', 'http://a/')\n        self.checkJoin(RFC1808_BASE, '../../', 'http://a/')"
+ },
+ {
+  "i": 72,
+  "project": "oauthlib",
+  "file": "docs/feature_matrix.rst",
+  "line": 82,
+  "rfc": "RFC5849",
+  "rfc_title": "The OAuth 1.0 Protocol",
+  "replaced_by": [
+   "RFC6749"
+  ],
+  "context": "additional packages: see the installation instructions for details.\n\n.. _`cryptography`: https://cryptography.io/en/latest/installation/\n.. _`RFC 5849`: https://tools.ietf.org/html/rfc5849\n.. _`RFC 6749 section-4.1`: https://tools.ietf.org/html/rfc6749#section-4.1\n.. _`RFC 6749 section-4.2`: https://tools.ietf.org/html/rfc6749#section-4.2\n.. _`RFC 6749 section-4.3`: https://tools.ietf.org/html/rfc6749#section-4.3"
+ },
+ {
+  "i": 73,
+  "project": "cpython-Lib",
+  "file": "http/client.py",
+  "line": 1526,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "context": "        for hdr, value in headers.items():\n            self.putheader(hdr, value)\n        if isinstance(body, str):\n            # RFC 2616 Section 3.7.1 says that text default has a\n            # default charset of iso-8859-1.\n            body = _encode(body, 'body')\n        self.endheaders(body, encode_chunked=encode_chunked)"
+ },
+ {
+  "i": 74,
+  "project": "aiohttp",
+  "file": "docs/client_advanced.rst",
+  "line": 237,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "        'CONNECTION': 'keep-alive'}\n\nThe dictionary is special, though: it's made just for HTTP\nheaders. According to `RFC 7230\n<http://tools.ietf.org/html/rfc7230#section-3.2>`_, HTTP Header names\nare case-insensitive. It also supports multiple values for the same\nkey as HTTP protocol does."
+ },
+ {
+  "i": 75,
+  "project": "openssl",
+  "file": "doc/man3/X509_check_host.pod",
+  "line": 56,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "comments are not allowed, and no attempt is made to normalize quoted\ncharacters. The mailbox syntax of RFC 6531 is supported for\nSmtpUTF8Mailbox address in subjectAltName according to RFC 8398,\nwith similar limitations as for RFC 822 syntax, and no attempt\nis made to convert from A-label to U-label before comparison.\nThe B<addresslen> argument must be the number of\ncharacters in the address string or zero in which case the length"
+ },
+ {
+  "i": 76,
+  "project": "go-net",
+  "file": "http/fs.go",
+  "line": 649,
+  "rfc": "RFC7232",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Conditional Requests",
+  "replaced_by": [
+   "RFC9110"
+  ],
+  "context": "// checkPreconditions evaluates request preconditions and reports whether a precondition\n// resulted in sending StatusNotModified or StatusPreconditionFailed.\nfunc checkPreconditions(w ResponseWriter, r *Request, modtime time.Time) (done bool, rangeHeader string) {\n\t// This function carefully follows RFC 7232 section 6.\n\tch := checkIfMatch(w, r)\n\tif ch == condNone {\n\t\tch = checkIfUnmodifiedSince(r, modtime)"
+ },
+ {
+  "i": 77,
+  "project": "haproxy",
+  "file": "src/http.c",
+  "line": 26,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "context": "\n/* It is about twice as fast on recent architectures to lookup a byte in a\n * table than to perform a boolean AND or OR between two tests. Refer to\n * RFC2616/RFC5234/RFC7230 for those chars. A token is any ASCII char that is\n * neither a separator nor a CTL char. An http ver_token is any ASCII which can\n * be found in an HTTP version, which includes 'H', 'T', 'P', '/', '.' and any\n * digit. Note: please do not overwrite values in assignment since gcc-2.95"
+ },
+ {
+  "i": 78,
+  "project": "haproxy",
+  "file": "doc/configuration.txt",
+  "line": 3018,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "  h1-case-adjust-bogus-client\" or \"option h1-case-adjust-bogus-server\" is\n  specified in a proxy.\n\n  There is no standard case for header names because, as stated in RFC7230,\n  they are case-insensitive. So applications must handle them in a case-\n  insensitive manner. But some bogus applications violate the standards and\n  erroneously rely on the cases most commonly used by browsers. This problem"
+ },
+ {
+  "i": 79,
+  "project": "go-crypto-tls",
+  "file": "x509/constraints.go",
+  "line": 575,
+  "rfc": "RFC2821",
+  "rfc_title": "Simple Mail Transfer Protocol",
+  "replaced_by": [
+   "RFC5321"
+  ],
+  "context": "\t\t\tip:    constraints[*net.IPNet, net.IP]{\"IP address\", newIPNetConstraints(c.PermittedIPRanges), newIPNetConstraints(c.ExcludedIPRanges)},\n\t\t\tdns:   constraints[string, string]{\"DNS name\", newDNSConstraints(c.PermittedDNSDomains, true), newDNSConstraints(c.ExcludedDNSDomains, false)},\n\t\t\turi:   constraints[string, string]{\"URI\", newHostConstraints(c.PermittedURIDomains), newHostConstraints(c.ExcludedURIDomains)},\n\t\t\temail: constraints[string, rfc2821Mailbox]{\"email address\", newEmailConstraints(c.PermittedEmailAddresses), newEmailConstraints(c.ExcludedEmailAddresses)},\n\t\t\tindex: i,\n\t\t}\n\t\tif currentConstraints == nil {"
+ },
+ {
+  "i": 80,
+  "project": "oauthlib",
+  "file": "oauthlib/oauth2/rfc6749/endpoints/authorization.py",
+  "line": 47,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "context": "        # We will deny any request which URI schema is not with https\n\n    The authorization server MUST support the use of the HTTP \"GET\"\n    method [RFC2616] for the authorization endpoint, and MAY support the\n    use of the \"POST\" method as well::\n\n        # HTTP method is currently not enforced"
+ },
+ {
+  "i": 81,
+  "project": "netty-codec-http",
+  "file": "src/main/java/io/netty/handler/codec/http/HttpObjectDecoder.java",
+  "line": 661,
+  "rfc": "RFC2616",
+  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9111",
+   "RFC9112"
+  ],
+  "context": "            // Correctly handle return codes of 1xx.\n            //\n            // See:\n            //     - https://www.w3.org/Protocols/rfc2616/rfc2616-sec4.html Section 4.4\n            //     - https://github.com/netty/netty/issues/222\n            if (statusClass == HttpStatusClass.INFORMATIONAL) {\n                // One exception: Hixie 76 websocket handshake response"
+ },
+ {
+  "i": 82,
+  "project": "go-net",
+  "file": "http/request.go",
+  "line": 828,
+  "rfc": "RFC7230",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Message Syntax and Routing",
+  "replaced_by": [
+   "RFC9110",
+   "RFC9112"
+  ],
+  "context": "\treturn host[:j] + host[i:]\n}\n\n// ParseHTTPVersion parses an HTTP version string according to RFC 7230, section 2.6.\n// \"HTTP/1.0\" returns (1, 0, true). Note that strings without\n// a minor version, such as \"HTTP/2\", are not valid.\nfunc ParseHTTPVersion(vers string) (major, minor int, ok bool) {"
+ },
+ {
+  "i": 83,
+  "project": "openssl",
+  "file": "test/recipes/70-test_tls13psk.t",
+  "line": 194,
+  "rfc": "RFC8446",
+  "rfc_title": "The Transport Layer Security (TLS) Protocol Version 1.3",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "\n    #Test 7: Attempt an invalid resume, with a server that can only do PSK.\n    #        Should be treated the same as an invalid binder (decrypt_error)\n    #        as per RFC8446 Appendix E.6\n    $proxy2->clear();\n    $proxy2->clientflags(\"-sess_in \".$session);\n    $proxy2->serverflags(\"-psk ffeeddccbbaa99887766554433221100 -no_ticket\");"
+ },
+ {
+  "i": 84,
+  "project": "urllib3",
+  "file": "src/urllib3/response.py",
+  "line": 334,
+  "rfc": "RFC7231",
+  "rfc_title": "Hypertext Transfer Protocol (HTTP/1.1): Semantics and Content",
+  "replaced_by": [
+   "RFC9110"
+  ],
+  "context": "\nclass MultiDecoder(ContentDecoder):\n    \"\"\"\n    From RFC7231:\n        If one or more encodings have been applied to a representation, the\n        sender that applied the encodings MUST generate a Content-Encoding\n        header field that lists the content codings in the order in which"
+ },
+ {
+  "i": 85,
+  "project": "cpython-Lib",
+  "file": "http/server.py",
+  "line": 187,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    recognizes three parts to a request:\n\n    1. One line identifying the request type and path\n    2. An optional set of RFC-822-style headers\n    3. An optional data part\n\n    The headers and data are separated by a blank line."
+ },
+ {
+  "i": 86,
+  "project": "haproxy",
+  "file": "src/hlua_fcn.c",
+  "line": 365,
+  "rfc": "RFC850",
+  "rfc_title": "Standard for interchange of USENET messages",
+  "replaced_by": [
+   "RFC5536",
+   "RFC5537"
+  ],
+  "context": "{\n\treturn hlua_parse_date(L, parse_imf_date);\n}\nstatic int hlua_rfc850_date(lua_State *L)\n{\n\treturn hlua_parse_date(L, parse_rfc850_date);\n}"
+ },
+ {
+  "i": 87,
+  "project": "cpython-Lib",
+  "file": "test/test_http_cookiejar.py",
+  "line": 609,
+  "rfc": "RFC2965",
+  "rfc_title": "HTTP State Management Mechanism",
+  "replaced_by": [
+   "RFC6265"
+  ],
+  "context": "            (True, False, 0),\n            (True, True, 0),\n        ])\n    def test_rfc2109_handling(self, rfc2109_as_netscape, rfc2965, version):\n        # RFC 2109 cookies are handled as RFC 2965 or Netscape cookies,\n        # dependent on policy settings\n        policy = DefaultCookiePolicy("
+ },
+ {
+  "i": 88,
+  "project": "authlib",
+  "file": "authlib/oauth1/rfc5849/parameters.py",
+  "line": 47,
+  "rfc": "RFC2617",
+  "rfc_title": "HTTP Authentication: Basic and Digest Access Authentication",
+  "replaced_by": [
+   "RFC7616",
+   "RFC7617",
+   "RFC9110"
+  ],
+  "context": "    # 4.  The OPTIONAL \"realm\" parameter MAY be added and interpreted per\n    #     `RFC2617 section 1.2`_.\n    #\n    # .. _`RFC2617 section 1.2`: https://tools.ietf.org/html/rfc2617#section-1.2\n    if realm:\n        # NOTE: realm should *not* be escaped\n        header_parameters = f'realm=\"{realm}\", ' + header_parameters"
+ },
+ {
+  "i": 89,
+  "project": "go-crypto-tls",
+  "file": "x509/constraints.go",
+  "line": 461,
+  "rfc": "RFC2821",
+  "rfc_title": "Simple Mail Transfer Protocol",
+  "replaced_by": [
+   "RFC5321"
+  ],
+  "context": "\tif len(l) == 0 {\n\t\treturn nil\n\t}\n\texactMap := map[rfc2821Mailbox]struct{}{}\n\tvar domains []string\n\tfor _, c := range l {\n\t\tif !strings.ContainsRune(c, '@') {"
+ },
+ {
+  "i": 90,
+  "project": "cpython-Lib",
+  "file": "http/cookiejar.py",
+  "line": 786,
+  "rfc": "RFC2965",
+  "rfc_title": "HTTP State Management Mechanism",
+  "replaced_by": [
+   "RFC6265"
+  ],
+  "context": "        self.value = value\n        self.port = port\n        self.port_specified = port_specified\n        # normalise case, as per RFC 2965 section 3.3.3\n        self.domain = domain.lower()\n        self.domain_specified = domain_specified\n        # Sigh.  We need to know whether the domain given in the"
+ },
+ {
+  "i": 91,
+  "project": "haproxy",
+  "file": "doc/configuration.txt",
+  "line": 10338,
+  "rfc": "RFC3164",
+  "rfc_title": "The BSD Syslog Protocol",
+  "replaced_by": [
+   "RFC5424"
+  ],
+  "context": "  \"warning\" will be used for termination signals and definitive service\n  termination, and \"alert\" will be used for when a server goes down.\n\n  Note : According to RFC3164, messages are truncated to 1024 bytes before\n         being emitted.\n\n  Example :"
+ },
+ {
+  "i": 92,
+  "project": "okhttp",
+  "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/OkHttpClient.kt",
+  "line": 765,
+  "rfc": "RFC6555",
+  "rfc_title": "Happy Eyeballs: Success with Dual-Stack Hosts",
+  "replaced_by": [
+   "RFC8305"
+  ],
+  "context": "     *\n     * Defaults to enabled, call with [fastFallback] = false to revert to 4.x behaviour.\n     *\n     * [rfc_6555]: https://datatracker.ietf.org/doc/html/rfc6555\n     */\n    fun fastFallback(fastFallback: Boolean) =\n      apply {"
+ },
+ {
+  "i": 93,
+  "project": "curl",
+  "file": "tests/data/test934",
+  "line": 9,
+  "rfc": "RFC2831",
+  "rfc_title": "Using Digest Authentication as a SASL Mechanism",
+  "replaced_by": [
+   "RFC6331"
+  ],
+  "context": "SASL\nSASL AUTH DIGEST-MD5\nSASL CANCELLATION\nRFC2831\nRFC4954\n</keywords>\n</info>"
+ },
+ {
+  "i": 94,
+  "project": "nghttp2",
+  "file": "lib/nghttp2_option.c",
+  "line": 137,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "context": "void nghttp2_option_set_server_fallback_rfc7540_priorities(\n  nghttp2_option *option, int val) {\n  option->opt_set_mask |= NGHTTP2_OPT_SERVER_FALLBACK_RFC7540_PRIORITIES;\n  option->server_fallback_rfc7540_priorities = val;\n}\n\nvoid nghttp2_option_set_no_rfc9113_leading_and_trailing_ws_validation("
+ },
+ {
+  "i": 95,
+  "project": "httpx",
+  "file": "tests/test_auth.py",
+  "line": 146,
+  "rfc": "RFC2069",
+  "rfc_title": "An Extension to HTTP : Digest Access Authentication",
+  "replaced_by": [
+   "RFC7616",
+   "RFC7617",
+   "RFC9110"
+  ],
+  "context": "        flow.send(response)\n\n\ndef test_digest_auth_rfc_2069():\n    # Example from https://datatracker.ietf.org/doc/html/rfc2069#section-2.4\n    # with corrected response from https://www.rfc-editor.org/errata/eid749\n"
+ },
+ {
+  "i": 96,
+  "project": "miekg-dns",
+  "file": "types.go",
+  "line": 1434,
+  "rfc": "RFC6844",
+  "rfc_title": "DNS Certification Authority Authorization (CAA) Resource Record",
+  "replaced_by": [
+   "RFC8659"
+  ],
+  "context": "\nfunc (rr *EUI64) String() string { return rr.Hdr.String() + euiToString(rr.Address, 64) }\n\n// CAA RR. See RFC 6844.\ntype CAA struct {\n\tHdr   RR_Header\n\tFlag  uint8"
+ },
+ {
+  "i": 97,
+  "project": "openssl",
+  "file": "crypto/x509/x509_vpm.c",
+  "line": 794,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "    param->validate_smtputf8 = validate_smtputf8;\n}\n\nint X509_VERIFY_PARAM_set1_rfc822(X509_VERIFY_PARAM *param,\n    const char *email, size_t len)\n{\n    clear_buffer_stack(&param->rfc822s);"
+ },
+ {
+  "i": 98,
+  "project": "openssl",
+  "file": "doc/man3/X509_VERIFY_PARAM_set1_host.pod",
+  "line": 283,
+  "rfc": "RFC822",
+  "rfc_title": "STANDARD FOR THE FORMAT OF ARPA INTERNET TEXT MESSAGES",
+  "replaced_by": [
+   "RFC5322"
+  ],
+  "context": "By default only the subject alternative name extension is consulted. When\nB<X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT> is set, the configured hostnames\nare also matched against the B<commonName> attribute of the certificate's\nsubject distinguished name, and the configured RFC 822 email addresses\nagainst the subject B<emailAddress> attribute. SMTPUTF8 email and IP\naddresses have no subject distinguished name counterpart and are always\nmatched only against the subject alternative name extension. See"
+ },
+ {
+  "i": 99,
+  "project": "go-crypto-tls",
+  "file": "tls/handshake_server.go",
+  "line": 384,
+  "rfc": "RFC8422",
+  "rfc_title": "Elliptic Curve Cryptography (ECC) Cipher Suites for Transport Layer Security (TLS) Versions 1.2 and Earlier",
+  "replaced_by": [
+   "RFC9846"
+  ],
+  "context": "\t\t\tofferedNonCompressedFormat = true\n\t\t}\n\t}\n\t// Per RFC 8422, Section 5.1.2, if the Supported Point Formats extension is\n\t// missing, uncompressed points are supported. If supportedPoints is empty,\n\t// the extension must be missing, as an empty extension body is rejected by\n\t// the parser. See https://go.dev/issue/49126."
+ }
+]

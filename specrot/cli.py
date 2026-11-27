@@ -1,0 +1,251 @@
+"""specrot command line."""
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+
+from rich.console import Console
+from rich.table import Table
+from rich.tree import Tree
+
+from . import graph, scan
+
+console = Console(highlight=False)
+STYLE = {"obsolete": "bold red", "historic": "red", "amended": "yellow", "ok": "green", "unknown": "dim"}
+ICON = {"obsolete": "✗", "historic": "✗", "amended": "!", "ok": "✓", "unknown": "?"}
+
+
+def _label(v: graph.Verdict) -> str:
+    return f"[{STYLE[v.level]}]{ICON[v.level]} {v.level.upper()}[/]"
+
+
+def _verdict_tree(v: graph.Verdict) -> Tree:
+    head = f"{_label(v)}  [bold]{v.id}[/]"
+    if v.known:
+        head += f"  {v.title}  [dim]({v.date}, {v.status.title() if v.status else '?'})[/]"
+    else:
+        head += "  [dim]no such RFC in the index[/]"
+    t = Tree(head)
+    if v.replaced_by:
+        r = t.add("[bold]replaced by[/] (follow OBSOLETES to documents still in force)")
+        for p in v.replaced_by:
+            r.add(" → ".join(p["chain"][:-1] + [f"[bold green]{p['current']}[/]"]) + f"  [dim]{p['title']}[/]")
+    if v.deprecations:
+        d = t.add("[bold]partly deprecated by[/]")
+        for u in v.deprecations:
+            d.add(f"[yellow]{u['id']}[/] {u['title']} [dim]({u['date']})[/]")
+    others = [u for u in v.updated_by if u not in v.deprecations]
+    if others:
+        u = t.add(f"[bold]updated by[/] {len(others)} document(s) still in force")
+        for x in others[:8]:
+            u.add(f"{x['id']} {x['title']} [dim]({x['date']})[/]")
+        if len(others) > 8:
+            u.add(f"[dim]… {len(others) - 8} more[/]")
+    if v.errata:
+        t.add(f"[bold]{v.errata}[/] verified technical errata  [dim]https://www.rfc-editor.org/errata/{v.id.lower()}[/]")
+    if v.series:
+        t.add("part of " + ", ".join(v.series))
+    return t
+
+
+def cmd_check(a, conn):
+    verdicts = [graph.check(conn, x) for x in a.rfc]
+    if a.json:
+        print(json.dumps([v.to_dict() for v in verdicts], indent=2))
+        return
+    for v in verdicts:
+        console.print(_verdict_tree(v))
+
+
+def _markdown(findings, root) -> str:
+    lines = [f"## specrot report for `{root}`", "", "| RFC | Status | Use instead / amended by | Cited at |", "|---|---|---|---|"]
+    for f in findings:
+        v = f.verdict
+        if v.level == "ok":
+            continue
+        fix = ", ".join(v.current) if v.current else ", ".join(u["id"] for u in v.updated_by[:4])
+        where = ", ".join(f"`{c.path}:{c.line}`" for c in f.citations[:3]) + (" …" if len(f.citations) > 3 else "")
+        lines.append(f"| [{v.id}]({v.url or ''}) {v.title or ''} | {v.level} | {fix} | {where} |")
+    return "\n".join(lines)
+
+
+def cmd_scan(a, conn):
+    root = Path(a.path)
+    found = scan.find_citations(root, a.include_history)
+    citations = found if a.all_kinds else [c for c in found if c.actionable]
+    findings = scan.judge(conn, citations)
+    counts = {lvl: sum(1 for f in findings if f.verdict.level == lvl) for lvl in scan.LEVELS}
+    if a.save:
+        conn.close()
+        wconn = graph.connect(a.store, read_only=False)
+        scan.save(wconn, a.save, root.resolve(), citations, a.url)
+        wconn.close()
+    if a.json:
+        print(json.dumps({"root": str(root), "citations": len(citations), "counts": counts,
+                          "findings": [f.to_dict() for f in findings]}, indent=2))
+    elif a.markdown:
+        print(_markdown(findings, root))
+    else:
+        console.print(f"[bold]{len(citations)}[/] RFC citations of [bold]{len(findings)}[/] distinct RFCs in {root}"
+                      + ("" if a.all_kinds else f"  [dim](skipped {len(found) - len(citations)} in tests or identifiers like time.RFC1123; --all-kinds to include)[/]"))
+        console.print("  ".join(f"[{STYLE[k]}]{ICON[k]} {k} {n}[/]" for k, n in counts.items() if n))
+        tab = Table(show_lines=False, header_style="bold")
+        for col in ("status", "RFC", "title", "use instead / amended by", "cited at"):
+            tab.add_column(col, overflow="fold")
+        for f in findings:
+            v = f.verdict
+            if v.level == "ok" and not a.all:
+                continue
+            fix = ", ".join(v.current) if v.current else (
+                "⚠ " + ", ".join(u["id"] for u in v.deprecations) if v.deprecations else
+                ", ".join(u["id"] for u in v.updated_by[:3]) + (" …" if len(v.updated_by) > 3 else ""))
+            if v.errata and v.level == "amended":
+                fix += f" (+{v.errata} errata)" if fix else f"{v.errata} errata"
+            where = f"{f.citations[0].path}:{f.citations[0].line}" + (f" +{len(f.citations) - 1}" if len(f.citations) > 1 else "")
+            tab.add_row(_label(v), v.id, (v.title or "")[:60], fix, where)
+        console.print(tab)
+        if a.save:
+            console.print(f"saved as (:Project {{name: '{a.save}'}}) in {a.store}")
+    fail = {x.strip() for x in (a.fail_on or "").split(",") if x.strip()}
+    if fail and any(counts.get(k) for k in fail):
+        sys.exit(1)
+
+
+def cmd_read(a, conn):
+    rows = graph.reading(conn, a.rfc, a.depth)
+    if a.json:
+        print(json.dumps(rows, indent=2))
+        return
+    tab = Table(title=f"Normative reading list for {graph.rfc_id(a.rfc)} (depth ≤ {a.depth})", header_style="bold")
+    for col in ("hop", "RFC", "title", "note"):
+        tab.add_column(col, overflow="fold")
+    for r in rows:
+        note = f"[red]obsolete → read {', '.join(r['current'])}[/]" if r["obsolete"] else ""
+        tab.add_row(str(r["depth"]), r["id"], r["title"] or "", note)
+    console.print(tab)
+    stale = sum(1 for r in rows if r["obsolete"])
+    console.print(f"{len(rows)} documents, [red]{stale}[/] of them obsolete (their replacements are named).")
+
+
+def cmd_impact(a, conn):
+    rows = graph.impact(conn, a.rfc, a.depth)
+    if a.json:
+        print(json.dumps(rows, indent=2))
+        return
+    tab = Table(title=f"Documents still in force that normatively depend on {graph.rfc_id(a.rfc)}", header_style="bold")
+    for col in ("hop", "RFC", "title", "date", "status"):
+        tab.add_column(col, overflow="fold")
+    for r in rows[: a.limit]:
+        tab.add_row(str(r["depth"]), r["id"], r["title"] or "", r["date"], (r["status"] or "").title())
+    console.print(tab)
+    console.print(f"{len(rows)} dependents" + (f" (showing {a.limit})" if len(rows) > a.limit else ""))
+
+
+def cmd_search(a, conn):
+    rows = graph.search(conn, a.query, a.limit)
+    if a.json:
+        print(json.dumps(rows, indent=2))
+        return
+    tab = Table(header_style="bold")
+    for col in ("RFC", "title", "date", "status"):
+        tab.add_column(col, overflow="fold")
+    for r in rows:
+        st = "[red]obsolete[/]" if r["obsolete"] else (r["status"] or "").title()
+        tab.add_row(r["id"], r["title"] or "", r["date"], st)
+    console.print(tab)
+
+
+def cmd_cypher(a, conn):
+    params = json.loads(a.params) if a.params else {}
+    if a.write:
+        conn.close()
+        conn = graph.connect(a.store, read_only=False)
+    rows = [dict(r) for r in conn.execute(a.statement, params)]
+    print(json.dumps(rows, indent=2, default=str))
+
+
+def cmd_build(a, _conn):
+    from . import build, sources
+    raw = Path(a.raw)
+    sources.fetch(raw, force=a.refresh)
+    console.print(build.build(raw, Path(a.store)))
+
+
+def cmd_mcp(a, _conn):
+    import os
+    os.environ.setdefault("SPECROT_STORE", a.store)
+    from . import mcp_server
+    mcp_server.main()
+
+
+def main(argv=None):
+    p = argparse.ArgumentParser(prog="specrot", description="Find the dead RFCs your code still cites (a Relate graph).")
+    p.add_argument("--store", default=str(graph.DEFAULT_STORE), help="Relate store (default: the committed store/rfc.rl)")
+    sub = p.add_subparsers(dest="cmd", required=True)
+
+    s = sub.add_parser("check", help="status of one or more RFCs: obsolete, amended, replacements")
+    s.add_argument("rfc", nargs="+")
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_check)
+
+    s = sub.add_parser("scan", help="find RFC citations in a file or directory and judge them")
+    s.add_argument("path")
+    s.add_argument("--all", action="store_true", help="also list citations that are current")
+    s.add_argument("--include-history", action="store_true", help="also scan CHANGELOG/HISTORY/NEWS files")
+    s.add_argument("--all-kinds", action="store_true", help="also count citations in tests and identifiers (time.RFC1123)")
+    s.add_argument("--json", action="store_true")
+    s.add_argument("--markdown", action="store_true")
+    s.add_argument("--fail-on", default="", help="comma list of levels that exit 1, e.g. obsolete,historic")
+    s.add_argument("--save", metavar="NAME", help="write the scan into the graph as (:Project {name: NAME})")
+    s.add_argument("--url", help="project URL stored with --save")
+    s.set_defaults(fn=cmd_scan)
+
+    s = sub.add_parser("read", help="normative reading list (what you must read to implement an RFC)")
+    s.add_argument("rfc")
+    s.add_argument("--depth", type=int, default=1)
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_read)
+
+    s = sub.add_parser("impact", help="documents still in force that normatively depend on an RFC")
+    s.add_argument("rfc")
+    s.add_argument("--depth", type=int, default=1)
+    s.add_argument("--limit", type=int, default=30)
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_impact)
+
+    s = sub.add_parser("search", help="full-text search over RFC titles and abstracts")
+    s.add_argument("query")
+    s.add_argument("--limit", type=int, default=10)
+    s.add_argument("--json", action="store_true")
+    s.set_defaults(fn=cmd_search)
+
+    s = sub.add_parser("cypher", help="run any Cypher statement against the store (read-only unless --write)")
+    s.add_argument("statement")
+    s.add_argument("--params", help="JSON object of parameters")
+    s.add_argument("--write", action="store_true")
+    s.set_defaults(fn=cmd_cypher)
+
+    s = sub.add_parser("build", help="download the sources and rebuild the store")
+    s.add_argument("--raw", default="data/raw")
+    s.add_argument("--refresh", action="store_true", help="download again even if cached")
+    s.set_defaults(fn=cmd_build)
+
+    s = sub.add_parser("mcp", help="run the MCP server on stdio (for Claude Code, Cursor, ...)")
+    s.set_defaults(fn=cmd_mcp)
+
+    a = p.parse_args(argv)
+    conn = None if a.cmd in ("build", "mcp") else graph.connect(a.store)
+    try:
+        a.fn(a, conn)
+    finally:
+        if conn is not None:
+            try:
+                conn.close()
+            except Exception:
+                pass
+
+
+if __name__ == "__main__":
+    main()

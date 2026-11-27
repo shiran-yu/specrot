@@ -1,0 +1,1195 @@
+[
+ {
+  "project": "curl",
+  "repo": "curl/curl",
+  "path": "",
+  "commit": "d5ec024cf205997c6a3416b2998953ce7cf23fcb",
+  "all_matches": 971,
+  "citations": 729,
+  "rfcs": 145,
+  "obsolete_rfcs": 40,
+  "obsolete_citations": 199,
+  "top_obsolete": [
+   [
+    "RFC5246",
+    36,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC8422",
+    26,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC6347",
+    18,
+    [
+     "RFC9147"
+    ]
+   ],
+   [
+    "RFC4346",
+    9,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC1738",
+    8,
+    [
+     "RFC4248",
+     "RFC4266"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "requests",
+  "repo": "psf/requests",
+  "path": "",
+  "commit": "3c7baaa05ab4aa49cc819ce3a819d260de19c157",
+  "all_matches": 27,
+  "citations": 26,
+  "rfcs": 11,
+  "obsolete_rfcs": 10,
+  "obsolete_citations": 23,
+  "top_obsolete": [
+   [
+    "RFC2616",
+    5,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7230",
+    4,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC4627",
+    3,
+    [
+     "RFC8259"
+    ]
+   ],
+   [
+    "RFC7231",
+    3,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2068",
+    2,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "urllib3",
+  "repo": "urllib3/urllib3",
+  "path": "",
+  "commit": "3db5970fcc56666ed5e7d450816ece9cce55589f",
+  "all_matches": 78,
+  "citations": 55,
+  "rfcs": 19,
+  "obsolete_rfcs": 6,
+  "obsolete_citations": 17,
+  "top_obsolete": [
+   [
+    "RFC7230",
+    6,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC6125",
+    5,
+    [
+     "RFC9525"
+    ]
+   ],
+   [
+    "RFC2388",
+    2,
+    [
+     "RFC7578"
+    ]
+   ],
+   [
+    "RFC6874",
+    2,
+    [
+     "RFC9844"
+    ]
+   ],
+   [
+    "RFC2818",
+    1,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "httpx",
+  "repo": "encode/httpx",
+  "path": "",
+  "commit": "e347fb5e93b91f7cf63a575f595f33db8d90fe20",
+  "all_matches": 50,
+  "citations": 38,
+  "rfcs": 22,
+  "obsolete_rfcs": 9,
+  "obsolete_citations": 14,
+  "top_obsolete": [
+   [
+    "RFC7231",
+    4,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC7230",
+    3,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2069",
+    1,
+    [
+     "RFC7616",
+     "RFC7617",
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2109",
+    1,
+    [
+     "RFC6265"
+    ]
+   ],
+   [
+    "RFC2616",
+    1,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "aiohttp",
+  "repo": "aio-libs/aiohttp",
+  "path": "",
+  "commit": "791283344186c2f3eeae6f27f7278089d4611990",
+  "all_matches": 285,
+  "citations": 189,
+  "rfcs": 36,
+  "obsolete_rfcs": 13,
+  "obsolete_citations": 28,
+  "top_obsolete": [
+   [
+    "RFC7230",
+    10,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2616",
+    4,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7233",
+    3,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2822",
+    2,
+    [
+     "RFC5322"
+    ]
+   ],
+   [
+    "RFC1036",
+    1,
+    [
+     "RFC5536",
+     "RFC5537"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "werkzeug",
+  "repo": "pallets/werkzeug",
+  "path": "",
+  "commit": "0f43c6ebd426039e4b99ec22535c2c8a2ec2f69f",
+  "all_matches": 56,
+  "citations": 49,
+  "rfcs": 19,
+  "obsolete_rfcs": 6,
+  "obsolete_citations": 7,
+  "top_obsolete": [
+   [
+    "RFC7232",
+    2,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2616",
+    1,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC5987",
+    1,
+    [
+     "RFC8187"
+    ]
+   ],
+   [
+    "RFC7230",
+    1,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7233",
+    1,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "django",
+  "repo": "django/django",
+  "path": "",
+  "commit": "f0e7bd90884b5da0a7418f3c78d1fd309c905014",
+  "all_matches": 206,
+  "citations": 71,
+  "rfcs": 28,
+  "obsolete_rfcs": 4,
+  "obsolete_citations": 4,
+  "top_obsolete": [
+   [
+    "RFC1866",
+    1,
+    [
+     "RFC2854"
+    ]
+   ],
+   [
+    "RFC2388",
+    1,
+    [
+     "RFC7578"
+    ]
+   ],
+   [
+    "RFC7231",
+    1,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC850",
+    1,
+    [
+     "RFC5536",
+     "RFC5537"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "cpython-Lib",
+  "repo": "python/cpython",
+  "path": "Lib",
+  "commit": "5dbe2ac850b7b180685ed6008d5b9d459fd4934f",
+  "all_matches": 1175,
+  "citations": 442,
+  "rfcs": 111,
+  "obsolete_rfcs": 43,
+  "obsolete_citations": 208,
+  "top_obsolete": [
+   [
+    "RFC3501",
+    5,
+    [
+     "RFC9051"
+    ]
+   ],
+   [
+    "RFC1738",
+    1,
+    [
+     "RFC4248",
+     "RFC4266"
+    ]
+   ],
+   [
+    "RFC2965",
+    38,
+    [
+     "RFC6265"
+    ]
+   ],
+   [
+    "RFC2822",
+    25,
+    [
+     "RFC5322"
+    ]
+   ],
+   [
+    "RFC822",
+    23,
+    [
+     "RFC5322"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "go-net",
+  "repo": "golang/go",
+  "path": "src/net",
+  "commit": "880f3ba4028fbe81523ce4935c29c225972fff02",
+  "all_matches": 646,
+  "citations": 465,
+  "rfcs": 86,
+  "obsolete_rfcs": 17,
+  "obsolete_citations": 122,
+  "top_obsolete": [
+   [
+    "RFC7540",
+    47,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC7230",
+    31,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7231",
+    11,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC6874",
+    6,
+    [
+     "RFC9844"
+    ]
+   ],
+   [
+    "RFC7232",
+    6,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "go-crypto-tls",
+  "repo": "golang/go",
+  "path": "src/crypto",
+  "commit": "880f3ba4028fbe81523ce4935c29c225972fff02",
+  "all_matches": 579,
+  "citations": 374,
+  "rfcs": 62,
+  "obsolete_rfcs": 19,
+  "obsolete_citations": 156,
+  "top_obsolete": [
+   [
+    "RFC5246",
+    12,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC2246",
+    4,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC4346",
+    4,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC8422",
+    3,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC8446",
+    80,
+    [
+     "RFC9846"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "undici",
+  "repo": "nodejs/undici",
+  "path": "",
+  "commit": "245306dc31b22316600bc963120f34714ebcdd0a",
+  "all_matches": 269,
+  "citations": 219,
+  "rfcs": 37,
+  "obsolete_rfcs": 9,
+  "obsolete_citations": 65,
+  "top_obsolete": [
+   [
+    "RFC1738",
+    1,
+    [
+     "RFC4248",
+     "RFC4266"
+    ]
+   ],
+   [
+    "RFC7230",
+    23,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7231",
+    17,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2616",
+    10,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC850",
+    7,
+    [
+     "RFC5536",
+     "RFC5537"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "node-lib",
+  "repo": "nodejs/node",
+  "path": "lib",
+  "commit": "b663e55882511aed0079aa8adc8333860d76031e",
+  "all_matches": 134,
+  "citations": 131,
+  "rfcs": 47,
+  "obsolete_rfcs": 14,
+  "obsolete_citations": 71,
+  "top_obsolete": [
+   [
+    "RFC7231",
+    36,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC7230",
+    12,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2616",
+    5,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7540",
+    3,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC2518",
+    2,
+    [
+     "RFC4918"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "hyper",
+  "repo": "hyperium/hyper",
+  "path": "",
+  "commit": "55247767429fb29753f724b467869aa6203db532",
+  "all_matches": 34,
+  "citations": 32,
+  "rfcs": 8,
+  "obsolete_rfcs": 4,
+  "obsolete_citations": 21,
+  "top_obsolete": [
+   [
+    "RFC7230",
+    13,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7540",
+    4,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC7231",
+    3,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2616",
+    1,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "reqwest",
+  "repo": "seanmonstar/reqwest",
+  "path": "",
+  "commit": "11ea959bc35f0b221afff7277ccc2388b05752b8",
+  "all_matches": 12,
+  "citations": 9,
+  "rfcs": 6,
+  "obsolete_rfcs": 1,
+  "obsolete_citations": 2,
+  "top_obsolete": [
+   [
+    "RFC8312",
+    2,
+    [
+     "RFC9438"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "okhttp",
+  "repo": "square/okhttp",
+  "path": "",
+  "commit": "223a0cc71eebd4d58cd54fd8a53dfb19a48b6b7c",
+  "all_matches": 243,
+  "citations": 230,
+  "rfcs": 57,
+  "obsolete_rfcs": 20,
+  "obsolete_citations": 86,
+  "top_obsolete": [
+   [
+    "RFC4346",
+    1,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC2616",
+    14,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2818",
+    8,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC7231",
+    8,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC7234",
+    8,
+    [
+     "RFC9111"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "netty-codec-http",
+  "repo": "netty/netty",
+  "path": "codec-http",
+  "commit": "41947a5ce17ea2dd1caba388a33fa460ddfb23dd",
+  "all_matches": 337,
+  "citations": 267,
+  "rfcs": 28,
+  "obsolete_rfcs": 10,
+  "obsolete_citations": 96,
+  "top_obsolete": [
+   [
+    "RFC1738",
+    1,
+    [
+     "RFC4248",
+     "RFC4266"
+    ]
+   ],
+   [
+    "RFC7230",
+    43,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2616",
+    35,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2965",
+    4,
+    [
+     "RFC6265"
+    ]
+   ],
+   [
+    "RFC7231",
+    4,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "nginx",
+  "repo": "nginx/nginx",
+  "path": "",
+  "commit": "0e0c6edd90593a43d05ef921c046cf284035b1ed",
+  "all_matches": 123,
+  "citations": 116,
+  "rfcs": 22,
+  "obsolete_rfcs": 9,
+  "obsolete_citations": 33,
+  "top_obsolete": [
+   [
+    "RFC8941",
+    16,
+    [
+     "RFC9651"
+    ]
+   ],
+   [
+    "RFC822",
+    4,
+    [
+     "RFC5322"
+    ]
+   ],
+   [
+    "RFC850",
+    4,
+    [
+     "RFC5536",
+     "RFC5537"
+    ]
+   ],
+   [
+    "RFC7540",
+    3,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC2818",
+    2,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "haproxy",
+  "repo": "haproxy/haproxy",
+  "path": "",
+  "commit": "47521745280e2570f68b8a1ef1153a26acc5cb81",
+  "all_matches": 1126,
+  "citations": 875,
+  "rfcs": 111,
+  "obsolete_rfcs": 28,
+  "obsolete_citations": 244,
+  "top_obsolete": [
+   [
+    "RFC2246",
+    3,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC5246",
+    3,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC8422",
+    2,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC7540",
+    73,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC3164",
+    24,
+    [
+     "RFC5424"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "openssl",
+  "repo": "openssl/openssl",
+  "path": "",
+  "commit": "2c112b259312115ff6a880cf6a3cf47acc7f8b8d",
+  "all_matches": 2551,
+  "citations": 1621,
+  "rfcs": 205,
+  "obsolete_rfcs": 48,
+  "obsolete_citations": 287,
+  "top_obsolete": [
+   [
+    "RFC5246",
+    21,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC2246",
+    11,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC6347",
+    7,
+    [
+     "RFC9147"
+    ]
+   ],
+   [
+    "RFC8422",
+    3,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC4346",
+    1,
+    [
+     "RFC9846"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "nghttp2",
+  "repo": "nghttp2/nghttp2",
+  "path": "",
+  "commit": "03fe9f52bfddb89b758d5e7ed0f4103b8c60a937",
+  "all_matches": 308,
+  "citations": 149,
+  "rfcs": 28,
+  "obsolete_rfcs": 8,
+  "obsolete_citations": 65,
+  "top_obsolete": [
+   [
+    "RFC7540",
+    31,
+    [
+     "RFC9113"
+    ]
+   ],
+   [
+    "RFC7230",
+    15,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC6962",
+    9,
+    [
+     "RFC9162"
+    ]
+   ],
+   [
+    "RFC2616",
+    3,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC7231",
+    3,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "pyjwt",
+  "repo": "jpadilla/pyjwt",
+  "path": "",
+  "commit": "0d231bfe088fc9af9a102ad04533daa50cbb2ac5",
+  "all_matches": 48,
+  "citations": 37,
+  "rfcs": 6,
+  "obsolete_rfcs": 0,
+  "obsolete_citations": 0,
+  "top_obsolete": []
+ },
+ {
+  "project": "jsonwebtoken",
+  "repo": "auth0/node-jsonwebtoken",
+  "path": "",
+  "commit": "b924272f29192e12926b5414546f7c5bfcc9579d",
+  "all_matches": 3,
+  "citations": 3,
+  "rfcs": 2,
+  "obsolete_rfcs": 0,
+  "obsolete_citations": 0,
+  "top_obsolete": []
+ },
+ {
+  "project": "oauthlib",
+  "repo": "oauthlib/oauthlib",
+  "path": "",
+  "commit": "179287a5f9067aac7b1c0d71c4c5e083ccbf58f2",
+  "all_matches": 669,
+  "citations": 425,
+  "rfcs": 27,
+  "obsolete_rfcs": 9,
+  "obsolete_citations": 116,
+  "top_obsolete": [
+   [
+    "RFC5849",
+    73,
+    [
+     "RFC6749"
+    ]
+   ],
+   [
+    "RFC2616",
+    14,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2617",
+    12,
+    [
+     "RFC7616",
+     "RFC7617",
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC3447",
+    6,
+    [
+     "RFC8017"
+    ]
+   ],
+   [
+    "RFC2818",
+    3,
+    [
+     "RFC9110"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "authlib",
+  "repo": "authlib/authlib",
+  "path": "",
+  "commit": "c451e6d1238678231ee21e31964cc8ce34474a37",
+  "all_matches": 1359,
+  "citations": 496,
+  "rfcs": 48,
+  "obsolete_rfcs": 5,
+  "obsolete_citations": 31,
+  "top_obsolete": [
+   [
+    "RFC5849",
+    18,
+    [
+     "RFC6749"
+    ]
+   ],
+   [
+    "RFC2616",
+    6,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2617",
+    3,
+    [
+     "RFC7616",
+     "RFC7617",
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2818",
+    3,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC4627",
+    1,
+    [
+     "RFC8259"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "miekg-dns",
+  "repo": "miekg/dns",
+  "path": "",
+  "commit": "b2d6c9f4480a71247e0df4ce709122852a2849cf",
+  "all_matches": 265,
+  "citations": 239,
+  "rfcs": 80,
+  "obsolete_rfcs": 16,
+  "obsolete_citations": 24,
+  "top_obsolete": [
+   [
+    "RFC2845",
+    4,
+    [
+     "RFC8945"
+    ]
+   ],
+   [
+    "RFC2535",
+    3,
+    [
+     "RFC4033",
+     "RFC4034",
+     "RFC4035"
+    ]
+   ],
+   [
+    "RFC3755",
+    3,
+    [
+     "RFC4033",
+     "RFC4034",
+     "RFC4035"
+    ]
+   ],
+   [
+    "RFC6944",
+    2,
+    [
+     "RFC9904"
+    ]
+   ],
+   [
+    "RFC1138",
+    1,
+    [
+     "RFC2156"
+    ]
+   ]
+  ]
+ },
+ {
+  "project": "dnspython",
+  "repo": "rthalley/dnspython",
+  "path": "",
+  "commit": "095a30eee6f9128eec540a4af27fb1872d4307da",
+  "all_matches": 455,
+  "citations": 358,
+  "rfcs": 94,
+  "obsolete_rfcs": 7,
+  "obsolete_citations": 14,
+  "top_obsolete": [
+   [
+    "RFC2845",
+    4,
+    [
+     "RFC8945"
+    ]
+   ],
+   [
+    "RFC2535",
+    3,
+    [
+     "RFC4033",
+     "RFC4034",
+     "RFC4035"
+    ]
+   ],
+   [
+    "RFC3658",
+    2,
+    [
+     "RFC4033",
+     "RFC4034",
+     "RFC4035"
+    ]
+   ],
+   [
+    "RFC8499",
+    2,
+    [
+     "RFC9499"
+    ]
+   ],
+   [
+    "RFC4408",
+    1,
+    [
+     "RFC7208"
+    ]
+   ]
+  ]
+ }
+]

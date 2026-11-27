@@ -1,0 +1,121 @@
+"""MCP server (stdio) so a coding agent checks spec currency before it cites or implements an RFC.
+
+    claude mcp add specrot -- uv run --directory /path/to/specrot specrot mcp
+"""
+from __future__ import annotations
+
+import threading
+from pathlib import Path
+
+from mcp.server.mcpserver import MCPServer
+
+from . import graph, scan
+
+INSTRUCTIONS = """specrot holds every IETF RFC and how they relate (OBSOLETES, UPDATES, normative and
+informative references, BCP/STD series, errata) in a Relate graph built from the RFC Editor index.
+Before you cite, implement or quote an RFC, call check_rfcs: your training data may predate the
+replacement (e.g. RFC 8446 for TLS 1.3 was obsoleted by RFC 9846 in 2026). Use scan_path on a
+repository to find stale citations, reading_list for what an implementation must read, and
+read_cypher for anything else (schema: get_schema)."""
+
+server = MCPServer(name="specrot", instructions=INSTRUCTIONS)
+_local = threading.local()
+
+
+def _conn():
+    # Relate connections are thread-affine: one read-only connection per worker thread.
+    if getattr(_local, "conn", None) is None:
+        _local.conn = graph.connect()
+    return _local.conn
+
+
+@server.tool()
+def check_rfcs(rfcs: list[str]) -> list[dict]:
+    """Status of RFCs ("2616", "RFC 7231"): level (obsolete/historic/amended/ok/unknown), the current
+    replacement chain, live updates (deprecations flagged), verified technical errata, BCP/STD series."""
+    return [graph.check(_conn(), x).to_dict() for x in rfcs]
+
+
+@server.tool()
+def scan_path(path: str, include_ok: bool = False, include_tests_and_identifiers: bool = False) -> dict:
+    """Find RFC citations in a file or directory (git-tracked files) and judge each cited RFC.
+    By default skips citations in test files and identifiers such as time.RFC1123."""
+    cites = [c for c in scan.find_citations(Path(path)) if include_tests_and_identifiers or c.actionable]
+    findings = scan.judge(_conn(), cites)
+    keep = [f for f in findings if include_ok or f.verdict.level != "ok"]
+    return {"citations": len(cites), "rfcs": len(findings),
+            "counts": {k: sum(1 for f in findings if f.verdict.level == k) for k in scan.LEVELS},
+            "findings": [_brief(f) for f in keep]}
+
+
+@server.tool()
+def scan_text(text: str) -> list[dict]:
+    """Judge the RFC citations in a snippet of code, a doc or a draft answer you are about to give."""
+    return [_brief(f) for f in scan.judge(_conn(), scan.find_in_text(text))]
+
+
+@server.tool()
+def reading_list(rfc: str, depth: int = 1) -> list[dict]:
+    """Normative references of an RFC up to `depth` hops; obsolete entries name their replacements."""
+    return graph.reading(_conn(), rfc, depth)
+
+
+@server.tool()
+def dependents(rfc: str, depth: int = 1) -> list[dict]:
+    """Documents still in force that normatively depend on an RFC (impact of a change to it)."""
+    return graph.impact(_conn(), rfc, depth)
+
+
+@server.tool()
+def search_rfcs(query: str, limit: int = 10) -> list[dict]:
+    """Full-text search (BM25) over RFC titles and abstracts; obsolete hits are marked."""
+    return graph.search(_conn(), query, limit)
+
+
+@server.tool()
+def get_schema() -> dict:
+    """Labels, relationship types and properties of the graph, for writing read_cypher queries."""
+    return {
+        "nodes": {
+            "RFC": "id 'RFC9110', number, title, date 'YYYY-MM', year, status, stream, area, wg, pages, abstract, "
+                   "keywords, url, obsolete (bool), verifiedTechnicalErrata (int)",
+            "Series": "id 'BCP14' | 'STD66', kind, number",
+            "Erratum": "id, type (Technical/Editorial), status (Verified/Reported/...), section, date, url",
+            "WorkingGroup": "acronym", "Area": "name",
+            "Project": "name, repo, url, commit, scannedAt (open-source projects scanned by specrot)",
+            "File": "path, project",
+        },
+        "relationships": [
+            "(:RFC)-[:OBSOLETES]->(:RFC)", "(:RFC)-[:UPDATES]->(:RFC)",
+            "(:RFC)-[:NORMATIVE_REF {via?}]->(:RFC|:Series)", "(:RFC)-[:INFORMATIVE_REF {via?}]->(:RFC|:Series)",
+            "(:Series)-[:INCLUDES]->(:RFC)", "(:Erratum)-[:AMENDS]->(:RFC)",
+            "(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)",
+            "(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, sections}]->(:RFC)",
+        ],
+        "indexes": ["FULLTEXT rfc_text on RFC(title, abstract)"],
+        "example": "MATCH (r:RFC {id:'RFC2616'})<-[:OBSOLETES]-+(n:RFC) WHERE NOT n.obsolete RETURN DISTINCT n.id",
+    }
+
+
+@server.tool()
+def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200) -> list[dict]:
+    """Run a read-only Cypher 25 statement against the store (Relate dialect, no APOC)."""
+    rows = []
+    for i, r in enumerate(_conn().execute(statement, parameters or {})):
+        if i >= limit:
+            break
+        rows.append({k: (v if isinstance(v, (str, int, float, bool, list, dict, type(None))) else str(v))
+                     for k, v in dict(r).items()})
+    return rows
+
+
+def _brief(f: scan.Finding) -> dict:
+    v = f.verdict
+    return {"rfc": v.id, "title": v.title, "level": v.level, "use_instead": v.current,
+            "deprecated_by": [d["id"] for d in v.deprecations],
+            "updated_by": [u["id"] for u in v.updated_by][:10], "verified_technical_errata": v.errata,
+            "cited_at": [f"{c.path}:{c.line}" for c in f.citations][:20], "citations": len(f.citations)}
+
+
+def main():
+    server.run("stdio")
