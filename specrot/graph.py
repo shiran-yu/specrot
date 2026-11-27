@@ -92,6 +92,7 @@ KIND_TEXT = {
     "version": "newer protocol version: the old RFC still defines the old version",
     "split": "content split across several documents",
     "retired": "retired without a replacement",
+    "redesign": "replaced by a different design: check before switching the citation",
 }
 
 
@@ -102,6 +103,8 @@ def path_kind(kinds: list[str]) -> str:
         return "retired"
     if kinds and kinds[0] == "version":
         return "version"
+    if "redesign" in kinds:
+        return "redesign"
     if "split" in kinds:
         return "split"
     return "edition"

@@ -331,7 +331,9 @@ def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
              "// field, according to RFC 8446, Section",              # section wrapped onto the next line
              "Violate RFC 7231/6.4.4 and do not convert POST",        # slash section
              "[RFC 8446]:",                                           # link definition, URL on the next line
+             "see RFC 8446 D.4 for middlebox",                        # bare appendix (E.4 in RFC 9846)
+             "urllib3 is RFC 3986 and RFC 6874 compliant",            # 6874 -> 9844 is a different design
              "# see RFC 8941"]
     (tmp_path / "x.md").write_text("\n".join(lines) + "\n")
     edits, _ = fix.plan(conn, tmp_path)
-    assert [e.line for e in edits] == [9]
+    assert [e.line for e in edits] == [11]

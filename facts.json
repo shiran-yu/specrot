@@ -1,14 +1,14 @@
 {
   "sections": {
     "cited": 292,
-    "mapped": 223,
-    "exact": 208
+    "mapped": 221,
+    "exact": 206
   },
   "nodes": {
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
-    "Section": 51730,
+    "Section": 51671,
     "RFC": 9869,
     "Series": 377,
     "Project": 26,
@@ -18,13 +18,13 @@
     "OBSOLETES": 1546,
     "UPDATES": 2172,
     "INFORMATIVE_REF": 69790,
-    "HAS_SECTION": 51730,
+    "HAS_SECTION": 51671,
     "FROM_WG": 6365,
     "NORMATIVE_REF": 58954,
     "INCLUDES": 451,
     "AMENDS": 8215,
     "IN_AREA": 530,
-    "CONTINUES_AS": 29386,
+    "CONTINUES_AS": 29352,
     "HAS_FILE": 2372,
     "CITES": 4664
   },
@@ -58,5 +58,5 @@
     "projects": 7,
     "citations": 130
   },
-  "store_bytes": 8007680
+  "store_bytes": 8003584
 }

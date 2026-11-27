@@ -87,10 +87,10 @@ seed RFC not in its key is. It does not check that a key lists every part of a s
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, 51,730 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,671 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,386
-  `CONTINUES_AS` between sections of an RFC and its replacements (27,830 with an identical heading). Of the normative references,
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,352
+  `CONTINUES_AS` between sections of an RFC and its replacements (27,799 with an identical heading). Of the normative references,
   42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
   derived from those series' members (marked `{via: 'BCP14'}`).
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
@@ -226,6 +226,10 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   RTSP → RTSP 2.0, while PKCS #1 v2.1 → v2.2 is a new edition and IPv6 or HTTP/1.1 in a title is not
   a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 45
   `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
+  Six edges are marked `redesign` by hand, each with its reason (`build.REDESIGN`: RFC 6874 → 9844,
+  TCP MD5 → TCP-AO, HTML 2.0 and form upload → text/html, BSD syslog → RFC 5424, Cookie2 → RFC 6265):
+  the replacement is a different design, so `fix` leaves those citations to a person. Only the 76
+  pairs `fix` proposes on the 26 projects were reviewed; other edges may hide the same case.
   Citations that deliberately describe legacy behaviour are reported like any other; list them in
   `.specrot-ignore`.
 - Citations are found with a regular expression. Media types such as `message/rfc822` are skipped;
@@ -233,8 +237,8 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
   same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 292
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 223 have a home in a current RFC
-  (208 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 221 have a home in a current RFC
+  (206 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
 - `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names

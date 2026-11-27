@@ -50,7 +50,7 @@ def _conn():
 def check_rfcs(rfcs: list[str]) -> list[dict]:
     """Status of RFCs ("2616", "RFC 7231", "BCP 14", or with a section: "RFC 7231 §6.5.1", "7231#6.5.1"; for an
     obsolete RFC section_now says where that section lives in the replacement). Level (obsolete, historic, old-version, amended, ok,
-    unknown), replacement chains with their kind (edition, version, split, retired), live updates with
+    unknown), replacement chains with their kind (edition, version, split, retired, redesign) and same_version (the newest edition on the old protocol version), live updates with
     deprecations flagged, verified technical errata, BCP/STD series. A bad id gives an error item, not a failure."""
     out = []
     for x in rfcs:
@@ -119,7 +119,7 @@ def get_schema() -> dict:
             "Section": "id 'RFC7231#6.5.1', rfc, number, title (only sections that carry over between editions)",
         },
         "relationships": [
-            "(:RFC)-[:OBSOLETES {kind: edition|version|split|retired}]->(:RFC)", "(:RFC)-[:UPDATES]->(:RFC)",
+            "(:RFC)-[:OBSOLETES {kind: edition|version|split|retired|redesign}]->(:RFC)", "(:RFC)-[:UPDATES]->(:RFC)",
             "(:RFC)-[:NORMATIVE_REF {via?}]->(:RFC|:Series)", "(:RFC)-[:INFORMATIVE_REF {via?}]->(:RFC|:Series)",
             "(:Series)-[:INCLUDES]->(:RFC)", "(:Erratum)-[:AMENDS]->(:RFC)",
             "(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)",
@@ -159,6 +159,8 @@ def _brief(f: scan.Finding) -> dict:
     v = f.verdict
     return {"rfc": v.id, "title": v.title, "level": v.level, "replaced_by": v.current,
             "replacement_kinds": sorted({r["kind"] for r in v.replaced_by}),
+            # newest edition on the old protocol version, when a later hop changes version (4492 -> 8422 -> TLS 1.3)
+            "same_version_edition": sorted({r["same_version"] for r in v.replaced_by if r.get("same_version")}),
             "deprecated_by": [d["id"] for d in v.deprecations],
             "updated_by": [u["id"] for u in v.updated_by][:10], "verified_technical_errata": v.errata,
             "cited_at": [f"{c.path}:{c.line}" for c in f.citations][:20], "citations": len(f.citations),

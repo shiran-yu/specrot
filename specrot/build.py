@@ -183,13 +183,25 @@ def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
 
 DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to historic|\bto historic\b|\bobsoleting\b|\bretir")
 PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b|S/MIME")
+# Hand-reviewed: the replacement is a different design, not a new edition (titles cannot tell). Reviewed for
+# every OBSOLETES pair that `specrot fix` proposes on the 26 showcase projects (76 pairs); reason from the new RFC.
+REDESIGN = {
+    ("RFC6874", "RFC9844"): "removes zone identifiers from URI syntax; only user-interface entry remains",
+    ("RFC2385", "RFC5925"): "TCP-AO is a new option with its own keys and MACs, not a revision of TCP MD5",
+    ("RFC1866", "RFC2854"): "HTML moved to the W3C; 2854 only registers the text/html media type",
+    ("RFC1867", "RFC2854"): "form upload moved to HTML (W3C) and multipart/form-data (RFC 7578)",
+    ("RFC3164", "RFC5424"): "a new syslog message format; 3164 documents the BSD format still in use",
+    ("RFC2965", "RFC6265"): "Cookie2/Set-Cookie2 dropped; 6265 specifies the Netscape-style cookies in use",
+}
 
 
 def classify_obsoletes(conn) -> None:
     rows = [dict(r) for r in conn.execute("""
         MATCH (n:RFC)-[:OBSOLETES]->(o:RFC)
         RETURN o.id AS old, o.title AS ot, n.id AS new, n.title AS nt, COUNT { (o)<-[:OBSOLETES]-() } AS k""")]
-    edits = [{"old": r["old"], "new": r["new"], "kind": obsoletes_kind(r["ot"], r["nt"], r["k"])} for r in rows]
+    edits = [{"old": r["old"], "new": r["new"],
+              "kind": "redesign" if (r["old"], r["new"]) in REDESIGN else obsoletes_kind(r["ot"], r["nt"], r["k"])}
+             for r in rows]
     conn.execute("""UNWIND $rows AS x MATCH (:RFC {id: x.new})-[e:OBSOLETES]->(:RFC {id: x.old})
                     SET e.kind = x.kind""", {"rows": edits})
     # oldVersion: obsolete only because a newer protocol version exists (TLS 1.2, OAuth 1.0)

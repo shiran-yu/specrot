@@ -27,7 +27,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "\n    def make_cookies(self, response, request):\n        \"\"\"Return sequence of Cookie objects extracted from response object.\"\"\"\n        # get cookie-attributes for RFC 2965 and Netscape protocols\n        headers = response.info()\n        rfc2965_hdrs = headers.get_all(\"Set-Cookie2\", [])\n        ns_hdrs = headers.get_all(\"Set-Cookie\", [])"
  },
@@ -131,7 +131,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "\n        if cookie.version > 0 and not domain_match(erhn, domain):\n            _debug(\"   effective request-host name %s does not domain-match \"\n                   \"RFC 2965 cookie domain %s\", erhn, domain)\n            return False\n        if cookie.version == 0 and not (\".\"+erhn).endswith(dotdomain):\n            _debug(\"   request-host %s does not match Netscape cookie domain \""
  },
@@ -174,7 +174,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "    May also modify cookies, though this is probably a bad idea.\n\n    The subclass DefaultCookiePolicy defines the standard rules for Netscape\n    and RFC 2965 cookies -- override that if you want a customized policy.\n\n    \"\"\"\n    def set_ok(self, cookie, request):"
  },
@@ -204,7 +204,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "    that check since all callers already ensure the value is not None.\n    \"\"\"\n    # If there aren't any doublequotes,\n    # then there can't be any special characters.  See RFC 2109.\n    if len(value) < 2:\n        return value\n    if value[0] != '\"' or value[-1] != '\"':"
  },
@@ -727,7 +727,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "    return req_host, erhn\n\ndef request_path(request):\n    \"\"\"Path component of request-URI, as defined by RFC 2965.\"\"\"\n    url = request.get_full_url()\n    parts = urllib.parse.urlsplit(url)\n    path = escape_path(parts.path)"
  },
@@ -835,7 +835,7 @@
    "RFC5424"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "\telse if (*size > LOG_LEGACYTIME_LEN) {\n\t\tint m;\n\n\t\t/* supported header format according to rfc3164.\n\t\t * ex:\n\t\t *  'Jan  1 00:00:00 HOSTNAME TAG[PID]: '\n\t\t *  or 'Jan  1 00:00:00 HOSTNAME TAG: '"
  },
@@ -1084,7 +1084,7 @@
    "RFC5424"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "      fill    If input message already contains a value for the hostname field,\n              we keep it.\n              If input message doesn't contain a value for the hostname field\n              (ie: '-' as input rfc5424 message or non compliant rfc3164 or\n              rfc5424 message), we use the source IP address from the sender as\n              hostname field.\n              (This is the default)"
  },
@@ -1161,7 +1161,7 @@
    "RFC5424"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "              only depends on the file descriptor used (stdout/stderr). This\n              is the default.\n\n      rfc3164 The RFC3164 syslog message format.\n              (https://tools.ietf.org/html/rfc3164)\n\n      rfc5424 The RFC5424 syslog message format."
  },
@@ -1176,7 +1176,7 @@
    "RFC5424"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "              only depends on the file descriptor used (stdout/stderr). This\n              is the default.\n\n      rfc3164 The RFC3164 syslog message format.\n              (https://tools.ietf.org/html/rfc3164)\n\n      rfc5424 The RFC5424 syslog message format."
  },
@@ -1343,7 +1343,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "        self.value = value\n        self.port = port\n        self.port_specified = port_specified\n        # normalise case, as per RFC 2965 section 3.3.3\n        self.domain = domain.lower()\n        self.domain_specified = domain_specified\n        # Sigh.  We need to know whether the domain given in the"
  },
@@ -1451,7 +1451,7 @@
    "RFC6265"
   ],
   "replacement_kinds": [
-   "edition"
+   "redesign"
   ],
   "context": "            self._process_rfc2109_cookies(ns_cookies)\n\n            # Look for Netscape cookies (from Set-Cookie headers) that match\n            # corresponding RFC 2965 cookies (from Set-Cookie2 headers).\n            # For each match, keep the RFC 2965 cookie and ignore the Netscape\n            # cookie (RFC 2965 section 9.1).  Actually, RFC 2109 cookies are\n            # bundled in with the Netscape cookies for this purpose, which is"
  },

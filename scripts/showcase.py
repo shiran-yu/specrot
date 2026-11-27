@@ -91,7 +91,8 @@ def main():
                         "top_obsolete": [(f.verdict.id, len(f.citations), f.verdict.current) for f in obsolete[:5]]})
         print(f"{name:18} {len(act):5} citations  {len(findings):4} RFCs  {len(obsolete):3} obsolete RFCs  {n_obs:4} obsolete citations")
     conn.close()
-    build.compact(graph.DEFAULT_STORE)
+    if not build.compact(graph.DEFAULT_STORE):
+        print("relate CLI not on PATH: store/rfc.rl left with its write-ahead log (~18 MB instead of ~8 MB)")
     PINS.write_text(json.dumps(heads, indent=2) + "\n")
     (HERE / "showcase-results.json").write_text(json.dumps(summary, indent=1) + "\n")
     c, o = sum(x["citations"] for x in summary), sum(x["obsolete_citations"] for x in summary)

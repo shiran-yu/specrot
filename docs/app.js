@@ -99,9 +99,10 @@ const rfcLink = (id) => `<a href="#rfc=${id.replace("RFC", "")}" class="rfc">${i
 const DEPRECATING = /deprecat|prohibit|obsolet|historic|retir|removing|sunset/i;
 // Kinds of OBSOLETES edges, computed when the store is built (specrot/build.py).
 const KIND_TEXT = { edition: "new edition of the same specification", version: "newer protocol version: the old RFC still defines the old version",
-  split: "content split across several documents", retired: "retired without a replacement" };
+  split: "content split across several documents", retired: "retired without a replacement",
+  redesign: "replaced by a different design: check before switching the citation" };
 // same rule as graph.py path_kind: the first hop decides (4492 -> 8422 -> 9846 is a replaced edition)
-const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k[0] === "version" ? "version" : k.includes("split") ? "split" : "edition";
+const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k[0] === "version" ? "version" : k.includes("redesign") ? "redesign" : k.includes("split") ? "split" : "edition";
 const sameVersion = (r) => { const j = r.kinds.indexOf("version"); return j > 0 ? r.chain[j] : null; };
 
 function showQuery(el, q = lastQuery) {
@@ -114,7 +115,7 @@ let renderSeq = 0;  // render token: a newer check or search makes slower, older
 let scanSeq = 0;    // the same for the scan tab, which renders into its own pane
 async function check(input) {
   const out = $("#check-out");
-  const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})(?:\s*(?:#|§|,?\s*sec(?:tion)?\.?)\s*([A-Z](?:\.\d+)*|\d+(?:\.\d+)*))?\.?\s*$/i);
+  const m = String(input).match(/^\s*(?:rfc\s*[-#]?)?\s*0*(\d{1,5})(?:\s*(?:#|§|,?\s*sec(?:tion)?\.?)\s*([A-Z](?:\.\d+)*|\d+(?:\.\d+)*))?\.?\s*$/i);
   if (!m) return search(input);
   const n = Number(m[1]), sec = m[2] ? m[2].toUpperCase() : null;
   rendered = sec ? `rfc=${n}&s=${sec}` : `rfc=${n}`;
@@ -209,7 +210,7 @@ async function drawLineage(n, rootId, my) {
 async function search(text) {
   const out = $("#check-out");
   const q = text.trim().split(/\s+/).filter(Boolean).map((w) => w.replace(/[^\p{L}\p{N}.-]/gu, "").toLowerCase()).filter(Boolean).join(" AND "); // lower case: AND/OR/NOT are operators
-  if (!q) return;
+  if (!q) { ++renderSeq; out.innerHTML = '<p class="dim">Type an RFC number (8446, RFC 7231 §6.5.1) or words to search.</p>'; return; }  // no stale result
   rendered = "q=" + text;
   if (decodeURIComponent(location.hash.slice(1)) !== rendered) location.hash = "q=" + encodeURIComponent(text);  // the hashchange handler skips it
   const my = ++renderSeq;

@@ -48,7 +48,7 @@ uv run specrot search "token revocation"
 uv run specrot cypher "MATCH (r:RFC {id:'RFC6749'})<-[:UPDATES]-(u) RETURN u.id, u.title"
 ```
 
-Graph schema: `(:RFC)-[:OBSOLETES {kind: edition|version|split|retired}]->(:RFC)`, `(:RFC)-[:UPDATES|NORMATIVE_REF|INFORMATIVE_REF]->(:RFC)`,
+Graph schema: `(:RFC)-[:OBSOLETES {kind: edition|version|split|retired|redesign}]->(:RFC)`, `(:RFC)-[:UPDATES|NORMATIVE_REF|INFORMATIVE_REF]->(:RFC)`,
 `(:Series {id:'BCP14'})-[:INCLUDES]->(:RFC)`, `(:Erratum)-[:AMENDS]->(:RFC)`,
 `(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)`,
 `(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines}]->(:RFC)` for 26 scanned open-source projects.

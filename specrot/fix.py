@@ -39,6 +39,8 @@ def _target(c: scan.Citation, v: graph.Verdict) -> tuple[str, str | None] | str:
     """(new rfc id, new section) or the reason to skip."""
     if v.level != "obsolete":
         return f"level {v.level}"
+    if any(r["kind"] == "redesign" for r in v.replaced_by):
+        return "replaced by a different design (TCP MD5 -> TCP-AO): a person decides"
     if sv := next((r["same_version"] for r in v.replaced_by if r.get("same_version")), None):
         return f"a newer protocol version is in the chain: {sv} (same version) or {', '.join(v.current)}?"
     vo = _versions(v.title or "")
@@ -77,7 +79,7 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
             return None  # "RFC 8446, sections 4.1.3 and 4.2.1" or a section wrapped onto the next line
         if head.rfind("[") > head.rfind("]") and re.match(r"[^\]]*\]:", tail):
             return None  # a Markdown link definition: its URL keeps the old RFC
-        if re.search(r"(?i)\bappendix\s+[A-Z]\b", line) and not m.group(2):
+        if (re.search(r"(?i)\bappendix\s+[A-Z]\b", line) or re.match(r"\s*,?\s*[A-Z](\.\d+)+\b", tail)) and not m.group(2):
             return None  # an appendix named in prose ("Appendix E.6 of RFC 8446" is F.6 in RFC 9846)
         if re.match(r"\s*:\s+[A-Z][\w/'-]*(\s+[\w/'()-]+){2,}", tail):
             return None  # a reference-list entry with the old document's title ("RFC 2732: Format for Literal ...")
