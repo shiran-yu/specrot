@@ -147,7 +147,7 @@ def cmd_scan(a, conn):
             tab.add_row(_label(v), v.id, (v.title or "")[:60], fix, where)
         console.print(tab)
         if too_big:
-            console.print(f"[yellow]skipped {len(too_big)} file(s) over {a.max_bytes:,} bytes[/] (--max-bytes to include): "
+            console.print(f"[yellow]skipped {len(too_big)} file(s) over {a.max_bytes:,} bytes or unreadable[/] (--max-bytes to include): "
                           + ", ".join(too_big[:5]) + (" …" if len(too_big) > 5 else ""))
         if a.save:
             console.print(f"saved as (:Project {{name: '{a.save}'}}) in {a.store}")

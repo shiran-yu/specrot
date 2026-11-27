@@ -5,11 +5,11 @@
     "exact": 208
   },
   "nodes": {
-    "Section": 51730,
-    "RFC": 9869,
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
+    "Section": 51730,
+    "RFC": 9869,
     "Series": 377,
     "Project": 26,
     "File": 2372
@@ -29,9 +29,9 @@
     "CITES": 4664
   },
   "showcase": {
-    "citations": 7667,
+    "citations": 7669,
     "obsolete": 1640,
-    "old_version": 283,
+    "old_version": 285,
     "projects": 26,
     "affected": 24,
     "obsolete_pct": 21

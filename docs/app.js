@@ -236,7 +236,7 @@ function citationsIn(text) {
       const before = line.slice(0, m.index), after = line.slice(m.index + 3 + m[1].length + m[2].length);
       if (/(message|text|x-)\/$/i.test(before) || Number(m[2]) === 0) continue;
       if (/[._]$/.test(before) || /^[A-Za-z_]/.test(after) || m[1].includes("_") || /^\.[A-Za-z]/.test(after)
-          || /^\s*(import|from)\s[\w., ]*$/.test(before)) continue;  // a name, or a module in an import line
+          || /^\s*(import\s+[\w., ]+|from\s+[\w.]+\s+import\s+[\w., ()*]+)\s*(#.*)?$/.test(line)) continue;  // a name, or a module in an import line
       const sec = m[3] || m[4] || (m[5] && m[5].toUpperCase()) || m[6] || before_[m.index] || null;
       out.push({ n: Number(m[2]), line: i + 1, sec });
     }

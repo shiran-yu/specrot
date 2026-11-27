@@ -27,11 +27,11 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,667** RFC citations in source
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,669** RFC citations in source
 and docs (tests and identifiers such as `time.RFC1123` excluded), **1,640 (21%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
 an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
-283 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+285 more) are not counted: they are reported as `old-version`, or `historic` when that version was
 itself retired. The most common: RFC 2616 (17 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).

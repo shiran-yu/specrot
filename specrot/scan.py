@@ -26,7 +26,7 @@ HISTORY_FILES = re.compile(r"(?i)^(changelog|changes|history|news|releases?)([._
 # Media types and module names that contain "rfc822" but cite nothing.
 NOT_A_CITATION = re.compile(r"(?i)(message|text|x-)/$")
 # a module name in an import statement (import rfc822 / from email import rfc822), not "quote from RFC 7231"
-IMPORT = re.compile(r"^\s*(import|from)\s[\w., ]*$")
+IMPORT = re.compile(r"^\s*(import\s+[\w., ]+|from\s+[\w.]+\s+import\s+[\w., ()*]+)\s*(#.*)?$")  # whole line
 TEST_PATH = re.compile(r"(?i:(^|/)(tests?|testdata|testing|__tests__|spec|fixtures?)(/|$)|(^|/)test_[^/]*$|_test\.[a-z]+$|\.test\.[a-z]+$)"
                        r"|(^|/)[a-z]+Tests?(/|$)|Tests?\.(kt|java|scala|cs|swift)$")
 MAX_BYTES = 2_000_000
@@ -93,6 +93,8 @@ def find_citations(root: Path, include_history: bool = False, skipped: list | No
         try:
             data = p.read_bytes()
         except OSError:
+            if skipped is not None:
+                skipped.append(str(p.relative_to(base)))  # unreadable: reported like an oversized file
             continue
         if data[:2] in (b"\xff\xfe", b"\xfe\xff"):  # UTF-16 with a byte-order mark
             text = data.decode("utf-16", errors="replace")
@@ -116,7 +118,7 @@ def _in_line(path: str, i: int, line: str) -> list[Citation]:
             continue
         if before.endswith("/"):
             kind = "link"
-        elif ((before and before[-1] in "._") or after.isalpha() or after == "_" or IMPORT.search(before)
+        elif ((before and before[-1] in "._") or after.isalpha() or after == "_" or IMPORT.match(line)
               or "_" in line[m.start() + 3:m.start(1)] or re.match(r"\.[A-Za-z]", line[m.end(1):])):
             # also RFC_4122 / rfc_822 (names) and RFC822.TEXT (an IMAP protocol item)
             kind = "identifier"

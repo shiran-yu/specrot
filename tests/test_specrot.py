@@ -314,6 +314,13 @@ def test_edition_then_version_chain_is_obsolete(conn):
     assert graph.check(conn, 5246).level == "old-version"
 
 
+def test_import_rule_matches_only_import_lines():
+    kinds = lambda t: [c.kind for c in scan.find_in_text(t)]
+    assert kinds("from RFC 7231, this document takes the status codes") == ["prose"]
+    assert kinds("import rfc822") == ["identifier"]
+    assert kinds("from rfc822 import parsedate  # old module") == ["identifier"]
+
+
 def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
     from specrot import fix
     lines = ["/* ECC ciphersuites from RFC4492 */",                   # 4492 -> 8422 -> TLS 1.3: a decision
