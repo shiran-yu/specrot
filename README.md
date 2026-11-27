@@ -119,8 +119,10 @@ Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -e . &&
 and rebuilds a subset of the graph there in about 3 s: RFCs, series, `OBSOLETES` with kinds,
 `UPDATES`, the 50,842 RFC-level normative references and the 26 projects (no errata, working groups
 or informative references), from [`docs/data/graph.json`](docs/data/graph.json), which
-`scripts/export_web.py` exports because the WASM build cannot open a `.rl` file. It offers check
-with a lineage graph, paste-and-scan, the 26-project table with links to the exact lines on
+`scripts/export_web.py` exports because the WASM build cannot open a `.rl` file. The sections and
+`CONTINUES_AS` load from `docs/data/sections.json` on the first section lookup
+([`#rfc=7231&s=6.5.1`](https://shiran-yu.github.io/specrot/#rfc=7231&s=6.5.1)). It offers check
+with a lineage graph and section lookup, paste-and-scan, the 26-project table with links to the exact lines on
 GitHub, and a Cypher console.
 
 Then:

@@ -5,11 +5,11 @@ let seq = 0;
 const $ = (s) => document.querySelector(s);
 const esc = (s) => String(s ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 
-function cypher(q, params, fromConsole = false) {
+function cypher(q, params, fromConsole = false, needs = null) {
   return new Promise((resolve, reject) => {
     const id = ++seq;
     pending.set(id, { resolve, reject, q });
-    worker.postMessage({ id, q, params, console: fromConsole });
+    worker.postMessage({ id, q, params, console: fromConsole, needs });
   });
 }
 
@@ -35,6 +35,12 @@ let lastQuery = null;
 
 // ---------- queries (same as specrot/graph.py) ----------
 const Q = {
+  // where a section of an obsolete RFC lives now: CONTINUES_AS (matched headings) to a document in force
+  section: `MATCH (s:Section {id: $id})
+MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
+MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
+RETURN r.id AS rfc, t.number AS section, t.title AS title, s.title AS was,
+       all(e IN relationships(p) WHERE e.exact) AS exact, size(relationships(p)) AS hops ORDER BY hops`,
   info: `MATCH (r:RFC {number: $n})
 OPTIONAL MATCH (s:Series)-[:INCLUDES]->(r)
 RETURN r.id AS id, r.title AS title, r.date AS date, r.status AS status, r.obsolete AS obsolete,
@@ -91,21 +97,21 @@ const KIND_TEXT = { edition: "new edition of the same specification", version: "
   split: "content split across several documents", retired: "retired without a replacement" };
 const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k.includes("version") ? "version" : k.includes("split") ? "split" : "edition";
 
-function showQuery(el) {
-  if (!lastQuery) return;
-  el.innerHTML = `<details><summary>Cypher · ${lastQuery.ms.toFixed(1)} ms in Relate WASM</summary><pre>${esc(lastQuery.q)}</pre></details>`;
+function showQuery(el, q = lastQuery) {
+  if (!q) return;
+  el.innerHTML = `<details><summary>Cypher · ${q.ms.toFixed(1)} ms in Relate WASM</summary><pre>${esc(q.q)}</pre></details>`;
 }
 
 // ---------- check tab ----------
 let renderSeq = 0;  // render token: a newer check or search makes slower, older ones drop their output
 async function check(input) {
   const out = $("#check-out");
-  const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})\s*$/i);
+  const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})(?:\s*(?:#|§|,?\s*sec(?:tion)?\.?)\s*([A-Z](?:\.\d+)*|\d+(?:\.\d+)*))?\.?\s*$/i);
   if (!m) return search(input);
-  const n = Number(m[1]);
-  rendered = `rfc=${n}`;
+  const n = Number(m[1]), sec = m[2] ? m[2].toUpperCase() : null;
+  rendered = sec ? `rfc=${n}&s=${sec}` : `rfc=${n}`;
   if (location.hash.slice(1) !== rendered) location.hash = rendered;  // the hashchange handler skips it
-  $("#q").value = `RFC ${n}`;
+  $("#q").value = sec ? `RFC ${n} §${sec}` : `RFC ${n}`;
   const my = ++renderSeq;
   const [info] = await cypher(Q.info, { n });
   if (my !== renderSeq) return;
@@ -114,6 +120,13 @@ async function check(input) {
   const ups = await cypher(Q.updates, { n });
   if (my !== renderSeq) return;
   const lvl = level({ ...info, updates: ups });
+  const infoQuery = lastQuery;
+  let secRows = null, secQuery = null;
+  if (sec && info.obsolete) {
+    secRows = await cypher(Q.section, { id: `RFC${n}#${sec}` }, false, "sections");
+    secQuery = lastQuery;
+    if (my !== renderSeq) return;
+  }
   const shortest = {};
   for (const r of repl) if (!shortest[r.current] || r.chain.length < shortest[r.current].chain.length) shortest[r.current] = { ...r, kind: pathKind(r.kinds) };
   const deps = ups.filter((u) => DEPRECATING.test(u.title));
@@ -128,11 +141,17 @@ async function check(input) {
   if (deps.length) html += `<h3>Partly deprecated by</h3><ul>` + deps.map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + `</ul>`;
   if (others.length) html += `<h3>Updated by ${others.length} document${others.length > 1 ? "s" : ""} still in force</h3><ul>` + others.slice(0, 10).map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + (others.length > 10 ? `<li class="dim">… ${others.length - 10} more</li>` : "") + `</ul>`;
   if (info.errata) html += `<p>${info.errata} verified technical errata · <a href="https://www.rfc-editor.org/errata/rfc${n}" target="_blank" rel="noopener">errata</a></p>`;
+  if (secRows) {
+    html += `<h3>Section ${esc(sec)} ${secRows[0] ? "· " + esc(secRows[0].was) : ""}</h3><ul class="chains">` + (secRows.length
+      ? secRows.map((s) => `<li><b class="ok">${rfcLink(s.rfc)} §${esc(s.section)}</b> ${esc(s.title)}${s.exact ? "" : ' <span class="dim">(reworded heading)</span>'}</li>`).join("")
+      : `<li class="dim">No section of the replacement has a matching heading; read its change log.</li>`) + `</ul><div class="q" id="q-sec"></div>`;
+  }
   html += `<div class="q" id="q-info"></div></div>`;
   html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions and live UPDATES. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>obsolete <span class="dot amended"></span>in force, amended <span class="dot ok"></span>in force <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;
   html += `<div class="card" id="citing"></div>`;
   out.innerHTML = html;
-  showQuery($("#q-info"));
+  showQuery($("#q-info"), infoQuery);
+  if (secQuery) showQuery($("#q-sec"), secQuery);
   await drawLineage(n, info.id, my);
   const cites = await cypher(Q.projectsCiting, { n });
   if (my !== renderSeq) return;
@@ -275,7 +294,7 @@ function tab(name) {
 }
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
-  if (h.startsWith("rfc=")) { tab("check"); check(h.slice(4)); }
+  if (h.startsWith("rfc=")) { tab("check"); check(h.slice(4).replace("&s=", "#")); }
   else if (h.startsWith("q=")) { tab("check"); $("#q").value = h.slice(2); search(h.slice(2)); }
   else if (h === "scan") { tab("scan"); scanText(); }
   else if (h === "projects") { tab("projects"); projects(); }

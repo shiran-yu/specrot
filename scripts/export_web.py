@@ -37,6 +37,15 @@ def main():
     data = {"built": fetched, "rfcs": rfcs, "edges": edges, "series": series, "projects": projects}
     OUT.write_text(json.dumps(data, separators=(",", ":")))
     print(OUT, f"{OUT.stat().st_size / 1e6:.1f} MB", {k: len(v) for k, v in edges.items()}, len(projects))
+    # sections load on demand (first section lookup): [rfc number, section, title] and edges by index
+    secs = q("MATCH (s:Section) RETURN s.id AS id, s.rfc AS r, s.number AS n, s.title AS t ORDER BY id")
+    at = {s["id"]: i for i, s in enumerate(secs)}
+    cont = [[at[r["a"]], at[r["b"]], int(bool(r["x"]))] for r in q(
+        "MATCH (a:Section)-[e:CONTINUES_AS]->(b:Section) RETURN a.id AS a, b.id AS b, e.exact AS x")]
+    sec_out = OUT.with_name("sections.json")
+    sec_out.write_text(json.dumps({"s": [[int(s["r"][3:]), s["n"], s["t"]] for s in secs], "e": cont},
+                                  separators=(",", ":")))
+    print(sec_out, f"{sec_out.stat().st_size / 1e6:.1f} MB", len(secs), len(cont))
 
 
 if __name__ == "__main__":

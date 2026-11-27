@@ -74,8 +74,26 @@ async function load() {
 const WRITES = /\b(CREATE|MERGE|DELETE|DETACH|SET|REMOVE|DROP|INSERT|FOREACH|LOAD\s+CSV)\b/i;
 const OPAQUE = /`[^`]*`|\/\*[\s\S]*?\*\/|\/\/[^\n]*|'(?:[^'\\]|\\.)*'|"(?:[^"\\]|\\.)*"/g;
 
-self.onmessage = (e) => {
-  const { id, q, params, console: fromConsole } = e.data;
+// Sections (CONTINUES_AS between headings of an RFC and its replacements) load on the first section lookup.
+let sections = null;
+async function loadSections() {
+  const S = await (await fetch("data/sections.json")).json();
+  run("CREATE CONSTRAINT section_id IF NOT EXISTS FOR (s:Section) REQUIRE s.id IS UNIQUE");
+  const rows = S.s.map(([n, num, title], i) => [i, n, num, title]);
+  for (let i = 0; i < rows.length; i += 10000)
+    run("UNWIND $rows AS x MATCH (r:RFC {number: x[1]}) CREATE (r)-[:HAS_SECTION]->(:Section {i: x[0], " +
+        "id: r.id + '#' + x[2], rfc: r.id, number: x[2], title: x[3]})", { rows: rows.slice(i, i + 10000) });
+  run("CREATE INDEX section_i IF NOT EXISTS FOR (s:Section) ON (s.i)");
+  for (let i = 0; i < S.e.length; i += 10000)
+    run("UNWIND $rows AS x MATCH (a:Section {i: x[0]}), (b:Section {i: x[1]}) CREATE (a)-[:CONTINUES_AS {exact: x[2] = 1}]->(b)",
+        { rows: S.e.slice(i, i + 10000) });
+}
+
+self.onmessage = async (e) => {
+  const { id, q, params, console: fromConsole, needs } = e.data;
+  if (needs === "sections") {
+    try { await (sections ??= loadSections()); } catch (err) { sections = null; post({ id, error: String(err.message || err) }); return; }
+  }
   const t = performance.now();
   try {
     if (fromConsole && WRITES.test(q.replace(OPAQUE, " x ")))
