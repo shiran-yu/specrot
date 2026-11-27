@@ -4,6 +4,12 @@ Find the dead RFCs your code still cites. specrot puts every IETF RFC and how th
 Relate graph file, so a developer, a CI job or a coding agent can ask "is this still the spec, and
 if not, what replaced it?"
 
+**Try it:** [live explorer](https://shiran-yu.github.io/specrot/) (Relate WASM in the browser, no install) ·
+`git clone https://github.com/shiran-yu/specrot && cd specrot && uv run specrot check 2616` (the graph ships
+in the repo) · **Evidence:** 1,687 of 8,044 RFC citations in 26 major projects point at obsolete RFCs;
+replaying 17 maintainer PRs, `fix` picks the maintainers' replacement in 46 of 49; upstream PRs open at
+[nginx](https://github.com/nginx/nginx/pull/2051) and [httpx](https://github.com/encode/httpx/pull/3874).
+
 ```console
 $ uv run specrot check 8446
 ✗ OBSOLETE  RFC8446  The Transport Layer Security (TLS) Protocol Version 1.3  (2018-08, Proposed Standard)
