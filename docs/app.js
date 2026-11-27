@@ -41,6 +41,11 @@ MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
 MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
 RETURN r.id AS rfc, t.number AS section, t.title AS title, s.title AS was,
        all(e IN relationships(p) WHERE e.exact) AS exact, size(relationships(p)) AS hops ORDER BY hops`,
+  sections: `UNWIND $ids AS id MATCH (s:Section {id: id})
+MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
+MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
+RETURN id, r.id AS rfc, t.number AS section, all(e IN relationships(p) WHERE e.exact) AS exact, size(relationships(p)) AS hops
+ORDER BY hops`,
   info: `MATCH (r:RFC {number: $n})
 OPTIONAL MATCH (s:Series)-[:INCLUDES]->(r)
 RETURN r.id AS id, r.title AS title, r.date AS date, r.status AS status, r.obsolete AS obsolete,
@@ -214,30 +219,48 @@ async function search(text) {
 }
 
 // ---------- scan tab ----------
-const CITATION = /(?<![a-z0-9])rfc[ \t_#-]{0,2}(\d{1,5})(?!\d)/gi;
-async function scanText() {
-  const text = $("#code").value;
-  const cites = [];
+// Same rules as specrot/scan.py: optional section ("RFC 2616, section 4.4", "rfc7230#section-5.3.3",
+// "RFC7540#4.1", "RFC 7231 6.3.6", "Section 4.2.8.1 of RFC 8446"); names like RFC_4122 or RFC822.TEXT are skipped.
+const CITATION = /(?<![a-z0-9])rfc([ \t_#-]{0,2})(\d{1,5})(?!\d)(?:(?:\.html|\.txt)?(?:[ \t]*,?[ \t]*(?:section|sec\.?|§|par\.)[ \t]*(\d+(?:\.\d+)*)|[ \t]*#[ \t]*(?:section-|sec)?(\d+(?:\.\d+)*)|#appendix-([a-z](?:\.\d+)*)|[ \t]+(?=\d+\.\d)(\d+(?:\.\d+)*)))?/gi;
+const SECTION_OF = /(?:section|§)[ \t]*(\d+(?:\.\d+)*),?[ \t]+of[ \t]+\[?rfc/gi;
+
+function citationsIn(text) {
+  const out = [];
   text.split("\n").forEach((line, i) => {
+    const before_ = {};
+    for (const m of line.matchAll(SECTION_OF)) before_[m.index + m[0].length - 3] = m[1];
     for (const m of line.matchAll(CITATION)) {
-      const before = line.slice(0, m.index);
-      if (/(message|text|x-)\/$/i.test(before)) continue;
-      cites.push({ n: Number(m[1]), line: i + 1 });
+      const before = line.slice(0, m.index), after = line.slice(m.index + 3 + m[1].length + m[2].length);
+      if (/(message|text|x-)\/$/i.test(before) || Number(m[2]) === 0) continue;
+      if (/[._]$/.test(before) || /^[A-Za-z_]/.test(after) || m[1].includes("_") || /^\.[A-Za-z]/.test(after)) continue;  // a name
+      const sec = m[3] || m[4] || (m[5] && m[5].toUpperCase()) || m[6] || before_[m.index] || null;
+      out.push({ n: Number(m[2]), line: i + 1, sec });
     }
   });
+  return out;
+}
+
+async function scanText() {
+  const cites = citationsIn($("#code").value);
   const ns = [...new Set(cites.map((c) => c.n))];
   const rows = await cypher(Q.judge, { ns });
+  const scanQuery = lastQuery;
   const byN = Object.fromEntries(rows.map((r) => [r.n, r]));
+  const ids = [...new Set(cites.filter((c) => c.sec && byN[c.n]?.obsolete).map((c) => `RFC${c.n}#${c.sec}`))];
+  const homes = {};
+  if (ids.length) for (const h of await cypher(Q.sections, { ids }, false, "sections")) (homes[h.id] ||= []).some((x) => x.rfc === h.rfc && x.section === h.section) || homes[h.id].push(h);
   const order = { obsolete: 0, historic: 1, "old-version": 2, amended: 3, ok: 4, unknown: 5 };
-  const found = ns.map((n) => ({ n, r: byN[n] ?? null, lines: cites.filter((c) => c.n === n).map((c) => c.line) }))
+  const found = ns.map((n) => ({ n, r: byN[n] ?? null, lines: cites.filter((c) => c.n === n).map((c) => c.line),
+    secs: [...new Set(cites.filter((c) => c.n === n && c.sec).map((c) => c.sec))] }))
     .map((x) => ({ ...x, lvl: level(x.r) })).sort((a, b) => order[a.lvl] - order[b.lvl]);
+  const moved = (f) => f.r?.obsolete ? f.secs.map((s) => `<br><span class="dim">§${esc(s)} → ${(homes[`RFC${f.n}#${s}`] || []).map((h) => `${h.rfc} §${esc(h.section)}${h.exact ? "" : " ~"}`).join(", ") || "?"}</span>`).join("") : "";
   const counts = {};
   found.forEach((f) => (counts[f.lvl] = (counts[f.lvl] || 0) + 1));
   $("#scan-out").innerHTML = `<div class="card"><p>${cites.length} citations of ${ns.length} RFCs · ${Object.entries(counts).map(([k, v]) => `${badge(k)} ${v}`).join(" ")}</p>
     <table><tr><th>status</th><th>RFC</th><th>title</th><th>replaced by / amended by</th><th>lines</th></tr>` +
-    found.map((f) => `<tr><td>${badge(f.lvl)}</td><td>${f.r ? rfcLink(f.r.id) : "RFC" + f.n}</td><td>${esc(f.r?.title ?? "not in the RFC index")}</td><td>${f.r ? (f.r.current.length ? f.r.current.map(rfcLink).join(", ") : f.r.updates.slice(0, 4).map(rfcLink).join(", ")) : ""}</td><td>${f.lines.join(", ")}</td></tr>`).join("") +
-    `</table><div class="q" id="q-scan"></div></div>`;
-  showQuery($("#q-scan"));
+    found.map((f) => `<tr><td>${badge(f.lvl)}</td><td>${f.r ? rfcLink(f.r.id) : "RFC" + f.n}</td><td>${esc(f.r?.title ?? "not in the RFC index")}</td><td>${f.r ? (f.r.current.length ? f.r.current.map(rfcLink).join(", ") : f.r.updates.slice(0, 4).map(rfcLink).join(", ")) : ""}${moved(f)}</td><td>${f.lines.join(", ")}</td></tr>`).join("") +
+    `</table><p class="dim">§ old → new: the cited section's heading in the replacement (CONTINUES_AS); ~ marks a reworded heading.</p><div class="q" id="q-scan"></div></div>`;
+  showQuery($("#q-scan"), scanQuery);
 }
 
 // ---------- projects tab ----------

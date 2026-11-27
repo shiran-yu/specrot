@@ -279,3 +279,9 @@ def test_fix_keeps_code_names_protocol_strings_and_bytes(conn, tmp_path):
 def test_obsoletes_kind(old, new, kind):
     from specrot.build import obsoletes_kind
     assert obsoletes_kind(old, new, 1) == kind
+
+
+def test_section_match_prefers_the_same_number():
+    from specrot import sections as S
+    m = S.match([("4", "Handshake Protocol")], {9846: [("4", "Handshake Protocol"), ("B.3", "Handshake Protocol")]})
+    assert m["4"]["section"] == "4"

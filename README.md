@@ -84,10 +84,10 @@ RFC). Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/a
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, 51,108 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,730 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,015
-  `CONTINUES_AS` between sections of an RFC and its replacements (27,508 with an identical heading). Of the normative references,
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,386
+  `CONTINUES_AS` between sections of an RFC and its replacements (27,830 with an identical heading). Of the normative references,
   42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
   derived from those series' members (marked `{via: 'BCP14'}`).
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
@@ -230,8 +230,8 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
   same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 284
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 216 have a home in a current RFC
-  (203 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 218 have a home in a current RFC
+  (204 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
 - `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names

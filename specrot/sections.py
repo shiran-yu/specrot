@@ -85,6 +85,8 @@ def match(old: list[tuple[str, str]], new: dict[str, list[tuple[str, str]]]) -> 
         if len(hits) > 1 and p:
             under = [h for h in hits if h[0] == p["rfc"] and (h[1] + ".").startswith(p["section"] + ".")]
             hits = under or [h for h in hits if h[0] == p["rfc"]] or hits
+        if len(hits) > 1:  # e.g. "Handshake Protocol" is both section 4 and appendix B.3: keep the same number
+            hits = [h for h in hits if h[1] == num] or hits
         if len(hits) == 1:
             rfc, n, t = hits[0]
             out[num] = {"rfc": rfc, "section": n, "title": t, "exact": exact}
