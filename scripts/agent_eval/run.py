@@ -6,7 +6,7 @@ Rows of conditions not run this time are kept from the existing results.json.
 
 Each question asks for the current RFC for a topic. The answer key is computed from the graph: the
 documents still in force at the end of the OBSOLETES chain that starts at the topic's classic RFC.
-An answer is correct when it names at least one of them and no obsolete RFC. Needs the `claude` CLI.
+An answer is correct when it names at least one of them and no obsolete RFC; complete when it names all of them. Needs the `claude` CLI.
 """
 from __future__ import annotations
 
@@ -69,7 +69,10 @@ def main():
     ap.add_argument("--models", nargs="+", default=["haiku", "sonnet"])
     ap.add_argument("--conditions", nargs="+", choices=CONDITIONS, default=list(CONDITIONS))
     ap.add_argument("--workers", type=int, default=4)
+    ap.add_argument("--rescore", action="store_true", help="recompute the summary from results.json, no model calls")
     a = ap.parse_args()
+    if a.rescore:
+        a.models, a.conditions = [], []
     conn = graph.connect()
     qs = json.loads((HERE / "questions.json").read_text())
     for q in qs:
@@ -99,6 +102,8 @@ def main():
             summary[f"{m} {c}"] = {
                 "correct": sum(r["correct"] for r in rs), "of": len(rs),
                 "named_an_obsolete_rfc": sum(bool(r["obsolete_named"]) for r in rs),
+                "complete": sum(set(r["key"]) <= set(r["named"]) and not r["obsolete_named"] for r in rs),
+                "used_more_than_one_turn": sum((r["turns"] or 0) > 1 for r in rs),
                 "named_only_obsolete_rfcs": sum(bool(r["obsolete_named"]) and not set(r["named"]) & set(r["key"]) for r in rs),
                 "correct_where_spec_was_replaced": f"{sum(r['correct'] for r in changed)}/{len(changed)}"}
     out = {"prompt": PROMPT, "summary": summary, "rows": rows}

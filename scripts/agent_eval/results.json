@@ -5,6 +5,8 @@
    "correct": 24,
    "of": 34,
    "named_an_obsolete_rfc": 10,
+   "complete": 23,
+   "used_more_than_one_turn": 0,
    "named_only_obsolete_rfcs": 2,
    "correct_where_spec_was_replaced": "16/25"
   },
@@ -12,6 +14,8 @@
    "correct": 33,
    "of": 34,
    "named_an_obsolete_rfc": 1,
+   "complete": 31,
+   "used_more_than_one_turn": 16,
    "named_only_obsolete_rfcs": 1,
    "correct_where_spec_was_replaced": "24/25"
   },
@@ -19,6 +23,8 @@
    "correct": 34,
    "of": 34,
    "named_an_obsolete_rfc": 0,
+   "complete": 32,
+   "used_more_than_one_turn": 34,
    "named_only_obsolete_rfcs": 0,
    "correct_where_spec_was_replaced": "25/25"
   },
@@ -26,6 +32,8 @@
    "correct": 32,
    "of": 34,
    "named_an_obsolete_rfc": 2,
+   "complete": 30,
+   "used_more_than_one_turn": 0,
    "named_only_obsolete_rfcs": 2,
    "correct_where_spec_was_replaced": "23/25"
   },
@@ -33,6 +41,8 @@
    "correct": 32,
    "of": 34,
    "named_an_obsolete_rfc": 2,
+   "complete": 30,
+   "used_more_than_one_turn": 4,
    "named_only_obsolete_rfcs": 1,
    "correct_where_spec_was_replaced": "23/25"
   },
@@ -40,6 +50,8 @@
    "correct": 34,
    "of": 34,
    "named_an_obsolete_rfc": 0,
+   "complete": 33,
+   "used_more_than_one_turn": 34,
    "named_only_obsolete_rfcs": 0,
    "correct_where_spec_was_replaced": "25/25"
   }

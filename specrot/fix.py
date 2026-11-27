@@ -16,6 +16,8 @@ from pathlib import Path
 
 from . import graph, scan
 
+HISTORY = re.compile(r"(?i)\b(obsolet\w*|supersed\w*|replac\w*|deprecat\w*|formerly|previously|historic\w*|legacy|"
+                     r"older|was updated|updated by)\b")
 RFC_HOSTS = re.compile(r"(?i)(rfc-editor\.org/rfc/|tools\.ietf\.org/html/|datatracker\.ietf\.org/doc/html/|ietf\.org/rfc/)$")
 
 
@@ -53,6 +55,10 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
         tail = line[m.end():]
         if head.endswith(("'", '"')) and tail.startswith(("'", '"')):
             return None  # a string literal in code ("rfc2109": ...), not prose
+        if head.count('"') % 2 or head.count("`") % 2:
+            return None  # inside a quoted example or quotation
+        if HISTORY.search(line) or re.search(rf"(?i)rfc[ \t_#-]{{0,2}}0*{n_new}(?!\d)", line):
+            return None  # the line already talks about the replacement or the history: rewording needs a person
         if not head.endswith("/") and re.fullmatch(r"rfc\d+", line[m.start():m.end(1)]):
             return None  # lower-case and unspaced outside a link: a code name (enum rfc822, fmt == rfc850)
         if head.endswith("/"):

@@ -4,6 +4,9 @@
     uv run python scripts/audit/label.py gpt         # GitHub Copilot CLI, model auto (recorded) -> labels-gpt.json
 
 The full prompt and the raw reply are kept in raw/<labeler>.json; score.py compares the two label files.
+A rerun writes labels-<labeler>-<time>.json and raw/<labeler>-<time>.json beside the published ones
+(compare with `score.py labels-claude.json labels-claude-<time>.json`); --save replaces the published files. The models behind the
+aliases are recorded in raw/; `sonnet` and Copilot's `auto` may resolve to newer models later.
 """
 import json
 import re
@@ -29,7 +32,8 @@ def copilot_model(stdout: str) -> str:
 
 
 def main():
-    who = sys.argv[1]
+    who, save = sys.argv[1], "--save" in sys.argv[2:]
+    stamp = "" if save else "-" + datetime.now(timezone.utc).strftime("%Y%m%dT%H%M")
     sample = json.loads((HERE / "sample.json").read_text())
     prompt = ((HERE / "LABELING.md").read_text() + "\n\nsample.json:\n```json\n" + json.dumps(sample, indent=1)
               + "\n```\nReply with only the JSON list, in one fenced json block.")
@@ -44,10 +48,10 @@ def main():
     labels = json.loads(block.group(1) if block else reply)
     assert sorted(x["i"] for x in labels) == list(range(len(sample))), "one label per item"
     (HERE / "raw").mkdir(exist_ok=True)
-    (HERE / "raw" / f"{who}.json").write_text(json.dumps({
+    (HERE / "raw" / f"{who}{stamp}.json").write_text(json.dumps({
         "date": datetime.now(timezone.utc).isoformat(timespec="seconds"), "model": model,
         "command": COMMANDS[who]("<prompt>"), "prompt": prompt, "reply": reply}, indent=1) + "\n")
-    (HERE / f"labels-{who}.json").write_text(json.dumps(sorted(labels, key=lambda x: x["i"]), indent=0) + "\n")
+    (HERE / f"labels-{who}{stamp}.json").write_text(json.dumps(sorted(labels, key=lambda x: x["i"]), indent=0) + "\n")
     print(who, model, len(labels), "labels")
 
 

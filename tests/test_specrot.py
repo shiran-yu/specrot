@@ -240,3 +240,11 @@ def test_fix_leaves_code_names_alone(conn, tmp_path):
     (tmp_path / "t.c").write_text("enum { rfc822, rfc850 };\n/* RFC 822 dates */\n")
     edits, _ = fix.plan(conn, tmp_path)
     assert [e.line for e in edits] == [2]
+
+
+def test_fix_skips_history_and_quoted_examples(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "n.py").write_text('# RFC 8446 for TLS 1.3 was obsoleted by RFC 9846\n'
+                                   '# examples: "Section 4.2.8.1 of RFC 8446"\n# obsoletes RFC 2109\n# see RFC 8941\n')
+    edits, skipped = fix.plan(conn, tmp_path)
+    assert [e.line for e in edits] == [4] and len(skipped) == 3

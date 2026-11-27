@@ -52,10 +52,13 @@ summary. specrot reports; a person decides, and `.specrot-ignore` records the de
 them" for 34 protocols, under three conditions. **No tools:** Haiku included an obsolete RFC in its
 answer for **10 of 34** (2 times alone, 8 times listed beside the current one, e.g. "RFC 8259, RFC
 7159" for JSON); Sonnet gave only the obsolete RFC for **2 of 34**, exactly the two replaced in 2026
-(TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). **Web search allowed:** the models searched on 16 (Haiku)
-and 4 (Sonnet) of the 34 questions and still missed 1 and 2, each time answering from memory
-without searching. **specrot MCP server attached:** they consulted it on every question and
-answered **34 of 34**. One sample per question. The answer key is the RFC Editor's own `OBSOLETES`
+(TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). **Web search allowed** (the only tools in that arm): the
+models took more than one turn, i.e. called a tool, on 16 (Haiku) and 4 (Sonnet) of the 34 questions
+and still named an obsolete RFC for 1 and 2, each time in a one-turn answer from memory. **specrot
+MCP server attached** (its tools only): every answer took a tool call and none named an obsolete
+RFC, **34 of 34**; 32 (Haiku) and 33 (Sonnet) named every RFC of the current specification, the
+others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per question; turns, not tool
+traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
 data read from the graph (the documents in force at the end of the chain from each topic's classic
 RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
