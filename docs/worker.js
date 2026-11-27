@@ -47,7 +47,7 @@ async function load() {
       run(`MATCH (p:Project {name: $name}) UNWIND $rows AS f
            CREATE (p)-[:HAS_FILE]->(file:File {path: f.path, project: $name})
            WITH file, f UNWIND f.cites AS c MATCH (r:RFC {number: c[0]})
-           CREATE (file)-[:CITES {lines: c[1]}]->(r)`, { name: p.name, rows });
+           CREATE (file)-[:CITES {lines: c[1], readerLines: c[1]}]->(r)`, { name: p.name, rows });  // export keeps reader lines only
     }
   }]);
   steps.push(["full-text index", () => run("CREATE FULLTEXT INDEX rfc_title IF NOT EXISTS FOR (r:RFC) ON EACH [r.title]")]);
