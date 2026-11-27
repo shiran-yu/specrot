@@ -233,3 +233,10 @@ def test_fix_targets_the_right_citation_on_a_line(conn, tmp_path):
     (tmp_path / "a.md").write_text('as per [RFC 7230](https://tools.ietf.org/html/rfc7230#section-3.2.2)\n"rfc2109": 1\n')
     edits, _ = fix.plan(conn, tmp_path)
     assert [e.new for e in edits] == ['as per [RFC 7230](https://tools.ietf.org/html/rfc9110#section-5.3)\n']
+
+
+def test_fix_leaves_code_names_alone(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "t.c").write_text("enum { rfc822, rfc850 };\n/* RFC 822 dates */\n")
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.line for e in edits] == [2]

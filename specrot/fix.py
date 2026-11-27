@@ -53,6 +53,8 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
         tail = line[m.end():]
         if head.endswith(("'", '"')) and tail.startswith(("'", '"')):
             return None  # a string literal in code ("rfc2109": ...), not prose
+        if not head.endswith("/") and re.fullmatch(r"rfc\d+", line[m.start():m.end(1)]):
+            return None  # lower-case and unspaced outside a link: a code name (enum rfc822, fmt == rfc850)
         if head.endswith("/"):
             if not RFC_HOSTS.search(head) or re.match(r"[#.][\w]", tail):
                 return None  # e.g. httpwg.org/specs/rfc7231.html#status.codes: anchors differ
