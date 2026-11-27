@@ -7,7 +7,7 @@ ROOT = Path(__file__).resolve().parent.parent
 
 def test_readme_matches_facts():
     f = json.loads((ROOT / "facts.json").read_text())
-    readme = (ROOT / "README.md").read_text()
+    readme = (ROOT / "README.md").read_text() + (ROOT / "EVIDENCE.md").read_text()
     s = f["showcase"]
     for needle in [f"**{s['citations']:,}**", f"**{s['obsolete']:,} ({s['obsolete_pct']}%)**",
                    f"**{s['affected']} of {s['projects']}**", f"{s['old_version']:,} more",

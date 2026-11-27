@@ -6,3 +6,4 @@
 * skills/*          # agent instructions with examples
 * specrot/*         # code comments and help text naming the RFCs it handles
 * action.yml        # example citations
+* EVIDENCE.md       # measurements about obsolete RFCs
