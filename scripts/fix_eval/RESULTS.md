@@ -26,3 +26,22 @@ Round 2's 13 Claude `wrong` labels, checked by hand against the RFC text (`data/
   labels it `keep` too. Same line-by-line limit.
 
 The labels are model labels, not human ones.
+
+## Held-out round (`holdout/`)
+
+Fixer frozen at commit 654610a, then `draw.py --holdout`: a new hash salt over the 601 proposed edits that
+were not in round 1 or 2 (no line labelled before). Same instructions, same two models.
+
+| Both `correct` | Claude: correct / keep / wrong | GPT: correct / keep / wrong | Both `wrong` | Agreement |
+|---|---|---|---|---|
+| **74** | 75 / 13 / 12 | 81 / 10 / 9 | 9 | 92% |
+
+The 9 edits both call wrong:
+- 4 leave a section number stale that the pattern did not capture: wrapped onto the next line ("RFC 8446,
+  Section" / "4.2.11.2"), the slash form "RFC 7231/6.4.4", and a Markdown link definition `[RFC 8446]:`
+  whose URL is on the next line. Fixed after this round (tests in
+  `test_fix_skips_version_changes_and_reference_link_labels`); this round's numbers are not recomputed.
+- 2 map RFC 7230 §3.2 "Header Fields" to RFC 9110 §6.3 "Header Fields" by its identical heading, while the
+  field syntax moved to RFC 9110 §5 "Fields": a limit of mapping by heading.
+- 1 next-line URL still names RFC 7231 (haproxy); 1 sentence about RFC 6125 is no longer true of RFC 9525
+  (CPython); 1 follows the RFC Editor's "RFC 2854 obsoletes RFC 1866" where the cited rule did not move (Django).

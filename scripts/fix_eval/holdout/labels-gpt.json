@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "correct",
+"note": ""
+},
+{
+"i": 1,
+"label": "correct",
+"note": ""
+},
+{
+"i": 2,
+"label": "wrong",
+"note": "RFC 9525 defines IP-address matching; the claim is no longer accurate."
+},
+{
+"i": 3,
+"label": "correct",
+"note": ""
+},
+{
+"i": 4,
+"label": "correct",
+"note": ""
+},
+{
+"i": 5,
+"label": "correct",
+"note": ""
+},
+{
+"i": 6,
+"label": "keep",
+"note": "RFC822 is deliberate: the flag and two-digit-year behavior are legacy."
+},
+{
+"i": 7,
+"label": "correct",
+"note": ""
+},
+{
+"i": 8,
+"label": "correct",
+"note": ""
+},
+{
+"i": 9,
+"label": "correct",
+"note": ""
+},
+{
+"i": 10,
+"label": "correct",
+"note": ""
+},
+{
+"i": 11,
+"label": "correct",
+"note": ""
+},
+{
+"i": 12,
+"label": "correct",
+"note": ""
+},
+{
+"i": 13,
+"label": "correct",
+"note": ""
+},
+{
+"i": 14,
+"label": "keep",
+"note": "The comment describes RFC 2388's vagueness, motivating this compatibility behavior."
+},
+{
+"i": 15,
+"label": "keep",
+"note": "This specifically refers to legacy RFC 2109 cookies."
+},
+{
+"i": 16,
+"label": "correct",
+"note": ""
+},
+{
+"i": 17,
+"label": "correct",
+"note": ""
+},
+{
+"i": 18,
+"label": "correct",
+"note": ""
+},
+{
+"i": 19,
+"label": "correct",
+"note": ""
+},
+{
+"i": 20,
+"label": "wrong",
+"note": "The following section number remains 4.2.11.2, not the new section."
+},
+{
+"i": 21,
+"label": "correct",
+"note": ""
+},
+{
+"i": 22,
+"label": "correct",
+"note": ""
+},
+{
+"i": 23,
+"label": "correct",
+"note": ""
+},
+{
+"i": 24,
+"label": "correct",
+"note": ""
+},
+{
+"i": 25,
+"label": "correct",
+"note": ""
+},
+{
+"i": 26,
+"label": "correct",
+"note": ""
+},
+{
+"i": 27,
+"label": "correct",
+"note": ""
+},
+{
+"i": 28,
+"label": "correct",
+"note": ""
+},
+{
+"i": 29,
+"label": "correct",
+"note": ""
+},
+{
+"i": 30,
+"label": "wrong",
+"note": "The section remains 6.4.4; RFC 9110 uses section 15.4.4."
+},
+{
+"i": 31,
+"label": "correct",
+"note": ""
+},
+{
+"i": 32,
+"label": "keep",
+"note": "Set-Cookie2 and RFC 2965 cookies are explicitly legacy formats."
+},
+{
+"i": 33,
+"label": "correct",
+"note": ""
+},
+{
+"i": 34,
+"label": "correct",
+"note": ""
+},
+{
+"i": 35,
+"label": "correct",
+"note": ""
+},
+{
+"i": 36,
+"label": "correct",
+"note": ""
+},
+{
+"i": 37,
+"label": "correct",
+"note": ""
+},
+{
+"i": 38,
+"label": "correct",
+"note": ""
+},
+{
+"i": 39,
+"label": "keep",
+"note": "\u201cRFC822 style\u201d names the established legacy date format."
+},
+{
+"i": 40,
+"label": "keep",
+"note": "The comment explicitly describes obsolete RFC 2965 compatibility."
+},
+{
+"i": 41,
+"label": "correct",
+"note": ""
+},
+{
+"i": 42,
+"label": "correct",
+"note": ""
+},
+{
+"i": 43,
+"label": "keep",
+"note": "\u201cUnwise\u201d characters are specific to RFC 2396's escaping terminology."
+},
+{
+"i": 44,
+"label": "correct",
+"note": ""
+},
+{
+"i": 45,
+"label": "correct",
+"note": ""
+},
+{
+"i": 46,
+"label": "correct",
+"note": ""
+},
+{
+"i": 47,
+"label": "correct",
+"note": ""
+},
+{
+"i": 48,
+"label": "correct",
+"note": ""
+},
+{
+"i": 49,
+"label": "correct",
+"note": ""
+},
+{
+"i": 50,
+"label": "correct",
+"note": ""
+},
+{
+"i": 51,
+"label": "correct",
+"note": ""
+},
+{
+"i": 52,
+"label": "correct",
+"note": ""
+},
+{
+"i": 53,
+"label": "wrong",
+"note": "The following section number remains 4.2.7, not the new section."
+},
+{
+"i": 54,
+"label": "correct",
+"note": ""
+},
+{
+"i": 55,
+"label": "correct",
+"note": ""
+},
+{
+"i": 56,
+"label": "correct",
+"note": ""
+},
+{
+"i": 57,
+"label": "correct",
+"note": ""
+},
+{
+"i": 58,
+"label": "correct",
+"note": ""
+},
+{
+"i": 59,
+"label": "wrong",
+"note": "The adjacent source URL still points to RFC 7231."
+},
+{
+"i": 60,
+"label": "keep",
+"note": "RFC 3164 names the specific legacy syslog format."
+},
+{
+"i": 61,
+"label": "correct",
+"note": ""
+},
+{
+"i": 62,
+"label": "correct",
+"note": ""
+},
+{
+"i": 63,
+"label": "correct",
+"note": ""
+},
+{
+"i": 64,
+"label": "correct",
+"note": ""
+},
+{
+"i": 65,
+"label": "correct",
+"note": ""
+},
+{
+"i": 66,
+"label": "correct",
+"note": ""
+},
+{
+"i": 67,
+"label": "correct",
+"note": ""
+},
+{
+"i": 68,
+"label": "correct",
+"note": ""
+},
+{
+"i": 69,
+"label": "correct",
+"note": ""
+},
+{
+"i": 70,
+"label": "correct",
+"note": ""
+},
+{
+"i": 71,
+"label": "correct",
+"note": ""
+},
+{
+"i": 72,
+"label": "correct",
+"note": ""
+},
+{
+"i": 73,
+"label": "correct",
+"note": ""
+},
+{
+"i": 74,
+"label": "correct",
+"note": ""
+},
+{
+"i": 75,
+"label": "correct",
+"note": ""
+},
+{
+"i": 76,
+"label": "keep",
+"note": "\u201cRFC 822 names\u201d refers to the established rfc822Name SAN type."
+},
+{
+"i": 77,
+"label": "correct",
+"note": ""
+},
+{
+"i": 78,
+"label": "correct",
+"note": ""
+},
+{
+"i": 79,
+"label": "wrong",
+"note": "RFC 9110 section 6.3 covers Connection, not field-name/value syntax."
+},
+{
+"i": 80,
+"label": "correct",
+"note": ""
+},
+{
+"i": 81,
+"label": "correct",
+"note": ""
+},
+{
+"i": 82,
+"label": "correct",
+"note": ""
+},
+{
+"i": 83,
+"label": "correct",
+"note": ""
+},
+{
+"i": 84,
+"label": "correct",
+"note": ""
+},
+{
+"i": 85,
+"label": "correct",
+"note": ""
+},
+{
+"i": 86,
+"label": "keep",
+"note": "The cited effective-request-host behavior is explicitly from RFC 2965."
+},
+{
+"i": 87,
+"label": "correct",
+"note": ""
+},
+{
+"i": 88,
+"label": "correct",
+"note": ""
+},
+{
+"i": 89,
+"label": "wrong",
+"note": "RFC 2854 concerns text/html, not application/x-www-form-urlencoded."
+},
+{
+"i": 90,
+"label": "correct",
+"note": ""
+},
+{
+"i": 91,
+"label": "correct",
+"note": ""
+},
+{
+"i": 92,
+"label": "correct",
+"note": ""
+},
+{
+"i": 93,
+"label": "correct",
+"note": ""
+},
+{
+"i": 94,
+"label": "correct",
+"note": ""
+},
+{
+"i": 95,
+"label": "wrong",
+"note": "The reference still links to RFC 8446, mismatching its new label."
+},
+{
+"i": 96,
+"label": "correct",
+"note": ""
+},
+{
+"i": 97,
+"label": "correct",
+"note": ""
+},
+{
+"i": 98,
+"label": "wrong",
+"note": "RFC 9110 section 6.3 covers Connection, not field-value syntax."
+},
+{
+"i": 99,
+"label": "correct",
+"note": ""
+}
+]

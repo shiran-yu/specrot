@@ -327,7 +327,11 @@ def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
              "clients, as defined in RFC 6962.",                      # CT -> CT Version 2.0
              "per [RFC 7230, section 6.3.2][]. Only enable",          # Markdown reference link label
              "(see Appendix E.6 of RFC8446). Note",                   # uncaptured appendix
+             "// supported_versions instead. See RFC 8446, sections 4.1.3 and 4.2.1.",  # plural sections
+             "// field, according to RFC 8446, Section",              # section wrapped onto the next line
+             "Violate RFC 7231/6.4.4 and do not convert POST",        # slash section
+             "[RFC 8446]:",                                           # link definition, URL on the next line
              "# see RFC 8941"]
     (tmp_path / "x.md").write_text("\n".join(lines) + "\n")
     edits, _ = fix.plan(conn, tmp_path)
-    assert [e.line for e in edits] == [5]
+    assert [e.line for e in edits] == [9]

@@ -241,9 +241,10 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   (`RFC_4122`, `rfc_822`), protocol strings (`RFC822.TEXT`), quoted examples, lines that already talk
   about history or the replacement, and files that are not UTF-8 alone, and `--write` changes only the
   lines in the diff. It also skips chains that change protocol version and appendices named in prose.
-  Of 100 sampled edits on the 26 projects, both labelers called **67** mergeable as is; Claude called 13
-  wrong, and a hand check found 3 of them real (stale appendices, fixed since)
-  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md)). 31 to 36 of 100 stale citations are
+  On a held-out sample of 100 edits (the fixer frozen first, no line seen in the earlier rounds), both
+  model labelers called **74** mergeable as is and 9 wrong; 4 of the 9 were stale section numbers the
+  pattern missed, fixed since, and 2 a section mapped by an identical heading whose content moved
+  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md), with the two earlier rounds). 31 to 36 of 100 stale citations are
   deliberate (the audit above), so a person reviews the diff before committing.
 - The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
   mostly have none).
