@@ -83,7 +83,7 @@ server and the browser explorer all run these Cypher queries against the same `s
 
 ## How it uses Relate
 
-- **Mode: single file** — [`store/rfc.rl`](store/rfc.rl) (8 MB).
+- **Mode: single file:** [`store/rfc.rl`](store/rfc.rl) (8 MB).
 - **Why this mode:** the graph is a dataset that ships with the code: one file to commit, clone,
   open read-only from the Python package, the `relate` CLI and the MCP server, and replace as a
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
