@@ -38,7 +38,7 @@ and coding agents, whose training data predates recent replacements.
 | Question | Answer |
 |---|---|
 | Does real code cite obsolete RFCs? | **1,603 of 8,034** RFC citations in 26 major codebases (20%), in 24 of the 26 (25 repositories: Go's `net` and `crypto` are counted apart) |
-| Are they worth fixing? | About half: two models labelling 100 of them agree on 49; they call 34 and 42 deliberate references, 8 and 5 scanner errors, and disagree on 22 |
+| Are they worth fixing? | About half, by model labels (no human labels): two models labelling 100 of them agree on 49; they call 34 and 42 deliberate references, 8 and 5 scanner errors, and disagree on 22 |
 | Do maintainers fix them? | Yes, by hand: 17 merged PRs replaced 106 obsolete citations; `fix` proposes 50 of those edits, 47 with the maintainers' RFC |
 | Do coding agents get it right? | Without tools Claude Haiku 5.5 names an obsolete RFC for 8 of 34 protocols and Sonnet 5.5 for 2 (the two replaced in 2026); with web search 1 and 2; with the specrot MCP server, 0 |
 | Upstream | PRs open (not merged) at [nginx#2051](https://github.com/nginx/nginx/pull/2051) and [httpx#3874](https://github.com/encode/httpx/pull/3874) |
@@ -260,7 +260,7 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   about history or the replacement, and files that are not UTF-8 alone, and `--write` changes only the
   lines in the diff. It also skips chains that change protocol version and appendices named in prose.
   On a held-out sample of 100 edits (the fixer frozen first, no line seen in the earlier rounds), both
-  model labelers called **74** mergeable as is and 9 wrong; 4 of the 9 were stale section numbers the
+  model labelers (no human labels) called **74** mergeable as is and 9 wrong; 4 of the 9 were stale section numbers the
   pattern missed, fixed since, and 2 a section mapped by an identical heading whose content moved
   ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md), with the two earlier rounds). 34 to 42 of 100 stale citations are
   deliberate (the audit in [EVIDENCE.md](EVIDENCE.md)), so a person reviews the diff before committing.
