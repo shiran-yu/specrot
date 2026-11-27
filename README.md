@@ -231,42 +231,15 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
 
 ## Limits
 
-- "Obsolete" is the RFC Editor's relation, not a judgement of the code. The edge `kind` (edition,
-  version, split, retired) is inferred from the two titles at build time (deprecation wording;
-  differing version numbers in a *protocol's* title, as in TLS 1.2 → 1.3, IMAP 4rev1 → 4rev2,
-  a TLS 1.2 extension folded into a TLS 1.3 document, CT → CT 2.0,
-  RTSP → RTSP 2.0, while PKCS #1 v2.1 → v2.2 is a new edition and IPv6 or HTTP/1.1 in a title is not
-  a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 55
-  `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
-  Two edges are marked `partial` by hand (`build.PARTIAL`: RFC 1738's telnet and gopher schemes moved to
-  RFC 4248 and 4266, while URL syntax went to RFC 3986, which only *updates* 1738), so `fix` leaves those too.
-  Six edges are marked `redesign` by hand, each with its reason (`build.REDESIGN`: RFC 6874 → 9844,
-  TCP MD5 → TCP-AO, HTML 2.0 and form upload → text/html, BSD syslog → RFC 5424, Cookie2 → RFC 6265):
-  the replacement is a different design, so `fix` leaves those citations to a person. Only the 76
-  pairs `fix` proposes on the 26 projects were reviewed; other edges may hide the same case.
-  Citations that deliberately describe legacy behaviour are reported like any other; list them in
-  `.specrot-ignore`.
-- Citations are found with a regular expression. Media types such as `message/rfc822` are skipped;
-  identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
-  (`--all-kinds` includes them).
-- Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 287
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 221 have a home in a current RFC
-  (207 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
-  gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
-  headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
-- `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names
-  (`RFC_4122`, `rfc_822`), protocol strings (`RFC822.TEXT`), quoted examples, lines that already talk
-  about history or the replacement, and files that are not UTF-8 alone, and `--write` changes only the
-  lines in the diff. It also skips chains that change protocol version and appendices named in prose.
-  On a held-out sample of 100 edits (the fixer frozen first, no line seen in the earlier rounds), both
-  model labelers (no human labels) called **74** mergeable as is and 9 wrong; 4 of the 9 were stale section numbers the
-  pattern missed, fixed since, and 2 a section mapped by an identical heading whose content moved
-  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md), with the two earlier rounds). 34 to 42 of 100 stale citations are
-  deliberate (the audit in [EVIDENCE.md](EVIDENCE.md)), so a person reviews the diff before committing.
-- The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
-  mostly have none).
-- The store reflects the sources on the day it was built (see `git log store/rfc.rl`).
+One line each; the details, numbers and tests are in [EVIDENCE.md](EVIDENCE.md#limits-in-detail).
+
+- "Obsolete" is the RFC Editor's relation, not a judgement of the code; the replacement kind is inferred
+  from titles, with 2 `partial` and 6 `redesign` edges set by hand.
+- Citations are found by a regular expression; identifiers and test files are excluded by default.
+- Sections are mapped by heading, so a section whose content moved under a new heading gets no home.
+- `fix` rewrites only unambiguous citations, as a diff for a person to review: about half of stale
+  citations are deliberate, and its precision is measured with model labels, not human ones.
+- Early RFCs have few recorded references; the store reflects the sources on the day it was built.
 
 Levels used everywhere (CLI, MCP, CI, browser), most severe first: `obsolete` (a newer edition
 replaced it, or it was retired), `historic` (including retired protocol versions such as TLS 1.0
