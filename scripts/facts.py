@@ -26,7 +26,12 @@ def main():
         RETURN r.id AS rfc, count(DISTINCT p) AS projects ORDER BY projects DESC, rfc LIMIT 4""")]
     tls = one("""MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(:RFC {id: 'RFC8446'}) WHERE size(c.readerLines) > 0
                  RETURN count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS citations""")
-    facts = {"nodes": labels, "relationships": rels, "showcase": show, "top_obsolete": top, "rfc8446_cited": tls,
+    cited = [dict(r) for r in c.execute("""MATCH (:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND NOT r.oldVersion
+        AND size(c.readerLines) > 0 UNWIND c.sections AS s RETURN DISTINCT r.id AS rfc, s""")]
+    homes = [graph.section_now(c, x["rfc"], x["s"]) for x in cited]
+    sections = {"cited": len(cited), "mapped": sum(bool(h) for h in homes),
+                "exact": sum(any(y["exact"] for y in h) for h in homes)}
+    facts = {"sections": sections, "nodes": labels, "relationships": rels, "showcase": show, "top_obsolete": top, "rfc8446_cited": tls,
              "store_bytes": graph.DEFAULT_STORE.stat().st_size}
     OUT.write_text(json.dumps(facts, indent=2) + "\n")
     print(json.dumps(facts, indent=2))

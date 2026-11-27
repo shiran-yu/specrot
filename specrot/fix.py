@@ -17,7 +17,8 @@ from pathlib import Path
 from . import graph, scan
 
 HISTORY = re.compile(r"(?i)\b(obsolet\w*|supersed\w*|replac\w*|deprecat\w*|formerly|previously|historic\w*|legacy|"
-                     r"older|was updated|updated by)\b")
+                     r"older|earlier|original\w*|was updated|updated by|backward\w*|compatib\w*|released|introduced|"
+                     r"(?:in|since|from) (?:19|20)\d\d)\b")
 RFC_HOSTS = re.compile(r"(?i)(rfc-editor\.org/rfc/|tools\.ietf\.org/html/|datatracker\.ietf\.org/doc/html/|ietf\.org/rfc/)$")
 
 
@@ -78,54 +79,69 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
     return None
 
 
+def _read(p: Path) -> list[str] | None:
+    """Lines with their own line endings; None for a file that is not UTF-8 (left untouched)."""
+    try:
+        return p.read_bytes().decode("utf-8").splitlines(keepends=True)
+    except (OSError, UnicodeDecodeError):
+        return None
+
+
 def plan(conn, root: Path, include_history: bool = False) -> tuple[list[Edit], list[tuple[scan.Citation, str]]]:
     cites = [c for c in scan.find_citations(root, include_history) if c.actionable]
     rules = scan.load_ignore(root)
     cites = [c for c in cites if not scan.accepted(c, rules)]
     edits, skipped = [], []
     base = root if root.is_dir() else root.parent
-    lines_of: dict[str, list[str]] = {}
-    # right to left within a line, so a rewrite never shifts the offset of the next one
-    pairs = sorted(((c, f.verdict) for f in scan.judge(conn, cites) for c in f.citations),
-                   key=lambda p: (p[0].path, p[0].line, -p[0].col))
-    for c, v in pairs:
-        t = _target(c, v)
-        if isinstance(t, str):
-            if v.obsolete:
-                skipped.append((c, t))
+    lines_of: dict[str, list[str] | None] = {}
+    by_line: dict[tuple, list] = {}
+    for f in scan.judge(conn, cites):
+        for c in f.citations:
+            if f.verdict.obsolete:
+                by_line.setdefault((c.path, c.line), []).append((c, f.verdict))
+    for (path_, line_no), pairs in sorted(by_line.items()):
+        # all or nothing per line, right to left so a rewrite never shifts the next offset
+        pairs.sort(key=lambda p: -p[0].col)
+        path = path_ if root.is_dir() else root.name
+        lines = lines_of.setdefault(path, _read(base / path))
+        old = new = lines[line_no - 1] if lines and line_no <= len(lines) else None
+        why, notes = None, []
+        for c, v in pairs:
+            t = _target(c, v)
+            if isinstance(t, str):
+                why = why or t
+                continue
+            r = _rewrite(new, c.col, t[0], t[1]) if new is not None else None
+            if r is None:
+                why = why or ("file is not UTF-8" if lines is None else "citation form not safe to rewrite")
+                continue
+            new = r
+            notes.append(f"{c.rfc}{'§' + c.section if c.section else ''} → {t[0]}{'§' + t[1] if t[1] else ''}")
+        if why or new == old:
+            skipped += [(c, why or "unchanged") for c, _ in pairs]
             continue
-        path = c.path if root.is_dir() else root.name
-        lines = lines_of.setdefault(path, (base / path).read_text(errors="replace").splitlines(keepends=True))
-        old = lines[c.line - 1]
-        new = _rewrite(old, c.col, t[0], t[1])
-        if new is None or new == old:
-            skipped.append((c, "citation form not safe to rewrite"))
-            continue
-        lines[c.line - 1] = new  # later edits on the same line build on this one; the last holds them all
-        edits.append(Edit(path, c.line, old, new, f"{c.rfc}{'§' + c.section if c.section else ''} → "
-                                                   f"{t[0]}{'§' + t[1] if t[1] else ''}"))
+        lines[line_no - 1] = new
+        edits.append(Edit(path, line_no, old, new, "; ".join(notes)))
     return edits, skipped
 
 
-def diff(root: Path, edits: list[Edit]) -> str:
+def _changed(root: Path, edits: list[Edit]):
     base = root if root.is_dir() else root.parent
-    out = []
     for path in dict.fromkeys(e.path for e in edits):
-        old = (base / path).read_text(errors="replace").splitlines(keepends=True)
+        old = _read(base / path)
         new = list(old)
         for e in edits:
             if e.path == path:
                 new[e.line - 1] = e.new
-        out += difflib.unified_diff(old, new, f"a/{path}", f"b/{path}")
-    return "".join(out)
+        yield base / path, path, old, new
+
+
+def diff(root: Path, edits: list[Edit]) -> str:
+    return "".join(x for _, path, old, new in _changed(root, edits)
+                   for x in difflib.unified_diff(old, new, f"a/{path}", f"b/{path}"))
 
 
 def apply(root: Path, edits: list[Edit]) -> None:
-    base = root if root.is_dir() else root.parent
-    for path in dict.fromkeys(e.path for e in edits):
-        p = base / path
-        lines = p.read_text(errors="replace").splitlines(keepends=True)
-        for e in edits:
-            if e.path == path:
-                lines[e.line - 1] = e.new
-        p.write_text("".join(lines))
+    """Write exactly the reviewed lines; every other byte of the file is kept."""
+    for p, _, _, new in list(_changed(root, edits)):
+        p.write_bytes("".join(new).encode("utf-8"))

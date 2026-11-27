@@ -110,7 +110,9 @@ def _in_line(path: str, i: int, line: str) -> list[Citation]:
             continue
         if before.endswith("/"):
             kind = "link"
-        elif (before and before[-1] in "._") or after.isalpha() or after == "_" or IMPORT.search(before):
+        elif ((before and before[-1] in "._") or after.isalpha() or after == "_" or IMPORT.search(before)
+              or "_" in line[m.start() + 3:m.start(1)] or re.match(r"\.[A-Za-z]", line[m.end(1):])):
+            # also RFC_4122 / rfc_822 (names) and RFC822.TEXT (an IMAP protocol item)
             kind = "identifier"
         else:
             kind = "prose"

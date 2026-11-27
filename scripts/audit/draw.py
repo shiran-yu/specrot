@@ -1,10 +1,11 @@
-"""Draw the audit sample: 100 citations, seed 2026, from the population the headline counts
+"""Draw the audit sample: the 100 citations with the smallest sha256("2026|project|file|line|rfc"), from the
+population the headline counts. Hash order keeps the sample stable when the population changes a little
 (reader-facing citations of RFCs a newer edition has replaced, in the 26 showcase projects).
 
     uv run python scripts/audit/draw.py      # writes scripts/audit/sample.json (needs data/showcase/)
 """
 import json
-import random
+import hashlib
 from pathlib import Path
 
 from specrot import graph, scan
@@ -23,8 +24,8 @@ def main():
         for f in scan.judge(conn, cites):
             if f.verdict.level == "obsolete":
                 population += [(name, root, c, f.verdict) for c in f.citations]
-    random.seed(2026)
-    sample = random.sample(population, 100)
+    key = lambda p: hashlib.sha256(f"2026|{p[0]}|{p[2].path}|{p[2].line}|{p[2].rfc}".encode()).hexdigest()
+    sample = sorted(population, key=key)[:100]
     out = []
     for i, (name, root, c, v) in enumerate(sample):
         lines = (root / c.path).read_text(errors="replace").splitlines()

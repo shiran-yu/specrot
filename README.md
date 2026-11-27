@@ -27,25 +27,27 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,596** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,645 (22%)** point at an RFC
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,484** RFC citations in source
+and docs (tests and identifiers such as `time.RFC1123` excluded), **1,580 (21%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
 an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
-272 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+292 more) are not counted: they are reported as `old-version`, or `historic` when that version was
 itself retired. The most common: RFC 2616 (17 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. We drew 100 of the 1,645 at random (seed 2026,
-[`scripts/audit/draw.py`](scripts/audit/draw.py)) and had two models label each from its code
+Not every one of these is a mistake. We took 100 of the 1,580, the first by a seeded hash
+([`scripts/audit/draw.py`](scripts/audit/draw.py)), and had two models label each from its code
 context, independently, with the same [instructions](scripts/audit/LABELING.md) and no tools:
 Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **62 of 100** as citing
-the old RFC as the specification the code follows, worth updating; 30 (Claude) and 28 (GPT) as
-deliberate references to the old text (compatibility, history, a list of supported RFCs); none as a
-false match. The labelers agree on 86% of items (Cohen's κ 0.70). These are model labels, not
-human ones. [`scripts/audit/label.py`](scripts/audit/label.py) reruns a labeler, `raw/` keeps each
-full prompt and reply, and [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the
-summary. specrot reports; a person decides, and `.specrot-ignore` records the decision.
+the old RFC as the specification the code follows, worth updating; 18 (Claude) and 31 (GPT) as
+deliberate references to the old text (compatibility, history, a list of supported RFCs); 11 and 3
+as scanner errors (an identifier or not a citation at all). The labelers agree on 79% of items
+(Cohen's κ 0.56). These are model labels, not human ones. [`scripts/audit/label.py`](scripts/audit/label.py)
+reruns a labeler into new files, `raw/` keeps each full prompt, reply and model (the instructions
+still name the earlier population, 1,645, as given to the labelers), and
+[`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports; a person
+decides, and `.specrot-ignore` records the decision.
 
 **How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
 `claude -p`) "which RFC is the current specification for X? If several RFCs together form it, list
@@ -57,10 +59,11 @@ models took more than one turn, i.e. called a tool, on 16 (Haiku) and 4 (Sonnet)
 and still named an obsolete RFC for 1 and 2, each time in a one-turn answer from memory. **specrot
 MCP server attached** (its tools only): every answer took a tool call and none named an obsolete
 RFC, **34 of 34**; 32 (Haiku) and 33 (Sonnet) named every RFC of the current specification, the
-others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per question; turns, not tool
-traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
+others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per question, so single
+answers vary between runs (5 of Haiku's 10 no-tool misses were right, without a tool call, in the web
+arm); turns, not tool traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
 data read from the graph (the documents in force at the end of the chain from each topic's classic
-RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scripts/agent_eval/).
+RFC). Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
 **Which relationships matter:**
 
@@ -81,10 +84,10 @@ RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scrip
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, 51,152 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,108 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,040
-  `CONTINUES_AS` between sections of an RFC and its replacements (27,533 with an identical heading). Of the normative references,
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,015
+  `CONTINUES_AS` between sections of an RFC and its replacements (27,508 with an identical heading). Of the normative references,
   42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
   derived from those series' members (marked `{via: 'BCP14'}`).
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
@@ -216,8 +219,9 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
 
 - "Obsolete" is the RFC Editor's relation, not a judgement of the code. The edge `kind` (edition,
   version, split, retired) is inferred from the two titles at build time (deprecation wording;
-  differing version numbers in a *protocol's* title, as in TLS 1.2 → 1.3, while PKCS #1 v2.1 → v2.2
-  is a new edition; number of successors), so it can be wrong for an unusual title. All 19
+  differing version numbers in a *protocol's* title, as in TLS 1.2 → 1.3, IMAP 4rev1 → 4rev2,
+  RTSP → RTSP 2.0, while PKCS #1 v2.1 → v2.2 is a new edition and IPv6 or HTTP/1.1 in a title is not
+  a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 45
   `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
   Citations that deliberately describe legacy behaviour are reported like any other; list them in
   `.specrot-ignore`.
@@ -225,11 +229,15 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 292
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 222 have a home in a current RFC
-  (208 by identical heading); a section whose content moved under a new heading gets none. The
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 284
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 216 have a home in a current RFC
+  (203 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
-- `specrot fix` rewrites only unambiguous citations and prints a diff; about a third of stale
+- `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names
+  (`RFC_4122`, `rfc_822`), protocol strings (`RFC822.TEXT`), quoted examples, lines that already talk
+  about history or the replacement, and files that are not UTF-8 alone, and `--write` changes only the
+  lines in the diff; about a third of stale
   citations are deliberate (see the audit above), so a person reviews it before committing.
 - The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
   mostly have none).

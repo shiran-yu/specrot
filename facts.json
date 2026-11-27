@@ -1,6 +1,11 @@
 {
+  "sections": {
+    "cited": 284,
+    "mapped": 216,
+    "exact": 203
+  },
   "nodes": {
-    "Section": 51152,
+    "Section": 51108,
     "RFC": 9869,
     "Erratum": 8215,
     "WorkingGroup": 532,
@@ -13,23 +18,23 @@
     "OBSOLETES": 1546,
     "UPDATES": 2172,
     "INFORMATIVE_REF": 69790,
-    "HAS_SECTION": 51152,
+    "HAS_SECTION": 51108,
     "FROM_WG": 6365,
     "NORMATIVE_REF": 58954,
     "INCLUDES": 451,
     "AMENDS": 8215,
     "IN_AREA": 530,
-    "CONTINUES_AS": 29040,
+    "CONTINUES_AS": 29015,
     "HAS_FILE": 2372,
     "CITES": 4664
   },
   "showcase": {
-    "citations": 7596,
-    "obsolete": 1645,
-    "old_version": 272,
+    "citations": 7484,
+    "obsolete": 1580,
+    "old_version": 292,
     "projects": 26,
     "affected": 24,
-    "obsolete_pct": 22
+    "obsolete_pct": 21
   },
   "top_obsolete": [
     {

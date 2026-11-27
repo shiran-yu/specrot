@@ -144,7 +144,7 @@ async function check(input) {
   if (secRows) {
     html += `<h3>Section ${esc(sec)} ${secRows[0] ? "· " + esc(secRows[0].was) : ""}</h3><ul class="chains">` + (secRows.length
       ? secRows.map((s) => `<li><b class="ok">${rfcLink(s.rfc)} §${esc(s.section)}</b> ${esc(s.title)}${s.exact ? "" : ' <span class="dim">(reworded heading)</span>'}</li>`).join("")
-      : `<li class="dim">No section of the replacement has a matching heading; read its change log.</li>`) + `</ul><div class="q" id="q-sec"></div>`;
+      : `<li class="dim">No section of the replacement has this heading, or there is no such section; see the change log.</li>`) + `</ul><div class="q" id="q-sec"></div>`;
   }
   html += `<div class="q" id="q-info"></div></div>`;
   html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions and live UPDATES. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>obsolete <span class="dot amended"></span>in force, amended <span class="dot ok"></span>in force <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;

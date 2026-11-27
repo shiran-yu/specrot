@@ -232,7 +232,10 @@ def test_fix_targets_the_right_citation_on_a_line(conn, tmp_path):
     from specrot import fix
     (tmp_path / "a.md").write_text('as per [RFC 7230](https://tools.ietf.org/html/rfc7230#section-3.2.2)\n"rfc2109": 1\n')
     edits, _ = fix.plan(conn, tmp_path)
-    assert [e.new for e in edits] == ['as per [RFC 7230](https://tools.ietf.org/html/rfc9110#section-5.3)\n']
+    assert edits == []  # the label (RFC 7230, split) cannot follow its link, so the line stays whole
+    (tmp_path / "b.md").write_text("see https://tools.ietf.org/html/rfc7230#section-3.2.2\n")
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.new for e in edits] == ["see https://tools.ietf.org/html/rfc9110#section-5.3\n"]
 
 
 def test_fix_leaves_code_names_alone(conn, tmp_path):
@@ -248,3 +251,31 @@ def test_fix_skips_history_and_quoted_examples(conn, tmp_path):
                                    '# examples: "Section 4.2.8.1 of RFC 8446"\n# obsoletes RFC 2109\n# see RFC 8941\n')
     edits, skipped = fix.plan(conn, tmp_path)
     assert [e.line for e in edits] == [4] and len(skipped) == 3
+
+
+def test_fix_keeps_code_names_protocol_strings_and_bytes(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "u.py").write_bytes(b"RESERVED_NCS, RFC_4122 = 0, 1\r\nfetch('RFC822.TEXT')\r\n"
+                                    b"# -dateopt rfc_822\r\n# see RFC 8941\r\n")
+    (tmp_path / "l.txt").write_bytes(b"caf\xe9 RFC 8941\n")  # Latin-1: not UTF-8, left alone
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [(e.path, e.line) for e in edits] == [("u.py", 4)]
+    fix.apply(tmp_path, edits)
+    assert (tmp_path / "u.py").read_bytes().endswith(b"# see RFC 9651\r\n")
+    assert (tmp_path / "u.py").read_bytes().count(b"\r\n") == 4
+
+
+@pytest.mark.parametrize("old,new,kind", [
+    ("Type of Service in the Internet Protocol Suite", "Definition of the DS Field in the IPv4 and IPv6 Headers", "edition"),
+    ("HTTP Authentication: Basic and Digest Access Authentication", "Hypertext Transfer Protocol (HTTP/1.1): Authentication", "edition"),
+    ("POP3 Support for UTF-8", "Post Office Protocol Version 3 (POP3) Support for UTF-8", "edition"),
+    ("PKCS #1: RSA Cryptography Specifications Version 2.1", "PKCS #1: RSA Cryptography Specifications Version 2.2", "edition"),
+    ("Lightweight Directory Access Protocol", "Lightweight Directory Access Protocol version 2 (LDAPv2) to Historic Status", "retired"),
+    ("Real Time Streaming Protocol (RTSP)", "Real-Time Streaming Protocol Version 2.0", "version"),
+    ("The Internet Key Exchange (IKE)", "Internet Key Exchange (IKEv2) Protocol", "version"),
+    ("INTERNET MESSAGE ACCESS PROTOCOL - VERSION 4rev1", "Internet Message Access Protocol (IMAP) - Version 4rev2", "version"),
+    ("The TLS Protocol Version 1.2", "The Transport Layer Security (TLS) Protocol Version 1.3", "version"),
+])
+def test_obsoletes_kind(old, new, kind):
+    from specrot.build import obsoletes_kind
+    assert obsoletes_kind(old, new, 1) == kind

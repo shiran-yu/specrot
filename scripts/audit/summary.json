@@ -2,22 +2,22 @@
  "n": 100,
  "labelers": {
   "claude": {
-   "update": 64,
-   "legacy": 30,
-   "identifier": 6,
+   "update": 71,
+   "legacy": 18,
+   "identifier": 9,
    "test": 0,
-   "not-a-citation": 0
+   "not-a-citation": 2
   },
   "gpt": {
-   "update": 70,
-   "legacy": 28,
-   "identifier": 2,
-   "test": 0,
-   "not-a-citation": 0
+   "update": 65,
+   "legacy": 31,
+   "identifier": 1,
+   "test": 1,
+   "not-a-citation": 2
   }
  },
- "agreement": 0.86,
- "cohen_kappa": 0.7,
+ "agreement": 0.79,
+ "cohen_kappa": 0.564,
  "update_by_both": 62,
- "update_by_either": 72
+ "update_by_either": 74
 }

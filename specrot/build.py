@@ -155,7 +155,7 @@ def load(conn, rfcs, series, rels, errata):
     classify_obsoletes(conn)
 
 
-VERSION = re.compile(r"(?i)(?:version\s*|/)(\d+(?:\.\d+)?)|\b(\d+\.\d+)\b")
+VERSION = re.compile(r"(?i)(?:version\s*|/)(\d+(?:\.\d+)?(?:rev\d+)?)|\b(\d+\.\d+)\b|\b(?!ip|icmp|dhcp)[a-z]+v(\d+)\b")  # not IPv6/DHCPv6: those name the IP version
 WORD = re.compile(r"[a-z0-9]+")
 
 
@@ -171,15 +171,18 @@ def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
         return "retired"
     vo, vn = _versions(old_title), _versions(new_title)
     # a version number in a protocol's title names a wire version (TLS 1.2, NTPv3); elsewhere a document revision (PKCS #1 v2.2)
-    if vo and vn and vo != vn and not (vo & vn) and PROTOCOL_TITLE.search(f"{old_title} {new_title}"):
+    # also a version named only by the new title (RTSP -> RTSP 2.0, IKE -> IKEv2) and revisions (IMAP 4rev1 -> 4rev2)
+    major = max(int(re.match(r"\d+", x).group()) for x in vn) if vn else 0
+    new_only = not vo and major >= 2 and not re.search(rf"[A-Za-z]{major}\b", old_title or "")  # not "POP3 ..." -> "POP3 ..."
+    if vn and not (vo & vn) and (vo or new_only) and PROTOCOL_TITLE.search(f"{old_title} {new_title}"):
         return "version"
     if n_successors > 1:
         return "split"
     return "edition"
 
 
-DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to historic|\bobsoleting\b|\bretir")
-PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b")
+DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to historic|\bto historic\b|\bobsoleting\b|\bretir")
+PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b|S/MIME")
 
 
 def classify_obsoletes(conn) -> None:

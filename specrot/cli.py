@@ -54,7 +54,7 @@ def _verdict_tree(v: graph.Verdict) -> Tree:
         for h in v.section_now:
             s.add(f"[bold green]{h['rfc']} §{h['section']}[/]  {h['title']}" + ("" if h["exact"] else "  [dim](reworded heading)[/]"))
         if not v.section_now:
-            s.add("[dim]no section with a matching heading in the replacement; read its change log[/]")
+            s.add(f"[dim]no section of the replacement has this heading, or {v.id} has no section {v.section}; see the change log[/]")
     if v.deprecations:
         d = t.add("[bold]partly deprecated by[/]")
         for u in v.deprecations:
