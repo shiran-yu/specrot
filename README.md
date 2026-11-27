@@ -27,8 +27,8 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,645** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,933 (25%)** point at an RFC
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,596** RFC citations in source
+and docs (tests and identifiers such as `time.RFC1123` excluded), **1,917 (25%)** point at an RFC
 that has since been obsoleted, in **24 of 26** projects. The most common: RFC 2616 (17 projects),
 RFC 7230 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with
 `uv run python scripts/showcase.py`; per-project numbers in
@@ -59,7 +59,7 @@ TLS 1.2 code path citing RFC 5246). specrot reports; a person decides. See [Limi
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
   `WorkingGroup`s in 16 `Area`s, and 26 scanned `Project`s with 2,372 `File`s.
-  Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 50k `NORMATIVE_REF`, 61k `INFORMATIVE_REF`,
+  Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
   `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`.
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
   (`(r)<-[:OBSOLETES]-+(n)`, `-[:NORMATIVE_REF]->{1,2}`), `EXISTS {}` / `COUNT {}` subqueries,
@@ -71,7 +71,7 @@ TLS 1.2 code path citing RFC 5246). specrot reports; a person decides. See [Limi
 (:RFC)-[:OBSOLETES|UPDATES]->(:RFC)          (:Series)-[:INCLUDES]->(:RFC)
 (:RFC)-[:NORMATIVE_REF|INFORMATIVE_REF]->(:RFC|:Series)
 (:Erratum)-[:AMENDS]->(:RFC)                 (:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)
-(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, sections, actionable}]->(:RFC)
+(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, readerLines, sections}]->(:RFC)
 ```
 
 ## Setup and run

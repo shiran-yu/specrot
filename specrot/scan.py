@@ -22,7 +22,8 @@ HISTORY_FILES = re.compile(r"(?i)^(changelog|changes|history|news|releases?)([._
 # Media types and module names that contain "rfc822" but cite nothing.
 NOT_A_CITATION = re.compile(r"(?i)(message|text|x-)/$")
 IMPORT = re.compile(r"(import|from)\s+$")
-TEST_PATH = re.compile(r"(?i)(^|/)(tests?|testdata|testing|__tests__|spec|fixtures?)(/|$)|(^|/)test_[^/]*$|_test\.[a-z]+$|\.test\.[a-z]+$")
+TEST_PATH = re.compile(r"(?i:(^|/)(tests?|testdata|testing|__tests__|spec|fixtures?)(/|$)|(^|/)test_[^/]*$|_test\.[a-z]+$|\.test\.[a-z]+$)"
+                       r"|(^|/)[a-z]+Tests?(/|$)|Tests?\.(kt|java|scala|cs|swift)$")
 MAX_BYTES = 2_000_000
 LEVELS = ["obsolete", "historic", "amended", "ok", "unknown"]
 
@@ -139,7 +140,7 @@ CREATE (p)-[:HAS_FILE]->(file:File {key: $name + ':' + f.path, path: f.path, pro
 WITH file, f
 UNWIND f.cites AS c
 MATCH (r:RFC {id: c.rfc})
-CREATE (file)-[:CITES {lines: c.lines, sections: c.sections, actionable: c.actionable}]->(r)
+CREATE (file)-[:CITES {lines: c.lines, readerLines: c.readerLines, sections: c.sections}]->(r)
 """
 
 
@@ -147,9 +148,10 @@ def save(conn, name: str, root: Path, citations: list[Citation], url: str | None
     """Write the scan into the graph: (:Project)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC)."""
     files: dict[str, dict[str, dict]] = defaultdict(dict)
     for c in citations:
-        e = files[c.path].setdefault(c.rfc, {"rfc": c.rfc, "lines": [], "sections": [], "actionable": 0})
+        e = files[c.path].setdefault(c.rfc, {"rfc": c.rfc, "lines": [], "readerLines": [], "sections": []})
         e["lines"].append(c.line)
-        e["actionable"] += int(c.actionable)
+        if c.actionable:
+            e["readerLines"].append(c.line)
         if c.section and c.section not in e["sections"]:
             e["sections"].append(c.section)
     rows = [{"path": p, "inTests": bool(TEST_PATH.search(p)), "cites": list(cs.values())} for p, cs in sorted(files.items())]

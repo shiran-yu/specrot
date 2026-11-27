@@ -16,7 +16,7 @@ async function load() {
   db = new mod.RelateDb();
   post({ type: "progress", text: "downloading the graph", pct: 5 });
   const G = await (await fetch("data/graph.json")).json();
-  const steps = [];
+  const steps = [], timings = [];
   steps.push(["constraints", () => {
     run("CREATE CONSTRAINT rfc_number IF NOT EXISTS FOR (r:RFC) REQUIRE r.number IS UNIQUE");
     run("CREATE CONSTRAINT rfc_id IF NOT EXISTS FOR (r:RFC) REQUIRE r.id IS UNIQUE");
@@ -27,10 +27,12 @@ async function load() {
       "UNWIND $rows AS x CREATE (:RFC {number: x[0], id: 'RFC' + toString(x[0]), title: x[1], date: x[2], " +
       "status: x[3], obsolete: x[4] = 1, errata: x[5], wg: x[6]})", { rows })]);
   }
+  const later = [];  // normative references load after the page is usable
   for (const [type, all] of Object.entries(G.edges)) {
+    const list = type === "NORMATIVE_REF" ? later : steps;
     for (let i = 0; i < all.length; i += 10000) {
       const rows = all.slice(i, i + 10000);
-      steps.push([`${type} ${i + rows.length}`, () => run(
+      list.push([`${type} ${i + rows.length}`, () => run(
         `UNWIND $rows AS x MATCH (a:RFC {number: x[0]}), (b:RFC {number: x[1]}) CREATE (a)-[:${type}]->(b)`, { rows })]);
     }
   }
@@ -51,10 +53,18 @@ async function load() {
   for (let i = 0; i < steps.length; i++) {
     post({ type: "progress", text: `building in your browser: ${steps[i][0]}`, pct: 10 + Math.round(88 * i / steps.length) });
     await new Promise((r) => setTimeout(r, 0));
+    const t = performance.now();
     steps[i][1]();
+    timings.push(`${steps[i][0]} ${Math.round(performance.now() - t)}ms`);
   }
-  const c = run("MATCH (n) WITH count(n) AS n MATCH ()-[r]->() RETURN n, count(r) AS r").rows[0];
-  post({ type: "ready", nodes: c.n, rels: c.r, built: G.built });
+  console.log("[specrot] build " + timings.join(", "));
+  const count = () => run("MATCH (n) WITH count(n) AS n MATCH ()-[r]->() RETURN n, count(r) AS r").rows[0];
+  post({ type: "ready", ...count(), built: G.built, partial: true });
+  for (const [, fn] of later) {
+    await new Promise((r) => setTimeout(r, 0));  // let queued queries run between batches
+    fn();
+  }
+  post({ type: "ready", ...count(), built: G.built, partial: false });
 }
 
 self.onmessage = (e) => {

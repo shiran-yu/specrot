@@ -81,7 +81,8 @@ def main():
         scan.save(conn, name, root, cites, url)
         conn.execute("MATCH (p:Project {name: $n}) SET p.commit = $c, p.repo = $r", {"n": name, "c": heads[repo], "r": repo})
         act = [c for c in cites if c.actionable]
-        findings = scan.judge(conn, act)
+        findings = [f for f in scan.judge(conn, act) if f.verdict.known]  # drop numbers not in the RFC index
+        act = [c for f in findings for c in f.citations]
         obsolete = [f for f in findings if f.verdict.level == "obsolete"]
         n_obs = sum(len(f.citations) for f in obsolete)
         summary.append({"project": name, "repo": repo, "path": sub, "commit": heads[repo], "all_matches": len(cites),

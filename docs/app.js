@@ -20,9 +20,8 @@ worker.onmessage = (e) => {
     $("#progress-bar").style.width = m.pct + "%";
   } else if (m.type === "ready") {
     $("#loading").hidden = true;
-    $("#stats").textContent = `${m.nodes.toLocaleString()} nodes · ${m.rels.toLocaleString()} relationships · RFC index of ${m.built} · built in your browser by Relate (WASM)`;
-    document.body.classList.add("ready");
-    route();
+    $("#stats").textContent = `${m.n.toLocaleString()} nodes · ${m.r.toLocaleString()} relationships (RFCs, series, projects; obsoletes, updates, normative references) · RFC index of ${m.built} · built in this tab by Relate (WASM)` + (m.partial ? " · loading 50k normative references…" : "");
+    if (!document.body.classList.contains("ready")) { document.body.classList.add("ready"); route(); }
   } else if (m.type === "fatal") {
     $("#progress-text").textContent = "Could not start Relate: " + m.error;
   } else if (pending.has(m.id)) {
@@ -154,7 +153,6 @@ async function drawLineage(n, rootId) {
       ...edges.map((r, i) => ({ data: { id: "e" + i, source: r.a, target: r.b, type: r.type } })),
     ],
     layout: { name: "breadthfirst", directed: true, spacingFactor: 1.1, padding: 12 },
-    wheelSensitivity: 0.3,
     style: [
       { selector: "node", style: { label: "data(label)", "text-wrap": "wrap", "text-valign": "center", "font-size": 10, color: "#fff", width: 64, height: 34, shape: "round-rectangle", "background-color": color("--ok") } },
       { selector: "node[cls = 'obsolete']", style: { "background-color": color("--bad") } },

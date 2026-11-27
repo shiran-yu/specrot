@@ -26,8 +26,8 @@ def main():
     projects = []
     for p in q("MATCH (p:Project) RETURN p.name AS name, p.repo AS repo, p.commit AS commit, p.url AS url ORDER BY name"):
         files = q(f"""MATCH (:Project {{name: '{p['name']}'}})-[:HAS_FILE]->(f:File)-[c:CITES]->(r:RFC)
-                     WHERE c.actionable > 0 AND NOT f.inTests
-                     RETURN f.path AS path, collect([r.number, c.lines]) AS cites ORDER BY path""")
+                     WHERE size(c.readerLines) > 0
+                     RETURN f.path AS path, collect([r.number, c.readerLines]) AS cites ORDER BY path""")
         p["files"] = [[f["path"], f["cites"]] for f in files]
         projects.append(p)
     OUT.parent.mkdir(parents=True, exist_ok=True)
