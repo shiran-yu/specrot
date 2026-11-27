@@ -52,6 +52,6 @@ include Sphinx `:rfc:` roles. Today's graph is used, so a 2014 PR is judged agai
   ("selected" in its title) 6 RFC 822/2822 lines the maintainers left, still on `main`. A person reviews the diff.
 - **Changes made while building this** (each with a test): `fix` skips a second section after the first
   ("section 14.4 and 3.9"), plural sections before the citation ("sections 2.2 and 2.3 of RFC 2396"), and
-  `scan`/`fix` now read Sphinx `:rfc:` roles, which a judge found missing (the first version of this table
+  `scan`/`fix` now read Sphinx `:rfc:` roles, which an earlier review found missing (the first version of this table
   counted 62 replacements because roles were invisible), and `scan` reads "RFC 850 date" as the name of a date format, not a citation (Django then gets one more proposal, the line it changed to RFC 9110). The table is the result after these changes.
 - Rerun: `cohort.py` and `run.py` need a `GITHUB_TOKEN` (60 unauthenticated API calls an hour are not enough).

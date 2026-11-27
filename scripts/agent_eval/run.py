@@ -59,7 +59,8 @@ def score(conn, text: str, key: list[str]) -> dict:
     """Only the answer line counts; a later explanatory note may mention the RFC it replaced."""
     answer = next((ln for ln in (text or "").splitlines() if ln.strip()), "")
     named = sorted({f"RFC{int(n)}" for n in re.findall(r"(?i)rfc\s*-?\s*(\d{1,5})", answer)})
-    obsolete = [x for x in named if graph.check(conn, x).obsolete]
+    # level obsolete only: an old-version RFC (IMAP4rev1, CT v1) is still right for code on that version
+    obsolete = [x for x in named if graph.check(conn, x).level == "obsolete"]
     return {"named": named, "obsolete_named": obsolete,
             "correct": bool(set(named) & set(key)) and not obsolete}
 
@@ -88,6 +89,7 @@ def main():
         answers = list(ex.map(lambda j: ask(j[0], j[1]["topic"], j[2], mcp, empty, str(tmp)), jobs))
     old = json.loads((HERE / "results.json").read_text()) if (HERE / "results.json").exists() else {"rows": []}
     rows = [r for r in old["rows"] if (r["model"], r["condition"]) not in {(m, c) for m, _, c in jobs}]
+    rows = [{**r, **score(conn, r["text"], r["key"])} for r in rows]  # kept rows are rescored with today's rules
     for (m, q, c), ans in zip(jobs, answers):
         rows.append({"model": m, "condition": c, "topic": q["topic"], "seed": q["seed"], "key": q["key"],
                      "date": datetime.now(timezone.utc).isoformat(timespec="seconds"),

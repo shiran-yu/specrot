@@ -134,7 +134,7 @@ def cmd_scan(a, conn):
         print(_markdown(findings, root))
     else:
         console.print(f"[bold]{len(citations)}[/] RFC citations of [bold]{len(findings)}[/] distinct RFCs in {root}"
-                      + ("" if a.all_kinds else f"  [dim](skipped {len(found) - len(citations)} in tests or identifiers like time.RFC1123; --all-kinds to include)[/]"))
+                      + ("" if a.all_kinds else f"  [dim](skipped {len(found) - len(citations) - n_accepted} in tests or identifiers like time.RFC1123; --all-kinds to include)[/]"))
         console.print("  ".join(f"[{STYLE[k]}]{ICON[k]} {k} {n}[/]" for k, n in counts.items() if n)
                       + (f"  [dim]{n_accepted} accepted by {scan.IGNORE_FILE}[/]" if n_accepted else ""))
         tab = Table(show_lines=False, header_style="bold")

@@ -306,7 +306,7 @@ async function scanText() {
 async function projects() {
   const rows = await cypher(Q.projects);
   const total = rows.reduce((a, r) => a + r.cites, 0), stale = rows.reduce((a, r) => a + r.stale, 0);
-  $("#projects-out").innerHTML = `<div class="card"><p><b>${stale.toLocaleString()}</b> of <b>${total.toLocaleString()}</b> RFC citations (${Math.round(100 * stale / total)}%) in the source and docs of 26 projects point at an RFC that a newer edition has replaced (tests, identifiers and older protocol versions such as TLS 1.2 excluded). Click a project.</p>
+  $("#projects-out").innerHTML = `<div class="card"><p><b>${stale.toLocaleString()}</b> of <b>${total.toLocaleString()}</b> RFC citations (${Math.round(100 * stale / total)}%) in the source and docs of 26 projects point at an RFC a later RFC has obsoleted (tests, identifiers and older protocol versions such as TLS 1.2 excluded). Click a project.</p>
   <table class="bars">` + rows.map((r) => `<tr data-p="${esc(r.name)}"><td><b>${esc(r.name)}</b><br><span class="dim">${esc(r.repo)}</span></td><td class="barcell"><div class="bar"><div style="width:${(100 * r.stale / Math.max(1, r.cites)).toFixed(1)}%"></div></div></td><td>${r.stale} / ${r.cites}</td></tr>`).join("") +
     `</table><div class="q" id="q-p"></div></div><div id="project-detail"></div>`;
   showQuery($("#q-p"));

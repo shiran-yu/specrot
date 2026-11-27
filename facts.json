@@ -12,16 +12,16 @@
     }
   },
   "sections": {
-    "cited": 288,
-    "mapped": 222,
-    "exact": 208
+    "cited": 287,
+    "mapped": 221,
+    "exact": 207
   },
   "nodes": {
     "Section": 51653,
     "Erratum": 8215,
-    "RFC": 9869,
     "WorkingGroup": 532,
     "Area": 16,
+    "RFC": 9869,
     "Project": 26,
     "File": 2442,
     "Series": 377
@@ -42,8 +42,8 @@
   },
   "showcase": {
     "citations": 8034,
-    "obsolete": 1604,
-    "old_version": 376,
+    "obsolete": 1603,
+    "old_version": 377,
     "projects": 26,
     "affected": 24,
     "obsolete_pct": 20

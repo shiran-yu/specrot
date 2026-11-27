@@ -4,6 +4,7 @@
 """
 from __future__ import annotations
 
+import atexit
 import functools
 import multiprocessing
 import re
@@ -46,10 +47,23 @@ def explained(fn):
 CYPHER_SECONDS = 20  # read_cypher stops a longer query
 
 
+def _close_connections():
+    for c in _all_conns:
+        try:
+            c.close()
+        except Exception:
+            pass
+
+
+_all_conns: list = []
+atexit.register(_close_connections)  # before interpreter shutdown, or relate's finalizer panics
+
+
 def _conn():
     # Relate connections are thread-affine: one read-only connection per worker thread.
     if getattr(_local, "conn", None) is None:
         _local.conn = graph.connect()
+        _all_conns.append(_local.conn)
     return _local.conn
 
 

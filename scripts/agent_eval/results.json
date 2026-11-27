@@ -2,13 +2,13 @@
  "prompt": "Which RFC is the current IETF specification for {topic}? If several RFCs together form the current specification, list them. Reply with only the RFC number(s), for example 'RFC 1234' or 'RFC 1234, RFC 5678'.",
  "summary": {
   "haiku alone": {
-   "correct": 24,
+   "correct": 26,
    "of": 34,
-   "named_an_obsolete_rfc": 10,
-   "complete": 23,
+   "named_an_obsolete_rfc": 8,
+   "complete": 25,
    "used_more_than_one_turn": 0,
    "named_only_obsolete_rfcs": 2,
-   "correct_where_spec_was_replaced": "16/25"
+   "correct_where_spec_was_replaced": "18/25"
   },
   "haiku web": {
    "correct": 33,
@@ -282,10 +282,8 @@
     "RFC3501",
     "RFC9051"
    ],
-   "obsolete_named": [
-    "RFC3501"
-   ],
-   "correct": false,
+   "obsolete_named": [],
+   "correct": true,
    "condition": "alone",
    "date": "2026-11-27T01:05:55+00:00"
   },
@@ -365,10 +363,8 @@
     "RFC6962",
     "RFC9162"
    ],
-   "obsolete_named": [
-    "RFC6962"
-   ],
-   "correct": false,
+   "obsolete_named": [],
+   "correct": true,
    "condition": "alone",
    "date": "2026-11-27T01:05:55+00:00"
   },

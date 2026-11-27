@@ -196,7 +196,8 @@ PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b|S/MIME")
 # Hand-reviewed: the replacement is a different design, not a new edition (titles cannot tell). Reviewed for
 # every OBSOLETES pair that `specrot fix` proposes on the 26 showcase projects (76 pairs); reason from the new RFC.
 # Hand-reviewed protocol version changes the titles do not show as such (no "Protocol" in the title).
-VERSION_PAIRS = {("RFC6962", "RFC9162"): "CT 2.0 is a new, incompatible protocol version; CT v1 logs still run 6962"}
+VERSION_PAIRS = {("RFC6962", "RFC9162"): "CT 2.0 is a new, incompatible protocol version; CT v1 logs still run 6962",
+                 ("RFC4347", "RFC6347"): "DTLS 1.0 (untitled version) -> DTLS 1.2; 4347 is Historic, like TLS 1.0"}
 # the replacement took over one part only; the rest moved elsewhere (an update), so a person picks the target
 PARTIAL = {
     ("RFC1738", "RFC4248"): "only the telnet URI scheme moved to 4248; generic URL syntax is RFC 3986 (an update of 1738)",

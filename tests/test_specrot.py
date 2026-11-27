@@ -203,8 +203,8 @@ def test_mcp_stdio_round_trip():
 
 
 def test_retired_protocol_versions_are_historic_and_document_revisions_are_editions(conn, tmp_path):
-    levels = {x: graph.check(conn, x).level for x in ("2246", "4346", "5246", "5849", "3447", "2898")}
-    assert levels == {"2246": "historic", "4346": "historic", "5246": "old-version", "5849": "old-version",
+    levels = {x: graph.check(conn, x).level for x in ("2246", "4346", "4347", "5246", "5849", "3447", "2898")}
+    assert levels == {"2246": "historic", "4346": "historic", "4347": "historic", "5246": "old-version", "5849": "old-version",
                       "3447": "obsolete", "2898": "obsolete"}
     (tmp_path / "tls.c").write_text("/* TLS 1.0 record layer, RFC 2246 section 6.2 */\n")
     p = subprocess.run([sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--fail-on", "historic"],
@@ -311,7 +311,7 @@ def test_scan_reports_skipped_large_files(tmp_path):
     assert json.loads(p.stdout)["skipped_large_files"] == ["big.txt"]
 
 
-def test_fix_judge_examples_from_cpython(conn, tmp_path):
+def test_fix_review_examples_from_cpython(conn, tmp_path):
     from specrot import fix
     lines = ["typ, dat = self.fetch(num, '(FLAGS INTERNALDATE RFC822)')",   # protocol string, single quotes
              "# UUIDs as specified in RFC 4122/9562",                          # replacement already named

@@ -6,7 +6,7 @@ if not, what replaced it?"
 
 **Try it:** [live explorer](https://shiran-yu.github.io/specrot/) (Relate WASM in the browser, no install) ·
 `git clone https://github.com/shiran-yu/specrot && cd specrot && uv run specrot check 2616` (the graph ships
-in the repo) · **Evidence:** 1,604 of 8,034 RFC citations in 26 major projects point at obsolete RFCs
+in the repo) · **Evidence:** 1,603 of 8,034 RFC citations in 26 major codebases point at obsolete RFCs
 ([below](#use-case), method in [EVIDENCE.md](EVIDENCE.md)).
 
 ```console
@@ -37,10 +37,10 @@ and coding agents, whose training data predates recent replacements.
 
 | Question | Answer |
 |---|---|
-| Does real code cite obsolete RFCs? | **1,604 of 8,034** RFC citations in 26 major projects (20%), in 24 of the 26 |
+| Does real code cite obsolete RFCs? | **1,603 of 8,034** RFC citations in 26 major codebases (20%), in 24 of the 26 (25 repositories: Go's `net` and `crypto` are counted apart) |
 | Are they worth fixing? | About half: two models labelling 100 of them agree on 49 (the rest are deliberate references or scanner errors) |
 | Do maintainers fix them? | Yes, by hand: 17 merged PRs replaced 106 obsolete citations; `fix` proposes 50 of those edits, 47 with the maintainers' RFC |
-| Do coding agents get it right? | Without tools Claude Haiku 5.5 names an obsolete RFC for 10 of 34 protocols; with the specrot MCP server, 0 |
+| Do coding agents get it right? | Without tools Claude Haiku 5.5 names an obsolete RFC for 8 of 34 protocols and Sonnet 5.5 for 2 (the two replaced in 2026); with web search 1 and 2; with the specrot MCP server, 0 |
 | Upstream | PRs open (not merged) at [nginx#2051](https://github.com/nginx/nginx/pull/2051) and [httpx#3874](https://github.com/encode/httpx/pull/3874) |
 
 **Which relationships matter:**
@@ -247,9 +247,9 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 288
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 222 have a home in a current RFC
-  (208 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 287
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 221 have a home in a current RFC
+  (207 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
 - `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names

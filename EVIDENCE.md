@@ -5,10 +5,10 @@ The measurements behind the README's numbers, each with the script that reproduc
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
 OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **8,034** RFC citations in source
-and docs (Sphinx `:rfc:` roles included; tests and identifiers such as `time.RFC1123` excluded), **1,604 (20%)** point at an RFC
-that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
+and docs (Sphinx `:rfc:` roles included; tests and identifiers such as `time.RFC1123` excluded), **1,603 (20%)** point at an RFC
+that a later RFC has obsoleted, in **24 of 26** projects. Citations of
 an older *protocol version* (TLS 1.2's RFC 5246 and its extensions, OAuth 1.0's RFC 5849, Certificate
-Transparency v1, the retired TLS 1.0 and 1.1; 376 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+Transparency v1, the retired TLS 1.0 and 1.1 and DTLS 1.0; 377 more) are not counted: they are reported as `old-version`, or `historic` when that version was
 itself retired. The most common: RFC 2616 (18 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
@@ -48,15 +48,16 @@ were generated with `specrot fix` and reviewed line by line before opening.
 **How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
 `claude -p`) "which RFC is the current specification for X? If several RFCs together form it, list
 them" for 34 protocols, under three conditions. **No tools:** Haiku included an obsolete RFC in its
-answer for **10 of 34** (2 times alone, 8 times listed beside the current one, e.g. "RFC 8259, RFC
-7159" for JSON); Sonnet gave only the obsolete RFC for **2 of 34**, exactly the two replaced in 2026
+answer for **8 of 34** (2 times alone, 6 times listed beside the current one, e.g. "RFC 8259, RFC
+7159" for JSON; two more answers named an older protocol version beside the current one, IMAP4rev1 and CT v1,
+which specrot rates `old-version` and does not count as wrong); Sonnet gave only the obsolete RFC for **2 of 34**, exactly the two replaced in 2026
 (TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). **Web search allowed** (the only tools in that arm): the
 models took more than one turn, i.e. called a tool, on 16 (Haiku) and 4 (Sonnet) of the 34 questions
 and still named an obsolete RFC for 1 and 2, each time in a one-turn answer from memory. **specrot
 MCP server attached** (its tools only): every answer took a tool call and none named an obsolete
 RFC, **34 of 34**; 32 (Haiku) and 33 (Sonnet) named every RFC of the current specification, the
 others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per question, so single
-answers vary between runs (5 of Haiku's 10 no-tool misses were right, without a tool call, in the web
+answers vary between runs (of the 10 no-tool answers that named any replaced RFC, 5 were right, without a tool call, in the web
 arm); turns, not tool traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
 data read from the graph (the documents in force at the end of the chain from each topic's classic
 RFC); [`check_key.py`](scripts/agent_eval/check_key.py) checks, against the RFC Editor's per-RFC
