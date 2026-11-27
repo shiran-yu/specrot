@@ -1,5 +1,5 @@
 // Runs Relate (WASM) off the main thread: builds the RFC graph from data/graph.json, then answers Cypher.
-const RELATE = "https://cdn.jsdelivr.net/npm/@relate/relate-wasm@1.3.0/relate.js";
+const RELATE = "./vendor/relate-wasm-1.3.0/relate.js";  // vendored (Apache-2.0) so the explorer works offline
 let db = null;
 
 const post = (msg) => self.postMessage(msg);

@@ -123,7 +123,8 @@ uv run specrot check 2616 8446 6749     # first run installs dependencies (~10 s
 Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -e . && specrot check 2616`.
 
 **No install at all:** open the [in-browser explorer](https://shiran-yu.github.io/specrot/) (or
-`python3 -m http.server -d docs 8000` in a clone). It runs the Relate WebAssembly build in the tab
+`python3 -m http.server -d docs 8000` in a clone, which works offline: Relate WASM and cytoscape are vendored in
+`docs/vendor/`). It runs the Relate WebAssembly build in the tab
 and rebuilds a subset of the graph there in about 3 s: RFCs, series, `OBSOLETES` with kinds,
 `UPDATES`, the 50,842 RFC-level normative references and the 26 projects (no errata, working groups
 or informative references; only files with reader-facing citations, so 1,705 `File`s rather than 2,442,
