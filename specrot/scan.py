@@ -63,7 +63,7 @@ def _files(root: Path, include_history: bool = False) -> list[Path]:
         files = [p for p in root.rglob("*") if p.is_file()]
     return [p for p in files
             if p.is_file() and not (set(p.relative_to(root).parts[:-1]) & SKIP_DIRS)
-            and (include_history or not HISTORY_FILES.match(p.name))
+            and (include_history or not HISTORY_FILES.match(p.name)) and p.name != ".specrot-ignore"
             and p.stat().st_size <= MAX_BYTES]
 
 
@@ -157,3 +157,24 @@ def save(conn, name: str, root: Path, citations: list[Citation], url: str | None
     conn.execute(SAVE, {"name": name, "url": url, "commit": _git_commit(root), "at": at})
     for i in range(0, len(rows), 2000):
         conn.execute(SAVE_FILES, {"name": name, "files": rows[i:i + 2000]})
+
+
+IGNORE_FILE = ".specrot-ignore"
+
+
+def load_ignore(root: Path) -> list[tuple[str, str | None, str]]:
+    """Rules from <root>/.specrot-ignore: `RFC5849 [path-glob] [# reason]`, one per line."""
+    p = (root if root.is_dir() else root.parent) / IGNORE_FILE
+    rules = []
+    if p.exists():
+        for raw in p.read_text().splitlines():
+            line, _, reason = raw.partition("#")
+            parts = line.split()
+            if parts:
+                rules.append((graph.rfc_id(parts[0]), parts[1] if len(parts) > 1 else None, reason.strip()))
+    return rules
+
+
+def accepted(c: Citation, rules) -> bool:
+    from fnmatch import fnmatch
+    return any(c.rfc == rid and (glob is None or fnmatch(c.path, glob)) for rid, glob, _ in rules)

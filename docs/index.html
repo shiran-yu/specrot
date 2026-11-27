@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>specrot · is this RFC still the spec?</title>
+<meta name="description" content="Every IETF RFC and how they relate, as a Relate graph running in your browser. Find the dead RFCs your code still cites.">
+<link rel="stylesheet" href="style.css">
+<script src="https://cdn.jsdelivr.net/npm/cytoscape@3.30.2/dist/cytoscape.min.js"></script>
+</head>
+<body>
+<header>
+  <div class="brand"><span class="logo">§</span> specrot</div>
+  <p class="tag">Find the dead RFCs your code still cites. Every IETF RFC and how they relate, as a <a href="https://relatedb.ai" target="_blank" rel="noopener">Relate</a> graph running in this tab.</p>
+  <p id="stats" class="dim"></p>
+  <nav>
+    <button data-tab="check" class="on">Check an RFC</button>
+    <button data-tab="scan">Scan code</button>
+    <button data-tab="projects">26 projects</button>
+    <button data-tab="cypher">Cypher</button>
+  </nav>
+</header>
+
+<div id="loading">
+  <div class="progress"><div id="progress-bar"></div></div>
+  <p id="progress-text" class="dim">starting Relate (WebAssembly)…</p>
+</div>
+
+<main>
+  <section id="check" class="tab">
+    <form id="check-form" class="row">
+      <input id="q" placeholder="RFC number (2616) or words (oauth token)" autocomplete="off" spellcheck="false">
+      <button>Check</button>
+    </form>
+    <p class="hints dim">Try <a href="#rfc=2616">2616</a> · <a href="#rfc=8446">8446</a> · <a href="#rfc=6749">6749</a> · <a href="#rfc=7540">7540</a> · <a href="#rfc=822">822</a> · <a href="#q=http%20caching">http caching</a></p>
+    <div id="check-out"></div>
+  </section>
+
+  <section id="scan" class="tab" hidden>
+    <p class="dim">Paste code, docs or an AI answer. Citations are found in your browser and judged against the graph; nothing is uploaded.</p>
+    <textarea id="code" spellcheck="false">// http/parse.go
+// ParseHTTPVersion parses an HTTP version string according to RFC 7230, section 2.6.
+// Header field names are case-insensitive (RFC 2616, section 4.2).
+// HTTP/2 framing follows RFC 7540; the TLS 1.3 handshake is RFC 8446, section 4.
+// Bearer tokens: RFC 6750. OAuth 2.0: RFC 6749. JSON bodies per RFC 4627.
+// Dates are formatted as in RFC 1123 and URIs are parsed per RFC 3986.</textarea>
+    <button id="scan-btn">Scan</button>
+    <div id="scan-out"></div>
+  </section>
+
+  <section id="projects" class="tab" hidden>
+    <div id="projects-out"></div>
+  </section>
+
+  <section id="cypher" class="tab" hidden>
+    <div id="examples" class="examples"></div>
+    <textarea id="cy-q" spellcheck="false"></textarea>
+    <button id="cy-run">Run (Ctrl+Enter)</button>
+    <p class="dim">Labels: RFC, Series, Project, File · relationships: OBSOLETES, UPDATES, NORMATIVE_REF, INCLUDES, HAS_FILE, CITES</p>
+    <div id="cypher-out"></div>
+  </section>
+</main>
+
+<footer class="dim">
+  Data: RFC Editor index and errata, IETF Datatracker references (metadata only). Engine: Relate 1.3 compiled to WebAssembly.
+  Code and the single-file store: <a href="https://github.com/shiran-yu/specrot">github.com/shiran-yu/specrot</a>. Not affiliated with the IETF or Neo4j.
+</footer>
+<script type="module" src="app.js"></script>
+</body>
+</html>

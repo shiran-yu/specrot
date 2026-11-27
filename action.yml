@@ -1,0 +1,22 @@
+name: specrot
+description: Flag RFC citations in your repository that point at obsoleted RFCs, with the replacement to cite.
+branding:
+  icon: book-open
+  color: red
+inputs:
+  path:
+    description: Directory to scan, relative to the workspace.
+    default: "."
+  fail-on:
+    description: Comma list of levels that fail the job (obsolete, historic, amended). Empty to only report.
+    default: obsolete
+runs:
+  using: composite
+  steps:
+    - uses: astral-sh/setup-uv@v6
+    - name: specrot report
+      shell: bash
+      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/${{ inputs.path }}" --markdown >> "$GITHUB_STEP_SUMMARY"
+    - name: specrot gate
+      shell: bash
+      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/${{ inputs.path }}" --fail-on "${{ inputs.fail-on }}"

@@ -93,3 +93,11 @@ def test_cli_scan_json_and_fail_on(tmp_path):
     assert r.returncode == 1
     out = json.loads(r.stdout)
     assert out["counts"]["obsolete"] == 2
+
+
+def test_ignore_file_accepts_legacy(tmp_path):
+    (tmp_path / "a.py").write_text(FIXTURE)
+    (tmp_path / ".specrot-ignore").write_text("RFC4627 a.py  # we still parse old JSON texts\n")
+    cmd = [sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--json"]
+    out = json.loads(subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT).stdout)
+    assert out["accepted"] == 2 and out["counts"]["obsolete"] == 1

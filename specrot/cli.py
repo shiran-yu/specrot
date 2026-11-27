@@ -75,6 +75,9 @@ def cmd_scan(a, conn):
     root = Path(a.path)
     found = scan.find_citations(root, a.include_history)
     citations = found if a.all_kinds else [c for c in found if c.actionable]
+    rules = scan.load_ignore(root)
+    n_accepted = sum(1 for c in citations if scan.accepted(c, rules))
+    citations = [c for c in citations if not scan.accepted(c, rules)]
     findings = scan.judge(conn, citations)
     counts = {lvl: sum(1 for f in findings if f.verdict.level == lvl) for lvl in scan.LEVELS}
     if a.save:
@@ -83,14 +86,15 @@ def cmd_scan(a, conn):
         scan.save(wconn, a.save, root.resolve(), citations, a.url)
         wconn.close()
     if a.json:
-        print(json.dumps({"root": str(root), "citations": len(citations), "counts": counts,
+        print(json.dumps({"root": str(root), "citations": len(citations), "accepted": n_accepted, "counts": counts,
                           "findings": [f.to_dict() for f in findings]}, indent=2))
     elif a.markdown:
         print(_markdown(findings, root))
     else:
         console.print(f"[bold]{len(citations)}[/] RFC citations of [bold]{len(findings)}[/] distinct RFCs in {root}"
                       + ("" if a.all_kinds else f"  [dim](skipped {len(found) - len(citations)} in tests or identifiers like time.RFC1123; --all-kinds to include)[/]"))
-        console.print("  ".join(f"[{STYLE[k]}]{ICON[k]} {k} {n}[/]" for k, n in counts.items() if n))
+        console.print("  ".join(f"[{STYLE[k]}]{ICON[k]} {k} {n}[/]" for k, n in counts.items() if n)
+                      + (f"  [dim]{n_accepted} accepted by {scan.IGNORE_FILE}[/]" if n_accepted else ""))
         tab = Table(show_lines=False, header_style="bold")
         for col in ("status", "RFC", "title", "use instead / amended by", "cited at"):
             tab.add_column(col, overflow="fold")

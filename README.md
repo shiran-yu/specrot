@@ -86,6 +86,12 @@ uv run specrot check 2616 8446 6749     # first run installs dependencies (~10 s
 
 Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -e . && specrot check 2616`.
 
+**No install at all:** open the [in-browser explorer](https://shiran-yu.github.io/specrot/). It runs
+the Relate WebAssembly build in the tab, loads the same graph (exported to
+[`docs/data/graph.json`](docs/data/graph.json) by `scripts/export_web.py`, because the WASM build
+cannot open a `.rl` file) and offers check, paste-and-scan, the 26-project table with links to the
+exact lines on GitHub, and a Cypher console.
+
 Then:
 
 ```bash
@@ -96,6 +102,26 @@ uv run specrot read 9110                       # normative reading list for an i
 uv run specrot impact 5280                     # what still in force depends on RFC 5280
 uv run specrot search "token revocation"       # full-text search over titles and abstracts
 uv run specrot cypher "MATCH (p:Project)-[:HAS_FILE]->()-[:CITES]->(r:RFC {id:'RFC2616'}) RETURN DISTINCT p.name"
+```
+
+### In CI
+
+```yaml
+# .github/workflows/specrot.yml
+on: [pull_request]
+jobs:
+  specrot:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: shiran-yu/specrot@main      # writes a report to the job summary, fails on obsolete citations
+```
+
+Citations that deliberately describe legacy behaviour go in a `.specrot-ignore` at the scanned root:
+
+```
+RFC5849  oauthlib/oauth1/*   # this module implements OAuth 1.0
+RFC5246                      # we still ship TLS 1.2
 ```
 
 ### For coding agents
