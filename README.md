@@ -67,19 +67,21 @@ RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scrip
 | Is it still in force but changed? | `UPDATES` from documents still in force; titles saying *Deprecating/Prohibiting* are flagged; verified technical `Erratum` nodes |
 | What must I read to implement it? | `NORMATIVE_REF` closure, references to `BCP`/`STD` series resolved to member RFCs, obsolete targets swapped for replacements |
 | Who is affected if it changes? | `NORMATIVE_REF` backwards from documents still in force |
+| Where does section 6.5.1 of RFC 7231 live now? | `(:Section)-[:CONTINUES_AS]->+(:Section)` to a section of a document still in force: §6.5.1 *400 Bad Request* → RFC 9110 §15.5.1; 2616 §14.20 → 7231 → 9110 §10.1.1 |
 | Which projects still cite it? | `(:Project)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC)` |
 
 ## How it uses Relate
 
-- **Mode: single file** — [`store/rfc.rl`](store/rfc.rl) (5 MB).
+- **Mode: single file** — [`store/rfc.rl`](store/rfc.rl) (8 MB).
 - **Why this mode:** the graph is a dataset that ships with the code: one file to commit, clone,
   open read-only from the Python package, the `relate` CLI and the MCP server, and replace as a
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, and 26 scanned `Project`s with 2,372 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,152 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`. Of the normative references,
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,040
+  `CONTINUES_AS` between sections of an RFC and its replacements (27,533 with an identical heading). Of the normative references,
   42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
   derived from those series' members (marked `{via: 'BCP14'}`).
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
@@ -94,6 +96,7 @@ RFC). Prompt, questions, transcripts and script in [`scripts/agent_eval/`](scrip
 (:RFC)-[:NORMATIVE_REF|INFORMATIVE_REF]->(:RFC|:Series)
 (:Erratum)-[:AMENDS]->(:RFC)                 (:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)
 (:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, readerLines, sections}]->(:RFC)
+(:RFC)-[:HAS_SECTION]->(:Section)-[:CONTINUES_AS {exact}]->(:Section)
 ```
 
 ## Setup and run
@@ -123,6 +126,8 @@ Then:
 uv run specrot scan /path/to/any/repo          # stale RFC citations, with file:line and the fix
 uv run specrot scan . --markdown               # a table to paste into a PR
 uv run specrot scan . --fail-on obsolete       # CI gate: exit 1 on obsolete citations
+uv run specrot fix .                           # unified diff: RFC and section rewritten where unambiguous
+uv run specrot check "RFC 7231 §6.5.1"         # where that section lives now (RFC 9110 §15.5.1)
 uv run specrot read 9110 --depth 2             # normative reading list for an implementation (depth 1-3)
 uv run specrot impact 5280                     # what still in force depends on RFC 5280 (depth 1-3)
 uv run specrot check "BCP 14" "STD 66"         # series resolve to their member RFCs
@@ -195,7 +200,7 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   [RFC Editor errata API](https://www.rfc-editor.org/api/v1/errata.json) (submitter names dropped),
   and normative/informative references from the
   [IETF Datatracker API](https://datatracker.ietf.org/api/v1/doc/relateddocument/).
-- **Rebuild:** `uv run specrot build` downloads into `data/raw/` (git-ignored, ~1 min) and rewrites
+- **Rebuild:** `uv run specrot build` downloads into `data/raw/` (git-ignored; ~1 min, plus ~40 min once for the 2,221 RFC texts used for sections) and rewrites
   the store; `uv run python scripts/showcase.py` re-scans the 26 projects at the commits pinned in
   [`scripts/showcase.json`](scripts/showcase.json).
 - Code: [`specrot/build.py`](specrot/build.py) (graph model and load),
@@ -213,7 +218,14 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   `.specrot-ignore`.
 - Citations are found with a regular expression. Media types such as `message/rfc822` are skipped;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
-  (`--all-kinds` includes them). Section numbers are kept but not mapped to the new document.
+  (`--all-kinds` includes them).
+- Sections are mapped by heading: a section continues as the section of the replacement with the
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 292
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 222 have a home in a current RFC
+  (208 by identical heading); a section whose content moved under a new heading gets none. The
+  headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
+- `specrot fix` rewrites only unambiguous citations and prints a diff; about a third of stale
+  citations are deliberate (see the audit above), so a person reviews it before committing.
 - The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
   mostly have none).
 - The store reflects the sources on the day it was built (see `git log store/rfc.rl`).

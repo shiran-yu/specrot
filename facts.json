@@ -1,22 +1,25 @@
 {
   "nodes": {
+    "Section": 51152,
+    "RFC": 9869,
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
     "Project": 26,
     "File": 2372,
-    "RFC": 9869,
     "Series": 377
   },
   "relationships": {
     "OBSOLETES": 1546,
     "UPDATES": 2172,
     "INFORMATIVE_REF": 69790,
+    "HAS_SECTION": 51152,
     "FROM_WG": 6365,
     "NORMATIVE_REF": 58954,
     "INCLUDES": 451,
     "AMENDS": 8215,
     "IN_AREA": 530,
+    "CONTINUES_AS": 29040,
     "HAS_FILE": 2372,
     "CITES": 4664
   },
@@ -50,5 +53,5 @@
     "projects": 7,
     "citations": 129
   },
-  "store_bytes": 5447680
+  "store_bytes": 7983104
 }

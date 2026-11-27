@@ -197,6 +197,44 @@ def classify_obsoletes(conn) -> None:
     conn.execute("UNWIND $rows AS x MATCH (r:RFC {id: x.id}) SET r.oldVersion = x.v", {"rows": flags})
 
 
+def load_sections(conn, txt_dir: Path) -> int:
+    """(:RFC)-[:HAS_SECTION]->(:Section)-[:CONTINUES_AS {exact}]->(:Section) for each OBSOLETES pair whose
+    texts are in txt_dir (sections.fetch); only sections that carry over, and their targets, are stored."""
+    from . import sections
+    succ: dict[int, list[int]] = {}
+    for r in conn.execute("""MATCH (n:RFC)-[e:OBSOLETES]->(o:RFC) WHERE e.kind IN ['edition', 'split', 'version']
+                             RETURN o.number AS o, n.number AS n"""):
+        succ.setdefault(r["o"], []).append(r["n"])
+    sections.fetch(set(succ) | {n for ns in succ.values() for n in ns}, txt_dir)  # cached; ~40 min the first time
+    cache: dict[int, list] = {}
+
+    def secs(n):
+        if n not in cache:
+            p = txt_dir / f"rfc{n}.txt"
+            cache[n] = sections.parse(p.read_text(errors="replace")) if p.exists() else []
+        return cache[n]
+
+    nodes, edges = {}, []
+    for old, news in succ.items():
+        o = secs(old)
+        if not o:
+            continue
+        titles = dict(o)
+        for num, t in sections.match(o, {n: secs(n) for n in news}).items():
+            a, b = f"RFC{old}#{num}", f"RFC{t['rfc']}#{t['section']}"
+            nodes[a] = {"id": a, "rfc": f"RFC{old}", "number": num, "title": titles[num]}
+            nodes[b] = {"id": b, "rfc": f"RFC{t['rfc']}", "number": t["section"], "title": t["title"]}
+            edges.append({"a": a, "b": b, "exact": t["exact"]})
+    conn.execute("CREATE CONSTRAINT section_id IF NOT EXISTS FOR (s:Section) REQUIRE s.id IS UNIQUE")
+    for b in _batches(list(nodes.values())):
+        conn.execute("""UNWIND $rows AS row MATCH (r:RFC {id: row.rfc})
+                        CREATE (r)-[:HAS_SECTION]->(s:Section) SET s = row""", {"rows": b})
+    for b in _batches(edges):
+        conn.execute("""UNWIND $rows AS row MATCH (a:Section {id: row.a}), (b:Section {id: row.b})
+                        CREATE (a)-[:CONTINUES_AS {exact: row.exact}]->(b)""", {"rows": b})
+    return len(edges)
+
+
 def build(raw: Path, store: Path) -> dict:
     rfcs, series, rels = parse_index(raw / "rfc-index.xml")
     # NOT ISSUED entries carry no title: keep them (they hold a number) but mark them
@@ -207,12 +245,13 @@ def build(raw: Path, store: Path) -> dict:
     tmp = Path(tempfile.mkdtemp()) / store.name
     conn = relate.connect(str(tmp))
     load(conn, rfcs, series, rels, errata)
+    continues = load_sections(conn, raw / "txt")
     conn.close()
     if store.exists():
         store.unlink()
     shutil.move(str(tmp), store)
     compact(store)
-    counts = {"rfcs": len(rfcs), "series": len(series), "errata": len(errata)}
+    counts = {"rfcs": len(rfcs), "series": len(series), "errata": len(errata), "CONTINUES_AS": continues}
     for t in {t for t, _, _ in rels}:
         counts[t] = sum(1 for x in rels if x[0] == t)
     return counts

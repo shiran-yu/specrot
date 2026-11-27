@@ -24,6 +24,13 @@ def _label(v: graph.Verdict) -> str:
     return f"[{STYLE[v.level]}]{ICON[v.level]} {v.level.upper()}[/]"
 
 
+def _moved(section: str, homes: list[dict]) -> str:
+    """'§6.5.1 → RFC9110 §15.5.1'; '~' marks a reworded heading; '?' when no heading matched."""
+    if not homes:
+        return f"§{section} → ?"
+    return f"§{section} → " + ", ".join(f"{h['rfc']} §{h['section']}{'' if h['exact'] else ' ~'}" for h in homes)
+
+
 def _verdict_tree(v: graph.Verdict) -> Tree:
     head = f"{_label(v)}  [bold]{v.id}[/]"
     if v.members:
@@ -42,6 +49,12 @@ def _verdict_tree(v: graph.Verdict) -> Tree:
             colour = "dim" if p["kind"] == "retired" else "bold green"
             r.add(" → ".join(p["chain"][:-1] + [f"[{colour}]{p['current']}[/]"]) + f"  {p['title']}"
                   + f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]")
+    if v.section and v.obsolete:
+        s = t.add(f"[bold]section {v.section}[/] {v.section_now[0]['was'] if v.section_now else ''} (CONTINUES_AS, by heading)")
+        for h in v.section_now:
+            s.add(f"[bold green]{h['rfc']} §{h['section']}[/]  {h['title']}" + ("" if h["exact"] else "  [dim](reworded heading)[/]"))
+        if not v.section_now:
+            s.add("[dim]no section with a matching heading in the replacement; read its change log[/]")
     if v.deprecations:
         d = t.add("[bold]partly deprecated by[/]")
         for u in v.deprecations:
@@ -76,6 +89,8 @@ def _markdown(findings, root) -> str:
         if v.level == "ok":
             continue
         fix = ", ".join(v.current) if v.current else ", ".join(u["id"] for u in v.updated_by[:4])
+        moved = list(dict.fromkeys(_moved(c.section, c.section_now) for c in f.citations if c.section and v.obsolete))
+        fix += "".join(f"<br>{m}" for m in moved[:4]) + (" …" if len(moved) > 4 else "")
         where = ", ".join(f"`{c.path}:{c.line}`" for c in f.citations[:3]) + (" …" if len(f.citations) > 3 else "")
         lines.append(f"| [{v.id}]({v.url or ''}) {v.title or ''} | {v.level} | {fix} | {where} |")
     return "\n".join(lines)
@@ -120,6 +135,8 @@ def cmd_scan(a, conn):
                 ", ".join(u["id"] for u in v.updated_by[:3]) + (" …" if len(v.updated_by) > 3 else ""))
             if v.errata and v.level == "amended":
                 fix += f" (+{v.errata} errata)" if fix else f"{v.errata} errata"
+            moved = list(dict.fromkeys(_moved(c.section, c.section_now) for c in f.citations if c.section and v.obsolete))
+            fix += "".join(f"\n[dim]{m}[/]" for m in moved[:3]) + (f"\n[dim]… {len(moved) - 3} more sections[/]" if len(moved) > 3 else "")
             where = f"{f.citations[0].path}:{f.citations[0].line}" + (f" +{len(f.citations) - 1}" if len(f.citations) > 1 else "")
             tab.add_row(_label(v), v.id, (v.title or "")[:60], fix, where)
         console.print(tab)
@@ -183,6 +200,23 @@ def cmd_cypher(a, conn):
     print(json.dumps(rows, indent=2, default=str))
 
 
+def cmd_fix(a, conn):
+    from . import fix
+    root = Path(a.path)
+    edits, skipped = fix.plan(conn, root, a.include_history)
+    if a.write:
+        fix.apply(root, edits)
+    else:
+        sys.stdout.write(fix.diff(root, edits))
+    err = Console(stderr=True)
+    err.print(f"[bold]{len(edits)}[/] citation(s) {'rewritten' if a.write else 'to rewrite (review the diff; --write applies it)'}"
+              f", [bold]{len(skipped)}[/] obsolete citation(s) left for a person:")
+    for c, why in skipped[: a.limit]:
+        err.print(f"  [dim]{c.path}:{c.line}[/] {c.rfc}{' §' + c.section if c.section else ''}: {why}")
+    if len(skipped) > a.limit:
+        err.print(f"  [dim]… {len(skipped) - a.limit} more (--limit)[/]")
+
+
 def cmd_build(a, _conn):
     from . import build, sources
     raw = Path(a.raw)
@@ -218,6 +252,13 @@ def main(argv=None):
     s.add_argument("--save", metavar="NAME", help="write the scan into the graph as (:Project {name: NAME})")
     s.add_argument("--url", help="project URL stored with --save")
     s.set_defaults(fn=cmd_scan)
+
+    s = sub.add_parser("fix", help="rewrite unambiguous obsolete citations (RFC and section) as a diff to review")
+    s.add_argument("path")
+    s.add_argument("--write", action="store_true", help="apply the edits instead of printing the diff")
+    s.add_argument("--include-history", action="store_true")
+    s.add_argument("--limit", type=int, default=20, help="skipped citations to list")
+    s.set_defaults(fn=cmd_fix)
 
     s = sub.add_parser("read", help="normative reading list (what you must read to implement an RFC)")
     s.add_argument("rfc")

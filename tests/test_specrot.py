@@ -199,3 +199,37 @@ def test_retired_protocol_versions_are_historic_and_document_revisions_are_editi
     p = subprocess.run([sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--fail-on", "historic"],
                        cwd=ROOT, capture_output=True, text=True)
     assert p.returncode == 1
+
+
+def test_section_parse_and_match():
+    from specrot import sections as S
+    old = S.parse("Table of Contents\n   6.5.1.  400 Bad Request ....... 58\n\n6.  Response Status Codes\n"
+                  "6.5.  Client Error 4xx\n6.5.1.  400 Bad Request\n7.  Response Header Fields\n"
+                  "RFC 7231            HTTP/1.1 Semantics and Content           June 2014\n")
+    assert old == [("6", "Response Status Codes"), ("6.5", "Client Error 4xx"), ("6.5.1", "400 Bad Request"),
+                   ("7", "Response Header Fields")]
+    new = {9110: [("15", "Status Codes"), ("15.5", "Client Error 4xx"), ("15.5.1", "400 Bad Request")]}
+    m = S.match(old, new)
+    assert m["6.5.1"] == {"rfc": 9110, "section": "15.5.1", "title": "400 Bad Request", "exact": True}
+    assert m["6"]["exact"] is False  # "Response Status Codes" ~ "Status Codes"
+
+
+def test_section_now_follows_continues_as(conn):
+    v = graph.check(conn, "RFC 7231 §6.5.1")
+    assert v.section == "6.5.1" and [(h["rfc"], h["section"]) for h in v.section_now] == [("RFC9110", "15.5.1")]
+    assert graph.check(conn, "2616#14.20").section_now[0]["rfc"] == "RFC9110"  # two hops: 2616 -> 7231 -> 9110
+
+
+def test_fix_rewrites_only_unambiguous_citations(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "a.c").write_text("// RFC 7231, section 6.5.1\n// see RFC 2616\n// RFC 8941 Section 4.2\n")
+    edits, skipped = fix.plan(conn, tmp_path)
+    assert [e.new.strip() for e in edits] == ["// RFC 9110, section 15.5.1", "// RFC 9651 Section 4.2"]
+    assert [(c.rfc, why) for c, why in skipped] == [("RFC2616", "no single replacement")]
+
+
+def test_fix_targets_the_right_citation_on_a_line(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "a.md").write_text('as per [RFC 7230](https://tools.ietf.org/html/rfc7230#section-3.2.2)\n"rfc2109": 1\n')
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.new for e in edits] == ['as per [RFC 7230](https://tools.ietf.org/html/rfc9110#section-5.3)\n']

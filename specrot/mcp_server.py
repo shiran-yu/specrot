@@ -48,7 +48,8 @@ def _conn():
 
 @server.tool()
 def check_rfcs(rfcs: list[str]) -> list[dict]:
-    """Status of RFCs ("2616", "RFC 7231", "BCP 14"): level (obsolete, old-version, historic, amended, ok,
+    """Status of RFCs ("2616", "RFC 7231", "BCP 14", or with a section: "RFC 7231 §6.5.1", "7231#6.5.1"; for an
+    obsolete RFC section_now says where that section lives in the replacement). Level (obsolete, historic, old-version, amended, ok,
     unknown), replacement chains with their kind (edition, version, split, retired), live updates with
     deprecations flagged, verified technical errata, BCP/STD series. A bad id gives an error item, not a failure."""
     out = []
@@ -114,6 +115,7 @@ def get_schema() -> dict:
             "WorkingGroup": "acronym", "Area": "name",
             "Project": "name, repo, url, commit, scannedAt (open-source projects scanned by specrot)",
             "File": "path, project",
+            "Section": "id 'RFC7231#6.5.1', rfc, number, title (only sections that carry over between editions)",
         },
         "relationships": [
             "(:RFC)-[:OBSOLETES {kind: edition|version|split|retired}]->(:RFC)", "(:RFC)-[:UPDATES]->(:RFC)",
@@ -121,6 +123,7 @@ def get_schema() -> dict:
             "(:Series)-[:INCLUDES]->(:RFC)", "(:Erratum)-[:AMENDS]->(:RFC)",
             "(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)",
             "(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, readerLines, sections}]->(:RFC)",
+            "(:RFC)-[:HAS_SECTION]->(:Section)-[:CONTINUES_AS {exact}]->(:Section)",
         ],
         "indexes": ["FULLTEXT rfc_text on RFC(title, abstract)"],
         "example": "MATCH (r:RFC {id:'RFC2616'})<-[:OBSOLETES]-+(n:RFC) WHERE NOT n.obsolete RETURN DISTINCT n.id",
@@ -157,7 +160,9 @@ def _brief(f: scan.Finding) -> dict:
             "replacement_kinds": sorted({r["kind"] for r in v.replaced_by}),
             "deprecated_by": [d["id"] for d in v.deprecations],
             "updated_by": [u["id"] for u in v.updated_by][:10], "verified_technical_errata": v.errata,
-            "cited_at": [f"{c.path}:{c.line}" for c in f.citations][:20], "citations": len(f.citations)}
+            "cited_at": [f"{c.path}:{c.line}" for c in f.citations][:20], "citations": len(f.citations),
+            "sections_now": {c.section: [f"{h['rfc']} §{h['section']}" + ("" if h["exact"] else " (reworded)")
+                                         for h in c.section_now] for c in f.citations if c.section and v.obsolete}}
 
 
 def main():

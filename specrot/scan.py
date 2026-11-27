@@ -10,11 +10,15 @@ from pathlib import Path
 
 from . import graph
 
-# "RFC 2616", "rfc2616", "RFC-7231", "RFC#6749", ".../html/rfc2616", "time.RFC1123Z"; optional section.
+# "RFC 2616", "rfc2616", "RFC-7231", "RFC#6749", ".../html/rfc2616", "time.RFC1123Z"; optional section:
+# "RFC 2616, section 4.4", "RFC7540#4.1", "rfc7230#section-5.3.3", "#appendix-A", "par. 2.7", "RFC 7231 6.3.6".
 CITATION = re.compile(
     r"(?i)(?<![a-z0-9])rfc[ \t_#-]{0,2}(\d{1,5})(?!\d)"
-    r"(?:[ \t]*,?[ \t]*(?:section|sec\.?|§)[ \t]*(\d+(?:\.\d+)*))?"
+    r"(?:(?:\.html|\.txt)?(?:[ \t]*,?[ \t]*(?:section|sec\.?|§|par\.)[ \t]*|[ \t]*#[ \t]*(?:section-|appendix-|sec)?"
+    r"|[ \t]+(?=\d+\.\d))((?-i:[A-Z])(?:\.\d+)*(?![\w-])|\d+(?:\.\d+)*))?"
 )
+# "Section 4.2.8.1 of RFC 8446", "section 6 of RFC 7159"
+SECTION_OF = re.compile(r"(?i)(?:section|§)[ \t]*(\d+(?:\.\d+)*),?[ \t]+of[ \t]+\[?(rfc)[ \t_-]{0,2}\d")
 SKIP_DIRS = {".git", "node_modules", "vendor", "third_party", "dist", "build", ".venv", "venv", "__pycache__",
              "target", ".tox", ".mypy_cache"}
 # Changelogs cite the RFCs a project used to follow; that history is not rot.
@@ -37,6 +41,8 @@ class Citation:
     text: str
     kind: str = "prose"      # prose | link | identifier (time.RFC1123, rfc2822_date)
     in_tests: bool = False
+    section_now: list = field(default_factory=list)  # where the cited section lives now (obsolete RFCs)
+    col: int = -1                                    # offset of the match in the raw line (for fix)
 
     @property
     def actionable(self) -> bool:
@@ -96,6 +102,7 @@ def find_citations(root: Path, include_history: bool = False) -> list[Citation]:
 
 def _in_line(path: str, i: int, line: str) -> list[Citation]:
     out = []
+    section_before = {m.start(2): m.group(1) for m in SECTION_OF.finditer(line)}
     for m in CITATION.finditer(line):
         n = int(m.group(1))
         before, after = line[:m.start()], line[m.end(1):m.end(1) + 1]
@@ -107,7 +114,9 @@ def _in_line(path: str, i: int, line: str) -> list[Citation]:
             kind = "identifier"
         else:
             kind = "prose"
-        out.append(Citation(path, i, f"RFC{n}", m.group(2), line.strip()[:200], kind, bool(TEST_PATH.search(path))))
+        section = m.group(2) or section_before.get(m.start())
+        out.append(Citation(path, i, f"RFC{n}", section, line.strip()[:200], kind, bool(TEST_PATH.search(path)),
+                            col=m.start()))
     return out
 
 
@@ -120,6 +129,15 @@ def judge(conn, citations: list[Citation]) -> list[Finding]:
     for c in citations:
         by_rfc[c.rfc].append(c)
     findings = [Finding(graph.check(conn, rid), cs) for rid, cs in by_rfc.items()]
+    homes: dict[tuple, list] = {}
+    for f in findings:
+        if f.verdict.obsolete:
+            for c in f.citations:
+                if c.section:
+                    key = (c.rfc, c.section)
+                    if key not in homes:
+                        homes[key] = graph.section_now(conn, c.rfc, c.section)
+                    c.section_now = homes[key]
     findings.sort(key=lambda f: (LEVELS.index(f.verdict.level), not f.verdict.deprecations, -len(f.citations), f.verdict.id))
     return findings
 

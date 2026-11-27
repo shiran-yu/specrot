@@ -34,6 +34,16 @@ def rfc_id(x: str | int) -> str:
     return f"{(m.group(1) or 'RFC').upper()}{int(m.group(2))}"
 
 
+REF = re.compile(r"(?i)^(.*?\d)\s*(?:#\s*(?:section-|appendix-)?|§\s*|,?\s+sec(?:tion)?\.?\s*)"
+                 r"((?-i:[A-Z])(?:\.\d+)*|\d+(?:\.\d+)*)\.?\s*$")
+
+
+def split_ref(x: str | int) -> tuple[str | int, str | None]:
+    """'7231#6.5.1', 'RFC 7231 §6.5.1', 'RFC 7231 section 6.5.1' -> ('7231...', '6.5.1'); else (x, None)."""
+    m = REF.match(str(x))
+    return (m.group(1), m.group(2)) if m else (x, None)
+
+
 def clamp_depth(depth: int) -> int:
     if int(depth) < 1:
         raise InputError(f"depth must be 1..{MAX_DEPTH}, got {depth}")
@@ -64,6 +74,17 @@ INFO = """
 MATCH (r:RFC {id: $id})
 RETURN r.id AS id, r.title AS title, r.date AS date, r.status AS status, r.obsolete AS obsolete,
        r.verifiedTechnicalErrata AS errata, r.wg AS wg, r.url AS url, r.abstract AS abstract
+"""
+
+# Where a section of an obsolete RFC lives now: CONTINUES_AS hops (matched headings, build.py) to a
+# section of a document still in force. exact is false when any hop matched a reworded heading.
+SECTION_NOW = """
+MATCH (s:Section {id: $id})
+MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
+MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
+RETURN r.id AS rfc, t.number AS section, t.title AS title, s.title AS was,
+       all(e IN relationships(p) WHERE e.exact) AS exact, size(relationships(p)) AS hops
+ORDER BY hops
 """
 
 KIND_TEXT = {
@@ -100,6 +121,8 @@ class Verdict:
     errata: int = 0
     series: list[str] = field(default_factory=list)
     members: list[str] = field(default_factory=list)        # for a BCP/STD/FYI id
+    section: str | None = None                               # the section asked about, if any
+    section_now: list[dict] = field(default_factory=list)   # [{rfc, section, title, was, exact}]
 
     @property
     def level(self) -> str:
@@ -133,7 +156,26 @@ class Verdict:
         return d
 
 
-def check(conn, x: str | int) -> Verdict:
+def section_now(conn, rid: str, section: str) -> list[dict]:
+    """Current homes of a section of an obsolete RFC, one per current document, fewest hops first."""
+    out: dict[tuple, dict] = {}
+    for r in conn.execute(SECTION_NOW, {"id": f"{rid}#{section}"}):
+        out.setdefault((r["rfc"], r["section"]), {k: r[k] for k in ("rfc", "section", "title", "was", "exact")})
+    return list(out.values())
+
+
+def check(conn, x: str | int, section: str | None = None) -> Verdict:
+    x, sec = split_ref(x)
+    section = section or sec
+    v = _check(conn, x)
+    if section and v.known:
+        v.section = section
+        if v.obsolete:
+            v.section_now = section_now(conn, v.id, section)
+    return v
+
+
+def _check(conn, x: str | int) -> Verdict:
     rid = rfc_id(x)
     if not rid.startswith("RFC"):
         members = [r["id"] for r in conn.execute(MEMBERS, {"id": rid})]
