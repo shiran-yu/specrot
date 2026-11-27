@@ -38,7 +38,7 @@ and coding agents, whose training data predates recent replacements.
 | Question | Answer |
 |---|---|
 | Does real code cite obsolete RFCs? | **1,603 of 8,034** RFC citations in 26 major codebases (20%), in 24 of the 26 (25 repositories: Go's `net` and `crypto` are counted apart) |
-| Are they worth fixing? | About half: two models labelling 100 of them agree on 49 (the rest are deliberate references or scanner errors) |
+| Are they worth fixing? | About half: two models labelling 100 of them agree on 49; they call 34 and 42 deliberate references, 8 and 5 scanner errors, and disagree on 22 |
 | Do maintainers fix them? | Yes, by hand: 17 merged PRs replaced 106 obsolete citations; `fix` proposes 50 of those edits, 47 with the maintainers' RFC |
 | Do coding agents get it right? | Without tools Claude Haiku 5.5 names an obsolete RFC for 8 of 34 protocols and Sonnet 5.5 for 2 (the two replaced in 2026); with web search 1 and 2; with the specrot MCP server, 0 |
 | Upstream | PRs open (not merged) at [nginx#2051](https://github.com/nginx/nginx/pull/2051) and [httpx#3874](https://github.com/encode/httpx/pull/3874) |

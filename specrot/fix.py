@@ -101,7 +101,7 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
             return None  # a Markdown link definition: its URL keeps the old RFC
         if (re.search(r"(?i)\bappendix\s+[A-Z]\b", line) or re.match(r"\s*,?\s*[A-Z](\.\d+)+\b", tail)) and not m.group(2):
             return None  # an appendix named in prose ("Appendix E.6 of RFC 8446" is F.6 in RFC 9846)
-        if re.match(r"\s*:\s+[A-Z][\w/'-]*(\s+[\w/'()-]+){2,}", tail):
+        if re.match(r"\s*:\s+[A-Z][\w/'-]*(\s+[\w/'()-]+){1,}", tail):
             return None  # a reference-list entry with the old document's title ("RFC 2732: Format for Literal ...")
         if HISTORY.search(line) or re.search(rf"(?<!\d){n_new}(?!\d)", line):
             return None  # the line already talks about the replacement or the history: rewording needs a person

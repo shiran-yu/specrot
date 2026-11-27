@@ -126,7 +126,9 @@ def test_bad_ids_raise_input_error(bad):
 def test_depth_is_capped(conn):
     with pytest.raises(graph.InputError):
         graph.reading(conn, 9110, 0)
-    assert max(r["depth"] for r in graph.impact(conn, 9110, 9)) <= graph.MAX_DEPTH
+    with pytest.raises(graph.InputError):
+        graph.impact(conn, 9110, 9)
+    assert max(r["depth"] for r in graph.impact(conn, 9110, 3)) <= graph.MAX_DEPTH
 
 
 def test_scan_untracked_and_utf16(tmp_path):
@@ -408,3 +410,10 @@ def test_partial_obsoletion_is_left_to_a_person(conn, tmp_path):
     (tmp_path / "a.py").write_text("# URL syntax per RFC 1738\n")
     edits, skipped = fix.plan(conn, tmp_path)
     assert not edits and "only part of it was replaced" in skipped[0][1]
+
+
+def test_fix_leaves_a_list_of_rfcs_with_titles(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "codes.py").write_text('"""Status codes:\n\n    * RFC 7238: Permanent Redirect\n"""\n')
+    edits, skipped = fix.plan(conn, tmp_path)
+    assert not edits and skipped

@@ -45,9 +45,9 @@ def split_ref(x: str | int) -> tuple[str | int, str | None]:
 
 
 def clamp_depth(depth: int) -> int:
-    if int(depth) < 1:
+    if not 1 <= int(depth) <= MAX_DEPTH:  # an error at both ends, never a silent cap
         raise InputError(f"depth must be 1..{MAX_DEPTH}, got {depth}")
-    return min(int(depth), MAX_DEPTH)
+    return int(depth)
 
 
 # Current replacements: follow OBSOLETES backwards to documents nobody obsoletes. Each edge carries the

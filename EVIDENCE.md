@@ -41,7 +41,7 @@ on this project chose these edits; two `fix` rules and Sphinx `:rfc:` support we
 the comparison, which RESULTS.md lists.
 
 **Upstream PRs from specrot (open):** [nginx/nginx#2051](https://github.com/nginx/nginx/pull/2051) (RFC 8941 →
-RFC 9651 in the Priority parser comments, qualified after review: the parser keeps RFC 8941's types) and
+RFC 9651 in the Priority parser comments, qualified after an automated Copilot review on the PR: the parser keeps RFC 8941's types) and
 [encode/httpx#3874](https://github.com/encode/httpx/pull/3874) (RFC 7230/7231 → RFC 9110 sections). Both
 were generated with `specrot fix` and reviewed line by line before opening.
 
