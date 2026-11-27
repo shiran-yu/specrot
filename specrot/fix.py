@@ -56,6 +56,8 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
         tail = line[m.end():]
         if head.endswith(("'", '"')) and tail.startswith(("'", '"')):
             return None  # a string literal in code ("rfc2109": ...), not prose
+        if re.search(rf"(?i)rfc_0*{m.group(1).lstrip('0')}(?!\d)", line):
+            return None  # the line explains a name built from this RFC (the rfc_822 format vs RFC 822)
         if head.count('"') % 2 or head.count("`") % 2:
             return None  # inside a quoted example or quotation
         if HISTORY.search(line) or re.search(rf"(?i)rfc[ \t_#-]{{0,2}}0*{n_new}(?!\d)", line):
