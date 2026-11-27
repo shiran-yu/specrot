@@ -28,7 +28,8 @@ Protocol code is full of comments like `// see RFC 7230, section 3.3.2`. RFCs ar
 after publication; they are *obsoleted* or *updated* by later RFCs. HTTP/1.1 has been rewritten
 twice since RFC 2616 (RFC 7230–7235 in 2014, RFC 9110–9112 in 2022), TLS 1.3's own RFC 8446 was
 replaced by RFC 9846 in July 2026, and OAuth 2.0 (RFC 6749) is amended by a security best practice
-(RFC 9700) that deprecates parts of it. A citation that was right when it was written quietly
+(RFC 9700) that rules out parts of it, such as the implicit grant (`specrot check 6749` lists it under
+"updated by"). A citation that was right when it was written quietly
 starts pointing a reader, a reviewer or an AI coding agent at the wrong text.
 
 **Who benefits:** maintainers of protocol libraries (HTTP clients and servers, TLS stacks, DNS,
@@ -298,8 +299,8 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 297
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 223 have a home in a current RFC
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 288
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 222 have a home in a current RFC
   (208 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
