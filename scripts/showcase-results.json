@@ -208,15 +208,15 @@
   "repo": "aio-libs/aiohttp",
   "path": "",
   "commit": "791283344186c2f3eeae6f27f7278089d4611990",
-  "all_matches": 285,
-  "citations": 190,
-  "rfcs": 36,
-  "obsolete_rfcs": 13,
-  "obsolete_citations": 28,
+  "all_matches": 307,
+  "citations": 212,
+  "rfcs": 39,
+  "obsolete_rfcs": 14,
+  "obsolete_citations": 35,
   "top_obsolete": [
    [
     "RFC7230",
-    10,
+    11,
     [
      "RFC9110",
      "RFC9112"
@@ -224,11 +224,18 @@
    ],
    [
     "RFC2616",
-    4,
+    5,
     [
      "RFC9110",
      "RFC9111",
      "RFC9112"
+    ]
+   ],
+   [
+    "RFC2109",
+    4,
+    [
+     "RFC6265"
     ]
    ],
    [
@@ -239,18 +246,12 @@
     ]
    ],
    [
-    "RFC2822",
+    "RFC2068",
     2,
     [
-     "RFC5322"
-    ]
-   ],
-   [
-    "RFC1036",
-    1,
-    [
-     "RFC5536",
-     "RFC5537"
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
     ]
    ]
   ]
@@ -260,26 +261,33 @@
   "repo": "pallets/werkzeug",
   "path": "",
   "commit": "0f43c6ebd426039e4b99ec22535c2c8a2ec2f69f",
-  "all_matches": 56,
-  "citations": 49,
-  "rfcs": 19,
-  "obsolete_rfcs": 6,
-  "obsolete_citations": 7,
+  "all_matches": 61,
+  "citations": 54,
+  "rfcs": 20,
+  "obsolete_rfcs": 7,
+  "obsolete_citations": 11,
   "top_obsolete": [
+   [
+    "RFC2616",
+    3,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2822",
+    2,
+    [
+     "RFC5322"
+    ]
+   ],
    [
     "RFC7232",
     2,
     [
      "RFC9110"
-    ]
-   ],
-   [
-    "RFC2616",
-    1,
-    [
-     "RFC9110",
-     "RFC9111",
-     "RFC9112"
     ]
    ],
    [
@@ -296,13 +304,6 @@
      "RFC9110",
      "RFC9112"
     ]
-   ],
-   [
-    "RFC7233",
-    1,
-    [
-     "RFC9110"
-    ]
    ]
   ]
  },
@@ -311,17 +312,40 @@
   "repo": "django/django",
   "path": "",
   "commit": "f0e7bd90884b5da0a7418f3c78d1fd309c905014",
-  "all_matches": 206,
-  "citations": 74,
-  "rfcs": 28,
-  "obsolete_rfcs": 4,
-  "obsolete_citations": 4,
+  "all_matches": 287,
+  "citations": 153,
+  "rfcs": 40,
+  "obsolete_rfcs": 8,
+  "obsolete_citations": 15,
   "top_obsolete": [
    [
+    "RFC7231",
+    4,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC2616",
+    3,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
     "RFC1866",
-    1,
+    2,
     [
      "RFC2854"
+    ]
+   ],
+   [
+    "RFC7234",
+    2,
+    [
+     "RFC9111"
     ]
    ],
    [
@@ -329,21 +353,6 @@
     1,
     [
      "RFC7578"
-    ]
-   ],
-   [
-    "RFC7231",
-    1,
-    [
-     "RFC9110"
-    ]
-   ],
-   [
-    "RFC850",
-    1,
-    [
-     "RFC5536",
-     "RFC5537"
     ]
    ]
   ]
@@ -353,11 +362,11 @@
   "repo": "python/cpython",
   "path": "Lib",
   "commit": "5dbe2ac850b7b180685ed6008d5b9d459fd4934f",
-  "all_matches": 1175,
-  "citations": 438,
+  "all_matches": 1177,
+  "citations": 440,
   "rfcs": 111,
   "obsolete_rfcs": 42,
-  "obsolete_citations": 196,
+  "obsolete_citations": 197,
   "top_obsolete": [
    [
     "RFC1738",
@@ -917,15 +926,15 @@
   "repo": "nghttp2/nghttp2",
   "path": "",
   "commit": "03fe9f52bfddb89b758d5e7ed0f4103b8c60a937",
-  "all_matches": 308,
-  "citations": 146,
-  "rfcs": 27,
+  "all_matches": 383,
+  "citations": 221,
+  "rfcs": 28,
   "obsolete_rfcs": 8,
-  "obsolete_citations": 65,
+  "obsolete_citations": 87,
   "top_obsolete": [
    [
     "RFC7540",
-    31,
+    53,
     [
      "RFC9113"
     ]
@@ -1044,11 +1053,11 @@
   "repo": "authlib/authlib",
   "path": "",
   "commit": "c451e6d1238678231ee21e31964cc8ce34474a37",
-  "all_matches": 1359,
-  "citations": 465,
-  "rfcs": 48,
-  "obsolete_rfcs": 4,
-  "obsolete_citations": 13,
+  "all_matches": 1551,
+  "citations": 657,
+  "rfcs": 50,
+  "obsolete_rfcs": 5,
+  "obsolete_citations": 15,
   "top_obsolete": [
    [
     "RFC2616",
@@ -1061,7 +1070,7 @@
    ],
    [
     "RFC2617",
-    3,
+    4,
     [
      "RFC7616",
      "RFC7617",
@@ -1073,6 +1082,13 @@
     3,
     [
      "RFC9110"
+    ]
+   ],
+   [
+    "RFC3447",
+    1,
+    [
+     "RFC8017"
     ]
    ],
    [

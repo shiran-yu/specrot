@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from . import graph, scan
-from .build import _versions
+from .build import REDESIGN, _versions
 
 HISTORY = re.compile(r"(?i)\b(obsolet\w*|supersed\w*|replac\w*|deprecat\w*|formerly|previously|historic\w*|legacy|"
                      r"older|earlier|original\w*|was updated|updated by|backward\w*|compatib\w*|released|introduced|"
@@ -40,7 +40,8 @@ def _target(c: scan.Citation, v: graph.Verdict) -> tuple[str, str | None] | str:
     if v.level != "obsolete":
         return f"level {v.level}"
     if any(r["kind"] == "redesign" for r in v.replaced_by):
-        return "replaced by a different design (TCP MD5 -> TCP-AO): a person decides"
+        why = next((REDESIGN[k] for r in v.replaced_by for k in REDESIGN if k[0] in r["chain"] and k[1] in r["chain"]), "")
+        return f"replaced by a different design ({why}): a person decides"
     if sv := next((r["same_version"] for r in v.replaced_by if r.get("same_version")), None):
         return f"a newer protocol version is in the chain: {sv} (same version) or {', '.join(v.current)}?"
     vo = _versions(v.title or "")
@@ -59,6 +60,18 @@ def _target(c: scan.Citation, v: graph.Verdict) -> tuple[str, str | None] | str:
 def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str | None:
     """Rewrite the citation that starts at `col`; None when its form is unsafe to touch."""
     n_new = new_rfc[3:]
+    for m in scan.ROLE.finditer(line):  # :rfc:`2822` and :rfc:`7232#section-4.1`; titled roles are left alone
+        if m.start() != col:
+            continue
+        if "<" in m.group(0) or HISTORY.search(line) or re.search(rf"(?<!\d){n_new}(?!\d)", line):
+            return None
+        if m.group(2) and not new_section:
+            return None  # the anchor's section would go stale
+        out = line[:m.start(1)] + n_new + line[m.end(1):]
+        if m.group(2):
+            shift = len(n_new) - len(m.group(1))
+            out = out[:m.start(2) + shift] + new_section + out[m.end(2) + shift:]
+        return out
     before_sections = {m.start(2): m for m in scan.SECTION_OF.finditer(line)}
     for m in scan.CITATION.finditer(line):
         if m.start() != col:
@@ -108,6 +121,20 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
     return None
 
 
+def _in_quotation(lines: list[str] | None, line_no: int) -> bool:
+    """An odd number of " in the comment lines just above: the line continues a quotation (httpx quoting
+    RFC 3986's "[RFC3513] or later"), whose text must stay verbatim."""
+    if not lines:
+        return False
+    quotes = 0
+    for prev in reversed(lines[max(0, line_no - 11):line_no - 1]):
+        body = re.sub(r"^\s*(#|//|/?\*+|--|;+)", "", prev)
+        if body == prev or not body.strip():  # not a comment line, or an empty one: the block ends
+            break
+        quotes += body.count('"')
+    return quotes % 2 == 1
+
+
 def _read(p: Path) -> list[str] | None:
     """Lines with their own line endings; None for a file that is not UTF-8 (left untouched)."""
     try:
@@ -141,6 +168,8 @@ def plan(conn, root: Path, include_history: bool = False) -> tuple[list[Edit], l
                 why = why or t
                 continue
             r = _rewrite(new, c.col, t[0], t[1]) if new is not None else None
+            if r is not None and _in_quotation(lines, line_no):
+                why, r = why or "inside a quotation that starts on an earlier line", None
             if r is None:
                 why = why or ("file is not UTF-8" if lines is None else "citation form not safe to rewrite")
                 continue

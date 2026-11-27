@@ -27,38 +27,44 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,669** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,640 (21%)** point at an RFC
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **8,044** RFC citations in source
+and docs (Sphinx `:rfc:` roles included; tests and identifiers such as `time.RFC1123` excluded), **1,687 (21%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
 an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
-285 more) are not counted: they are reported as `old-version`, or `historic` when that version was
-itself retired. The most common: RFC 2616 (17 projects), RFC 7230
+303 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+itself retired. The most common: RFC 2616 (18 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. We took 100 of the 1,640, the first by a seeded hash
+Not every one of these is a mistake. We took 100 of the 1,687, the first by a seeded hash
 ([`scripts/audit/draw.py`](scripts/audit/draw.py)), and had two models label each from its code
 context, independently, with the same [instructions](scripts/audit/LABELING.md) and no tools:
-Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **54 of 100** as citing
-the old RFC as the specification the code follows, worth updating (61 Claude, 58 GPT); 31 and 36 as
-deliberate references to the old text (compatibility, history, a list of supported RFCs); 8 and 6
-as scanner errors (an identifier or not a citation at all). The labelers agree on 83% of items
-(Cohen's κ 0.68). These are model labels, not human ones, and they vary between runs: an earlier run
-on a sample sharing 96 of these items gave 62 (git history of `scripts/audit/`). [`scripts/audit/label.py`](scripts/audit/label.py)
+Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **49 of 100** as citing
+the old RFC as the specification the code follows, worth updating (58 Claude, 53 GPT); 34 and 42 as
+deliberate references to the old text (compatibility, history, a list of supported RFCs); 8 and 5
+as scanner errors (an identifier or not a citation at all). The labelers agree on 78% of items
+(Cohen's κ 0.60). These are model labels, not human ones, and they vary between runs: earlier runs on samples
+sharing 95 or more of these items gave 62 and 54 (git history of `scripts/audit/`). [`scripts/audit/label.py`](scripts/audit/label.py)
 reruns a labeler into new files, `raw/` keeps each full prompt, reply and model (the instructions
 still name the earlier population, 1,645, as given to the labelers), and
 [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports; a person
 decides, and `.specrot-ignore` records the decision.
 
 **Do maintainers make these changes?** Yes, by hand. CPython merged "Update selected RFC 2822 references
-to RFC 5322" in 2025 and moved `base64` to RFC 4648 in 2021 and 2026; Django merged "Updated documentation
-and comments for RFC updates" in 2022. We ran `specrot fix` on the base files of eight such merged PRs in
-the scanned projects and compared ([`scripts/maintainer_eval/`](scripts/maintainer_eval/RESULTS.md)):
-specrot calls **61 of the 62** citations the maintainers replaced obsolete (the 62nd, RFC 1123, is in force),
-and where `fix` proposes an edit (26), it names the RFC the maintainers chose in **25**, the 26th being a
-2014 PR whose target, RFC 7231, has itself been replaced since. Of 9 proposals with a section number, 7
-match the section the maintainers wrote (RFC 7232 §3.1 → RFC 9110 §13.1.1). Nobody on this project chose
-these edits.
+to RFC 5322" in 2025; Django merged "Updated documentation and comments for RFC updates" in 2022. A fixed
+GitHub search over the 26 projects, with a rule that does not use specrot, finds 17 merged PRs that
+replace RFC citations ([`scripts/maintainer_eval/`](scripts/maintainer_eval/RESULTS.md), every candidate
+and reason in `cohort.json`). Replaying them: maintainers replaced **113** citations; specrot calls **106**
+obsolete, and the other 7 correct a wrong RFC number or swap an RFC that is in force. `fix` proposes an
+edit for 49 of the 106 (`scan` reports all of them) and names the maintainers' RFC in **46 of 49**; of 19
+proposals with a section, 16 match the maintainers' section (RFC 7232 §3.1 → RFC 9110 §13.1.1). Nobody
+on this project chose these edits; two `fix` rules and Sphinx `:rfc:` support were added while building
+the comparison, which RESULTS.md lists.
+
+**Upstream PRs from specrot (open):** [nginx/nginx#2051](https://github.com/nginx/nginx/pull/2051) (RFC 8941 →
+RFC 9651 in the Priority parser comments, qualified after review: the parser keeps RFC 8941's types) and
+[encode/httpx#3874](https://github.com/encode/httpx/pull/3874) (RFC 7230/7231 → RFC 9110 sections). Both
+were generated with `specrot fix` and reviewed line by line before opening.
 
 **How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
 `claude -p`) "which RFC is the current specification for X? If several RFCs together form it, list
@@ -97,7 +103,7 @@ seed RFC not in its key is. It does not check that a key lists every part of a s
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, 51,671 `Section`s, and 26 scanned `Project`s with 2,372 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,671 `Section`s, and 26 scanned `Project`s with 2,442 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
   `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,352
   `CONTINUES_AS` between sections of an RFC and its replacements (27,799 with an identical heading). Of the normative references,
@@ -246,9 +252,9 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 292
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 221 have a home in a current RFC
-  (206 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 297
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 223 have a home in a current RFC
+  (208 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
 - `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names
@@ -258,7 +264,7 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   On a held-out sample of 100 edits (the fixer frozen first, no line seen in the earlier rounds), both
   model labelers called **74** mergeable as is and 9 wrong; 4 of the 9 were stale section numbers the
   pattern missed, fixed since, and 2 a section mapped by an identical heading whose content moved
-  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md), with the two earlier rounds). 31 to 36 of 100 stale citations are
+  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md), with the two earlier rounds). 34 to 42 of 100 stale citations are
   deliberate (the audit above), so a person reviews the diff before committing.
 - The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
   mostly have none).

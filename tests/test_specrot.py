@@ -314,6 +314,23 @@ def test_edition_then_version_chain_is_obsolete(conn):
     assert graph.check(conn, 5246).level == "old-version"
 
 
+def test_sphinx_rfc_roles_are_found_and_fixed(conn, tmp_path):
+    from specrot import fix
+    found = scan.find_in_text("because :rfc:`RFC 7232 <7232#section-4.1>` and :rfc:`2822`")
+    assert [(c.rfc, c.section) for c in found] == [("RFC7232", "4.1"), ("RFC2822", None)]
+    (tmp_path / "x.rst").write_text("a valid :rfc:`2822` style header\nper :rfc:`7232#section-3.1`\n")
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.new.strip() for e in edits] == ["a valid :rfc:`5322` style header", "per :rfc:`9110#section-13.1.1`"]
+
+
+def test_fix_leaves_quotations_spanning_lines(conn, tmp_path):
+    from specrot import fix
+    (tmp_path / "x.py").write_text('# From RFC 3986:\n#\n# "A host identified by an IP literal, version 6\n'
+                                   '# [RFC3513] or later, is distinguished by enclosing it"\n# see RFC 3513\n')
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.line for e in edits] == [5]
+
+
 def test_import_rule_matches_only_import_lines():
     kinds = lambda t: [c.kind for c in scan.find_in_text(t)]
     assert kinds("from RFC 7231, this document takes the status codes") == ["prose"]

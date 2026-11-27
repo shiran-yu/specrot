@@ -2,8 +2,7 @@
 
     uv run python -m scripts.maintainer_eval.run     # writes scripts/maintainer_eval/results.json
 
-For each merged PR in PRS (found by searching the scanned projects for merged PRs with "RFC" in the title
-that replace obsolete citations), the changed files are fetched at the PR's base and merge commits from
+For each merged PR that cohort.py selected (cohort.json: the search, every candidate, the rule), the changed files are fetched at the PR's base and merge commits from
 GitHub, `specrot fix` runs on the base files, and every base line the maintainers changed that cites an
 RFC is compared with fix's proposal: whether specrot calls the replaced RFC obsolete, whether `fix` proposes an edit, and whether
 the RFC (and section) it proposes is one the maintainers wrote in the block that replaced the line;
@@ -22,8 +21,8 @@ from specrot import fix, graph, scan
 
 HERE = Path(__file__).resolve().parent
 WORK = HERE.parent.parent / "data" / "maintainer_eval"
-PRS = [("python/cpython", 139435), ("python/cpython", 151275), ("python/cpython", 27700), ("python/cpython", 148),
-       ("django/django", 16257), ("nghttp2/nghttp2", 1809), ("psf/requests", 2087), ("urllib3/urllib3", 409)]
+# the PRs cohort.py selected by its fixed search and rule
+PRS = [(c["repo"], c["pr"]) for c in json.loads((HERE / "cohort.json").read_text())["candidates"] if c["included"]]
 
 
 def get(url: str) -> bytes:

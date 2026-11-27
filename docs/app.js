@@ -239,7 +239,13 @@ function citationsIn(text) {
       if (/[._]$/.test(before) || /^[A-Za-z_]/.test(after) || m[1].includes("_") || /^\.[A-Za-z]/.test(after)
           || /^\s*(import\s+[\w., ]+|from\s+[\w.]+\s+import\s+[\w., ()*]+)\s*(#.*)?$/.test(line)) continue;  // a name, or a module in an import line
       const sec = m[3] || m[4] || (m[5] && m[5].toUpperCase()) || m[6] || before_[m.index] || null;
-      out.push({ n: Number(m[2]), line: i + 1, sec });
+      out.push({ n: Number(m[2]), line: i + 1, sec, col: m.index });
+    }
+    // Sphinx/reST role, as ROLE in scan.py: :rfc:`2822`, :rfc:`RFC 7232 <7232#section-4.1>`
+    for (const m of line.matchAll(/:rfc:`(?:[^`<]*<)?0*(\d{1,5})(?:#(?:section|appendix)-([A-Z]?[\d.]*\d|[A-Z]))?>?`/g)) {
+      const inside = out.find((c) => c.line === i + 1 && c.col >= m.index && c.col < m.index + m[0].length);
+      if (inside) inside.sec ||= m[2] || null;
+      else if (Number(m[1])) out.push({ n: Number(m[1]), line: i + 1, sec: m[2] || null, col: m.index });
     }
   });
   return out;

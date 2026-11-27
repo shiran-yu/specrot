@@ -2,27 +2,27 @@
 {
 "i": 0,
 "label": "update",
-"note": "Parser behavior cites the superseded HTTP specification."
+"note": "HTTP message-body rules reference a superseded specification."
 },
 {
 "i": 1,
 "label": "legacy",
-"note": "Explicitly supports RFC 2965 and Netscape cookie protocols."
+"note": "Explicitly supports RFC 2965 and Netscape cookies."
 },
 {
 "i": 2,
 "label": "legacy",
-"note": "Lists supported authentication mechanisms, including older ones."
+"note": "Lists the older DIGEST-MD5 authentication mechanism."
 },
 {
 "i": 3,
 "label": "update",
-"note": "TLS 1.3 signature schemes cite the superseded edition."
+"note": "TLS 1.3 signature schemes reference the superseded edition."
 },
 {
 "i": 4,
-"label": "update",
-"note": "IP address encoding behavior cites the superseded certificate profile."
+"label": "legacy",
+"note": "Describes compatibility with the older certificate profile."
 },
 {
 "i": 5,
@@ -32,62 +32,62 @@
 {
 "i": 6,
 "label": "update",
-"note": "Date grammar is quoted from the superseded HTTP specification."
+"note": "Date grammar is attributed to the old HTTP specification."
 },
 {
 "i": 7,
 "label": "legacy",
-"note": "RFC 2253 is a deliberately supported DN format."
+"note": "Names the deliberately supported RFC 2253 output format."
 },
 {
 "i": 8,
 "label": "legacy",
-"note": "Describes compatibility with RFC 2965 cookies."
+"note": "Describes handling of RFC 2965 cookies."
 },
 {
 "i": 9,
 "label": "legacy",
-"note": "Discusses fallback behavior under the older TLS specification."
+"note": "Discusses fallback signaling and its interaction with TLS versions."
 },
 {
 "i": 10,
 "label": "update",
-"note": "TLS key-share handling cites the superseded edition."
+"note": "TLS 1.3 key-share handling cites the superseded edition."
 },
 {
 "i": 11,
 "label": "legacy",
-"note": "Explicitly describes rules for legacy RFC 2965 cookies."
+"note": "Explicitly supports RFC 2965 cookies."
 },
 {
 "i": 12,
 "label": "update",
-"note": "Date-header recommendation cites the superseded HTTP specification."
+"note": "HTTP date-header recommendation cites the superseded specification."
 },
 {
 "i": 13,
 "label": "update",
-"note": "Cookie parsing behavior cites a superseded cookie specification."
+"note": "Cookie parsing behavior is tied to an outdated specification."
 },
 {
 "i": 14,
 "label": "update",
-"note": "Hop-by-hop header behavior cites a superseded HTTP specification."
+"note": "HTTP hop-by-hop header rules cite the superseded edition."
 },
 {
 "i": 15,
 "label": "update",
-"note": "Conditional request comparison rule cites the superseded specification."
+"note": "Conditional request comparison rule cites the superseded edition."
 },
 {
 "i": 16,
 "label": "update",
-"note": "HTTP date documentation links to the superseded specification."
+"note": "HTTP date format documentation cites the superseded edition."
 },
 {
 "i": 17,
 "label": "legacy",
-"note": "RFC 2253 is a deliberately supported DN format."
+"note": "Names the deliberately supported RFC 2253 output format."
 },
 {
 "i": 18,
@@ -97,406 +97,406 @@
 {
 "i": 19,
 "label": "update",
-"note": "JSON encoding assumption cites the superseded specification."
+"note": "JSON encoding behavior is based on the superseded RFC."
 },
 {
 "i": 20,
 "label": "update",
-"note": "JSON encoding assumption cites the superseded specification."
+"note": "JSON encoding behavior is based on the superseded RFC."
 },
 {
 "i": 21,
-"label": "not-a-citation",
-"note": "RFC822 is an IMAP FETCH data-item token here."
+"label": "test",
+"note": "RFC822 is an IMAP FETCH test item."
 },
 {
 "i": 22,
 "label": "legacy",
-"note": "Explains the historical changes across email RFC editions."
+"note": "Historical note contrasts the old rule with successors."
 },
 {
 "i": 23,
 "label": "legacy",
-"note": "Identifies legacy cipher suites from the older TLS extension."
+"note": "Identifies older ECC cipher-suite constants."
 },
 {
 "i": 24,
 "label": "legacy",
-"note": "Discusses certificate-status behavior for older TLS handshakes."
+"note": "Discusses the older TLS certificate-status message."
 },
 {
 "i": 25,
 "label": "update",
-"note": "HTTP CONNECT authority-form cites the superseded specification."
+"note": "HTTP authority-form parsing cites the superseded RFC."
 },
 {
 "i": 26,
 "label": "update",
-"note": "HTTP date grammar is quoted from the superseded specification."
+"note": "HTTP date grammar is attributed to the superseded RFC."
 },
 {
 "i": 27,
 "label": "update",
-"note": "Status-code definitions cite superseded HTTP specifications."
+"note": "Status-code descriptions cite superseded HTTP specifications."
 },
 {
 "i": 28,
 "label": "update",
-"note": "Cache combination behavior cites the superseded specification."
+"note": "Cache combination behavior cites the superseded RFC."
 },
 {
 "i": 29,
 "label": "not-a-citation",
-"note": "RFC822 names a MIME subtype, not the IETF RFC."
+"note": "rfc822 is a MIME subtype string here."
 },
 {
 "i": 30,
 "label": "update",
-"note": "Cache-key behavior cites the superseded HTTP specification."
+"note": "Cache key behavior cites the superseded HTTP specification."
 },
 {
 "i": 31,
 "label": "update",
-"note": "TLS extension behavior cites the superseded TLS edition."
+"note": "TLS extension handling cites the superseded edition."
 },
 {
 "i": 32,
 "label": "update",
-"note": "Security behavior cites the superseded TLS edition."
+"note": "TLS subgroup validation cites the superseded edition."
 },
 {
 "i": 33,
 "label": "update",
-"note": "Absolute-URL handling cites the superseded HTTP specification."
+"note": "Absolute-URL handling is attributed to the old HTTP RFC."
 },
 {
 "i": 34,
 "label": "legacy",
-"note": "RFC 2253 is a deliberately supported DN format."
+"note": "Names the deliberately supported RFC 2253 output format."
 },
 {
 "i": 35,
 "label": "legacy",
-"note": "Intentionally quotes the older authentication specification."
+"note": "Intentionally quotes the old RFC's credentials description."
 },
 {
 "i": 36,
 "label": "update",
-"note": "OAuth endpoint requirements cite the superseded HTTP specification."
+"note": "OAuth documentation cites the superseded HTTP specification."
 },
 {
 "i": 37,
-"label": "update",
-"note": "Response-body behavior is quoted from the superseded specification."
+"label": "legacy",
+"note": "Intentionally quotes the older RFC's message-body text."
 },
 {
 "i": 38,
-"label": "update",
-"note": "Named-curve behavior cites the superseded TLS extension specification."
+"label": "legacy",
+"note": "Describes support for named curves from the older TLS RFC."
 },
 {
 "i": 39,
 "label": "update",
-"note": "Request-payload behavior links to superseded HTTP sections."
+"note": "Request payload guidance cites the superseded HTTP specification."
 },
 {
 "i": 40,
 "label": "update",
-"note": "HTTP/2 setting documentation links to the superseded specification."
+"note": "HTTP/2 setting documentation cites the superseded RFC."
 },
 {
 "i": 41,
 "label": "legacy",
-"note": "\u201cNEW RFC 2070\u201d is a historical attribution."
+"note": "Marks a character entity as introduced by the older RFC."
 },
 {
 "i": 42,
 "label": "update",
-"note": "Cipher-list documentation links to the superseded HTTP/2 specification."
+"note": "HTTP/2 cipher-suite list links to the superseded RFC."
 },
 {
 "i": 43,
 "label": "update",
-"note": "Cache documentation links to the superseded HTTP specification."
+"note": "Cache documentation cites the superseded HTTP specification."
 },
 {
 "i": 44,
 "label": "update",
-"note": "Cache behavior cites the superseded HTTP specification."
+"note": "Cache documentation links to the superseded HTTP specification."
 },
 {
 "i": 45,
 "label": "update",
-"note": "HTTP/2 stream behavior cites the superseded specification."
+"note": "HTTP/2 stream-limit behavior cites the superseded RFC."
 },
 {
 "i": 46,
 "label": "update",
-"note": "Status-code limits cite the superseded HTTP specification."
+"note": "HTTP status-code definitions cite the superseded RFC."
 },
 {
 "i": 47,
-"label": "update",
-"note": "Request-path behavior cites the superseded cookie specification."
+"label": "legacy",
+"note": "Describes the legacy RFC 2965 cookie path."
 },
 {
 "i": 48,
 "label": "update",
-"note": "HTTP date documentation links to the superseded specification."
+"note": "HTTP date documentation links to the superseded RFC."
 },
 {
 "i": 49,
 "label": "update",
-"note": "Status-code definitions cite superseded HTTP specifications."
+"note": "HTTP status-code descriptions cite superseded specifications."
 },
 {
 "i": 50,
 "label": "update",
-"note": "Directs readers to the superseded HTTP specification."
+"note": "The FAQ directs readers to a superseded HTTP RFC."
 },
 {
 "i": 51,
 "label": "update",
-"note": "HTTP/2 server-push documentation cites the superseded specification."
+"note": "HTTP/2 server-push documentation cites the superseded RFC."
 },
 {
 "i": 52,
 "label": "update",
-"note": "HTTP/2 frame validation cites the superseded specification."
+"note": "HTTP/2 frame validation cites the superseded RFC."
 },
 {
 "i": 53,
 "label": "update",
-"note": "Content-Length guidance quotes the superseded HTTP specification."
+"note": "Content-Length guidance cites the superseded HTTP RFC."
 },
 {
 "i": 54,
 "label": "legacy",
-"note": "Explicitly describes support for the legacy syslog format."
+"note": "Documents support for the older syslog format."
 },
 {
 "i": 55,
 "label": "update",
-"note": "Certificate name matching cites a superseded specification."
+"note": "SMTPUTF8 certificate matching cites the superseded RFC."
 },
 {
 "i": 56,
 "label": "legacy",
-"note": "Describes support for the older Certificate Transparency extension."
+"note": "Documents support for the older Certificate Transparency extension."
 },
 {
 "i": 57,
 "label": "legacy",
-"note": "Explicitly identifies the deprecated HTTP/2 priorities mechanism."
+"note": "Explicitly identifies the deprecated RFC 7540 priority mechanism."
 },
 {
 "i": 58,
 "label": "update",
-"note": "Success-response definition cites the superseded HTTP specification."
+"note": "HTTP success-code semantics cite the superseded RFC."
 },
 {
 "i": 59,
 "label": "update",
-"note": "HTTP date grammar is quoted from the superseded specification."
+"note": "HTTP date grammar is attributed to the superseded RFC."
 },
 {
 "i": 60,
 "label": "legacy",
-"note": "Historical TLS configuration link for an older HTTP/2 cipher list."
+"note": "References the historical HTTP/2 cipher-suite denylist."
 },
 {
 "i": 61,
 "label": "update",
-"note": "TLS anti-replay behavior cites the superseded edition."
+"note": "TLS 1.3 freshness-check guidance cites the superseded edition."
 },
 {
 "i": 62,
 "label": "legacy",
-"note": "Implements compatibility with the older DNSSEC KEY format."
+"note": "References legacy DNSSEC KEY record behavior."
 },
 {
 "i": 63,
-"label": "identifier",
-"note": "RFC822 appears within a validation parameter name."
+"label": "not-a-citation",
+"note": "rfc822 names a certificate general-name type here."
 },
 {
 "i": 64,
-"label": "legacy",
-"note": "Supports the host_name extension defined in an older TLS RFC."
+"label": "update",
+"note": "TLS server-name handling cites the superseded extension RFC."
 },
 {
 "i": 65,
 "label": "legacy",
-"note": "Explicitly calls RFC 2616 obsolete when discussing historical behavior."
+"note": "Explicitly describes the older RFC as obsolete."
 },
 {
 "i": 66,
 "label": "update",
-"note": "Content-Length handling cites the superseded HTTP specification."
+"note": "Content-Length validation cites the superseded HTTP RFC."
 },
 {
 "i": 67,
 "label": "legacy",
-"note": "The redirect exception is explicitly retained for backward compatibility."
+"note": "The cited rule is contrasted with intentional compatibility behavior."
 },
 {
 "i": 68,
 "label": "update",
-"note": "HTTP/2 authority handling quotes the superseded specification."
+"note": "HTTP/2 server-push validation cites the superseded RFC."
 },
 {
 "i": 69,
 "label": "legacy",
-"note": "RFC 2253 is a deliberately supported DN format."
+"note": "Names the deliberately supported RFC 2253 output format."
 },
 {
 "i": 70,
 "label": "legacy",
-"note": "Discusses compatibility with legacy RFC 3164 messages."
+"note": "Describes handling of older syslog message formats."
 },
 {
 "i": 71,
 "label": "legacy",
-"note": "Explicitly lists the older RFC as deprecated by its successor."
+"note": "Explicitly lists RFC 2617 as deprecated."
 },
 {
 "i": 72,
 "label": "legacy",
-"note": "Handles the supported_points extension for older TLS peers."
+"note": "Handles the older TLS supported-points extension."
 },
 {
 "i": 73,
 "label": "legacy",
-"note": "Describes the legacy RFC 822-style date format."
+"note": "Describes support for the older RFC 822 date style."
 },
 {
 "i": 74,
 "label": "update",
-"note": "HTTP/2 GOAWAY handling cites the superseded specification."
+"note": "HTTP/2 GOAWAY handling cites the superseded RFC."
 },
 {
 "i": 75,
 "label": "legacy",
-"note": "Documents RFC 3164 as a supported syslog format."
+"note": "Documents the deliberately supported RFC 3164 format."
 },
 {
 "i": 76,
 "label": "legacy",
-"note": "Documents RFC 3164 as a supported syslog format."
+"note": "Documents the deliberately supported RFC 3164 format."
 },
 {
 "i": 77,
 "label": "update",
-"note": "Address-selection comparison cites a superseded specification."
+"note": "Address ordering compares against the superseded RFC."
 },
 {
 "i": 78,
 "label": "update",
-"note": "Encoding behavior cites the superseded HTTP specification."
+"note": "Encoding guidance relies on the superseded HTTP specification."
 },
 {
 "i": 79,
 "label": "update",
-"note": "Status-code definitions cite superseded HTTP specifications."
+"note": "HTTP status-code descriptions cite superseded specifications."
 },
 {
 "i": 80,
 "label": "legacy",
-"note": "Lists multiple email RFC generations for parser compatibility."
+"note": "Explicitly supports parsing older message-format rules."
 },
 {
 "i": 81,
 "label": "legacy",
-"note": "Documents support for the deprecated HTTP/2 stream-weight mechanism."
+"note": "Documents the older HTTP/2 stream-weight mechanism."
 },
 {
 "i": 82,
 "label": "update",
-"note": "TLS downgrade protection cites the superseded edition."
+"note": "TLS 1.3 downgrade protection cites the superseded edition."
 },
 {
 "i": 83,
 "label": "legacy",
-"note": "Describes support for the older Certificate Transparency extension."
+"note": "Documents support for the older Certificate Transparency extension."
 },
 {
 "i": 84,
 "label": "update",
-"note": "Message-ID generation cites the superseded email specification."
+"note": "Message-ID documentation cites the superseded message-format RFC."
 },
 {
 "i": 85,
 "label": "legacy",
-"note": "Explains historical date-format differences across RFC editions."
+"note": "Explicitly notes deprecation and recommends migration."
 },
 {
 "i": 86,
-"label": "update",
-"note": "PRI method documentation cites the superseded HTTP/2 specification."
+"label": "legacy",
+"note": "Historical comparison of date formats across RFC editions."
 },
 {
 "i": 87,
-"label": "legacy",
-"note": "Describes normalization for legacy RFC 2965 cookies."
+"label": "update",
+"note": "HTTP/2 PRI method registration cites the superseded RFC."
 },
 {
 "i": 88,
-"label": "update",
-"note": "Transfer-Encoding handling cites the superseded HTTP specification."
+"label": "legacy",
+"note": "Describes handling of RFC 2965 cookies."
 },
 {
 "i": 89,
-"label": "not-a-citation",
-"note": "The absolute-form section belongs to RFC 7230, not RFC 7320."
+"label": "update",
+"note": "Transfer-Encoding validation cites the superseded HTTP RFC."
 },
 {
 "i": 90,
-"label": "update",
-"note": "HTTP/2 frame types cite the superseded specification."
+"label": "not-a-citation",
+"note": "Likely a mistaken section reference; absolute-form is HTTP RFC 7230."
 },
 {
 "i": 91,
 "label": "update",
-"note": "Method validation links to superseded HTTP specifications."
+"note": "HTTP/2 frame-type definitions cite the superseded RFC."
 },
 {
 "i": 92,
-"label": "legacy",
-"note": "Intentionally discusses the older RFC's ambiguity and browser differences."
+"label": "update",
+"note": "HTTP method validity links to superseded specifications."
 },
 {
 "i": 93,
+"label": "legacy",
+"note": "Intentionally discusses the older RFC's ambiguity."
+},
+{
+"i": 94,
 "label": "update",
 "note": "URI path behavior cites the superseded HTTP specification."
 },
 {
-"i": 94,
-"label": "legacy",
-"note": "Describes deliberate handling of RFC 2965 and RFC 2109 cookies."
-},
-{
 "i": 95,
 "label": "legacy",
-"note": "Handles SCT data from the older Certificate Transparency format."
+"note": "Explicitly retains and prioritizes RFC 2965 cookies."
 },
 {
 "i": 96,
-"label": "update",
-"note": "Header syntax is quoted from the superseded HTTP specification."
+"label": "legacy",
+"note": "References the older Certificate Transparency protocol."
 },
 {
 "i": 97,
-"label": "not-a-citation",
-"note": "RFC 850 names an HTTP date format here, not the RFC."
+"label": "legacy",
+"note": "Intentionally quotes the older RFC's header-field text."
 },
 {
 "i": 98,
-"label": "identifier",
-"note": "RFC7540 is part of the deprecated command-line option name."
+"label": "not-a-citation",
+"note": "RFC850 names a legacy HTTP date format here."
 },
 {
 "i": 99,
-"label": "update",
-"note": "WebSocket utility documentation links to the superseded HTTP specification."
+"label": "legacy",
+"note": "The option for the old priority mechanism is deprecated."
 }
 ]

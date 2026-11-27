@@ -1,221 +1,43 @@
 {
  "total": {
-  "replaced_citations": 62,
-  "obsolete": 61,
-  "fix_proposed": 26,
-  "same_rfc": 25,
-  "same_section": 7,
-  "fix_on_untouched_lines": 16
+  "replaced_citations": 113,
+  "obsolete": 106,
+  "fix_proposed": 49,
+  "same_rfc": 46,
+  "same_section": 16,
+  "fix_on_untouched_lines": 49
  },
  "prs": [
   {
-   "repo": "python/cpython",
-   "pr": 139435,
-   "title": "gh-139434: Update selected RFC 2822 references to RFC 5322",
-   "merged_at": "2025-11-04T19:46:08Z",
-   "merged_by": "bitdancer",
-   "base": "248ce9fa8c7a1ed1912e0db31172c8cd2c298b37",
-   "merge": "ce1bb85d286130f44b7e874430b0b12990d61dc1",
+   "repo": "aio-libs/aiohttp",
+   "pr": 7661,
+   "title": "Update Python parser for RFCs 9110/9112",
+   "merged_at": "2023-10-06T16:11:13Z",
+   "merged_by": "Dreamsorcerer",
+   "base": "314e9602729ab74d67dd0fbcb83eec571600076b",
+   "merge": "85713a4894610e848490915e5871ad71199348e2",
    "files": [
-    "Doc/library/http.client.rst",
-    "Doc/library/http.server.rst",
-    "Doc/library/mailbox.rst",
-    "Doc/library/time.rst",
-    "Doc/tutorial/stdlib.rst",
-    "Lib/email/_parseaddr.py",
-    "Lib/email/_policybase.py",
-    "Lib/email/feedparser.py",
-    "Lib/email/generator.py",
-    "Lib/email/message.py",
-    "Lib/email/parser.py",
-    "Lib/http/client.py",
-    "Lib/smtplib.py",
-    "Lib/test/test_email/data/msg_35.txt",
-    "Lib/test/test_email/test_email.py"
+    "aiohttp/http_parser.py",
+    "tests/test_http_parser.py"
    ],
    "rows": [
     {
-     "file": "Lib/email/_policybase.py",
-     "line": 383,
-     "rfc": "RFC2822",
-     "old": "# default value of 78, as recommended by RFC 2822.",
-     "maintainer": "# default value of 78, as recommended by RFC 5322 section 2.1.1.",
+     "file": "aiohttp/http_parser.py",
+     "line": 54,
+     "rfc": "RFC7230",
+     "old": "# See https://tools.ietf.org/html/rfc7230#section-3.1.1",
+     "maintainer": "# See https://www.rfc-editor.org/rfc/rfc9110.html#name-overview / # and https://www.rfc-editor.org/rfc/rfc9110.html#name-tokens",
      "level": "obsolete",
-     "fix": "# default value of 78, as recommended by RFC 5322.",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/feedparser.py",
-     "line": 35,
-     "rfc": "RFC2822",
-     "old": "# RFC 2822 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
-     "maintainer": "# RFC 5322 section 3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
-     "level": "obsolete",
-     "fix": "# RFC 5322 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/feedparser.py",
-     "line": 297,
-     "rfc": "RFC2822",
-     "old": "# another RFC 2822 message.",
-     "maintainer": "# another RFC 5322 message.",
-     "level": "obsolete",
-     "fix": "# another RFC 5322 message.",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/generator.py",
-     "line": 53,
-     "rfc": "RFC2822",
-     "old": "by RFC 2822.",
-     "maintainer": "by RFC 5322 section 2.1.1.",
-     "level": "obsolete",
-     "fix": "by RFC 5322.",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/message.py",
-     "line": 144,
-     "rfc": "RFC2822",
-     "old": "A message object is defined as something that has a bunch of RFC 2822",
-     "maintainer": "A message object is defined as something that has a bunch of RFC 5322",
-     "level": "obsolete",
-     "fix": "A message object is defined as something that has a bunch of RFC 5322",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/parser.py",
-     "line": 5,
-     "rfc": "RFC2822",
-     "old": "\"\"\"A parser of RFC 2822 and MIME email messages.\"\"\"",
-     "maintainer": "\"\"\"A parser of RFC 5322 and MIME email messages.\"\"\"",
-     "level": "obsolete",
-     "fix": null,
+     "fix": "# See https://tools.ietf.org/html/rfc9112#section-3",
      "same_rfc": false,
      "same_section": false
     },
     {
-     "file": "Lib/email/parser.py",
-     "line": 18,
-     "rfc": "RFC2822",
-     "old": "\"\"\"Parser of RFC 2822 and MIME email messages.",
-     "maintainer": "\"\"\"Parser of RFC 5322 and MIME email messages.",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/parser.py",
-     "line": 24,
-     "rfc": "RFC2822",
-     "old": "The string must be formatted as a block of RFC 2822 headers and header",
-     "maintainer": "The string must be formatted as a block of RFC 5322 headers and header",
-     "level": "obsolete",
-     "fix": "The string must be formatted as a block of RFC 5322 headers and header",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/parser.py",
-     "line": 78,
-     "rfc": "RFC2822",
-     "old": "\"\"\"Parser of binary RFC 2822 and MIME email messages.",
-     "maintainer": "\"\"\"Parser of binary RFC 5322 and MIME email messages.",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/email/parser.py",
-     "line": 84,
-     "rfc": "RFC2822",
-     "old": "The input must be formatted as a block of RFC 2822 headers and header",
-     "maintainer": "The input must be formatted as a block of RFC 5322 headers and header",
-     "level": "obsolete",
-     "fix": "The input must be formatted as a block of RFC 5322 headers and header",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/http/client.py",
-     "line": 234,
-     "rfc": "RFC2822",
-     "old": "Parses only RFC2822 headers from header lines.",
-     "maintainer": "Parses only RFC 5322 headers from header lines.",
-     "level": "obsolete",
-     "fix": "Parses only RFC5322 headers from header lines.",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/http/client.py",
-     "line": 247,
-     "rfc": "RFC2822",
-     "old": "\"\"\"Parses only RFC2822 headers from a file pointer.\"\"\"",
-     "maintainer": "\"\"\"Parses only RFC 5322 headers from a file pointer.\"\"\"",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 920,
-     "rfc": "RFC2822",
-     "old": "described in RFC 2822 (a ValueError is raised if there is more than",
-     "maintainer": "described in RFC 5322 (a ValueError is raised if there is more than",
-     "level": "obsolete",
-     "fix": "described in RFC 5322 (a ValueError is raised if there is more than",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 934,
-     "rfc": "RFC2822",
-     "old": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 2822",
-     "maintainer": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
-     "level": "obsolete",
-     "fix": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 953,
-     "rfc": "RFC2822",
-     "old": "# Prefer the sender field per RFC 2822:3.6.2.",
-     "maintainer": "# Prefer the sender field per RFC 5322 section 3.6.2.",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/test/test_email/data/msg_35.txt",
-     "line": 4,
-     "rfc": "RFC2822",
-     "old": "counter to RFC 2822, there's no separating newline here",
-     "maintainer": "counter to RFC 5322, there's no separating newline here",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/test/test_email/test_email.py",
-     "line": 2376,
-     "rfc": "RFC2822",
-     "old": "counter to RFC 2822, there's no separating newline here",
-     "maintainer": "counter to RFC 5322, there's no separating newline here",
+     "file": "aiohttp/http_parser.py",
+     "line": 55,
+     "rfc": "RFC7230",
+     "old": "# and https://tools.ietf.org/html/rfc7230#appendix-B",
+     "maintainer": "# See https://www.rfc-editor.org/rfc/rfc9110.html#name-overview / # and https://www.rfc-editor.org/rfc/rfc9110.html#name-tokens",
      "level": "obsolete",
      "fix": null,
      "same_rfc": false,
@@ -224,280 +46,31 @@
    ],
    "fix_on_untouched_lines": [
     {
-     "file": "Doc/library/http.client.rst",
-     "line": 371,
-     "old": "<https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6>`_, a HTTP ``Host:``",
-     "fix": "<https://datatracker.ietf.org/doc/html/rfc9110#section-9.3.6>`_, a HTTP ``Host:``"
+     "file": "aiohttp/http_parser.py",
+     "line": 538,
+     "old": "# https://datatracker.ietf.org/doc/html/rfc7230#section-5.3.3",
+     "fix": "# https://datatracker.ietf.org/doc/html/rfc9112#section-3.2.3"
     },
     {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 31,
-     "old": "# in RFC822, other than Z.  According to RFC1123, the description in",
-     "fix": "# in RFC5322, other than Z.  According to RFC1123, the description in"
+     "file": "aiohttp/http_parser.py",
+     "line": 542,
+     "old": "# https://datatracker.ietf.org/doc/html/rfc7230#section-5.3.1",
+     "fix": "# https://datatracker.ietf.org/doc/html/rfc9112#section-3.2.1"
     },
     {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 32,
-     "old": "# RFC822 gets the signs wrong, so we can't rely on any such time",
-     "fix": "# RFC5322 gets the signs wrong, so we can't rely on any such time"
-    },
-    {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 148,
-     "old": "# appropriate four-digit format, according to the POSIX standard. RFC 822",
-     "fix": "# appropriate four-digit format, according to the POSIX standard. RFC 5322"
-    },
-    {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 217,
-     "old": "To understand what this class does, it helps to have a copy of RFC 2822 in",
-     "fix": "To understand what this class does, it helps to have a copy of RFC 5322 in"
-    },
-    {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 433,
-     "old": "If 'allowcomments' is non-zero, embedded RFC 2822 comments are allowed",
-     "fix": "If 'allowcomments' is non-zero, embedded RFC 5322 comments are allowed"
-    },
-    {
-     "file": "Lib/email/_parseaddr.py",
-     "line": 495,
-     "old": "A phrase is a sequence of words, which are in turn either RFC 2822",
-     "fix": "A phrase is a sequence of words, which are in turn either RFC 5322"
-    },
-    {
-     "file": "Lib/http/client.py",
-     "line": 114,
-     "old": "# Header name/value ABNF (http://tools.ietf.org/html/rfc7230#section-3.2)",
-     "fix": "# Header name/value ABNF (http://tools.ietf.org/html/rfc9110#section-6.3)"
-    },
-    {
-     "file": "Lib/http/client.py",
-     "line": 843,
-     "old": "a body (RFC 7230, Section 3.3.2). We also set the Content-Length for",
-     "fix": "a body (RFC 9112, Section 6.2). We also set the Content-Length for"
-    },
-    {
-     "file": "Lib/http/client.py",
-     "line": 909,
-     "old": "(https://tools.ietf.org/html/rfc7231#section-4.3.6), a HTTP Host:",
-     "fix": "(https://tools.ietf.org/html/rfc9110#section-9.3.6), a HTTP Host:"
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 4,
-     "old": "Authentication) and RFC 2487 (Secure SMTP over TLS).",
-     "fix": "Authentication) and RFC 3207 (Secure SMTP over TLS)."
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 36,
-     "old": "# Better RFC 821 compliance (MAIL and RCPT, and CRLF in data)",
-     "fix": "# Better RFC 5321 compliance (MAIL and RCPT, and CRLF in data)"
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 38,
-     "old": "# RFC 2554 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>.",
-     "fix": "# RFC 4954 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>."
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 269,
-     "old": "# RFC 2821 says we should use the fqdn in the EHLO/HELO verb, and",
-     "fix": "# RFC 5321 says we should use the fqdn in the EHLO/HELO verb, and"
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 460,
-     "old": "# According to RFC1869 some (badly written)",
-     "fix": "# According to RFC5321 some (badly written)"
-    },
-    {
-     "file": "Lib/smtplib.py",
-     "line": 488,
-     "old": "# RFC 1869 requires a space between ehlo keyword and parameters.",
-     "fix": "# RFC 5321 requires a space between ehlo keyword and parameters."
+     "file": "aiohttp/http_parser.py",
+     "line": 558,
+     "old": "# https://datatracker.ietf.org/doc/html/rfc7230#section-5.3.2",
+     "fix": "# https://datatracker.ietf.org/doc/html/rfc9112#section-3.2.2"
     }
    ],
    "summary": {
-    "replaced_citations": 17,
-    "obsolete": 17,
-    "fix_proposed": 10,
-    "same_rfc": 10,
-    "same_section": 0,
-    "fix_on_untouched_lines": 16
-   }
-  },
-  {
-   "repo": "python/cpython",
-   "pr": 151275,
-   "title": "gh-77328: Update `base64` module docstring to reference RFC 4648",
-   "merged_at": "2026-06-13T12:21:54Z",
-   "merged_by": "StanFromIreland",
-   "base": "3a8bebd86f36be05442fa2f3adcc83c2a4b00ef2",
-   "merge": "e9339876883f96af2e406a92a05be647b7fbe5d5",
-   "files": [
-    "Lib/base64.py"
-   ],
-   "rows": [
-    {
-     "file": "Lib/base64.py",
-     "line": 1,
-     "rfc": "RFC3548",
-     "old": "\"\"\"Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 data encodings\"\"\"",
-     "maintainer": "\"\"\"Base16, Base32, Base64 (RFC 4648), Base85 and Ascii85 data encodings\"\"\"",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Lib/base64.py",
-     "line": 222,
-     "rfc": "RFC3548",
-     "old": "RFC 3548 allows for optional mapping of the digit 0 (zero) to the",
-     "maintainer": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
-     "level": "obsolete",
-     "fix": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Lib/base64.py",
-     "line": 269,
-     "rfc": "RFC3548",
-     "old": "# RFC 3548, Base 16 Alphabet specifies uppercase, but hexlify() returns",
-     "maintainer": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
-     "level": "obsolete",
-     "fix": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
-     "same_rfc": true,
-     "same_section": false
-    }
-   ],
-   "fix_on_untouched_lines": [],
-   "summary": {
-    "replaced_citations": 3,
-    "obsolete": 3,
-    "fix_proposed": 2,
-    "same_rfc": 2,
-    "same_section": 0,
-    "fix_on_untouched_lines": 0
-   }
-  },
-  {
-   "repo": "python/cpython",
-   "pr": 27700,
-   "title": "bpo-36700: updated RFC references",
-   "merged_at": "2021-08-13T10:58:56Z",
-   "merged_by": "ambv",
-   "base": "a2ce538e16d5e3a6168704366bdd7a8c5af29881",
-   "merge": "e43b9bbc31c22a0d97dc4fc420300e40c2d74166",
-   "files": [
-    "Doc/library/base64.rst",
-    "Doc/library/security_warnings.rst"
-   ],
-   "rows": [
-    {
-     "file": "Doc/library/base64.rst",
-     "line": 5,
-     "rfc": "RFC3548",
-     "old": ":synopsis: RFC 3548: Base16, Base32, Base64 Data Encodings;",
-     "maintainer": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
-     "level": "obsolete",
-     "fix": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
-     "same_rfc": true,
-     "same_section": false
-    }
-   ],
-   "fix_on_untouched_lines": [],
-   "summary": {
-    "replaced_citations": 1,
-    "obsolete": 1,
+    "replaced_citations": 2,
+    "obsolete": 2,
     "fix_proposed": 1,
-    "same_rfc": 1,
+    "same_rfc": 0,
     "same_section": 0,
-    "fix_on_untouched_lines": 0
-   }
-  },
-  {
-   "repo": "python/cpython",
-   "pr": 148,
-   "title": "bpo-19180: Updated reference for RFC 1750 and RFC 3280",
-   "merged_at": "2017-06-09T09:43:59Z",
-   "merged_by": "ncoghlan",
-   "base": "ae8750bca8234a9af9382b9d7e457b57f810ad64",
-   "merge": "63c2c8ac17750ba2be2cfc4e339cae1f4edee54f",
-   "files": [
-    "Doc/library/ssl.rst",
-    "Modules/_ssl.c",
-    "Modules/clinic/_ssl.c.h"
-   ],
-   "rows": [
-    {
-     "file": "Doc/library/ssl.rst",
-     "line": 2316,
-     "rfc": "RFC1750",
-     "old": "`RFC 1750: Randomness Recommendations for Security <https://www.ietf.org/rfc/rfc1750>`_",
-     "maintainer": "`RFC 4086: Randomness Requirements for Security <http://datatracker.ietf.org/doc/rfc4086/>`_ / Donald E., Jeffrey I. Schiller",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Doc/library/ssl.rst",
-     "line": 2319,
-     "rfc": "RFC3280",
-     "old": "`RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile <https://www.ietf.org/rfc/rfc3280>`_",
-     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Doc/library/ssl.rst",
-     "line": 2322,
-     "rfc": "RFC4366",
-     "old": "`RFC 4366: Transport Layer Security (TLS) Extensions <https://www.ietf.org/rfc/rfc4366>`_",
-     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    },
-    {
-     "file": "Modules/_ssl.c",
-     "line": 4470,
-     "rfc": "RFC1750",
-     "old": "string.  See RFC 1750.",
-     "maintainer": "string.  See RFC 4086.",
-     "level": "obsolete",
-     "fix": "string.  See RFC 4086.",
-     "same_rfc": true,
-     "same_section": false
-    },
-    {
-     "file": "Modules/clinic/_ssl.c.h",
-     "line": 850,
-     "rfc": "RFC1750",
-     "old": "\"string.  See RFC 1750.\");",
-     "maintainer": "\"string.  See RFC 4086.\");",
-     "level": "obsolete",
-     "fix": null,
-     "same_rfc": false,
-     "same_section": false
-    }
-   ],
-   "fix_on_untouched_lines": [],
-   "summary": {
-    "replaced_citations": 5,
-    "obsolete": 5,
-    "fix_proposed": 1,
-    "same_rfc": 1,
-    "same_section": 0,
-    "fix_on_untouched_lines": 0
+    "fix_on_untouched_lines": 3
    }
   },
   {
@@ -810,11 +383,275 @@
      "same_section": false
     },
     {
+     "file": "docs/ref/csrf.txt",
+     "line": 17,
+     "rfc": "RFC7231",
+     "old": "'safe' methods, as defined by :rfc:`7231#section-4.2.1`) are side effect free.",
+     "maintainer": "'safe' methods, as defined by :rfc:`9110#section-9.2.1`) are side effect free.",
+     "level": "obsolete",
+     "fix": "'safe' methods, as defined by :rfc:`9110#section-9.2.1`) are side effect free.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/csrf.txt",
+     "line": 93,
+     "rfc": "RFC7231",
+     "old": "'safe' by :rfc:`7231#section-4.2.1`). These requests ought never to have any",
+     "maintainer": "'safe' by :rfc:`9110#section-9.2.1`). These requests ought never to have any",
+     "level": "obsolete",
+     "fix": "'safe' by :rfc:`9110#section-9.2.1`). These requests ought never to have any",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/csrf.txt",
+     "line": 95,
+     "rfc": "RFC7231",
+     "old": "ought to be harmless. :rfc:`7231#section-4.2.1` defines POST, PUT, and DELETE",
+     "maintainer": "ought to be harmless. :rfc:`9110#section-9.2.1` defines POST, PUT, and DELETE",
+     "level": "obsolete",
+     "fix": "ought to be harmless. :rfc:`9110#section-9.2.1` defines POST, PUT, and DELETE",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/middleware.txt",
+     "line": 125,
+     "rfc": "RFC7232",
+     "old": ":rfc:`7232#section-2.1`.",
+     "maintainer": ":rfc:`9110#section-8.8.1`.",
+     "level": "obsolete",
+     "fix": ":rfc:`9110#section-8.8.1`.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/models/instances.txt",
+     "line": 851,
+     "rfc": "RFC2396",
+     "old": "ASCII characters (required by the URI specification, :rfc:`2396#section-2`)",
+     "maintainer": "ASCII characters (required by the URI specification, :rfc:`3986#section-2`)",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/models/querysets.txt",
+     "line": 2177,
+     "rfc": "RFC7231",
+     "old": ":rfc:`Safe methods <7231#section-4.2.1>` in the HTTP spec.",
+     "maintainer": ":rfc:`Safe methods <9110#section-9.2.1>` in the HTTP spec.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/request-response.txt",
+     "line": 762,
+     "rfc": "RFC7231",
+     "old": "The :rfc:`HTTP status code <7231#section-6>` for the response.",
+     "maintainer": "The :rfc:`HTTP status code <9110#section-15>` for the response.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/request-response.txt",
+     "line": 806,
+     "rfc": "RFC7231",
+     "old": "``status`` is the :rfc:`HTTP status code <7231#section-6>` for the response.",
+     "maintainer": "``status`` is the :rfc:`HTTP status code <9110#section-15>` for the / response. You can use Python's :py:class:`http.HTTPStatus` for meaningful / aliases, such as ``HTTPStatus.NO_CONTENT``.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/request-response.txt",
+     "line": 1166,
+     "rfc": "RFC7231",
+     "old": "The :rfc:`HTTP status code <7231#section-6>` for the response.",
+     "maintainer": "The :rfc:`HTTP status code <9110#section-15>` for the response.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/unicode.txt",
+     "line": 149,
+     "rfc": "RFC2396",
+     "old": "URL from an :rfc:`IRI <3987>` -- very loosely speaking, a :rfc:`URI <2396>`",
+     "maintainer": "URL from an :rfc:`IRI <3987>` -- very loosely speaking, a :rfc:`URI <3986>`",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/utils.txt",
+     "line": 24,
+     "rfc": "RFC7231",
+     "old": "For information on the ``Vary`` header, see :rfc:`7231#section-7.1.4`.",
+     "maintainer": "For information on the ``Vary`` header, see :rfc:`9110#section-12.5.5`.",
+     "level": "obsolete",
+     "fix": "For information on the ``Vary`` header, see :rfc:`9110#section-12.5.5`.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/utils.txt",
+     "line": 78,
+     "rfc": "RFC7231",
+     "old": "asterisk ``'*'``, according to :rfc:`7231#section-7.1.4`. Otherwise,",
+     "maintainer": "asterisk ``'*'``, according to :rfc:`9110#section-12.5.5`. Otherwise,",
+     "level": "obsolete",
+     "fix": "asterisk ``'*'``, according to :rfc:`9110#section-12.5.5`. Otherwise,",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/utils.txt",
+     "line": 724,
+     "rfc": "RFC7231",
+     "old": "specified by HTTP :rfc:`7231#section-7.1.1.1`.",
+     "maintainer": "specified by HTTP :rfc:`9110#section-5.6.7`.",
+     "level": "obsolete",
+     "fix": "specified by HTTP :rfc:`9110#section-5.6.7`.",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/ref/views.txt",
+     "line": 124,
+     "rfc": "RFC7231",
+     "old": "\"403 Forbidden\", as per :rfc:`7231#section-6.5.3` (the HTTP 1.1 Specification).",
+     "maintainer": "\"403 Forbidden\", as per :rfc:`9110#section-15.5.4` (the HTTP 1.1 / Specification). The template context contains ``exception``, which is the / string representation of the exception that triggered the view.",
+     "level": "obsolete",
+     "fix": "\"403 Forbidden\", as per :rfc:`9110#section-15.5.4` (the HTTP 1.1 Specification).",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/topics/cache.txt",
+     "line": 1405,
+     "rfc": "RFC7234",
+     "old": "You can control downstream caches in other ways as well (see :rfc:`7234` for",
+     "maintainer": "You can control downstream caches in other ways as well (see :rfc:`9111` for",
+     "level": "obsolete",
+     "fix": "You can control downstream caches in other ways as well (see :rfc:`9111` for",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/cache.txt",
+     "line": 1408,
+     "rfc": "RFC7234",
+     "old": "certain amount of time with the :rfc:`max-age <7234#section-5.2.2.8>`",
+     "maintainer": "certain amount of time with the :rfc:`max-age <9111#section-5.2.2.1>`",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 18,
+     "rfc": "RFC7232",
+     "old": "such as either :rfc:`If-modified-since <7232#section-3.3>` or",
+     "maintainer": "such as either :rfc:`If-Modified-Since <9110#section-13.1.3>` or / :rfc:`If-Unmodified-Since <9110#section-13.1.4>`, containing the date of the / last modification time it was sent, or either :rfc:`If-Match / <9110#section-13.1.1>` or :rfc:`If-None-Match <9110#section-13.1.2>`, / containing the last",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 19,
+     "rfc": "RFC7232",
+     "old": ":rfc:`If-unmodified-since <7232#section-3.4>`, containing the date of the last",
+     "maintainer": "such as either :rfc:`If-Modified-Since <9110#section-13.1.3>` or / :rfc:`If-Unmodified-Since <9110#section-13.1.4>`, containing the date of the / last modification time it was sent, or either :rfc:`If-Match / <9110#section-13.1.1>` or :rfc:`If-None-Match <9110#section-13.1.2>`, / containing the last",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 20,
+     "rfc": "RFC7232",
+     "old": "modification time it was sent, or either :rfc:`If-match <7232#section-3.1>` or",
+     "maintainer": "such as either :rfc:`If-Modified-Since <9110#section-13.1.3>` or / :rfc:`If-Unmodified-Since <9110#section-13.1.4>`, containing the date of the / last modification time it was sent, or either :rfc:`If-Match / <9110#section-13.1.1>` or :rfc:`If-None-Match <9110#section-13.1.2>`, / containing the last",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 21,
+     "rfc": "RFC7232",
+     "old": ":rfc:`If-none-match <7232#section-3.2>`, containing the last ``ETag`` it was",
+     "maintainer": "such as either :rfc:`If-Modified-Since <9110#section-13.1.3>` or / :rfc:`If-Unmodified-Since <9110#section-13.1.4>`, containing the date of the / last modification time it was sent, or either :rfc:`If-Match / <9110#section-13.1.1>` or :rfc:`If-None-Match <9110#section-13.1.2>`, / containing the last",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 38,
+     "rfc": "RFC7232",
+     "old": "the :rfc:`ETag <7232#section-2.3>` value or the last-modified time for a",
+     "maintainer": "the :rfc:`ETag <9110#section-8.8.3>` value or the last-modified time for a",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 61,
+     "rfc": "RFC7232",
+     "old": "representing the :rfc:`ETag <7232#section-2.3>` for the resource, or ``None``",
+     "maintainer": "representing the :rfc:`ETag <9110#section-8.8.3>` for the resource, or ``None``",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
      "file": "docs/topics/conditional-view-processing.txt",
      "line": 108,
      "rfc": "RFC7232",
      "old": "because :rfc:`RFC 7232 <7232#section-4.1>` requires that the headers they",
      "maintainer": "because :rfc:`RFC 9110 <9110#section-15.4.5>` requires that the headers / they set be present on 304 responses.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/topics/conditional-view-processing.txt",
+     "line": 197,
+     "rfc": "RFC7231",
+     "old": ":rfc:`7231#section-4.3.4` to learn about the distinction between setting a",
+     "maintainer": ":rfc:`9110#section-9.3.4` to learn about the distinction between setting a",
+     "level": "obsolete",
+     "fix": ":rfc:`9110#section-9.3.4` to learn about the distinction between setting a",
+     "same_rfc": true,
+     "same_section": true
+    },
+    {
+     "file": "docs/topics/testing/tools.txt",
+     "line": 353,
+     "rfc": "RFC7231",
+     "old": "parameter in order to comply with :rfc:`7231#section-4.3.8`, which",
+     "maintainer": "parameter in order to comply with :rfc:`9110#section-9.3.8`, which",
      "level": "obsolete",
      "fix": null,
      "same_rfc": false,
@@ -878,34 +715,288 @@
    ],
    "fix_on_untouched_lines": [],
    "summary": {
-    "replaced_citations": 30,
-    "obsolete": 29,
-    "fix_proposed": 11,
-    "same_rfc": 11,
-    "same_section": 7,
+    "replaced_citations": 54,
+    "obsolete": 53,
+    "fix_proposed": 21,
+    "same_rfc": 21,
+    "same_section": 16,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 12142,
+   "title": "Fixed #31029 -- Used more specific links to RFCs.",
+   "merged_at": "2019-11-28T06:59:36Z",
+   "merged_by": "felixxm",
+   "base": "249a6190aef5e3676c6d9aa6c38cecff895b5993",
+   "merge": "ff1b19da6761217ed1b14cc7e94c6438903565d8",
+   "files": [
+    "docs/internals/contributing/writing-documentation.txt",
+    "docs/ref/csrf.txt",
+    "docs/ref/models/instances.txt",
+    "docs/ref/request-response.txt",
+    "docs/ref/settings.txt",
+    "docs/ref/templates/builtins.txt",
+    "docs/ref/utils.txt",
+    "docs/ref/validators.txt"
+   ],
+   "rows": [
+    {
+     "file": "docs/ref/validators.txt",
+     "line": 157,
+     "rfc": "RFC2732",
+     "old": "IPv6 addresses (:rfc:`2732`) and unicode domains are both supported.",
+     "maintainer": "IPv6 addresses (:rfc:`3986#section-3.2.2`) and unicode domains are both / supported.",
+     "level": "obsolete",
+     "fix": "IPv6 addresses (:rfc:`3986`) and unicode domains are both supported.",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "docs/ref/csrf.txt",
+     "line": 17,
+     "old": "'safe' methods, as defined by :rfc:`7231#section-4.2.1`) are side effect free.",
+     "fix": "'safe' methods, as defined by :rfc:`9110#section-9.2.1`) are side effect free."
+    },
+    {
+     "file": "docs/ref/utils.txt",
+     "line": 24,
+     "old": "For information on the ``Vary`` header, see :rfc:`7231#section-7.1.4`.",
+     "fix": "For information on the ``Vary`` header, see :rfc:`9110#section-12.5.5`."
+    },
+    {
+     "file": "docs/ref/utils.txt",
+     "line": 87,
+     "old": "Handling an asterisk ``'*'`` according to :rfc:`7231#section-7.1.4` was",
+     "fix": "Handling an asterisk ``'*'`` according to :rfc:`9110#section-12.5.5` was"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 1,
+    "obsolete": 1,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 3
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 11132,
+   "title": "Updated spelling and RFCs in HttpOnly cookie flag docs.",
+   "merged_at": "2019-03-27T15:11:22Z",
+   "merged_by": "timgraham",
+   "base": "2afd670de5b2f28f56f722a95344fb7eefad3d37",
+   "merge": "398afba084679f1055926f6f91bd33fe124a92c5",
+   "files": [
+    "django/conf/global_settings.py",
+    "docs/ref/request-response.txt",
+    "docs/ref/settings.txt",
+    "docs/releases/1.3.txt"
+   ],
+   "rows": [
+    {
+     "file": "docs/ref/request-response.txt",
+     "line": 806,
+     "rfc": "RFC2109",
+     "old": "header. It is not part of the :rfc:`2109` standard for cookies,",
+     "maintainer": "HttpOnly_ is a flag included in a Set-Cookie HTTP response header. It's / part of the :rfc:`6265` standard for cookies and can be a useful way to / mitigate the risk of a client-side script accessing the protected cookie",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "docs/ref/settings.txt",
+     "line": 2992,
+     "rfc": "RFC2109",
+     "old": "is not part of the :rfc:`2109` standard for cookies, and it isn't honored",
+     "maintainer": "HttpOnly_ is a flag included in a Set-Cookie HTTP response header. It's part of / the :rfc:`6265` standard for cookies and can be a useful way to mitigate the / risk of a client-side script accessing the protected cookie data.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 2,
+    "obsolete": 2,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
     "fix_on_untouched_lines": 0
    }
   },
   {
    "repo": "nghttp2/nghttp2",
-   "pr": 1809,
-   "title": "Update README to mention new HTTP/2 RFC",
-   "merged_at": "2022-10-02T03:53:13Z",
+   "pr": 2855,
+   "title": "nghttpx: Rewrite CertLookupTree based on RFC 9525 rules",
+   "merged_at": "2026-09-09T14:19:22Z",
    "merged_by": "tatsuhiro-t",
-   "base": "634e65df64b9dc62208e7d3304f01d85c2b715fa",
-   "merge": "7380ff35514f304c466768cc959c6cc881618070",
+   "base": "f08d8902ea65b5a499ff40071d4adc1a4ed102b5",
+   "merge": "e4a2c989b39a9285791a8c0bbb9eb90fcb328659",
    "files": [
-    "README.rst"
+    "src/shrpx_tls.cc",
+    "src/shrpx_tls.h",
+    "src/shrpx_tls_test.cc"
    ],
-   "rows": [],
-   "fix_on_untouched_lines": [],
+   "rows": [
+    {
+     "file": "src/shrpx_tls.h",
+     "line": 161,
+     "rfc": "RFC6125",
+     "old": "// TODO Treat wildcard pattern described as RFC 6125.",
+     "maintainer": "",
+     "level": "obsolete",
+     "fix": "// TODO Treat wildcard pattern described as RFC 9525.",
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "src/shrpx_tls.cc",
+     "line": 979,
+     "old": "// https://tools.ietf.org/html/rfc8446#section-8.3",
+     "fix": "// https://tools.ietf.org/html/rfc9846#section-8.3"
+    },
+    {
+     "file": "src/shrpx_tls.cc",
+     "line": 1262,
+     "old": "// https://tools.ietf.org/html/rfc8446#section-8.3 is still",
+     "fix": "// https://tools.ietf.org/html/rfc9846#section-8.3 is still"
+    }
+   ],
    "summary": {
-    "replaced_citations": 0,
+    "replaced_citations": 1,
+    "obsolete": 1,
+    "fix_proposed": 1,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 2
+   }
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2854,
+   "title": "nghttpx: Client TLS certificate validation based on RFC 9525",
+   "merged_at": "2026-09-09T12:40:31Z",
+   "merged_by": "tatsuhiro-t",
+   "base": "305dbdbe721957ffe6e03e0043d139b3b8ea5224",
+   "merge": "f08d8902ea65b5a499ff40071d4adc1a4ed102b5",
+   "files": [
+    "src/shrpx_tls.cc",
+    "src/shrpx_tls.h",
+    "src/shrpx_tls_test.cc"
+   ],
+   "rows": [
+    {
+     "file": "src/shrpx_tls.h",
+     "line": 273,
+     "rfc": "RFC6125",
+     "old": "// is based on RFC 6125.",
+     "maintainer": "// is based on RFC 9525.",
+     "level": "obsolete",
+     "fix": "// is based on RFC 9525.",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "src/shrpx_tls.cc",
+     "line": 979,
+     "old": "// https://tools.ietf.org/html/rfc8446#section-8.3",
+     "fix": "// https://tools.ietf.org/html/rfc9846#section-8.3"
+    },
+    {
+     "file": "src/shrpx_tls.cc",
+     "line": 1262,
+     "old": "// https://tools.ietf.org/html/rfc8446#section-8.3 is still",
+     "fix": "// https://tools.ietf.org/html/rfc9846#section-8.3 is still"
+    },
+    {
+     "file": "src/shrpx_tls.h",
+     "line": 161,
+     "old": "// TODO Treat wildcard pattern described as RFC 6125.",
+     "fix": "// TODO Treat wildcard pattern described as RFC 9525."
+    }
+   ],
+   "summary": {
+    "replaced_citations": 1,
+    "obsolete": 1,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 3
+   }
+  },
+  {
+   "repo": "nodejs/node",
+   "pr": 58753,
+   "title": "doc: fix wrong RFC number in http2",
+   "merged_at": "2025-06-20T13:57:24Z",
+   "merged_by": "nodejs-github-bot",
+   "base": "efebf461313db420243717f48aaa0b97d5279580",
+   "merge": "98433c73198c99f95d84ea65b458c9cc3b1612b4",
+   "files": [
+    "doc/api/http2.md"
+   ],
+   "rows": [
+    {
+     "file": "doc/api/http2.md",
+     "line": 1081,
+     "rfc": "RFC1993",
+     "old": "description: Following the deprecation of priority signaling as of RFC 1993,",
+     "maintainer": "description: Following the deprecation of priority signaling as of RFC 9113,",
+     "level": "ok",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "doc/api/http2.md",
+     "line": 1580,
+     "rfc": "RFC1993",
+     "old": "description: Following the deprecation of priority signaling as of RFC 1993,",
+     "maintainer": "description: Following the deprecation of priority signaling as of RFC 9113,",
+     "level": "ok",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "doc/api/http2.md",
+     "line": 3520,
+     "old": "registry established by \\[RFC 7540]) and the values the actual numeric value",
+     "fix": "registry established by \\[RFC 9113]) and the values the actual numeric value"
+    },
+    {
+     "file": "doc/api/http2.md",
+     "line": 4637,
+     "old": "Status message is not supported by HTTP/2 (RFC 7540 8.1.2.4). It returns",
+     "fix": "Status message is not supported by HTTP/2 (RFC 9113 8.3.2). It returns"
+    },
+    {
+     "file": "doc/api/http2.md",
+     "line": 4898,
+     "old": "[HTTP/2]: https://tools.ietf.org/html/rfc7540",
+     "fix": "[HTTP/2]: https://tools.ietf.org/html/rfc9113"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 2,
     "obsolete": 0,
     "fix_proposed": 0,
     "same_rfc": 0,
     "same_section": 0,
-    "fix_on_untouched_lines": 0
+    "fix_on_untouched_lines": 3
    }
   },
   {
@@ -963,6 +1054,915 @@
     "same_rfc": 0,
     "same_section": 0,
     "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 153126,
+   "title": "gh-68147: Fix RFC references in imaplib",
+   "merged_at": "2026-07-05T14:08:58Z",
+   "merged_by": "serhiy-storchaka",
+   "base": "d2d415b9761a539c37ea4f950df4e9aab0eca6ed",
+   "merge": "74a2438bf783077cf49460ed0fed8853675fb103",
+   "files": [
+    "Doc/library/imaplib.rst",
+    "Lib/imaplib.py",
+    "Lib/test/test_imaplib.py"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/imaplib.rst",
+     "line": 19,
+     "rfc": "RFC2060",
+     "old": ":rfc:`2060`. It is backward compatible with IMAP4 (:rfc:`1730`) servers, but",
+     "maintainer": ":rfc:`3501`. It is backward compatible with IMAP4 (:rfc:`1730`) servers, but",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/imaplib.rst",
+     "line": 635,
+     "rfc": "RFC2060",
+     "old": "section 6.4.6 of :rfc:`2060` as being one of \"FLAGS\", \"+FLAGS\", or \"-FLAGS\",",
+     "maintainer": "section 6.4.6 of :rfc:`3501` as being one of \"FLAGS\", \"+FLAGS\", or \"-FLAGS\",",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/imaplib.py",
+     "line": 3,
+     "rfc": "RFC2060",
+     "old": "Based on RFC 2060.",
+     "maintainer": "Based on RFC 3501.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 3,
+    "obsolete": 3,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151275,
+   "title": "gh-77328: Update `base64` module docstring to reference RFC 4648",
+   "merged_at": "2026-06-13T12:21:54Z",
+   "merged_by": "StanFromIreland",
+   "base": "3a8bebd86f36be05442fa2f3adcc83c2a4b00ef2",
+   "merge": "e9339876883f96af2e406a92a05be647b7fbe5d5",
+   "files": [
+    "Lib/base64.py"
+   ],
+   "rows": [
+    {
+     "file": "Lib/base64.py",
+     "line": 1,
+     "rfc": "RFC3548",
+     "old": "\"\"\"Base16, Base32, Base64 (RFC 3548), Base85 and Ascii85 data encodings\"\"\"",
+     "maintainer": "\"\"\"Base16, Base32, Base64 (RFC 4648), Base85 and Ascii85 data encodings\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/base64.py",
+     "line": 222,
+     "rfc": "RFC3548",
+     "old": "RFC 3548 allows for optional mapping of the digit 0 (zero) to the",
+     "maintainer": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
+     "level": "obsolete",
+     "fix": "RFC 4648 allows for optional mapping of the digit 0 (zero) to the",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/base64.py",
+     "line": 269,
+     "rfc": "RFC3548",
+     "old": "# RFC 3548, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "maintainer": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "level": "obsolete",
+     "fix": "# RFC 4648, Base 16 Alphabet specifies uppercase, but hexlify() returns",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 3,
+    "obsolete": 3,
+    "fix_proposed": 2,
+    "same_rfc": 2,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 142262,
+   "title": "Docs: fix RFC index reference for TLS 1.3",
+   "merged_at": "2025-12-06T13:05:20Z",
+   "merged_by": "picnixz",
+   "base": "2dac9e6016c81abbefa4256253ff5c59b29378a7",
+   "merge": "61823a5382e8c0c0292e90a46ae3e1859b7f278b",
+   "files": [
+    "Lib/ssl.py",
+    "Lib/test/test_ssl.py"
+   ],
+   "rows": [
+    {
+     "file": "Lib/ssl.py",
+     "line": 188,
+     "rfc": "RFC8466",
+     "old": "See RFC 8466, section B.2",
+     "maintainer": "See RFC 8446, section B.2",
+     "level": "amended",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/test/test_ssl.py",
+     "line": 5616,
+     "rfc": "RFC8466",
+     "old": "See RFC 8466, section B.2",
+     "maintainer": "See RFC 8446, section B.2",
+     "level": "amended",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Lib/ssl.py",
+     "line": 173,
+     "old": "See RFC 8446, section B.1",
+     "fix": "See RFC 9846, section B.1"
+    },
+    {
+     "file": "Lib/ssl.py",
+     "line": 230,
+     "old": "See RFC 8446, section B.3",
+     "fix": "See RFC 9846, section B.3"
+    },
+    {
+     "file": "Lib/ssl.py",
+     "line": 366,
+     "old": "RFC 6125 explicitly doesn't define an algorithm for this",
+     "fix": "RFC 9525 explicitly doesn't define an algorithm for this"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 2,
+    "obsolete": 0,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 3
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 139435,
+   "title": "gh-139434: Update selected RFC 2822 references to RFC 5322",
+   "merged_at": "2025-11-04T19:46:08Z",
+   "merged_by": "bitdancer",
+   "base": "248ce9fa8c7a1ed1912e0db31172c8cd2c298b37",
+   "merge": "ce1bb85d286130f44b7e874430b0b12990d61dc1",
+   "files": [
+    "Doc/library/http.client.rst",
+    "Doc/library/http.server.rst",
+    "Doc/library/mailbox.rst",
+    "Doc/library/time.rst",
+    "Doc/tutorial/stdlib.rst",
+    "Lib/email/_parseaddr.py",
+    "Lib/email/_policybase.py",
+    "Lib/email/feedparser.py",
+    "Lib/email/generator.py",
+    "Lib/email/message.py",
+    "Lib/email/parser.py",
+    "Lib/http/client.py",
+    "Lib/smtplib.py",
+    "Lib/test/test_email/data/msg_35.txt",
+    "Lib/test/test_email/test_email.py"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/http.client.rst",
+     "line": 136,
+     "rfc": "RFC2822",
+     "old": "(i.e. not text) and must provide a valid :rfc:`2822` style header.",
+     "maintainer": "(i.e. not text) and must provide a valid :rfc:`5322` style header.",
+     "level": "obsolete",
+     "fix": "(i.e. not text) and must provide a valid :rfc:`5322` style header.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/http.server.rst",
+     "line": 157,
+     "rfc": "RFC2822",
+     "old": "HTTP request provide a valid :rfc:`2822` style header.",
+     "maintainer": "HTTP request provide a valid :rfc:`5322` style header.",
+     "level": "obsolete",
+     "fix": "HTTP request provide a valid :rfc:`5322` style header.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/mailbox.rst",
+     "line": 920,
+     "rfc": "RFC2822",
+     "old": "or a file, it should contain an :rfc:`2822`\\ -compliant message, which is read",
+     "maintainer": "or a file, it should contain an :rfc:`5322`\\ -compliant message, which is read",
+     "level": "obsolete",
+     "fix": "or a file, it should contain an :rfc:`5322`\\ -compliant message, which is read",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/time.rst",
+     "line": 587,
+     "rfc": "RFC2822",
+     "old": ":rfc:`2822` Internet email standard.  [1]_ ::",
+     "maintainer": ":rfc:`5322` Internet email standard.  [1]_ ::",
+     "level": "obsolete",
+     "fix": ":rfc:`5322` Internet email standard.  [1]_ ::",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/tutorial/stdlib.rst",
+     "line": 338,
+     "rfc": "RFC2822",
+     "old": "MIME and other :rfc:`2822`-based message documents. Unlike :mod:`smtplib` and",
+     "maintainer": "MIME and other :rfc:`5322`-based message documents. Unlike :mod:`smtplib` and",
+     "level": "obsolete",
+     "fix": "MIME and other :rfc:`5322`-based message documents. Unlike :mod:`smtplib` and",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/_policybase.py",
+     "line": 383,
+     "rfc": "RFC2822",
+     "old": "# default value of 78, as recommended by RFC 2822.",
+     "maintainer": "# default value of 78, as recommended by RFC 5322 section 2.1.1.",
+     "level": "obsolete",
+     "fix": "# default value of 78, as recommended by RFC 5322.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/feedparser.py",
+     "line": 35,
+     "rfc": "RFC2822",
+     "old": "# RFC 2822 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "maintainer": "# RFC 5322 section 3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "level": "obsolete",
+     "fix": "# RFC 5322 $3.6.8 Optional fields.  ftext is %d33-57 / %d59-126, Any character",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/feedparser.py",
+     "line": 297,
+     "rfc": "RFC2822",
+     "old": "# another RFC 2822 message.",
+     "maintainer": "# another RFC 5322 message.",
+     "level": "obsolete",
+     "fix": "# another RFC 5322 message.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/generator.py",
+     "line": 53,
+     "rfc": "RFC2822",
+     "old": "by RFC 2822.",
+     "maintainer": "by RFC 5322 section 2.1.1.",
+     "level": "obsolete",
+     "fix": "by RFC 5322.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/message.py",
+     "line": 144,
+     "rfc": "RFC2822",
+     "old": "A message object is defined as something that has a bunch of RFC 2822",
+     "maintainer": "A message object is defined as something that has a bunch of RFC 5322",
+     "level": "obsolete",
+     "fix": "A message object is defined as something that has a bunch of RFC 5322",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 5,
+     "rfc": "RFC2822",
+     "old": "\"\"\"A parser of RFC 2822 and MIME email messages.\"\"\"",
+     "maintainer": "\"\"\"A parser of RFC 5322 and MIME email messages.\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 18,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parser of RFC 2822 and MIME email messages.",
+     "maintainer": "\"\"\"Parser of RFC 5322 and MIME email messages.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 24,
+     "rfc": "RFC2822",
+     "old": "The string must be formatted as a block of RFC 2822 headers and header",
+     "maintainer": "The string must be formatted as a block of RFC 5322 headers and header",
+     "level": "obsolete",
+     "fix": "The string must be formatted as a block of RFC 5322 headers and header",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 78,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parser of binary RFC 2822 and MIME email messages.",
+     "maintainer": "\"\"\"Parser of binary RFC 5322 and MIME email messages.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/email/parser.py",
+     "line": 84,
+     "rfc": "RFC2822",
+     "old": "The input must be formatted as a block of RFC 2822 headers and header",
+     "maintainer": "The input must be formatted as a block of RFC 5322 headers and header",
+     "level": "obsolete",
+     "fix": "The input must be formatted as a block of RFC 5322 headers and header",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 234,
+     "rfc": "RFC2822",
+     "old": "Parses only RFC2822 headers from header lines.",
+     "maintainer": "Parses only RFC 5322 headers from header lines.",
+     "level": "obsolete",
+     "fix": "Parses only RFC5322 headers from header lines.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 247,
+     "rfc": "RFC2822",
+     "old": "\"\"\"Parses only RFC2822 headers from a file pointer.\"\"\"",
+     "maintainer": "\"\"\"Parses only RFC 5322 headers from a file pointer.\"\"\"",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 920,
+     "rfc": "RFC2822",
+     "old": "described in RFC 2822 (a ValueError is raised if there is more than",
+     "maintainer": "described in RFC 5322 (a ValueError is raised if there is more than",
+     "level": "obsolete",
+     "fix": "described in RFC 5322 (a ValueError is raised if there is more than",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 934,
+     "rfc": "RFC2822",
+     "old": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 2822",
+     "maintainer": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
+     "level": "obsolete",
+     "fix": "# 'Resent-Date' is a mandatory field if the Message is resent (RFC 5322",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 953,
+     "rfc": "RFC2822",
+     "old": "# Prefer the sender field per RFC 2822:3.6.2.",
+     "maintainer": "# Prefer the sender field per RFC 5322 section 3.6.2.",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/test/test_email/data/msg_35.txt",
+     "line": 4,
+     "rfc": "RFC2822",
+     "old": "counter to RFC 2822, there's no separating newline here",
+     "maintainer": "counter to RFC 5322, there's no separating newline here",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/test/test_email/test_email.py",
+     "line": 2376,
+     "rfc": "RFC2822",
+     "old": "counter to RFC 2822, there's no separating newline here",
+     "maintainer": "counter to RFC 5322, there's no separating newline here",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Doc/library/http.client.rst",
+     "line": 371,
+     "old": "<https://datatracker.ietf.org/doc/html/rfc7231#section-4.3.6>`_, a HTTP ``Host:``",
+     "fix": "<https://datatracker.ietf.org/doc/html/rfc9110#section-9.3.6>`_, a HTTP ``Host:``"
+    },
+    {
+     "file": "Doc/library/http.client.rst",
+     "line": 452,
+     "old": "Send an :rfc:`822`\\ -style header to the server.  It sends a line to the server",
+     "fix": "Send an :rfc:`5322`\\ -style header to the server.  It sends a line to the server"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 31,
+     "old": "# in RFC822, other than Z.  According to RFC1123, the description in",
+     "fix": "# in RFC5322, other than Z.  According to RFC1123, the description in"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 32,
+     "old": "# RFC822 gets the signs wrong, so we can't rely on any such time",
+     "fix": "# RFC5322 gets the signs wrong, so we can't rely on any such time"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 148,
+     "old": "# appropriate four-digit format, according to the POSIX standard. RFC 822",
+     "fix": "# appropriate four-digit format, according to the POSIX standard. RFC 5322"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 217,
+     "old": "To understand what this class does, it helps to have a copy of RFC 2822 in",
+     "fix": "To understand what this class does, it helps to have a copy of RFC 5322 in"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 433,
+     "old": "If 'allowcomments' is non-zero, embedded RFC 2822 comments are allowed",
+     "fix": "If 'allowcomments' is non-zero, embedded RFC 5322 comments are allowed"
+    },
+    {
+     "file": "Lib/email/_parseaddr.py",
+     "line": 495,
+     "old": "A phrase is a sequence of words, which are in turn either RFC 2822",
+     "fix": "A phrase is a sequence of words, which are in turn either RFC 5322"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 114,
+     "old": "# Header name/value ABNF (http://tools.ietf.org/html/rfc7230#section-3.2)",
+     "fix": "# Header name/value ABNF (http://tools.ietf.org/html/rfc9110#section-6.3)"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 843,
+     "old": "a body (RFC 7230, Section 3.3.2). We also set the Content-Length for",
+     "fix": "a body (RFC 9112, Section 6.2). We also set the Content-Length for"
+    },
+    {
+     "file": "Lib/http/client.py",
+     "line": 909,
+     "old": "(https://tools.ietf.org/html/rfc7231#section-4.3.6), a HTTP Host:",
+     "fix": "(https://tools.ietf.org/html/rfc9110#section-9.3.6), a HTTP Host:"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 4,
+     "old": "Authentication) and RFC 2487 (Secure SMTP over TLS).",
+     "fix": "Authentication) and RFC 3207 (Secure SMTP over TLS)."
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 36,
+     "old": "# Better RFC 821 compliance (MAIL and RCPT, and CRLF in data)",
+     "fix": "# Better RFC 5321 compliance (MAIL and RCPT, and CRLF in data)"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 38,
+     "old": "# RFC 2554 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>.",
+     "fix": "# RFC 4954 (authentication) support by Gerhard Haering <gerhard@bigfoot.de>."
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 269,
+     "old": "# RFC 2821 says we should use the fqdn in the EHLO/HELO verb, and",
+     "fix": "# RFC 5321 says we should use the fqdn in the EHLO/HELO verb, and"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 460,
+     "old": "# According to RFC1869 some (badly written)",
+     "fix": "# According to RFC5321 some (badly written)"
+    },
+    {
+     "file": "Lib/smtplib.py",
+     "line": 488,
+     "old": "# RFC 1869 requires a space between ehlo keyword and parameters.",
+     "fix": "# RFC 5321 requires a space between ehlo keyword and parameters."
+    }
+   ],
+   "summary": {
+    "replaced_citations": 22,
+    "obsolete": 22,
+    "fix_proposed": 15,
+    "same_rfc": 15,
+    "same_section": 0,
+    "fix_on_untouched_lines": 17
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27700,
+   "title": "bpo-36700: updated RFC references",
+   "merged_at": "2021-08-13T10:58:56Z",
+   "merged_by": "ambv",
+   "base": "a2ce538e16d5e3a6168704366bdd7a8c5af29881",
+   "merge": "e43b9bbc31c22a0d97dc4fc420300e40c2d74166",
+   "files": [
+    "Doc/library/base64.rst",
+    "Doc/library/security_warnings.rst"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/base64.rst",
+     "line": 5,
+     "rfc": "RFC3548",
+     "old": ":synopsis: RFC 3548: Base16, Base32, Base64 Data Encodings;",
+     "maintainer": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
+     "level": "obsolete",
+     "fix": ":synopsis: RFC 4648: Base16, Base32, Base64 Data Encodings;",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/base64.rst",
+     "line": 19,
+     "rfc": "RFC3548",
+     "old": ":rfc:`3548`, which defines the Base16, Base32, and Base64 algorithms,",
+     "maintainer": ":rfc:`4648`, which defines the Base16, Base32, and Base64 algorithms,",
+     "level": "obsolete",
+     "fix": ":rfc:`4648`, which defines the Base16, Base32, and Base64 algorithms,",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/base64.rst",
+     "line": 22,
+     "rfc": "RFC3548",
+     "old": "The :rfc:`3548` encodings are suitable for encoding binary data so that it can",
+     "maintainer": "The :rfc:`4648` encodings are suitable for encoding binary data so that it can be",
+     "level": "obsolete",
+     "fix": "The :rfc:`4648` encodings are suitable for encoding binary data so that it can",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/base64.rst",
+     "line": 31,
+     "rfc": "RFC3548",
+     "old": "defined in :rfc:`3548` (normal, and URL- and filesystem-safe) are supported.",
+     "maintainer": "defined in :rfc:`4648` (normal, and URL- and filesystem-safe) are supported.",
+     "level": "obsolete",
+     "fix": "defined in :rfc:`4648` (normal, and URL- and filesystem-safe) are supported.",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [],
+   "summary": {
+    "replaced_citations": 4,
+    "obsolete": 4,
+    "fix_proposed": 4,
+    "same_rfc": 4,
+    "same_section": 0,
+    "fix_on_untouched_lines": 0
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 24137,
+   "title": "Fix id of 'Internet Message Format' RFC in email doc",
+   "merged_at": "2021-04-26T01:38:12Z",
+   "merged_by": "orsenthil",
+   "base": "ea46579067fd2d4e164d6605719ffec690c4d621",
+   "merge": "cb5c802dcf8851663c4eac5d73f968f626a3a1dc",
+   "files": [
+    "Doc/library/email.compat32-message.rst",
+    "Doc/library/email.rst"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/email.compat32-message.rst",
+     "line": 26,
+     "rfc": "RFC5233",
+     "old": ":rfc:`5233` style names and values, where the field name and value are",
+     "maintainer": ":rfc:`5322` style names and values, where the field name and value are",
+     "level": "ok",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/email.rst",
+     "line": 19,
+     "rfc": "RFC5233",
+     "old": "RFC-compliant as possible, supporting :rfc:`5233` and :rfc:`6532`, as well as",
+     "maintainer": "RFC-compliant as possible, supporting :rfc:`5322` and :rfc:`6532`, as well as",
+     "level": "ok",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Doc/library/email.compat32-message.rst",
+     "line": 283,
+     "old": "message's :rfc:`2822` headers.  Note that there are some semantic differences",
+     "fix": "message's :rfc:`5322` headers.  Note that there are some semantic differences"
+    },
+    {
+     "file": "Doc/library/email.rst",
+     "line": 17,
+     "old": "(:rfc:`2821`), NNTP, or other servers; those are functions of modules such as",
+     "fix": "(:rfc:`5321`), NNTP, or other servers; those are functions of modules such as"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 2,
+    "obsolete": 0,
+    "fix_proposed": 0,
+    "same_rfc": 0,
+    "same_section": 0,
+    "fix_on_untouched_lines": 2
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 173,
+   "title": "bpo-16285: Update urllib quoting to RFC 3986",
+   "merged_at": "2017-02-25T09:00:29Z",
+   "merged_by": "ncoghlan",
+   "base": "e3ce69522ffd7c0354d6e70d18f42bce325ed97e",
+   "merge": "21024f06622c4c55b666adb130797a4ee205d005",
+   "files": [
+    "Doc/library/urllib.parse.rst",
+    "Doc/whatsnew/3.7.rst",
+    "Lib/test/test_urllib.py",
+    "Lib/urllib/parse.py",
+    "Misc/ACKS",
+    "Misc/NEWS"
+   ],
+   "rows": [
+    {
+     "file": "Lib/test/test_urllib.py",
+     "line": 736,
+     "rfc": "RFC2396",
+     "old": "According to RFC 2396 (Uniform Resource Identifiers), to escape a",
+     "maintainer": "According to RFC 3986 (Uniform Resource Identifiers), to escape a",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Lib/urllib/parse.py",
+     "line": 739,
+     "rfc": "RFC2396",
+     "old": "RFC 2396 Uniform Resource Identifiers (URI): Generic Syntax lists",
+     "maintainer": "RFC 3986 Uniform Resource Identifiers (URI): Generic Syntax lists",
+     "level": "obsolete",
+     "fix": "RFC 3986 Uniform Resource Identifiers (URI): Generic Syntax lists",
+     "same_rfc": true,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 62,
+     "old": "Following the syntax specifications in :rfc:`1808`, urlparse recognizes",
+     "fix": "Following the syntax specifications in :rfc:`3986`, urlparse recognizes"
+    },
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 205,
+     "old": "of the URL (see :rfc:`2396`) is wanted.  A separate function is needed to",
+     "fix": "of the URL (see :rfc:`3986`) is wanted.  A separate function is needed to"
+    },
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 586,
+     "old": ":rfc:`2732` - Format for Literal IPv6 Addresses in URL's.",
+     "fix": ":rfc:`3986` - Format for Literal IPv6 Addresses in URL's."
+    },
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 589,
+     "old": ":rfc:`2396` - Uniform Resource Identifiers (URI): Generic Syntax",
+     "fix": ":rfc:`3986` - Uniform Resource Identifiers (URI): Generic Syntax"
+    },
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 593,
+     "old": ":rfc:`2368` - The mailto URL scheme.",
+     "fix": ":rfc:`6068` - The mailto URL scheme."
+    },
+    {
+     "file": "Doc/library/urllib.parse.rst",
+     "line": 596,
+     "old": ":rfc:`1808` - Relative Uniform Resource Locators",
+     "fix": ":rfc:`3986` - Relative Uniform Resource Locators"
+    },
+    {
+     "file": "Lib/urllib/parse.py",
+     "line": 8,
+     "old": "RFC 2732 : \"Format for Literal IPv6 Addresses in URL's by R.Hinden, B.Carpenter",
+     "fix": "RFC 3986 : \"Format for Literal IPv6 Addresses in URL's by R.Hinden, B.Carpenter"
+    },
+    {
+     "file": "Lib/urllib/parse.py",
+     "line": 11,
+     "old": "RFC 2396:  \"Uniform Resource Identifiers (URI)\": Generic Syntax by T.",
+     "fix": "RFC 3986:  \"Uniform Resource Identifiers (URI)\": Generic Syntax by T."
+    },
+    {
+     "file": "Lib/urllib/parse.py",
+     "line": 16,
+     "old": "RFC 1808: \"Relative Uniform Resource Locators\", by R. Fielding, UC Irvine, June",
+     "fix": "RFC 3986: \"Relative Uniform Resource Locators\", by R. Fielding, UC Irvine, June"
+    },
+    {
+     "file": "Misc/NEWS",
+     "line": 6676,
+     "old": "- Issue #21800: imaplib now supports RFC 5161 (enable), RFC 6855",
+     "fix": "- Issue #21800: imaplib now supports RFC 5161 (enable), RFC 9755"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 2,
+    "obsolete": 2,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 10
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 148,
+   "title": "bpo-19180: Updated reference for RFC 1750 and RFC 3280",
+   "merged_at": "2017-06-09T09:43:59Z",
+   "merged_by": "ncoghlan",
+   "base": "ae8750bca8234a9af9382b9d7e457b57f810ad64",
+   "merge": "63c2c8ac17750ba2be2cfc4e339cae1f4edee54f",
+   "files": [
+    "Doc/library/ssl.rst",
+    "Modules/_ssl.c",
+    "Modules/clinic/_ssl.c.h"
+   ],
+   "rows": [
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 827,
+     "rfc": "RFC4366",
+     "old": "Indication* extension (as defined in :rfc:`4366`).",
+     "maintainer": "Indication* extension (as defined in :rfc:`6066`).",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2316,
+     "rfc": "RFC1750",
+     "old": "`RFC 1750: Randomness Recommendations for Security <https://www.ietf.org/rfc/rfc1750>`_",
+     "maintainer": "`RFC 4086: Randomness Requirements for Security <http://datatracker.ietf.org/doc/rfc4086/>`_ / Donald E., Jeffrey I. Schiller",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2319,
+     "rfc": "RFC3280",
+     "old": "`RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL Profile <https://www.ietf.org/rfc/rfc3280>`_",
+     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 2322,
+     "rfc": "RFC4366",
+     "old": "`RFC 4366: Transport Layer Security (TLS) Extensions <https://www.ietf.org/rfc/rfc4366>`_",
+     "maintainer": "`RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile <http://datatracker.ietf.org/doc/rfc5280/>`_ / D. Cooper",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    },
+    {
+     "file": "Modules/_ssl.c",
+     "line": 4470,
+     "rfc": "RFC1750",
+     "old": "string.  See RFC 1750.",
+     "maintainer": "string.  See RFC 4086.",
+     "level": "obsolete",
+     "fix": "string.  See RFC 4086.",
+     "same_rfc": true,
+     "same_section": false
+    },
+    {
+     "file": "Modules/clinic/_ssl.c.h",
+     "line": 850,
+     "rfc": "RFC1750",
+     "old": "\"string.  See RFC 1750.\");",
+     "maintainer": "\"string.  See RFC 4086.\");",
+     "level": "obsolete",
+     "fix": null,
+     "same_rfc": false,
+     "same_section": false
+    }
+   ],
+   "fix_on_untouched_lines": [
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 363,
+     "old": "string (so you can always use :const:`0.0`).  See :rfc:`1750` for more",
+     "fix": "string (so you can always use :const:`0.0`).  See :rfc:`4086` for more"
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 399,
+     "old": "The function now follows :rfc:`6125`, section 6.4.3 and does neither",
+     "fix": "The function now follows :rfc:`9525`, section 6.4.3 and does neither"
+    },
+    {
+     "file": "Doc/library/ssl.rst",
+     "line": 1047,
+     "old": "instance of the *Subject Alternative Name* extension (see :rfc:`3280`),",
+     "fix": "instance of the *Subject Alternative Name* extension (see :rfc:`5280`),"
+    }
+   ],
+   "summary": {
+    "replaced_citations": 6,
+    "obsolete": 6,
+    "fix_proposed": 1,
+    "same_rfc": 1,
+    "same_section": 0,
+    "fix_on_untouched_lines": 3
    }
   },
   {

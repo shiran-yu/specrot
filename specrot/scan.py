@@ -17,6 +17,8 @@ CITATION = re.compile(
     r"(?:(?:\.html|\.txt)?(?:[ \t]*,?[ \t]*(?:section|sec\.?|§|par\.)[ \t]*|[ \t]*#[ \t]*(?:section-|appendix-|sec)?"
     r"|[ \t]+(?=\d+\.\d))((?-i:[A-Z])(?:\.\d+)*(?![\w-])|\d+(?:\.\d+)*))?"
 )
+# Sphinx/reST role: :rfc:`2822`, :rfc:`7232#section-4.1`, :rfc:`RFC 7232 <7232#section-4.1>`
+ROLE = re.compile(r":rfc:`(?:[^`<]*<)?0*(\d{1,5})(?:#(?:section|appendix)-([A-Z]?[\d.]*\d|[A-Z]))?>?`")
 # "Section 4.2.8.1 of RFC 8446", "section 6 of RFC 7159"
 SECTION_OF = re.compile(r"(?i)(?:section|§)[ \t]*(\d+(?:\.\d+)*),?[ \t]+of[ \t]+\[?(rfc)[ \t_-]{0,2}\d")
 SKIP_DIRS = {".git", "node_modules", "vendor", "third_party", "dist", "build", ".venv", "venv", "__pycache__",
@@ -127,6 +129,13 @@ def _in_line(path: str, i: int, line: str) -> list[Citation]:
         section = m.group(2) or section_before.get(m.start())
         out.append(Citation(path, i, f"RFC{n}", section, line.strip()[:200], kind, bool(TEST_PATH.search(path)),
                             col=m.start()))
+    for m in ROLE.finditer(line):
+        inside = [c for c in out if m.start() <= c.col < m.end()]  # :rfc:`RFC 7232 <...>` already found as prose
+        if inside:
+            inside[0].section = inside[0].section or m.group(2)
+        elif int(m.group(1)):
+            out.append(Citation(path, i, f"RFC{int(m.group(1))}", m.group(2), line.strip()[:200], "prose",
+                                bool(TEST_PATH.search(path)), col=m.start()))
     return out
 
 

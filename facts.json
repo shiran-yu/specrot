@@ -1,18 +1,18 @@
 {
   "sections": {
-    "cited": 292,
-    "mapped": 221,
-    "exact": 206
+    "cited": 297,
+    "mapped": 223,
+    "exact": 208
   },
   "nodes": {
+    "Section": 51671,
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
-    "Section": 51671,
     "RFC": 9869,
     "Series": 377,
     "Project": 26,
-    "File": 2372
+    "File": 2442
   },
   "relationships": {
     "OBSOLETES": 1546,
@@ -25,13 +25,13 @@
     "AMENDS": 8215,
     "IN_AREA": 530,
     "CONTINUES_AS": 29352,
-    "HAS_FILE": 2372,
-    "CITES": 4664
+    "HAS_FILE": 2442,
+    "CITES": 4795
   },
   "showcase": {
-    "citations": 7669,
-    "obsolete": 1640,
-    "old_version": 285,
+    "citations": 8044,
+    "obsolete": 1687,
+    "old_version": 303,
     "projects": 26,
     "affected": 24,
     "obsolete_pct": 21
@@ -39,7 +39,7 @@
   "top_obsolete": [
     {
       "rfc": "RFC2616",
-      "projects": 17
+      "projects": 18
     },
     {
       "rfc": "RFC7230",
@@ -58,5 +58,5 @@
     "projects": 7,
     "citations": 130
   },
-  "store_bytes": 8003584
+  "store_bytes": 8011776
 }

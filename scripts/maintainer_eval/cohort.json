@@ -1,0 +1,1965 @@
+{
+ "query": "repo:{repo} is:pr is:merged RFC in:title",
+ "candidates": [
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 13500,
+   "title": "Sort RFC 2231 filename continuations numerically",
+   "closed_at": "2026-09-04T21:32:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 13636,
+   "title": "[PR #13500/fbc5851a backport][3.15] Sort RFC 2231 filename continuations numerically",
+   "closed_at": "2026-09-04T22:16:29Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 12689,
+   "title": "Reject all RFC 9110 forbidden control characters in outbound headers",
+   "closed_at": "2026-05-28T14:01:25Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 12717,
+   "title": "[PR #12689/07ed41bc backport][3.14] Reject all RFC 9110 forbidden control characters in outbound headers",
+   "closed_at": "2026-05-28T14:20:43Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 12231,
+   "title": "Adjust header value characters to RFC 9110",
+   "closed_at": "2026-03-11T19:37:32Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 12235,
+   "title": "[PR #12231/7043bc56 backport][3.13] Adjust header value character checks to RFC 9110",
+   "closed_at": "2026-03-11T23:38:18Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 12236,
+   "title": "[PR #12231/7043bc56 backport][3.14] Adjust header value character checks to RFC 9110",
+   "closed_at": "2026-03-11T23:37:59Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 7954,
+   "title": "Implement happy eyeballs (RFC 8305)",
+   "closed_at": "2024-01-05T00:40:42Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 8005,
+   "title": "Implement happy eyeballs (RFC 8305) (#7954)",
+   "closed_at": "2024-01-05T02:53:36Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 7661,
+   "title": "Update Python parser for RFCs 9110/9112",
+   "closed_at": "2023-10-06T16:11:13Z",
+   "included": true,
+   "replaced": {
+    "aiohttp/http_parser.py": [
+     "RFC7230"
+    ]
+   }
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 7756,
+   "title": "Ensure empty body response for 1xx/204/304 per RFC 9112 sec 6.3",
+   "closed_at": "2023-11-02T19:58:16Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 7778,
+   "title": "Ensure empty body response for 1xx/204/304 per RFC 9112 sec 6.3 (#7756)",
+   "closed_at": "2023-11-02T23:12:26Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 7662,
+   "title": "[PR #7661/85713a48 backport][3.8] Update Python parser for RFCs 9110/9112",
+   "closed_at": "2023-10-06T16:11:40Z",
+   "included": false,
+   "replaced": {
+    "aiohttp/http_parser.py": [
+     "RFC7230"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 3235,
+   "title": "Make METHRE RFC-7230 compliant",
+   "closed_at": "2018-09-08T17:07:49Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 1500,
+   "title": "Update Connection header to match RFC 6455 case",
+   "closed_at": "2016-12-25T04:47:16Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "aio-libs/aiohttp",
+   "pr": 233,
+   "title": "Add more headers per RFC: 2616, 2518, 3230, 5988 and for event source",
+   "closed_at": "2015-01-13T08:00:00Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 1052,
+   "title": "fix(oauth): sign RFC 9068 access tokens with any supported alg",
+   "closed_at": "2026-11-13T16:40:42Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 1008,
+   "title": "fix(oauth): deprecate the client ID as the default RFC 9068 audience",
+   "closed_at": "2026-11-06T10:11:47Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 979,
+   "title": "fix(oauth): return RFC 6750 errors in the client registration endpoints",
+   "closed_at": "2026-11-02T20:49:07Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 1005,
+   "title": "fix(oidc): accept RFC 9068 JWT access tokens at the userinfo endpoint",
+   "closed_at": "2026-11-05T12:09:52Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 987,
+   "title": "fix(oauth): add the RFC 9207 iss parameter in the response mode",
+   "closed_at": "2026-11-04T10:00:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 891,
+   "title": "fix: Catch InvalidKeyIdError in RFC 9068 JWTBearerTokenValidator",
+   "closed_at": "2026-05-21T03:20:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "authlib/authlib",
+   "pr": 594,
+   "title": "Fix encode_client_secret_basic to match RFC 6749",
+   "closed_at": "2023-11-21T13:42:54Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 20714,
+   "title": "Fixed #36931 -- Handled LookupError in multipart parser for invalid RFC 2231 encoding",
+   "closed_at": "2026-02-24T18:44:43Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 16257,
+   "title": "Updated documentation and comments for RFC updates.",
+   "closed_at": "2022-11-10T13:22:12Z",
+   "included": true,
+   "replaced": {
+    "django/core/handlers/wsgi.py": [
+     "RFC2396"
+    ],
+    "django/http/multipartparser.py": [
+     "RFC2388"
+    ],
+    "django/middleware/csrf.py": [
+     "RFC7231"
+    ],
+    "django/middleware/gzip.py": [
+     "RFC7232"
+    ],
+    "django/test/client.py": [
+     "RFC2616",
+     "RFC7230"
+    ],
+    "django/utils/cache.py": [
+     "RFC7231",
+     "RFC7232"
+    ],
+    "django/utils/http.py": [
+     "RFC7231",
+     "RFC7232"
+    ],
+    "django/utils/translation/trans_real.py": [
+     "RFC2616",
+     "RFC3066"
+    ],
+    "django/views/defaults.py": [
+     "RFC7231"
+    ],
+    "docs/ref/csrf.txt": [
+     "RFC7231"
+    ],
+    "docs/ref/middleware.txt": [
+     "RFC7232"
+    ],
+    "docs/ref/models/instances.txt": [
+     "RFC2396"
+    ],
+    "docs/ref/models/querysets.txt": [
+     "RFC7231"
+    ],
+    "docs/ref/request-response.txt": [
+     "RFC7231"
+    ],
+    "docs/ref/unicode.txt": [
+     "RFC2396"
+    ],
+    "docs/ref/utils.txt": [
+     "RFC7231"
+    ],
+    "docs/ref/views.txt": [
+     "RFC7231"
+    ],
+    "docs/topics/cache.txt": [
+     "RFC7234"
+    ],
+    "docs/topics/conditional-view-processing.txt": [
+     "RFC7231",
+     "RFC7232"
+    ],
+    "docs/topics/testing/tools.txt": [
+     "RFC7231"
+    ],
+    "tests/conditional_processing/tests.py": [
+     "RFC7232"
+    ],
+    "tests/middleware/tests.py": [
+     "RFC7232"
+    ],
+    "tests/requests/tests.py": [
+     "RFC2616"
+    ],
+    "tests/test_client/views.py": [
+     "RFC2616"
+    ],
+    "tests/utils_tests/test_http.py": [
+     "RFC7232"
+    ]
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 13800,
+   "title": "Fixed #32191 -- Made CookieStorage use RFC 6265 compliant format.",
+   "closed_at": "2021-01-07T12:20:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 12722,
+   "title": "Used :rfc: role in various docs.",
+   "closed_at": "2020-04-15T18:00:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 12382,
+   "title": "Updated the GeoJSON format specification link to RFC 7946.",
+   "closed_at": "2020-01-29T08:35:18Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 12142,
+   "title": "Fixed #31029 -- Used more specific links to RFCs.",
+   "closed_at": "2019-11-28T06:59:36Z",
+   "included": true,
+   "replaced": {
+    "docs/ref/validators.txt": [
+     "RFC2732"
+    ]
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 11666,
+   "title": "Fixed #30701 -- Updated patch_vary_headers() to handle an asterisk according to RFC 7231.",
+   "closed_at": "2019-08-16T15:30:28Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 11132,
+   "title": "Updated spelling and RFCs in HttpOnly cookie flag docs.",
+   "closed_at": "2019-03-27T15:11:22Z",
+   "included": true,
+   "replaced": {
+    "docs/ref/request-response.txt": [
+     "RFC2109"
+    ],
+    "docs/ref/settings.txt": [
+     "RFC2109"
+    ]
+   }
+  },
+  {
+   "repo": "django/django",
+   "pr": 9499,
+   "title": "Fixed #28965 -- Update cookie date format to follow RFC 7231.",
+   "closed_at": "2018-01-02T17:03:59Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 8445,
+   "title": "Fixed #28081 -- Make conditional_content_removal() compliant with RFC\u2026",
+   "closed_at": "2017-05-09T18:55:05Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 366,
+   "title": "fixed rfc comment typo in middleware/csrf.py",
+   "closed_at": "2012-09-10T15:20:01Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "django/django",
+   "pr": 457,
+   "title": "Fixed #19142 -- Language codes can include numbers (RFC 3066).",
+   "closed_at": "2012-10-21T17:35:01Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "encode/httpx",
+   "pr": 3045,
+   "title": "Fix RFC 2069 mode digest authentication",
+   "closed_at": "2024-01-10T10:08:43Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "hyperium/hyper",
+   "pr": 3648,
+   "title": "fix(http2): \"Trailer\" header should be allowed in HTTP/2 responses as per RFC 9110",
+   "closed_at": "2024-04-26T15:33:31Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "hyperium/hyper",
+   "pr": 2682,
+   "title": "feat(h2): implement the extended CONNECT protocol from RFC 8441",
+   "closed_at": "2022-02-08T01:35:34Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "hyperium/hyper",
+   "pr": 1598,
+   "title": "feat(client): implement rfc 6555 (happy eyeballs)",
+   "closed_at": "2018-07-10T20:43:05Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "jpadilla/pyjwt",
+   "pr": 344,
+   "title": "RFC: Add type hints",
+   "closed_at": "2018-04-08T23:31:38Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "jpadilla/pyjwt",
+   "pr": 244,
+   "title": "Add support for ECDSA public keys in OpenSSH (RFC 4253) format",
+   "closed_at": "2017-03-15T00:03:48Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1636,
+   "title": "SVCB is now RFC 9460.",
+   "closed_at": "2025-02-22T12:01:06Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1567,
+   "title": "Add RFC 9540 to SVCBs to indicate Oblivious HTTP is available",
+   "closed_at": "2024-06-13T15:49:04Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1253,
+   "title": "Add support for extended DNS errors (RFC 8914).",
+   "closed_at": "2021-04-08T15:11:06Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1224,
+   "title": "readme: add CAA and ZOMEMD RFCs",
+   "closed_at": "2021-02-23T09:10:31Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1211,
+   "title": "Support parsing known RR types in RFC 3597 format",
+   "closed_at": "2021-01-30T13:05:25Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 1097,
+   "title": "RFCs allow multiple questions, but not in practice",
+   "closed_at": "2020-03-29T17:46:10Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 970,
+   "title": "DNSSEC: remove deprecated algorithm RSAMD5 (RFC 6944)",
+   "closed_at": "2019-05-20T06:44:44Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 878,
+   "title": "Add newly released RFC to readme",
+   "closed_at": "2019-01-03T16:37:57Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 900,
+   "title": "RFC 1996 allows SOA in answer in notify",
+   "closed_at": "2019-01-12T10:11:12Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 715,
+   "title": "Use RFC 8032 functions added to x/crypto/ed25519",
+   "closed_at": "2018-07-25T12:01:45Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "miekg/dns",
+   "pr": 193,
+   "title": "RRSIG.Sign: remove duplicate before signing records as per RFC",
+   "closed_at": "2015-03-17T15:36:26Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 18113,
+   "title": "Auto-port 4.1: Reject request-only and response-only pseudo-headers in invalid contexts (RFC 9113)",
+   "closed_at": "2026-10-26T18:04:13Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 18112,
+   "title": "Auto-port 5.0: Reject request-only and response-only pseudo-headers in invalid contexts (RFC 9113)",
+   "closed_at": "2026-10-26T17:22:45Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 17752,
+   "title": "Reject request-only and response-only pseudo-headers in invalid contexts (RFC 9113)",
+   "closed_at": "2026-10-26T14:52:45Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 17100,
+   "title": "Add system property to disable RFC 6761 localhost resolution",
+   "closed_at": "2026-08-07T05:32:42Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 17231,
+   "title": "Auto-port 5.0: Add system property to disable RFC 6761 localhost resolution",
+   "closed_at": "2026-08-07T12:01:55Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 17230,
+   "title": "Auto-port 4.1: Add system property to disable RFC 6761 localhost resolution",
+   "closed_at": "2026-08-07T12:01:24Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 16966,
+   "title": "Add RFC 10008 QUERY Method support",
+   "closed_at": "2026-06-18T16:08:52Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 16978,
+   "title": "Add RFC 10008 QUERY Method support (#16966)",
+   "closed_at": "2026-06-19T00:58:29Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 16975,
+   "title": "Auto-port 5.0: Add RFC 10008 QUERY Method support",
+   "closed_at": "2026-06-18T17:59:14Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 15771,
+   "title": "Add :protocol pseudo-header support for Extended CONNECT (RFC 9220)",
+   "closed_at": "2025-11-05T13:36:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 15470,
+   "title": "Add support for SOCKS5 private authentication methods (RFC#1928)",
+   "closed_at": "2025-08-13T05:45:17Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 12012,
+   "title": "Support RFC 8879 Certificate Compression for TLSv1.3",
+   "closed_at": "2022-02-02T07:59:48Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 10259,
+   "title": "Fix date format in headers to use 2-digit day of month as per RFC 2616",
+   "closed_at": "2020-05-11T06:57:17Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 704,
+   "title": "HTTP method should be case sensitive (RFC-2616 Sec. 5.1.1)",
+   "closed_at": "2012-11-02T07:30:41Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "netty/netty",
+   "pr": 703,
+   "title": "HTTP method should be case sensitive (RFC-2616 Sec. 5.1.1)",
+   "closed_at": "2012-11-02T07:31:30Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2855,
+   "title": "nghttpx: Rewrite CertLookupTree based on RFC 9525 rules",
+   "closed_at": "2026-09-09T14:19:23Z",
+   "included": true,
+   "replaced": {
+    "src/shrpx_tls.h": [
+     "RFC6125"
+    ]
+   }
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2854,
+   "title": "nghttpx: Client TLS certificate validation based on RFC 9525",
+   "closed_at": "2026-09-09T12:40:31Z",
+   "included": true,
+   "replaced": {
+    "src/shrpx_tls.h": [
+     "RFC6125"
+    ]
+   }
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2287,
+   "title": "Remove RFC 7540 priorities",
+   "closed_at": "2025-01-10T10:01:58Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2291,
+   "title": "nghttpd: Remove RFC 7540 priorities",
+   "closed_at": "2025-01-12T07:46:25Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2290,
+   "title": "nghttp: Remove RFC 7540 priorities",
+   "closed_at": "2025-01-11T10:02:00Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2068,
+   "title": "Describe RFC 7540 priorities deprecation plan",
+   "closed_at": "2024-02-15T10:08:36Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 2060,
+   "title": "Deprecate RFC 7540 priorities (aka stream dependencies)",
+   "closed_at": "2024-02-09T10:43:19Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1991,
+   "title": "Add API to get and parse RFC 9218 priority",
+   "closed_at": "2023-11-05T07:22:38Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1809,
+   "title": "Update README to mention new HTTP/2 RFC",
+   "closed_at": "2022-10-02T03:53:13Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1733,
+   "title": "nghttpx: Disable RFC 7540 priorities",
+   "closed_at": "2022-06-16T09:39:35Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1728,
+   "title": "Implement RFC 9218 extensible prioritization scheme",
+   "closed_at": "2022-06-12T08:32:23Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1734,
+   "title": "Allow server to override RFC 9218 stream priority",
+   "closed_at": "2022-06-16T11:53:12Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1731,
+   "title": "Add a server option to fallback to RFC 7540 priorities",
+   "closed_at": "2022-06-14T23:34:58Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1231,
+   "title": "Implement RFC 8441",
+   "closed_at": "2018-09-23T08:34:54Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 1234,
+   "title": "nghttpx: Implement RFC 8441 Bootstrapping WebSocket with HTTP/2",
+   "closed_at": "2018-09-29T02:54:48Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nghttp2/nghttp2",
+   "pr": 378,
+   "title": "Added support for RFC 7413 (TCP Fast Open) on nghttpx proxy for listening connections.",
+   "closed_at": "2015-10-06T14:33:09Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nginx/nginx",
+   "pr": 1895,
+   "title": "HTTP/3: fix QPACK static table values to match RFC 9204",
+   "closed_at": "2026-10-28T16:26:27Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nginx/nginx",
+   "pr": 1520,
+   "title": "HTTP/2: implement RFC 9218 Extensible Prioritization Scheme for HTTP",
+   "closed_at": "2026-09-28T21:16:28Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nginx/nginx",
+   "pr": 893,
+   "title": "Mail: xtext encoding (RFC 3461) in XCLIENT LOGIN.",
+   "closed_at": "2025-09-26T13:04:20Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/node",
+   "pr": 58753,
+   "title": "doc: fix wrong RFC number in http2",
+   "closed_at": "2025-06-20T13:57:24Z",
+   "included": true,
+   "replaced": {
+    "doc/api/http2.md": [
+     "RFC1993"
+    ]
+   }
+  },
+  {
+   "repo": "nodejs/node",
+   "pr": 58116,
+   "title": "http2: add lenient flag for RFC-9113",
+   "closed_at": "2025-06-05T12:30:08Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 5459,
+   "title": "feat: support HTTP QUERY method (RFC 10008)",
+   "closed_at": "2026-07-02T11:36:06Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 4911,
+   "title": "fix(cache): check Authorization on request headers per RFC 9111 \u00a73.5",
+   "closed_at": "2026-03-22T09:19:41Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 4873,
+   "title": "docs(dispatcher): use RFC 2606 domains in interceptor examples",
+   "closed_at": "2026-03-08T14:54:04Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 4775,
+   "title": "fix: support Connection header with connection-specific header names per RFC 7230",
+   "closed_at": "2026-03-22T21:49:40Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 4492,
+   "title": "fix: implement proper stale-while-revalidate behavior per RFC 5861",
+   "closed_at": "2025-09-01T17:01:52Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "nodejs/undici",
+   "pr": 3396,
+   "title": "separate whatwg websocket logic from rfc 6455",
+   "closed_at": "2024-07-08T02:55:58Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "oauthlib/oauthlib",
+   "pr": 1002,
+   "title": "Ignore client-supplied scope on RFC 8628 device token requests",
+   "closed_at": "2026-10-30T22:57:13Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "oauthlib/oauthlib",
+   "pr": 461,
+   "title": "Add two error codes from RFC 6750",
+   "closed_at": "2017-04-03T09:30:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "oauthlib/oauthlib",
+   "pr": 407,
+   "title": "Allow `/` and `?` characters in query string (RFC 3986 section 3.4)",
+   "closed_at": "2016-03-14T09:48:03Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "oauthlib/oauthlib",
+   "pr": 144,
+   "title": "Fix a copy-paste-o in a link to RFC 3986",
+   "closed_at": "2013-05-05T16:26:11Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "pallets/werkzeug",
+   "pr": 100,
+   "title": "allow RFC 2069 authentication",
+   "closed_at": "2011-09-07T09:46:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "pallets/werkzeug",
+   "pr": 977,
+   "title": "RFC 7233 - Range Requests",
+   "closed_at": "2016-09-08T13:34:17Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "pallets/werkzeug",
+   "pr": 1678,
+   "title": "Adds missing RFC HTTP status codes",
+   "closed_at": "2020-01-05T18:43:20Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "psf/requests",
+   "pr": 2758,
+   "title": "Fix RFC Quotation",
+   "closed_at": "2015-09-05T21:01:39Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "psf/requests",
+   "pr": 2087,
+   "title": "Update trivial mentions to RFC 2616.",
+   "closed_at": "2014-06-08T14:44:26Z",
+   "included": true,
+   "replaced": {
+    "docs/user/quickstart.rst": [
+     "RFC2616"
+    ],
+    "requests/sessions.py": [
+     "RFC2616"
+    ]
+   }
+  },
+  {
+   "repo": "psf/requests",
+   "pr": 428,
+   "title": "Keep non RFC cookie key characters separate.",
+   "closed_at": "2012-02-15T06:08:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "psf/requests",
+   "pr": 772,
+   "title": "First pass at documenting encodings and RFC compliance.",
+   "closed_at": "2012-08-10T16:05:08Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 155786,
+   "title": "gh-153309: Add HTTP QUERY method (RFC 10008) to http library",
+   "closed_at": "2026-11-14T13:42:07Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156932,
+   "title": "[3.10] gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293) (GH-156020)",
+   "closed_at": "2026-10-01T00:29:37Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156931,
+   "title": "[3.11]  gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293) (GH-156020)",
+   "closed_at": "2026-10-01T00:29:43Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156922,
+   "title": "[3.13] gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293) (GH-156020)",
+   "closed_at": "2026-09-09T14:28:36Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156930,
+   "title": "[3.12] gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293) (GH-156020)",
+   "closed_at": "2026-09-08T13:42:00Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156020,
+   "title": "[3.14] gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293)",
+   "closed_at": "2026-09-04T09:29:07Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 155293,
+   "title": "gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454",
+   "closed_at": "2026-08-18T11:06:11Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151050,
+   "title": "gh-151049: Add 2001:1::3/128 (RFC 9665) to ipaddress IPv6 global exceptions",
+   "closed_at": "2026-09-22T20:45:01Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 156017,
+   "title": "[3.15] gh-155292: Don't consider Unicode codepoint attributes outside RFC 3454 (GH-155293)",
+   "closed_at": "2026-08-18T19:52:12Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 153126,
+   "title": "gh-68147: Fix RFC references in imaplib",
+   "closed_at": "2026-07-05T14:08:58Z",
+   "included": true,
+   "replaced": {
+    "Doc/library/imaplib.rst": [
+     "RFC2060"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151441,
+   "title": "[3.13] gh-77328: Update `base64` module RFC references to RFC 4648 (GH-151275)",
+   "closed_at": "2026-06-13T13:27:28Z",
+   "included": false,
+   "replaced": {
+    "Lib/base64.py": [
+     "RFC3548"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151439,
+   "title": "[3.14] gh-77328: Update `base64` module RFC references to RFC 4648 (GH-151275)",
+   "closed_at": "2026-06-13T13:01:07Z",
+   "included": false,
+   "replaced": {
+    "Lib/base64.py": [
+     "RFC3548"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151438,
+   "title": "[3.15] gh-77328: Update `base64` module RFC references to RFC 4648 (GH-151275)",
+   "closed_at": "2026-06-13T13:00:54Z",
+   "included": false,
+   "replaced": {
+    "Lib/base64.py": [
+     "RFC3548"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 153130,
+   "title": "[3.15] gh-68147: Fix RFC references in imaplib (GH-153126)",
+   "closed_at": "2026-07-05T14:41:39Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/imaplib.rst": [
+     "RFC2060"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 153131,
+   "title": "[3.14] gh-68147: Fix RFC references in imaplib (GH-153126)",
+   "closed_at": "2026-07-05T14:36:06Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/imaplib.rst": [
+     "RFC2060"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 153132,
+   "title": "[3.13] gh-68147: Fix RFC references in imaplib (GH-153126)",
+   "closed_at": "2026-07-05T14:32:51Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/imaplib.rst": [
+     "RFC2060"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 138908,
+   "title": "gh-138907: Support RFC 9309 in robotparser",
+   "closed_at": "2026-05-04T18:03:12Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 151275,
+   "title": "gh-77328: Update `base64` module docstring to reference RFC 4648",
+   "closed_at": "2026-06-13T12:21:54Z",
+   "included": true,
+   "replaced": {
+    "Lib/base64.py": [
+     "RFC3548"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 149376,
+   "title": "[3.13] gh-138907: Support RFC 9309 in robotparser (GH-138908)",
+   "closed_at": "2026-05-04T18:43:04Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 149374,
+   "title": "[3.14] gh-138907: Support RFC 9309 in robotparser (GH-138908)",
+   "closed_at": "2026-05-04T18:28:55Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 122540,
+   "title": "gh-83938, gh-122476: Stop incorrectly RFC 2047 encoding non-ASCII email addresses",
+   "closed_at": "2026-05-01T17:52:07Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 142340,
+   "title": "[3.14] Docs: fix RFC index reference for TLS 1.3 (GH-142262)",
+   "closed_at": "2025-12-06T14:51:09Z",
+   "included": false,
+   "replaced": {
+    "Lib/ssl.py": [
+     "RFC8466"
+    ],
+    "Lib/test/test_ssl.py": [
+     "RFC8466"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 142341,
+   "title": "[3.13] Docs: fix RFC index reference for TLS 1.3 (GH-142262)",
+   "closed_at": "2025-12-06T13:29:55Z",
+   "included": false,
+   "replaced": {
+    "Lib/ssl.py": [
+     "RFC8466"
+    ],
+    "Lib/test/test_ssl.py": [
+     "RFC8466"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 142262,
+   "title": "Docs: fix RFC index reference for TLS 1.3",
+   "closed_at": "2025-12-06T13:05:20Z",
+   "included": true,
+   "replaced": {
+    "Lib/ssl.py": [
+     "RFC8466"
+    ],
+    "Lib/test/test_ssl.py": [
+     "RFC8466"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 139435,
+   "title": "gh-139434: Update selected RFC 2822 references to RFC 5322",
+   "closed_at": "2025-11-04T19:46:08Z",
+   "included": true,
+   "replaced": {
+    "Doc/library/http.client.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/http.server.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/mailbox.rst": [
+     "RFC2822"
+    ],
+    "Doc/tutorial/stdlib.rst": [
+     "RFC2822"
+    ],
+    "Lib/email/_policybase.py": [
+     "RFC2822"
+    ],
+    "Lib/email/feedparser.py": [
+     "RFC2822"
+    ],
+    "Lib/email/generator.py": [
+     "RFC2822"
+    ],
+    "Lib/email/message.py": [
+     "RFC2822"
+    ],
+    "Lib/email/parser.py": [
+     "RFC2822"
+    ],
+    "Lib/http/client.py": [
+     "RFC2822"
+    ],
+    "Lib/smtplib.py": [
+     "RFC2822"
+    ],
+    "Lib/test/test_email/data/msg_35.txt": [
+     "RFC2822"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 129414,
+   "title": "[3.13] gh-129408: http: Fix typo 'RFF' to RFC' in docstring (GH-129411)",
+   "closed_at": "2025-01-28T18:48:51Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 135747,
+   "title": "[3.14] gh-89083: add links to RFC 9562 sections in UUID docs (GH-135684)",
+   "closed_at": "2025-06-20T11:09:14Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 124282,
+   "title": "[3.13] gh-124217, ipaddress: Add RFC 9637 reserved IPv6 block `3fff::/20` (GH-124240)",
+   "closed_at": "2024-10-07T21:45:59Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 124283,
+   "title": "[3.12] gh-124217, ipaddress: Add RFC 9637 reserved IPv6 block `3fff::/20` (GH-124240)",
+   "closed_at": "2024-09-20T12:20:28Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 137140,
+   "title": "[3.14] gh-136992: Add \"None\" as valid `SameSite` value as per RFC 6265bis (GH-137040)",
+   "closed_at": "2025-07-30T19:43:53Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 137141,
+   "title": "[3.13] gh-136992: Add \"None\" as valid `SameSite` value as per RFC 6265bis (GH-137040)",
+   "closed_at": "2025-07-27T20:08:47Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 141025,
+   "title": "[3.14] gh-139434: Update selected RFC 2822 references to RFC 5322 (GH-139435)",
+   "closed_at": "2025-11-04T21:23:16Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/http.client.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/http.server.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/mailbox.rst": [
+     "RFC2822"
+    ],
+    "Doc/tutorial/stdlib.rst": [
+     "RFC2822"
+    ],
+    "Lib/email/_policybase.py": [
+     "RFC2822"
+    ],
+    "Lib/email/feedparser.py": [
+     "RFC2822"
+    ],
+    "Lib/email/generator.py": [
+     "RFC2822"
+    ],
+    "Lib/email/message.py": [
+     "RFC2822"
+    ],
+    "Lib/email/parser.py": [
+     "RFC2822"
+    ],
+    "Lib/http/client.py": [
+     "RFC2822"
+    ],
+    "Lib/smtplib.py": [
+     "RFC2822"
+    ],
+    "Lib/test/test_email/data/msg_35.txt": [
+     "RFC2822"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 141024,
+   "title": "[3.13] gh-139434: Update selected RFC 2822 references to RFC 5322 (GH-139435)",
+   "closed_at": "2025-11-04T21:22:31Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/http.client.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/http.server.rst": [
+     "RFC2822"
+    ],
+    "Doc/library/mailbox.rst": [
+     "RFC2822"
+    ],
+    "Doc/tutorial/stdlib.rst": [
+     "RFC2822"
+    ],
+    "Lib/email/_policybase.py": [
+     "RFC2822"
+    ],
+    "Lib/email/feedparser.py": [
+     "RFC2822"
+    ],
+    "Lib/email/generator.py": [
+     "RFC2822"
+    ],
+    "Lib/email/message.py": [
+     "RFC2822"
+    ],
+    "Lib/email/parser.py": [
+     "RFC2822"
+    ],
+    "Lib/http/client.py": [
+     "RFC2822"
+    ],
+    "Lib/smtplib.py": [
+     "RFC2822"
+    ],
+    "Lib/test/test_email/data/msg_35.txt": [
+     "RFC2822"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 127828,
+   "title": "[3.13] gh-123401: Fix http.cookies module to support obsolete RFC 850 date format (GH-123405)",
+   "closed_at": "2024-12-11T15:38:09Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 127829,
+   "title": "[3.12] gh-123401: Fix http.cookies module to support obsolete RFC 850 date format (GH-123405)",
+   "closed_at": "2024-12-11T15:34:23Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 135247,
+   "title": "[3.14] gh-134151 Fix `TypeError` in `email.utils.decode_params` when sorting RFC 2231 continuations (GH-134687)",
+   "closed_at": "2025-06-08T07:38:39Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 135248,
+   "title": "[3.13] gh-134151 Fix `TypeError` in `email.utils.decode_params` when sorting RFC 2231 continuations (GH-134687)",
+   "closed_at": "2025-06-08T07:38:00Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 135255,
+   "title": "[3.14] gh-135244: generate UUID random Node ID with a CSPRNG as per RFC 9562, \u00a76.10.3 (GH-135226)",
+   "closed_at": "2025-06-08T12:13:05Z",
+   "included": false,
+   "replaced": {
+    "Lib/uuid.py": [
+     "RFC4122"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 9436,
+   "title": "gh-78319: add UTF8 marker per RFC",
+   "closed_at": "2025-09-29T06:03:06Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 135684,
+   "title": "gh-89083: Attaching RFC links in UUID docs",
+   "closed_at": "2025-06-20T11:03:42Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 137408,
+   "title": "[3.13] gh-135244: generate UUID random Node ID with a CSPRNG as per RFC 9562, \u00a76.10.3 (GH-135226)",
+   "closed_at": "2025-08-05T09:01:07Z",
+   "included": false,
+   "replaced": {
+    "Lib/uuid.py": [
+     "RFC4122"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 134687,
+   "title": "gh-134151 Fix TypeError in email.utils.decode_params() when sorting RFC 2231 continuations",
+   "closed_at": "2025-06-08T07:13:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 127820,
+   "title": "gh-127794: Validate header name according to rfc-5322",
+   "closed_at": "2025-03-30T12:29:29Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 121119,
+   "title": "gh-89083: add support for UUID version 7 (RFC 9562) ",
+   "closed_at": "2025-03-04T09:47:19Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 120650,
+   "title": "gh-89083: add support for UUID version 6 (RFC 9562) ",
+   "closed_at": "2025-03-02T11:41:56Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 129411,
+   "title": "gh-129408: http: Fix typo 'RFF' to RFC' in docstring",
+   "closed_at": "2025-01-28T18:25:52Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 128193,
+   "title": "gh-128192: support HTTP sha-256 digest authentication as per RFC-7617",
+   "closed_at": "2024-12-28T21:05:34Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 123405,
+   "title": "gh-123401: Fix http.cookies module to support obsolete RFC 850 date format",
+   "closed_at": "2024-12-11T13:28:19Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 127194,
+   "title": "GH-127236: `pathname2url()`: generate RFC 1738 URL for absolute POSIX path",
+   "closed_at": "2024-11-25T19:59:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 126966,
+   "title": "gh-85957: Add missing MIME types for images with RFCs",
+   "closed_at": "2024-11-18T18:13:21Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 123224,
+   "title": "gh-89083: add support for UUID version 8 (RFC 9562)",
+   "closed_at": "2024-11-12T18:08:49Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 126412,
+   "title": "gh-89416: Add RFC 9559 MIME types for Matroska formats",
+   "closed_at": "2024-11-11T21:08:55Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 124240,
+   "title": "gh-124217: Add RFC 9637 reserved IPv6 block `3fff::/20`",
+   "closed_at": "2024-09-20T11:01:28Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 97934,
+   "title": "gh-97646: Change `.js` and `.mjs` files mimetype to conform to RFC 9239",
+   "closed_at": "2022-10-07T19:00:53Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 95800,
+   "title": "[3.10] gh-95789: update documentation RFC base URL",
+   "closed_at": "2022-08-12T16:15:46Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 29456,
+   "title": "bpo-45743: Move __APPLE_USE_RFC_3542 into socketmodule.c (GH-29456)",
+   "closed_at": "2021-11-08T11:48:34Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27700,
+   "title": "bpo-36700: updated RFC references",
+   "closed_at": "2021-08-13T10:58:56Z",
+   "included": true,
+   "replaced": {
+    "Doc/library/base64.rst": [
+     "RFC3548"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27759,
+   "title": "[3.10] bpo-36700: [doc] Update base64 RFC references to RFC 4648 (GH-27700)",
+   "closed_at": "2021-08-13T11:21:53Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/base64.rst": [
+     "RFC3548"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27747,
+   "title": "bpo-44873: added test cases from RFC 4648",
+   "closed_at": "2021-08-13T10:50:38Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 27757,
+   "title": "[3.10] bpo-44873: Added test case based on recommended test cases from RFC 4648 (GH-27747)",
+   "closed_at": "2021-08-13T11:15:27Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 24137,
+   "title": "Fix id of 'Internet Message Format' RFC in email doc",
+   "closed_at": "2021-04-26T01:38:12Z",
+   "included": true,
+   "replaced": {
+    "Doc/library/email.compat32-message.rst": [
+     "RFC5233"
+    ],
+    "Doc/library/email.rst": [
+     "RFC5233"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 25613,
+   "title": "[3.9] Fix id of 'Internet Message Format' RFC in email doc (GH-24137)",
+   "closed_at": "2021-04-26T01:42:56Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/email.compat32-message.rst": [
+     "RFC5233"
+    ],
+    "Doc/library/email.rst": [
+     "RFC5233"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 25614,
+   "title": "[3.8] Fix id of 'Internet Message Format' RFC in email doc (GH-24137)",
+   "closed_at": "2021-04-26T01:42:27Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/email.compat32-message.rst": [
+     "RFC5233"
+    ],
+    "Doc/library/email.rst": [
+     "RFC5233"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 22967,
+   "title": "[WIP/RFC] bpo-15872: tests: remove oddity from test_rmtree_errors",
+   "closed_at": "2020-12-21T06:38:03Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 19526,
+   "title": "bpo-35569: Expose RFC 3542 IPv6 socket options on macOS",
+   "closed_at": "2020-05-17T06:32:47Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 18551,
+   "title": "bpo-39678 RFC refactor queue manager thread",
+   "closed_at": "2020-03-01T20:49:15Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 173,
+   "title": "bpo-16285: Update urllib quoting to RFC 3986",
+   "closed_at": "2017-02-25T09:00:29Z",
+   "included": true,
+   "replaced": {
+    "Lib/test/test_urllib.py": [
+     "RFC2396"
+    ]
+   }
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 7103,
+   "title": "bpo-33641: Convert RFC references into links.",
+   "closed_at": "2018-05-31T04:39:01Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 9085,
+   "title": "[RFC] bpo-34585: Don't do runtime test to get float byte order",
+   "closed_at": "2018-09-19T06:25:48Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 7276,
+   "title": "[3.6] bpo-33641: Convert RFC references into links. (GH-7103)",
+   "closed_at": "2018-05-31T06:11:07Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 7271,
+   "title": "[3.7] bpo-33641: Convert RFC references into links. (GH-7103)",
+   "closed_at": "2018-05-31T05:33:23Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 2023,
+   "title": "[3.6] bpo-19180: Updated references for RFC 1750, RFC 3280 & RFC 4366",
+   "closed_at": "2017-06-09T12:37:53Z",
+   "included": false,
+   "replaced": {
+    "Doc/library/ssl.rst": [
+     "RFC1750",
+     "RFC3280",
+     "RFC4366"
+    ],
+    "Modules/_ssl.c": [
+     "RFC1750"
+    ],
+    "Modules/clinic/_ssl.c.h": [
+     "RFC1750"
+    ]
+   },
+   "excluded": "backport of another PR"
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 3387,
+   "title": "bpo-21649: Add RFC 7525 and Mozilla server side TLS",
+   "closed_at": "2017-09-06T23:19:57Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 3399,
+   "title": "[3.6] bpo-21649: Add RFC 7525 and Mozilla server side TLS (GH-3387)",
+   "closed_at": "2017-09-07T00:31:32Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 3400,
+   "title": "[2.7] bpo-21649: Add RFC 7525 and Mozilla server side TLS (GH-3387)",
+   "closed_at": "2017-09-07T00:31:48Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "python/cpython",
+   "pr": 148,
+   "title": "bpo-19180: Updated reference for RFC 1750 and RFC 3280",
+   "closed_at": "2017-06-09T09:43:59Z",
+   "included": true,
+   "replaced": {
+    "Doc/library/ssl.rst": [
+     "RFC1750",
+     "RFC3280",
+     "RFC4366"
+    ],
+    "Modules/_ssl.c": [
+     "RFC1750"
+    ],
+    "Modules/clinic/_ssl.c.h": [
+     "RFC1750"
+    ]
+   }
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 1383,
+   "title": "Strictly apply RFC 3597 compression rules when decompressing.",
+   "closed_at": "2026-10-28T01:31:52Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 1324,
+   "title": "Tighten SVCB/HTTPS presentation and wire parsing per RFC 9460",
+   "closed_at": "2026-10-07T13:31:24Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 676,
+   "title": "Add support for RFC 6742 types.",
+   "closed_at": "2021-07-17T23:28:09Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 1002,
+   "title": "Add support for RFC 4471 predecessor() and successor() methods.",
+   "closed_at": "2023-11-04T23:22:35Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 955,
+   "title": "add some missing DNSSEC RFCs",
+   "closed_at": "2023-07-13T00:06:22Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 797,
+   "title": "Padding (RFC 7830, RFC 8467)",
+   "closed_at": "2022-03-23T12:57:37Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 578,
+   "title": "Adds SMIMEA record type, RFC 8162",
+   "closed_at": "2020-08-27T12:45:24Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 511,
+   "title": "DS: support mnemonic format from RFC 4034 section 5.3",
+   "closed_at": "2020-06-18T12:44:54Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 17,
+   "title": "Add TLSA (RFC 6698) record type",
+   "closed_at": "2012-09-25T16:35:13Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "rthalley/dnspython",
+   "pr": 26,
+   "title": " Remove DNSKEY keytag uniqueness assumption (RFC 4034, section 8)",
+   "closed_at": "2013-03-31T10:33:29Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "square/okhttp",
+   "pr": null,
+   "title": null,
+   "closed_at": null,
+   "included": false,
+   "replaced": {},
+   "error": "search failed: HTTP 422"
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 1487,
+   "title": "Implement RFC 3986 URL parsing",
+   "closed_at": "2018-12-07T16:19:22Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 409,
+   "title": "Update references to RFC 2616",
+   "closed_at": "2014-06-07T17:25:30Z",
+   "included": true,
+   "replaced": {
+    "urllib3/_collections.py": [
+     "RFC2616"
+    ],
+    "urllib3/poolmanager.py": [
+     "RFC2616"
+    ],
+    "urllib3/response.py": [
+     "RFC2616"
+    ]
+   }
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 642,
+   "title": "[RFC] Warn if header parsing failed",
+   "closed_at": "2015-06-12T16:49:28Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 233,
+   "title": "RFC: Fix WantReadError when using pyOpenSSL and Timeouts",
+   "closed_at": "2013-08-27T19:40:55Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 110,
+   "title": "Make the Content-Encoding value case insensitive per RFC 2616.",
+   "closed_at": "2012-10-21T19:03:03Z",
+   "included": false,
+   "replaced": {}
+  },
+  {
+   "repo": "urllib3/urllib3",
+   "pr": 1318,
+   "title": "Make header parsing more RFC-7230-compliant",
+   "closed_at": "2018-01-30T13:07:41Z",
+   "included": false,
+   "replaced": {}
+  }
+ ]
+}

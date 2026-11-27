@@ -1304,6 +1304,21 @@
  },
  {
   "i": 85,
+  "project": "nghttp2",
+  "file": "lib/includes/nghttp2/nghttp2.h",
+  "line": 4231,
+  "rfc": "RFC7540",
+  "rfc_title": "Hypertext Transfer Protocol Version 2 (HTTP/2)",
+  "replaced_by": [
+   "RFC9113"
+  ],
+  "replacement_kinds": [
+   "edition"
+  ],
+  "context": " *\n * .. warning::\n *\n *   Deprecated.  :rfc:`7540` priorities are deprecated by\n *   :rfc:`9113`.  Consider migrating to :rfc:`9218` extensible\n *   prioritization scheme.\n *"
+ },
+ {
+  "i": 86,
   "project": "openssl",
   "file": "doc/man1/openssl-x509.pod.in",
   "line": 236,
@@ -1318,7 +1333,7 @@
   "context": "or its successors RFC 2822 and RFC 5322. It outputs dates in the format\n\"Mmm DD HH:MM:SS YYYY GMT\" (e.g., \"Jul 31 22:20:50 2017 GMT\"). The month\nappears before the day, unlike all three RFCs, which put the day first.\nThe 4-digit year differs from RFC 822 (which used 2-digit years), and the\ntimezone name \"GMT\" is obsolete per RFC 2822 and RFC 5322 (which require\nnumeric offsets such as \"+0000\").\n"
  },
  {
-  "i": 86,
+  "i": 87,
   "project": "undici",
   "file": "lib/llhttp/constants.js",
   "line": 117,
@@ -1333,7 +1348,7 @@
   "context": "    'UNLINK': 32,\n    /* icecast */\n    'SOURCE': 33,\n    /* RFC-7540, section 11.6 */\n    'PRI': 34,\n    /* RFC-2326 RTSP */\n    'DESCRIBE': 35,"
  },
  {
-  "i": 87,
+  "i": 88,
   "project": "cpython-Lib",
   "file": "http/cookiejar.py",
   "line": 786,
@@ -1348,7 +1363,7 @@
   "context": "        self.value = value\n        self.port = port\n        self.port_specified = port_specified\n        # normalise case, as per RFC 2965 section 3.3.3\n        self.domain = domain.lower()\n        self.domain_specified = domain_specified\n        # Sigh.  We need to know whether the domain given in the"
  },
  {
-  "i": 88,
+  "i": 89,
   "project": "hyper",
   "file": "src/proto/h1/role.rs",
   "line": 1330,
@@ -1364,7 +1379,7 @@
   "context": "        }\n\n        if inc.headers.contains_key(header::TRANSFER_ENCODING) {\n            // https://tools.ietf.org/html/rfc7230#section-3.3.3\n            // If Transfer-Encoding header is present, and 'chunked' is\n            // not the final encoding, and this is a Request, then it is\n            // malformed. A server should respond with 400 Bad Request."
  },
  {
-  "i": 89,
+  "i": 90,
   "project": "haproxy",
   "file": "src/http_htx.c",
   "line": 849,
@@ -1379,7 +1394,7 @@
   "context": "\telse {\n\t\tsl->flags |= HTX_SL_F_HAS_AUTHORITY;\n\t\tif (sl->info.req.meth != HTTP_METH_CONNECT) {\n\t\t\t// absolute-form (RFC7320 #5.3.2)\n\t\t\tsl->flags |= HTX_SL_F_HAS_SCHM;\n\t\t\tif (uri.len > 4 && (uri.ptr[0] | 0x20) == 'h')\n\t\t\t\tsl->flags |= ((uri.ptr[4] == ':') ? HTX_SL_F_SCHM_HTTP : HTX_SL_F_SCHM_HTTPS);"
  },
  {
-  "i": 90,
+  "i": 91,
   "project": "haproxy",
   "file": "include/haproxy/h2.h",
   "line": 82,
@@ -1394,7 +1409,7 @@
   "context": "\tH2_FT_PING            = 0x06,     // RFC7540 #6.7\n\tH2_FT_GOAWAY          = 0x07,     // RFC7540 #6.8\n\tH2_FT_WINDOW_UPDATE   = 0x08,     // RFC7540 #6.9\n\tH2_FT_CONTINUATION    = 0x09,     // RFC7540 #6.10\n\tH2_FT_ENTRIES /* must be last */\n} __attribute__((packed));\n"
  },
  {
-  "i": 91,
+  "i": 92,
   "project": "nghttp2",
   "file": "lib/includes/nghttp2/nghttp2.h",
   "line": 5948,
@@ -1409,7 +1424,7 @@
   "context": " *\n * Returns nonzero if the |value| which is supposed to be the value of\n * the :method header field is valid according to\n * https://datatracker.ietf.org/doc/html/rfc7231#section-4 and\n * https://datatracker.ietf.org/doc/html/rfc7230#section-3.2.6\n */\nNGHTTP2_EXTERN int nghttp2_check_method(const uint8_t *value, size_t len);"
  },
  {
-  "i": 92,
+  "i": 93,
   "project": "okhttp",
   "file": "okhttp/src/commonJvmAndroid/kotlin/okhttp3/MultipartBody.kt",
   "line": 397,
@@ -1424,7 +1439,7 @@
   "context": "    /**\n     * Appends a quoted-string to a StringBuilder.\n     *\n     * RFC 2388 is rather vague about how one should escape special characters in form-data\n     * parameters, and as it turns out Firefox and Chrome actually do rather different things, and\n     * both say in their comments that they're not really sure what the right approach is. We go\n     * with Chrome's behavior (which also experimentally seems to match what IE does), but if you"
  },
  {
-  "i": 93,
+  "i": 94,
   "project": "oauthlib",
   "file": "oauthlib/oauth1/rfc5849/signature.py",
   "line": 151,
@@ -1441,7 +1456,7 @@
   "context": "    if not scheme:\n        raise ValueError('missing scheme')\n\n    # Per `RFC 2616 section 5.1.2`_:\n    #\n    # Note that the absolute path cannot be empty; if none is present in\n    # the original URI, it MUST be given as \"/\" (the server root)."
  },
  {
-  "i": 94,
+  "i": 95,
   "project": "cpython-Lib",
   "file": "http/cookiejar.py",
   "line": 1655,
@@ -1456,7 +1471,7 @@
   "context": "            self._process_rfc2109_cookies(ns_cookies)\n\n            # Look for Netscape cookies (from Set-Cookie headers) that match\n            # corresponding RFC 2965 cookies (from Set-Cookie2 headers).\n            # For each match, keep the RFC 2965 cookie and ignore the Netscape\n            # cookie (RFC 2965 section 9.1).  Actually, RFC 2109 cookies are\n            # bundled in with the Netscape cookies for this purpose, which is"
  },
  {
-  "i": 95,
+  "i": 96,
   "project": "go-crypto-tls",
   "file": "internal/upki/check.go",
   "line": 236,
@@ -1471,7 +1486,7 @@
   "context": "//\n// It returns errMalformedSCTExtension if the extension is present but malformed.\n//\n// See RFC 6962 \u00a73.3 for more information.\nfunc ExtractSCTs(cert *x509.Certificate) ([]SCT, error) {\n\tvar raw []byte\n\tfor _, ext := range cert.Extensions {"
  },
  {
-  "i": 96,
+  "i": 97,
   "project": "curl",
   "file": "lib/http.c",
   "line": 1370,
@@ -1488,7 +1503,7 @@
   "context": "                        const char *content, /* content string to find */\n                        const size_t clen) /* len of the content in bytes */\n{\n  /* RFC2616, section 4.2 says: \"Each header field consists of a name followed\n   * by a colon (\":\") and the field value. Field names are case-insensitive.\n   * The field value MAY be preceded by any amount of LWS, though a single SP\n   * is preferred.\" */"
  },
  {
-  "i": 97,
+  "i": 98,
   "project": "haproxy",
   "file": "doc/lua-api/index.rst",
   "line": 455,
@@ -1504,7 +1519,7 @@
   "context": "\n  This function take a string representing http date, and returns an integer\n  containing the corresponding date with a epoch format. A valid http date\n  me respect the format IMF, RFC850 or ASCTIME.\n\n  :param string date: a date http-date formatted\n  :returns: integer containing epoch date"
  },
  {
-  "i": 98,
+  "i": 99,
   "project": "nghttp2",
   "file": "src/nghttpd.cc",
   "line": 417,
@@ -1517,22 +1532,5 @@
    "edition"
   ],
   "context": "        config.ktls = true;\n        break;\n      case 13:\n        // no-rfc7540-pri option\n        std::println(stderr,\n                     \"[WARNING]: --no-rfc7540-pri option has been deprecated.\");\n        break;"
- },
- {
-  "i": 99,
-  "project": "undici",
-  "file": "lib/web/websocket/util.js",
-  "line": 96,
-  "rfc": "RFC2616",
-  "rfc_title": "Hypertext Transfer Protocol -- HTTP/1.1",
-  "replaced_by": [
-   "RFC9110",
-   "RFC9111",
-   "RFC9112"
-  ],
-  "replacement_kinds": [
-   "split"
-  ],
-  "context": "\n/**\n * @see https://datatracker.ietf.org/doc/html/rfc6455\n * @see https://datatracker.ietf.org/doc/html/rfc2616\n * @see https://bugs.chromium.org/p/chromium/issues/detail?id=398407\n * @param {string} protocol\n * @returns {boolean}"
  }
 ]
