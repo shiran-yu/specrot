@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import functools
+import re
 import threading
 from pathlib import Path
 
@@ -34,8 +35,10 @@ def explained(fn):
         except graph.InputError as e:
             raise ToolError(str(e)) from e
         except relate.Error as e:
-            raise ToolError(f"Relate rejected the query: {e}. (The store is read-only; get_schema lists "
-                            f"labels, relationship types and properties.)") from e
+            write = re.search(r"(?i)read.?only|write|\b(create|merge|delete|set|remove)\b", str(e))
+            raise ToolError(f"Relate rejected the query: {e}. ("
+                            + ("The store is read-only. " if write else "")
+                            + "get_schema lists labels, relationship types and properties.)") from e
     return wrapper
 
 
