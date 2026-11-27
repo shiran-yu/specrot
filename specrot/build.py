@@ -197,6 +197,11 @@ PROTOCOL_TITLE = re.compile(r"(?i)\bprotocol\b|S/MIME")
 # every OBSOLETES pair that `specrot fix` proposes on the 26 showcase projects (76 pairs); reason from the new RFC.
 # Hand-reviewed protocol version changes the titles do not show as such (no "Protocol" in the title).
 VERSION_PAIRS = {("RFC6962", "RFC9162"): "CT 2.0 is a new, incompatible protocol version; CT v1 logs still run 6962"}
+# the replacement took over one part only; the rest moved elsewhere (an update), so a person picks the target
+PARTIAL = {
+    ("RFC1738", "RFC4248"): "only the telnet URI scheme moved to 4248; generic URL syntax is RFC 3986 (an update of 1738)",
+    ("RFC1738", "RFC4266"): "only the gopher URI scheme moved to 4266; generic URL syntax is RFC 3986 (an update of 1738)",
+}
 REDESIGN = {
     ("RFC6874", "RFC9844"): "removes zone identifiers from URI syntax; only user-interface entry remains",
     ("RFC2385", "RFC5925"): "TCP-AO is a new option with its own keys and MACs, not a revision of TCP MD5",
@@ -212,7 +217,7 @@ def classify_obsoletes(conn) -> None:
         MATCH (n:RFC)-[:OBSOLETES]->(o:RFC)
         RETURN o.id AS old, o.title AS ot, n.id AS new, n.title AS nt, COUNT { (o)<-[:OBSOLETES]-() } AS k""")]
     edits = [{"old": r["old"], "new": r["new"],
-              "kind": "redesign" if (r["old"], r["new"]) in REDESIGN else "version" if (r["old"], r["new"]) in VERSION_PAIRS
+              "kind": "redesign" if (r["old"], r["new"]) in REDESIGN else "partial" if (r["old"], r["new"]) in PARTIAL else "version" if (r["old"], r["new"]) in VERSION_PAIRS
                       else obsoletes_kind(r["ot"], r["nt"], r["k"])}
              for r in rows]
     conn.execute("""UNWIND $rows AS x MATCH (:RFC {id: x.new})-[e:OBSOLETES]->(:RFC {id: x.old})

@@ -14,7 +14,8 @@ def test_readme_matches_facts():
                    f"{f['nodes']['RFC']:,} `RFC`s", f"{f['nodes']['Erratum']:,} `Erratum`",
                    f"{f['relationships']['NORMATIVE_REF']:,} `NORMATIVE_REF`",
                    f"{f['relationships']['INFORMATIVE_REF']:,} `INFORMATIVE_REF`",
-                   f"{f['nodes']['File']:,} `File`s",
+                   f"{f['nodes']['File']:,} `File`s", f"{f['nodes']['Section']:,} `Section`s",
+                   f"{f['relationships']['CONTINUES_AS']:,}",
                    f"Of the {f['sections']['cited']}\n  distinct obsolete (RFC, section) pairs",
                    f"{f['sections']['mapped']} have a home", f"({f['sections']['exact']} by identical heading"]:
         assert needle in readme, needle

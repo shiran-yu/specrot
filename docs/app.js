@@ -124,9 +124,10 @@ const DEPRECATING = /deprecat|prohibit|obsolet|historic|retir|removing|sunset/i;
 // Kinds of OBSOLETES edges, computed when the store is built (specrot/build.py).
 const KIND_TEXT = { edition: "new edition of the same specification", version: "newer protocol version: the old RFC still defines the old version",
   split: "content split across several documents", retired: "retired without a replacement",
-  redesign: "replaced by a different design: check before switching the citation" };
+  redesign: "replaced by a different design: check before switching the citation",
+  partial: "only one part of it moved here: check the updates for the rest" };
 // same rule as graph.py path_kind: the first hop decides (4492 -> 8422 -> 9846 is a replaced edition)
-const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k[0] === "version" ? "version" : k.includes("redesign") ? "redesign" : k.includes("split") ? "split" : "edition";
+const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k[0] === "version" ? "version" : k.includes("redesign") ? "redesign" : k.includes("partial") ? "partial" : k.includes("split") ? "split" : "edition";
 const sameVersion = (r) => { const j = r.kinds.indexOf("version"); return j > 0 ? r.chain[j] : null; };
 
 function showQuery(el, q = lastQuery) {

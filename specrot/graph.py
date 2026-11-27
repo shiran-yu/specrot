@@ -93,6 +93,7 @@ KIND_TEXT = {
     "split": "content split across several documents",
     "retired": "retired without a replacement",
     "redesign": "replaced by a different design: check before switching the citation",
+    "partial": "only one part of it moved here: check the updates for the rest",
 }
 
 
@@ -105,6 +106,8 @@ def path_kind(kinds: list[str]) -> str:
         return "version"
     if "redesign" in kinds:
         return "redesign"
+    if "partial" in kinds:
+        return "partial"
     if "split" in kinds:
         return "split"
     return "edition"

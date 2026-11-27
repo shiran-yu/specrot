@@ -398,3 +398,13 @@ def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
     edits, _ = fix.plan(conn, tmp_path)
     assert [e.line for e in edits] == [13, 14]
     assert "section 13.1.1 of RFC 9110" in edits[1].new
+
+
+def test_partial_obsoletion_is_left_to_a_person(conn, tmp_path):
+    from specrot import fix
+    v = graph.check(conn, 1738)
+    assert {r["kind"] for r in v.replaced_by} == {"partial"}
+    assert "RFC3986" in [u["id"] for u in v.updated_by]
+    (tmp_path / "a.py").write_text("# URL syntax per RFC 1738\n")
+    edits, skipped = fix.plan(conn, tmp_path)
+    assert not edits and "only part of it was replaced" in skipped[0][1]

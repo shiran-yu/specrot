@@ -17,26 +17,26 @@
     "exact": 208
   },
   "nodes": {
-    "Section": 51671,
+    "Section": 51653,
     "Erratum": 8215,
+    "RFC": 9869,
     "WorkingGroup": 532,
     "Area": 16,
-    "RFC": 9869,
-    "Series": 377,
     "Project": 26,
-    "File": 2442
+    "File": 2442,
+    "Series": 377
   },
   "relationships": {
     "OBSOLETES": 1546,
     "UPDATES": 2172,
     "INFORMATIVE_REF": 69790,
-    "HAS_SECTION": 51671,
+    "HAS_SECTION": 51653,
     "FROM_WG": 6365,
     "NORMATIVE_REF": 58954,
     "INCLUDES": 451,
     "AMENDS": 8215,
     "IN_AREA": 530,
-    "CONTINUES_AS": 29352,
+    "CONTINUES_AS": 29343,
     "HAS_FILE": 2442,
     "CITES": 4795
   },

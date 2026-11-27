@@ -17,7 +17,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from . import graph, scan
-from .build import REDESIGN, _versions
+from .build import PARTIAL, REDESIGN, _versions
 
 HISTORY = re.compile(r"(?i)\b(obsolet\w*|supersed\w*|replac\w*|deprecat\w*|formerly|previously|historic\w*|legacy|"
                      r"older|earlier|original\w*|was updated|updated by|backward\w*|compatib\w*|released|introduced|"
@@ -42,6 +42,9 @@ def _target(c: scan.Citation, v: graph.Verdict) -> tuple[str, str | None] | str:
     if any(r["kind"] == "redesign" for r in v.replaced_by):
         why = next((REDESIGN[k] for r in v.replaced_by for k in REDESIGN if k[0] in r["chain"] and k[1] in r["chain"]), "")
         return f"replaced by a different design ({why}): a person decides"
+    if any(r["kind"] == "partial" for r in v.replaced_by):
+        why = next((PARTIAL[k] for r in v.replaced_by for k in PARTIAL if k[0] in r["chain"] and k[1] in r["chain"]), "")
+        return f"only part of it was replaced ({why}): a person decides"
     if sv := next((r["same_version"] for r in v.replaced_by if r.get("same_version")), None):
         return f"a newer protocol version is in the chain: {sv} (same version) or {', '.join(v.current)}?"
     vo = _versions(v.title or "")

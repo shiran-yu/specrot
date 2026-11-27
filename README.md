@@ -89,9 +89,9 @@ server and the browser explorer all run these Cypher queries against the same `s
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
   same file; reads open it with `read_only=True`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
-  `WorkingGroup`s in 16 `Area`s, 51,671 `Section`s, and 26 scanned `Project`s with 2,442 `File`s.
+  `WorkingGroup`s in 16 `Area`s, 51,653 `Section`s, and 26 scanned `Project`s with 2,442 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,352
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`, `HAS_SECTION`, and 29,343
   `CONTINUES_AS` between sections of an RFC and its replacements (27,799 with an identical heading). Of the normative references,
   42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
   derived from those series' members (marked `{via: 'BCP14'}`).
@@ -235,6 +235,8 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   RTSP → RTSP 2.0, while PKCS #1 v2.1 → v2.2 is a new edition and IPv6 or HTTP/1.1 in a title is not
   a version change; tests in `tests/test_specrot.py::test_obsoletes_kind`; number of successors), so it can be wrong for an unusual title. All 55
   `version` edges are listed by `MATCH (n)-[e:OBSOLETES {kind:'version'}]->(o) RETURN o.title, n.title`.
+  Two edges are marked `partial` by hand (`build.PARTIAL`: RFC 1738's telnet and gopher schemes moved to
+  RFC 4248 and 4266, while URL syntax went to RFC 3986, which only *updates* 1738), so `fix` leaves those too.
   Six edges are marked `redesign` by hand, each with its reason (`build.REDESIGN`: RFC 6874 → 9844,
   TCP MD5 → TCP-AO, HTML 2.0 and form upload → text/html, BSD syslog → RFC 5424, Cookie2 → RFC 6265):
   the replacement is a different design, so `fix` leaves those citations to a person. Only the 76
