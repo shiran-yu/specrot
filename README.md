@@ -87,7 +87,8 @@ server and the browser explorer all run these Cypher queries against the same `s
 - **Why this mode:** the graph is a dataset that ships with the code: one file to commit, clone,
   open read-only from the Python package, the `relate` CLI and the MCP server, and replace as a
   whole when the RFC index changes. Nothing to start, no server. Writes (`scan --save`) go to the
-  same file; reads open it with `read_only=True`.
+  same file; reads open it with `read_only=True`. A write appends to the file (one save doubled it to 16 MB
+  in a test), so save into a copy (`--store my.rl`) and compact with `relate clone`.
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
   `WorkingGroup`s in 16 `Area`s, 51,653 `Section`s, and 26 scanned `Project`s with 2,442 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
@@ -172,8 +173,9 @@ RFC5246                      # we still ship TLS 1.2
 ```
 
 `specrot scan . --baseline` appends today's findings as such lines, so a CI gate added to an existing
-project fails only on new stale citations. specrot's own repository passes its own gate in CI this way ([`.specrot-ignore`](.specrot-ignore)): its
-examples and evaluation data cite old RFCs on purpose.
+project fails only on new stale citations. specrot's own repository runs its own gate in CI ([`.specrot-ignore`](.specrot-ignore)): data, evaluation
+files and docs about obsolete RFCs are accepted wholesale, while the code and the skill are accepted one RFC at a
+time, so a new stale citation there fails the build.
 
 ### For coding agents
 

@@ -1,9 +1,36 @@
-# specrot's own repository: these files cite old RFCs on purpose (examples, evaluation data, the RFC graph)
+# specrot's own repository. Data, evaluation and docs about obsolete RFCs are accepted wholesale;
+# the code and the skill are accepted one RFC at a time, so a new stale citation there fails CI.
 * docs/*            # explorer data and its demo text
 * scripts/*         # evaluation inputs, labels and results
 * facts.json        # numbers about the graph
 * README.md         # examples and results about obsolete RFCs
-* skills/*          # agent instructions with examples
-* specrot/*         # code comments and help text naming the RFCs it handles
-* action.yml        # example citations
 * EVIDENCE.md       # measurements about obsolete RFCs
+* action.yml        # example citations
+RFC1738 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC1866 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC1867 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC2385 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC2965 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC3164 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC6874 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC4347 specrot/build.py  # hand-curated edge lists (PARTIAL, REDESIGN, VERSION_PAIRS) name the old RFCs
+RFC7231 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2616 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC822 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC7232 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC8446 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2822 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC4492 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2109 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2396 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2732 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC3513 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC7159 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC7230 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC7540 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC850 specrot/*  # comments and help text give these as worked examples of stale citations
+RFC2822 skills/*  # the skill's examples of stale citations
+RFC7230 skills/*  # the skill's examples of stale citations
+RFC7231 skills/*  # the skill's examples of stale citations
+RFC7540 skills/*  # the skill's examples of stale citations
+RFC8446 skills/*  # the skill's examples of stale citations

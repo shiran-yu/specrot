@@ -48,9 +48,9 @@ def _verdict_tree(v: graph.Verdict) -> Tree:
         for p in v.replaced_by:
             colour = "dim" if p["kind"] == "retired" else "bold green"
             r.add(" → ".join(p["chain"][:-1] + [f"[{colour}]{p['current']}[/]"]) + f"  {p['title']}"
-                  + f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]"
-                  + (f"\n  [dim]staying on the older protocol version? {p['same_version']} is its newest edition[/]"
-                     if p.get("same_version") else ""))
+                  + (f"  [dim](new edition, then a newer protocol version)[/]\n  code on the older protocol version: "
+                     f"[bold green]{p['same_version']}[/] is current for it" if p.get("same_version")
+                     else f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]"))
     if v.section and v.obsolete:
         s = t.add(f"[bold]section {v.section}[/] {v.section_now[0]['was'] if v.section_now else ''} (CONTINUES_AS, by heading)")
         for h in v.section_now:
