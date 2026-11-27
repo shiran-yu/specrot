@@ -2,501 +2,501 @@
 {
 "i": 0,
 "label": "update",
-"note": "Cites RFC 2616 4.4 for body-length rules"
+"note": "cites RFC 2616 s4.4 for body-length rules"
 },
 {
 "i": 1,
 "label": "legacy",
-"note": "Deliberately handles RFC 2965 and Netscape cookie protocols"
+"note": "deliberately supports RFC 2965 cookies"
 },
 {
 "i": 2,
 "label": "legacy",
-"note": "List of supported SASL RFCs including old ones"
+"note": "list of supported mechanisms including old ones"
 },
 {
 "i": 3,
 "label": "update",
-"note": "Cites RFC 8446 section for signature schemes"
+"note": "cites RFC 8446 4.2.3 as spec"
 },
 {
 "i": 4,
 "label": "update",
-"note": "Cites RFC3280 for IP address encoding"
+"note": "IP address encoding cites RFC3280"
 },
 {
 "i": 5,
 "label": "update",
-"note": "Cites RFC7540 for WINDOW_UPDATE handling"
+"note": "frame behaviour cites RFC7540 6.9"
 },
 {
 "i": 6,
 "label": "update",
-"note": "Quotes RFC7231 grammar as spec reference"
+"note": "date grammar copied from RFC7231"
 },
 {
 "i": 7,
 "label": "identifier",
-"note": "rfc2253 is a format option name"
+"note": "rfc2253 is a config format keyword"
 },
 {
 "i": 8,
 "label": "legacy",
-"note": "Debug message for RFC 2965 cookie domain"
+"note": "RFC 2965 cookies handled deliberately"
 },
 {
 "i": 9,
-"label": "update",
-"note": "Cites RFC 7507 fallback behaviour"
+"label": "legacy",
+"note": "no replacement RFC; fallback SCSV behaviour"
 },
 {
 "i": 10,
 "label": "update",
-"note": "Cites RFC 8446 section for key_share"
+"note": "cites RFC 8446 section 4.2.8"
 },
 {
 "i": 11,
 "label": "legacy",
-"note": "Policy covers Netscape and RFC 2965 cookies deliberately"
+"note": "policy deliberately covers RFC 2965 cookies"
 },
 {
 "i": 12,
 "label": "update",
-"note": "Recommends date header per RFC 7231"
+"note": "date header recommendation cites RFC 7231"
 },
 {
 "i": 13,
 "label": "update",
-"note": "Cites RFC 2109 for quoting rules"
+"note": "quoting rule cites obsolete RFC 2109"
 },
 {
 "i": 14,
 "label": "legacy",
-"note": "Deliberately lists headers from obsoleted RFC 2616"
+"note": "explicit compatibility note about obsoleted RFC 2616"
 },
 {
 "i": 15,
 "label": "update",
-"note": "Quotes RFC7232 section for weak comparison"
+"note": "quotes RFC 7232 3.2 as governing rule"
 },
 {
 "i": 16,
 "label": "update",
-"note": "Links RFC7231 section for date formats"
+"note": "doc :see: link to RFC 7231"
 },
 {
 "i": 17,
 "label": "identifier",
-"note": "rfc2253 is a format option name"
+"note": "rfc2253 is a config format keyword"
 },
 {
 "i": 18,
 "label": "update",
-"note": "Cites RFC7540 for SETTINGS frame length"
+"note": "frame check cites RFC7540#6.5"
 },
 {
 "i": 19,
 "label": "update",
-"note": "Assumes UTF-8 based on RFC 4627"
+"note": "UTF-8 default cites RFC 4627"
 },
 {
 "i": 20,
 "label": "update",
-"note": "Assumes UTF-8 based on RFC 4627"
+"note": "UTF-8 default cites RFC 4627"
 },
 {
 "i": 21,
-"label": "not-a-citation",
-"note": "IMAP RFC822 fetch data item name"
+"label": "identifier",
+"note": "RFC822 is an IMAP FETCH item name"
 },
 {
 "i": 22,
 "label": "legacy",
-"note": "History note on RFC 822/2822/5322 year format"
+"note": "history note on RFC 822/2822/5322"
 },
 {
 "i": 23,
-"label": "update",
-"note": "Quotes RFC4366 on certificate status"
+"label": "legacy",
+"note": "ciphersuites' origin; legacy TLS 1.2 constants"
 },
 {
 "i": 24,
 "label": "update",
-"note": "Links RFC7230 for authority-form"
+"note": "quotes RFC4366 for status request"
 },
 {
 "i": 25,
 "label": "update",
-"note": "Quotes RFC7231 grammar as spec reference"
+"note": "authority-form cites RFC 7230 5.3.3"
 },
 {
 "i": 26,
 "label": "update",
-"note": "Status code comments cite RFC 7231 sections"
+"note": "date grammar copied from RFC7231"
 },
 {
 "i": 27,
 "label": "update",
-"note": "Cites RFC 7234 for header combining"
+"note": "status code table cites RFC 7231"
 },
 {
 "i": 28,
-"label": "not-a-citation",
-"note": "rfc822 is a MIME subtype name"
+"label": "update",
+"note": "header combining defined by RFC 7234"
 },
 {
 "i": 29,
-"label": "update",
-"note": "Cites RFC 7234 for secondary key"
+"label": "not-a-citation",
+"note": "message/rfc822 media subtype"
 },
 {
 "i": 30,
 "label": "update",
-"note": "Cites RFC 8446 for supported_groups"
+"note": "secondary key cites RFC 7234#4.1"
 },
 {
 "i": 31,
 "label": "update",
-"note": "Cites RFC 8446 for small subgroup attacks"
+"note": "supported_groups cites RFC 8446 4.2.7"
 },
 {
 "i": 32,
 "label": "update",
-"note": "Cites RFC 2616 for absolute URL host"
+"note": "cites RFC 8446 section 4.2.8.1"
 },
 {
 "i": 33,
-"label": "identifier",
-"note": "rfc2253 is a format option string"
+"label": "update",
+"note": "absolute URL host rule per RFC 2616"
 },
 {
 "i": 34,
-"label": "update",
-"note": "Cites RFC 2617 for basic auth encoding"
+"label": "identifier",
+"note": "rfc2253 is a format argument value"
 },
 {
 "i": 35,
-"label": "legacy",
-"note": "Quotes RFC 6749 text referencing RFC2616"
+"label": "update",
+"note": "Basic auth encoding cites RFC 2617"
 },
 {
 "i": 36,
-"label": "update",
-"note": "Cites rfc2616 for message body rules"
+"label": "legacy",
+"note": "quotes RFC 6749 text containing [RFC2616]"
 },
 {
 "i": 37,
 "label": "update",
-"note": "Links RFC7231 for payload body methods"
+"note": "message-body rule cites rfc2616 4.3"
 },
 {
 "i": 38,
 "label": "update",
-"note": "Links RFC7540 for setting format"
+"note": "named curves cite RFC 4492"
 },
 {
 "i": 39,
-"label": "legacy",
-"note": "Historical note on entity origin"
+"label": "update",
+"note": "payload semantics cite RFC 7231"
 },
 {
 "i": 40,
 "label": "update",
-"note": "Links RFC7540 appendix for cipher block list"
+"note": "setting format link to RFC 7540"
 },
 {
 "i": 41,
-"label": "update",
-"note": "Links RFC7234 as caching spec"
+"label": "legacy",
+"note": "historical entity annotation 'NEW RFC 2070'"
 },
 {
 "i": 42,
 "label": "update",
-"note": "Claims honoring RFC 7234 cache headers"
+"note": "cipher block list link to RFC 7540"
 },
 {
 "i": 43,
-"label": "legacy",
-"note": "Explains RFC 7540 specific behaviour"
+"label": "update",
+"note": "doc link to RFC 7234"
 },
 {
 "i": 44,
 "label": "update",
-"note": "Links RFC7231 status codes"
+"note": "claims honoring RFC 7234 cache headers"
 },
 {
 "i": 45,
 "label": "update",
-"note": "Path definition cites RFC 2965"
+"note": "API doc cites RFC 7540 reserved streams"
 },
 {
 "i": 46,
 "label": "update",
-"note": "Links RFC7231 for date formats"
+"note": "status code link to RFC 7231"
 },
 {
 "i": 47,
-"label": "update",
-"note": "Status code comments cite RFC 7231 sections"
+"label": "legacy",
+"note": "RFC 2965 cookie support is deliberate"
 },
 {
 "i": 48,
 "label": "update",
-"note": "FAQ points to RFC 2616 for return codes"
+"note": "doc :see: link to RFC 7231"
 },
 {
 "i": 49,
 "label": "update",
-"note": "Links RFC7540 for server push"
+"note": "status code table cites RFC 7231"
 },
 {
 "i": 50,
 "label": "update",
-"note": "Cites RFC7540 for frame length"
+"note": "FAQ points readers to RFC 2616"
 },
 {
 "i": 51,
 "label": "update",
-"note": "Links RFC7230 for Content-Length rule"
+"note": "server push link to RFC 7540"
 },
 {
 "i": 52,
 "label": "update",
-"note": "Header format per rfc3164"
+"note": "frame length cites RFC7540#4.2"
 },
 {
 "i": 53,
 "label": "update",
-"note": "Cites RFC 8398 for SmtpUTF8Mailbox"
+"note": "Content-Length rule cites RFC 7230"
 },
 {
 "i": 54,
-"label": "update",
-"note": "Cites RFC6962 for Certificate Transparency"
+"label": "legacy",
+"note": "supports rfc3164 format alongside rfc5424"
 },
 {
 "i": 55,
-"label": "legacy",
-"note": "Deliberately handles deprecated RFC 7540 priorities"
+"label": "update",
+"note": "id-on-SmtpUTF8Mailbox cites RFC 8398"
 },
 {
 "i": 56,
-"label": "update",
-"note": "Cites RFC 2616 for 2xx meaning"
+"label": "legacy",
+"note": "RFC 6962 SCT format; 9162 is incompatible v2"
 },
 {
 "i": 57,
-"label": "update",
-"note": "Quotes RFC7231 grammar as spec reference"
+"label": "legacy",
+"note": "deliberate note on deprecated 7540 priorities"
 },
 {
 "i": 58,
 "label": "update",
-"note": "Link to RFC7540 appendix in history doc"
+"note": "2xx semantics cite RFC 2616"
 },
 {
 "i": 59,
 "label": "update",
-"note": "Links RFC8446 for freshness check"
+"note": "date grammar copied from RFC7231"
 },
 {
 "i": 60,
-"label": "update",
-"note": "Quotes RFC 2535 section 7.1"
+"label": "legacy",
+"note": "history doc link to HTTP/2 denylist"
 },
 {
 "i": 61,
-"label": "identifier",
-"note": "validate_rfc822 function/parameter name"
+"label": "update",
+"note": "freshness check link to RFC 8446"
 },
 {
 "i": 62,
-"label": "update",
-"note": "Cites RFC 3546 for host_name type"
+"label": "legacy",
+"note": "KEY record legacy semantics from RFC 2535"
 },
 {
 "i": 63,
-"label": "legacy",
-"note": "Notes behaviour forbidden by obsolete RFC2616"
+"label": "identifier",
+"note": "validate_rfc822 is a function name"
 },
 {
 "i": 64,
 "label": "update",
-"note": "Links RFC7230 for Content-Length guard"
+"note": "host_name type cites RFC 3546"
 },
 {
 "i": 65,
 "label": "legacy",
-"note": "Notes behaviour not specified by RFC, for compatibility"
+"note": "explicitly calls RFC2616 obsolete"
 },
 {
 "i": 66,
 "label": "update",
-"note": "Quotes RFC 7540 section 8.2"
+"note": "Content-Length rule cites RFC 7230"
 },
 {
 "i": 67,
-"label": "identifier",
-"note": "rfc2253 is a format option name"
+"label": "update",
+"note": "redirect rule refers to RFC 7235"
 },
 {
 "i": 68,
-"label": "identifier",
-"note": "rfc3164 names a syslog format"
+"label": "update",
+"note": "quotes RFC 7540 section 8.2"
 },
 {
 "i": 69,
-"label": "legacy",
-"note": "Notes RFC 2617 is deprecated by RFC 7616"
+"label": "identifier",
+"note": "rfc2253 is a config format keyword"
 },
 {
 "i": 70,
 "label": "legacy",
-"note": "Describes RFC822 style time zones accepted"
+"note": "handles both rfc3164 and rfc5424 messages"
 },
 {
 "i": 71,
-"label": "update",
-"note": "Cites RFC7540 for GOAWAY handling"
+"label": "legacy",
+"note": "notes RFC 2617 as deprecated, lists both"
 },
 {
 "i": 72,
-"label": "identifier",
-"note": "rfc3164 is a log format name"
+"label": "update",
+"note": "point formats cite RFC 4492 5.1.2"
 },
 {
 "i": 73,
-"label": "identifier",
-"note": "rfc3164 is a log format name"
+"label": "legacy",
+"note": "names accepted RFC822-style time zones"
 },
 {
 "i": 74,
 "label": "update",
-"note": "Refers to RFC 3484 address ordering"
+"note": "GOAWAY cites RFC7540#6.8"
 },
 {
 "i": 75,
-"label": "update",
-"note": "Cites RFC 2616 for default charset"
+"label": "legacy",
+"note": "documents rfc3164 as a supported format"
 },
 {
 "i": 76,
-"label": "update",
-"note": "Status code comments cite RFC 7231 sections"
+"label": "legacy",
+"note": "documents rfc3164 as a supported format"
 },
 {
 "i": 77,
-"label": "legacy",
-"note": "Parser covers RFC822/2822/5322 lineage"
+"label": "update",
+"note": "address ordering cites RFC 3484"
 },
 {
 "i": 78,
-"label": "update",
-"note": "Points to RFC 7540 for priorities"
+"label": "legacy",
+"note": "deliberately follows RFC 2616 charset default"
 },
 {
 "i": 79,
 "label": "update",
-"note": "Cites rfc8446 for downgrade sentinel"
+"note": "status code table cites RFC 7231"
 },
 {
 "i": 80,
-"label": "update",
-"note": "Cites RFC6962 for Certificate Transparency"
+"label": "legacy",
+"note": "parser lists historical RFC lineage"
 },
 {
 "i": 81,
-"label": "update",
-"note": "Message-ID per RFC 2822"
+"label": "legacy",
+"note": "7540 priorities removed in 9113"
 },
 {
 "i": 82,
 "label": "update",
-"note": "Cites RFC-7540 for PRI method"
+"note": "downgrade sentinel cites rfc8446 4.1.3"
 },
 {
 "i": 83,
 "label": "legacy",
-"note": "RFC 2965 behaviour implemented deliberately"
+"note": "RFC 6962 SCT format; 9162 is incompatible v2"
 },
 {
 "i": 84,
 "label": "update",
-"note": "Links RFC7230 for Transfer-Encoding rule"
+"note": "Message-ID cites RFC 2822"
 },
 {
 "i": 85,
-"label": "update",
-"note": "Cites RFC7320 for absolute-form"
+"label": "legacy",
+"note": "deliberate comparison of RFC 822 and successors"
 },
 {
 "i": 86,
 "label": "update",
-"note": "Frame type constants cite RFC7540 sections"
+"note": "PRI method cites RFC-7540 11.6"
 },
 {
 "i": 87,
-"label": "update",
-"note": "Validates method per RFC7231/7230"
+"label": "legacy",
+"note": "RFC 2965 cookie behaviour is deliberate"
 },
 {
 "i": 88,
 "label": "update",
-"note": "Discusses RFC 2388 escaping vagueness"
+"note": "Transfer-Encoding rule cites RFC 7230"
 },
 {
 "i": 89,
 "label": "update",
-"note": "Cites RFC 2616 for request path"
+"note": "RFC7320 is a typo for RFC7230 absolute-form"
 },
 {
 "i": 90,
-"label": "legacy",
-"note": "Deliberate RFC 2965 cookie handling"
+"label": "update",
+"note": "frame types cite RFC7540"
 },
 {
 "i": 91,
 "label": "update",
-"note": "Cites RFC 6962 for SCT extension"
+"note": "method validity cites RFC 7231/7230"
 },
 {
 "i": 92,
 "label": "update",
-"note": "Quotes RFC2616 on header fields"
+"note": "form-data escaping cites RFC 2388"
 },
 {
 "i": 93,
-"label": "legacy",
-"note": "Lists RFC850 as supported HTTP date format"
+"label": "update",
+"note": "request path rule cites RFC 2616 5.1.2"
 },
 {
 "i": 94,
-"label": "identifier",
-"note": "no-rfc7540-pri is an option name"
+"label": "legacy",
+"note": "RFC 2965 vs Netscape cookie handling deliberate"
 },
 {
 "i": 95,
-"label": "update",
-"note": "Links rfc2616 as spec reference"
+"label": "legacy",
+"note": "RFC 6962 SCT extension format"
 },
 {
 "i": 96,
 "label": "update",
-"note": "Cites RFC6125 wildcard matching rule"
+"note": "header syntax quotes RFC2616 4.2"
 },
 {
 "i": 97,
-"label": "update",
-"note": "Cites RFC7540 for stream state"
+"label": "legacy",
+"note": "RFC850 is an obsolete HTTP date format, accepted"
 },
 {
 "i": 98,
-"label": "update",
-"note": "Links RFC7540 appendix for cipher block list"
+"label": "identifier",
+"note": "option name no-rfc7540-pri"
 },
 {
 "i": 99,
 "label": "update",
-"note": "Links RFC7230 for header case-insensitivity"
+"note": "see-link to rfc2616 for tokens"
 }
 ]

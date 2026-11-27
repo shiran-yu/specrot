@@ -292,3 +292,35 @@ def test_scan_reports_skipped_large_files(tmp_path):
     p = subprocess.run([sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--json", "--max-bytes", "100"],
                        cwd=ROOT, capture_output=True, text=True)
     assert json.loads(p.stdout)["skipped_large_files"] == ["big.txt"]
+
+
+def test_fix_judge_examples_from_cpython(conn, tmp_path):
+    from specrot import fix
+    lines = ["typ, dat = self.fetch(num, '(FLAGS INTERNALDATE RFC822)')",   # protocol string, single quotes
+             "# UUIDs as specified in RFC 4122/9562",                          # replacement already named
+             "# RFC 2822, which is the followon to RFC 822",                   # history / duplicate target
+             "# RFC 7231: 6.3.6.",                                              # uncaptured section
+             "#   RFC 2732: Format for Literal IPv6 Addresses in URL's",       # reference list entry
+             "# Modified 04-Oct-1995 by Jack Jansen; RFC 3548 support",        # dated attribution
+             "# see RFC 8941"]
+    (tmp_path / "x.py").write_text("\n".join(lines) + "\n")
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.line for e in edits] == [7]
+
+
+def test_edition_then_version_chain_is_obsolete(conn):
+    v = graph.check(conn, 4492)
+    assert v.level == "obsolete" and v.replaced_by[0]["same_version"] == "RFC8422"
+    assert graph.check(conn, 5246).level == "old-version"
+
+
+def test_fix_skips_version_changes_and_reference_link_labels(conn, tmp_path):
+    from specrot import fix
+    lines = ["/* ECC ciphersuites from RFC4492 */",                   # 4492 -> 8422 -> TLS 1.3: a decision
+             "clients, as defined in RFC 6962.",                      # CT -> CT Version 2.0
+             "per [RFC 7230, section 6.3.2][]. Only enable",          # Markdown reference link label
+             "(see Appendix E.6 of RFC8446). Note",                   # uncaptured appendix
+             "# see RFC 8941"]
+    (tmp_path / "x.md").write_text("\n".join(lines) + "\n")
+    edits, _ = fix.plan(conn, tmp_path)
+    assert [e.line for e in edits] == [5]

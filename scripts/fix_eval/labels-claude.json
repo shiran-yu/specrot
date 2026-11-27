@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "correct",
+"note": "HEADERS frame section carried over to RFC 9113 6.2"
+},
+{
+"i": 1,
+"label": "wrong",
+"note": "RFC 9846 section number unverified; 8446 4.2.3 mapping doubtful"
+},
+{
+"i": 2,
+"label": "correct",
+"note": "Structured Fields byte sequence; 9651 obsoletes 8941"
+},
+{
+"i": 3,
+"label": "keep",
+"note": "Table of OID sources; original reference list"
+},
+{
+"i": 4,
+"label": "keep",
+"note": "Quotes RFC 8446 text with its appendix number"
+},
+{
+"i": 5,
+"label": "correct",
+"note": "OCSP; RFC 6960 obsoletes 2560"
+},
+{
+"i": 6,
+"label": "correct",
+"note": "410 Gone is 9110 15.5.11"
+},
+{
+"i": 7,
+"label": "wrong",
+"note": "RFC 9598 updates 8398 rather than replacing it; mapping questionable"
+},
+{
+"i": 8,
+"label": "correct",
+"note": "Message body length is 9112 section 6.3"
+},
+{
+"i": 9,
+"label": "correct",
+"note": "Method definitions are in 9110 section 9.3"
+},
+{
+"i": 10,
+"label": "keep",
+"note": "Discusses RFC 2965 specifically, alongside RFC 2109"
+},
+{
+"i": 11,
+"label": "correct",
+"note": "Body length rules moved to 9112 6.3"
+},
+{
+"i": 12,
+"label": "correct",
+"note": "Date header recommendation is in RFC 9110"
+},
+{
+"i": 13,
+"label": "correct",
+"note": "414 is 9110 15.5.15"
+},
+{
+"i": 14,
+"label": "correct",
+"note": "Connection preface is 9113 section 3.4"
+},
+{
+"i": 15,
+"label": "correct",
+"note": "Expect 100-continue is 9110 10.1.1"
+},
+{
+"i": 16,
+"label": "keep",
+"note": "RFC 9844 deprecates zone IDs; 6874 behaviour is described"
+},
+{
+"i": 17,
+"label": "correct",
+"note": "Content-Length guidance is 9112 section 6.2"
+},
+{
+"i": 18,
+"label": "correct",
+"note": "RFC 8187 obsoletes 5987"
+},
+{
+"i": 19,
+"label": "keep",
+"note": "Quoted spec text; section renumbering unverified"
+},
+{
+"i": 20,
+"label": "wrong",
+"note": "Section 4.3.10 in RFC 9846 unverified"
+},
+{
+"i": 21,
+"label": "wrong",
+"note": "CRC32c appendix is Appendix A in RFC 9260"
+},
+{
+"i": 22,
+"label": "correct",
+"note": "GeneralName IP address; RFC 5280 obsoletes 3280"
+},
+{
+"i": 23,
+"label": "correct",
+"note": "Authorization scheme syntax now in RFC 9110"
+},
+{
+"i": 24,
+"label": "correct",
+"note": "Frame size section 4.2 unchanged in 9113"
+},
+{
+"i": 25,
+"label": "correct",
+"note": "SubjectPublicKeyInfo defined in RFC 5280"
+},
+{
+"i": 26,
+"label": "correct",
+"note": "202 is 9110 15.3.3"
+},
+{
+"i": 27,
+"label": "correct",
+"note": "GET semantics are 9110 section 9.3.1"
+},
+{
+"i": 28,
+"label": "keep",
+"note": "Inside quoted spec text; bracket refs belong to the quote"
+},
+{
+"i": 29,
+"label": "correct",
+"note": "Content-Type missing handling is 9110 section 8.3"
+},
+{
+"i": 30,
+"label": "correct",
+"note": "RFC 8259 obsoletes 7159"
+},
+{
+"i": 31,
+"label": "correct",
+"note": "DATA frame section unchanged in 9113"
+},
+{
+"i": 32,
+"label": "keep",
+"note": "Heading for quoted RFC 7234 text; mixes with [RFC7231]"
+},
+{
+"i": 33,
+"label": "keep",
+"note": "Ciphersuite origin; historical RFC 4132 definitions"
+},
+{
+"i": 34,
+"label": "correct",
+"note": "TLS 1.3 ticket lifetime; RFC 9846 obsoletes 8446"
+},
+{
+"i": 35,
+"label": "correct",
+"note": "Exporters section 7.5 same in RFC 9846"
+},
+{
+"i": 36,
+"label": "wrong",
+"note": "Section 4.3.10 in RFC 9846 unverified"
+},
+{
+"i": 37,
+"label": "wrong",
+"note": "RFC 9904 unrelated to CERT type mnemonics"
+},
+{
+"i": 38,
+"label": "correct",
+"note": "IPv6 literal syntax is in RFC 3986"
+},
+{
+"i": 39,
+"label": "correct",
+"note": "Persistence/pipelining is 9112 section 9.3.2"
+},
+{
+"i": 40,
+"label": "wrong",
+"note": "Mapped 4.4.1 to 4.1; transcript section mapping doubtful"
+},
+{
+"i": 41,
+"label": "correct",
+"note": "SETTINGS flags section unchanged in 9113"
+},
+{
+"i": 42,
+"label": "correct",
+"note": "Body length is 9112 section 6.3"
+},
+{
+"i": 43,
+"label": "correct",
+"note": "Status code cacheability is 9110 section 15.1"
+},
+{
+"i": 44,
+"label": "correct",
+"note": "Body length is 9112 section 6.3"
+},
+{
+"i": 45,
+"label": "correct",
+"note": "205 is 9110 15.3.6"
+},
+{
+"i": 46,
+"label": "correct",
+"note": "Quoted flow-control rule unchanged in 9113 6.9.1"
+},
+{
+"i": 47,
+"label": "correct",
+"note": "Cookie syntax now in RFC 6265"
+},
+{
+"i": 48,
+"label": "keep",
+"note": "TCP MD5 option is RFC 2385, not TCP-AO"
+},
+{
+"i": 49,
+"label": "correct",
+"note": "Interoperable integers; RFC 8259 section 6"
+},
+{
+"i": 50,
+"label": "keep",
+"note": "Quotes RFC 2396 warning text"
+},
+{
+"i": 51,
+"label": "correct",
+"note": "Relative Location is allowed in RFC 9110"
+},
+{
+"i": 52,
+"label": "keep",
+"note": "Historical reference to the RFC 822 style"
+},
+{
+"i": 53,
+"label": "correct",
+"note": "Server push is 9113 section 8.4"
+},
+{
+"i": 54,
+"label": "keep",
+"note": "Refers to the RFC822 date format flag"
+},
+{
+"i": 55,
+"label": "correct",
+"note": "RFC 8659 obsoletes 6844 CAA"
+},
+{
+"i": 56,
+"label": "wrong",
+"note": "Duplicates the following 9112 9.3.2 reference line"
+},
+{
+"i": 57,
+"label": "keep",
+"note": "OID arc source comment; original RFC defines it"
+},
+{
+"i": 58,
+"label": "correct",
+"note": "Conforming-to reference; RFC 9846 replaces 8446"
+},
+{
+"i": 59,
+"label": "correct",
+"note": "Loopback address is in RFC 4291 section 2.5.3"
+},
+{
+"i": 60,
+"label": "correct",
+"note": "HTTP-date is 9110 section 5.6.7"
+},
+{
+"i": 61,
+"label": "correct",
+"note": "Content-Length/Transfer-Encoding is 9112 section 6.1"
+},
+{
+"i": 62,
+"label": "correct",
+"note": "504 is 9110 15.6.5"
+},
+{
+"i": 63,
+"label": "keep",
+"note": "Ciphersuite origin; historical RFC 4132 definitions"
+},
+{
+"i": 64,
+"label": "wrong",
+"note": "Section 4.3.10 in RFC 9846 unverified"
+},
+{
+"i": 65,
+"label": "correct",
+"note": "GMT date requirement is in RFC 9110"
+},
+{
+"i": 66,
+"label": "correct",
+"note": "attr-char is defined in RFC 8187"
+},
+{
+"i": 67,
+"label": "keep",
+"note": "Refers to RFC 2965 cookies specifically"
+},
+{
+"i": 68,
+"label": "correct",
+"note": "Policy node; RFC 5280 obsoletes 3280"
+},
+{
+"i": 69,
+"label": "correct",
+"note": "Persistent connections are 9112 section 9.3"
+},
+{
+"i": 70,
+"label": "correct",
+"note": "AlgorithmIdentifier in RFC 5280 section 4.1.1.2"
+},
+{
+"i": 71,
+"label": "correct",
+"note": "Cipher block list is in RFC 9113"
+},
+{
+"i": 72,
+"label": "correct",
+"note": "EHLO syntax is in RFC 5321"
+},
+{
+"i": 73,
+"label": "correct",
+"note": "Dictionary parsing section 4.2.2 unchanged in 9651"
+},
+{
+"i": 74,
+"label": "wrong",
+"note": "RFC 2854 is text/html, not form uploads"
+},
+{
+"i": 75,
+"label": "correct",
+"note": "Expect header is 9110 section 10.1.1"
+},
+{
+"i": 76,
+"label": "correct",
+"note": "Neighbouring status codes already cite RFC 9110"
+},
+{
+"i": 77,
+"label": "correct",
+"note": "417 is 9110 15.5.18"
+},
+{
+"i": 78,
+"label": "correct",
+"note": "Range requests are 9110 section 14.2"
+},
+{
+"i": 79,
+"label": "correct",
+"note": "RFC 7578 obsoletes 2388"
+},
+{
+"i": 80,
+"label": "correct",
+"note": "Server push is 9113 section 8.4"
+},
+{
+"i": 81,
+"label": "wrong",
+"note": "Section 4.3.3 in RFC 9846 unverified"
+},
+{
+"i": 82,
+"label": "keep",
+"note": "Refers to RFC 2965 domain dot behaviour"
+},
+{
+"i": 83,
+"label": "keep",
+"note": "Detects RFC 2965 style cookies deliberately"
+},
+{
+"i": 84,
+"label": "correct",
+"note": "Strict parse failure; section 4.2 same in 9651"
+},
+{
+"i": 85,
+"label": "correct",
+"note": "Max concurrent streams section 5.1.2 unchanged"
+},
+{
+"i": 86,
+"label": "correct",
+"note": "RFC 9562 obsoletes 4122 UUIDs"
+},
+{
+"i": 87,
+"label": "correct",
+"note": "RFC 8659 obsoletes 6844 CAA"
+},
+{
+"i": 88,
+"label": "correct",
+"note": "Body allowance by status is 9112 section 6"
+},
+{
+"i": 89,
+"label": "correct",
+"note": "Obsolete date formats are 9110 section 5.6.7"
+},
+{
+"i": 90,
+"label": "correct",
+"note": "Retry-After is 9110 section 10.2.3"
+},
+{
+"i": 91,
+"label": "keep",
+"note": "Deliberate historical comparison with RFC 822"
+},
+{
+"i": 92,
+"label": "correct",
+"note": "Key schedule section 7.1 same in RFC 9846"
+},
+{
+"i": 93,
+"label": "correct",
+"note": "416 handling now in RFC 9110"
+},
+{
+"i": 94,
+"label": "wrong",
+"note": "Appendix E.6 in RFC 9846 unverified"
+},
+{
+"i": 95,
+"label": "keep",
+"note": "Bibliographic list of RFCs in a docstring"
+},
+{
+"i": 96,
+"label": "wrong",
+"note": "CRC32c appendix is Appendix A in RFC 9260"
+},
+{
+"i": 97,
+"label": "keep",
+"note": "Quotation from RFC 2616 text"
+},
+{
+"i": 98,
+"label": "correct",
+"note": "CONNECT/payload method is 9110 section 9.3.5"
+},
+{
+"i": 99,
+"label": "correct",
+"note": "Loopback address is in RFC 4291 section 2.5.3"
+}
+]

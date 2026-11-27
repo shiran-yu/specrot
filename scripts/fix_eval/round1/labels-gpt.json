@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "correct",
+"note": ""
+},
+{
+"i": 1,
+"label": "correct",
+"note": ""
+},
+{
+"i": 2,
+"label": "correct",
+"note": ""
+},
+{
+"i": 3,
+"label": "correct",
+"note": ""
+},
+{
+"i": 4,
+"label": "correct",
+"note": ""
+},
+{
+"i": 5,
+"label": "correct",
+"note": ""
+},
+{
+"i": 6,
+"label": "correct",
+"note": ""
+},
+{
+"i": 7,
+"label": "correct",
+"note": ""
+},
+{
+"i": 8,
+"label": "correct",
+"note": ""
+},
+{
+"i": 9,
+"label": "correct",
+"note": ""
+},
+{
+"i": 10,
+"label": "keep",
+"note": "The comment compares legacy RFC 2965 and RFC 2109 rules."
+},
+{
+"i": 11,
+"label": "correct",
+"note": ""
+},
+{
+"i": 12,
+"label": "keep",
+"note": "RFC 4347 specifically describes DTLS 1.0 cookie exchange."
+},
+{
+"i": 13,
+"label": "correct",
+"note": ""
+},
+{
+"i": 14,
+"label": "correct",
+"note": ""
+},
+{
+"i": 15,
+"label": "correct",
+"note": ""
+},
+{
+"i": 16,
+"label": "correct",
+"note": ""
+},
+{
+"i": 17,
+"label": "keep",
+"note": "These legacy cipher suites are attributed to RFC 4492."
+},
+{
+"i": 18,
+"label": "correct",
+"note": ""
+},
+{
+"i": 19,
+"label": "correct",
+"note": ""
+},
+{
+"i": 20,
+"label": "correct",
+"note": ""
+},
+{
+"i": 21,
+"label": "correct",
+"note": ""
+},
+{
+"i": 22,
+"label": "correct",
+"note": ""
+},
+{
+"i": 23,
+"label": "correct",
+"note": ""
+},
+{
+"i": 24,
+"label": "correct",
+"note": ""
+},
+{
+"i": 25,
+"label": "correct",
+"note": ""
+},
+{
+"i": 26,
+"label": "correct",
+"note": ""
+},
+{
+"i": 27,
+"label": "correct",
+"note": ""
+},
+{
+"i": 28,
+"label": "correct",
+"note": ""
+},
+{
+"i": 29,
+"label": "correct",
+"note": ""
+},
+{
+"i": 30,
+"label": "correct",
+"note": ""
+},
+{
+"i": 31,
+"label": "correct",
+"note": ""
+},
+{
+"i": 32,
+"label": "correct",
+"note": ""
+},
+{
+"i": 33,
+"label": "correct",
+"note": ""
+},
+{
+"i": 34,
+"label": "correct",
+"note": ""
+},
+{
+"i": 35,
+"label": "correct",
+"note": ""
+},
+{
+"i": 36,
+"label": "correct",
+"note": ""
+},
+{
+"i": 37,
+"label": "correct",
+"note": ""
+},
+{
+"i": 38,
+"label": "correct",
+"note": ""
+},
+{
+"i": 39,
+"label": "correct",
+"note": ""
+},
+{
+"i": 40,
+"label": "wrong",
+"note": "RFC 9904 covers DNSSEC algorithms, not CERT record types."
+},
+{
+"i": 41,
+"label": "correct",
+"note": ""
+},
+{
+"i": 42,
+"label": "correct",
+"note": ""
+},
+{
+"i": 43,
+"label": "keep",
+"note": "OpenSSL describes its legacy Certificate Transparency v1 implementation."
+},
+{
+"i": 44,
+"label": "wrong",
+"note": "The replacement section does not match the cited transcript-hash topic."
+},
+{
+"i": 45,
+"label": "correct",
+"note": ""
+},
+{
+"i": 46,
+"label": "correct",
+"note": ""
+},
+{
+"i": 47,
+"label": "correct",
+"note": ""
+},
+{
+"i": 48,
+"label": "correct",
+"note": ""
+},
+{
+"i": 49,
+"label": "correct",
+"note": ""
+},
+{
+"i": 50,
+"label": "correct",
+"note": ""
+},
+{
+"i": 51,
+"label": "correct",
+"note": ""
+},
+{
+"i": 52,
+"label": "keep",
+"note": "This names the TCP MD5 option defined by RFC 2385."
+},
+{
+"i": 53,
+"label": "correct",
+"note": ""
+},
+{
+"i": 54,
+"label": "keep",
+"note": "The quoted warning is specifically from RFC 2396."
+},
+{
+"i": 55,
+"label": "correct",
+"note": ""
+},
+{
+"i": 56,
+"label": "keep",
+"note": "\u201cRFC 822 style\u201d is a historical format description."
+},
+{
+"i": 57,
+"label": "correct",
+"note": ""
+},
+{
+"i": 58,
+"label": "keep",
+"note": "This attributes a specific quoted requirement to RFC 6962."
+},
+{
+"i": 59,
+"label": "keep",
+"note": "The output format is explicitly tied to the RFC822 flag."
+},
+{
+"i": 60,
+"label": "correct",
+"note": ""
+},
+{
+"i": 61,
+"label": "correct",
+"note": ""
+},
+{
+"i": 62,
+"label": "keep",
+"note": "The heading records the historical source of these object identifiers."
+},
+{
+"i": 63,
+"label": "correct",
+"note": ""
+},
+{
+"i": 64,
+"label": "correct",
+"note": ""
+},
+{
+"i": 65,
+"label": "keep",
+"note": "These legacy AES cipher suites originate in RFC 3268."
+},
+{
+"i": 66,
+"label": "correct",
+"note": ""
+},
+{
+"i": 67,
+"label": "correct",
+"note": ""
+},
+{
+"i": 68,
+"label": "correct",
+"note": ""
+},
+{
+"i": 69,
+"label": "correct",
+"note": ""
+},
+{
+"i": 70,
+"label": "correct",
+"note": ""
+},
+{
+"i": 71,
+"label": "correct",
+"note": ""
+},
+{
+"i": 72,
+"label": "correct",
+"note": ""
+},
+{
+"i": 73,
+"label": "keep",
+"note": "This describes RFC 2965 versioned-cookie behavior."
+},
+{
+"i": 74,
+"label": "correct",
+"note": ""
+},
+{
+"i": 75,
+"label": "keep",
+"note": "RFC 5077 names the TLS ticket extension being disabled."
+},
+{
+"i": 76,
+"label": "correct",
+"note": ""
+},
+{
+"i": 77,
+"label": "correct",
+"note": ""
+},
+{
+"i": 78,
+"label": "correct",
+"note": ""
+},
+{
+"i": 79,
+"label": "correct",
+"note": ""
+},
+{
+"i": 80,
+"label": "correct",
+"note": ""
+},
+{
+"i": 81,
+"label": "keep",
+"note": "The text explicitly describes RFC 1867-posting historically."
+},
+{
+"i": 82,
+"label": "correct",
+"note": ""
+},
+{
+"i": 83,
+"label": "correct",
+"note": ""
+},
+{
+"i": 84,
+"label": "correct",
+"note": ""
+},
+{
+"i": 85,
+"label": "correct",
+"note": ""
+},
+{
+"i": 86,
+"label": "correct",
+"note": ""
+},
+{
+"i": 87,
+"label": "correct",
+"note": ""
+},
+{
+"i": 88,
+"label": "correct",
+"note": ""
+},
+{
+"i": 89,
+"label": "correct",
+"note": ""
+},
+{
+"i": 90,
+"label": "keep",
+"note": "RFC 4492 describes the legacy ECDHE curve configuration."
+},
+{
+"i": 91,
+"label": "keep",
+"note": "RFC 6265 no longer gives leading dots this RFC 2965 role."
+},
+{
+"i": 92,
+"label": "keep",
+"note": "The code explicitly detects the legacy RFC 2965 cookie format."
+},
+{
+"i": 93,
+"label": "correct",
+"note": ""
+},
+{
+"i": 94,
+"label": "correct",
+"note": ""
+},
+{
+"i": 95,
+"label": "correct",
+"note": ""
+},
+{
+"i": 96,
+"label": "keep",
+"note": "This is the RFC 6962 SCT list wire-format definition."
+},
+{
+"i": 97,
+"label": "correct",
+"note": ""
+},
+{
+"i": 98,
+"label": "correct",
+"note": ""
+},
+{
+"i": 99,
+"label": "correct",
+"note": ""
+}
+]

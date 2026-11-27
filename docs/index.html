@@ -39,8 +39,8 @@
   <section id="scan" class="tab" hidden>
     <p class="dim">Paste code, docs or an AI answer. Citations are found in your browser and judged against the graph; nothing is uploaded.</p>
     <textarea id="code" spellcheck="false">// http/parse.go
-// ParseHTTPVersion parses an HTTP version string according to RFC 7230, section 2.6.
-// Header field names are case-insensitive (RFC 2616, section 4.2).
+// bodyLength picks the message body length as in RFC 7230, section 3.3.3.
+// A bad Content-Length is rejected (RFC 2616, section 14.13).
 // HTTP/2 framing follows RFC 7540; the TLS 1.3 handshake is RFC 8446, section 4.
 // Malformed requests get 400 Bad Request (RFC 7231, section 6.5.1).
 // Bearer tokens: RFC 6750. OAuth 2.0: RFC 6749. JSON bodies per RFC 4627.

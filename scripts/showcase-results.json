@@ -5,10 +5,10 @@
   "path": "",
   "commit": "d5ec024cf205997c6a3416b2998953ce7cf23fcb",
   "all_matches": 971,
-  "citations": 729,
+  "citations": 741,
   "rfcs": 145,
   "obsolete_rfcs": 34,
-  "obsolete_citations": 102,
+  "obsolete_citations": 108,
   "top_obsolete": [
    [
     "RFC1738",
@@ -27,7 +27,7 @@
    ],
    [
     "RFC2616",
-    15,
+    19,
     [
      "RFC9110",
      "RFC9111",
@@ -35,16 +35,16 @@
     ]
    ],
    [
-    "RFC2831",
-    8,
-    []
-   ],
-   [
     "RFC7231",
-    7,
+    9,
     [
      "RFC9110"
     ]
+   ],
+   [
+    "RFC2831",
+    8,
+    []
    ]
   ]
  },
@@ -209,7 +209,7 @@
   "path": "",
   "commit": "791283344186c2f3eeae6f27f7278089d4611990",
   "all_matches": 285,
-  "citations": 189,
+  "citations": 190,
   "rfcs": 36,
   "obsolete_rfcs": 13,
   "obsolete_citations": 28,
@@ -312,7 +312,7 @@
   "path": "",
   "commit": "f0e7bd90884b5da0a7418f3c78d1fd309c905014",
   "all_matches": 206,
-  "citations": 71,
+  "citations": 74,
   "rfcs": 28,
   "obsolete_rfcs": 4,
   "obsolete_citations": 4,
@@ -354,10 +354,10 @@
   "path": "Lib",
   "commit": "5dbe2ac850b7b180685ed6008d5b9d459fd4934f",
   "all_matches": 1175,
-  "citations": 433,
+  "citations": 438,
   "rfcs": 111,
   "obsolete_rfcs": 42,
-  "obsolete_citations": 194,
+  "obsolete_citations": 196,
   "top_obsolete": [
    [
     "RFC1738",
@@ -403,14 +403,14 @@
   "path": "src/net",
   "commit": "880f3ba4028fbe81523ce4935c29c225972fff02",
   "all_matches": 646,
-  "citations": 465,
+  "citations": 471,
   "rfcs": 86,
   "obsolete_rfcs": 17,
-  "obsolete_citations": 122,
+  "obsolete_citations": 124,
   "top_obsolete": [
    [
     "RFC7540",
-    47,
+    48,
     [
      "RFC9113"
     ]
@@ -452,14 +452,14 @@
   "path": "src/crypto",
   "commit": "880f3ba4028fbe81523ce4935c29c225972fff02",
   "all_matches": 579,
-  "citations": 374,
-  "rfcs": 62,
-  "obsolete_rfcs": 14,
-  "obsolete_citations": 124,
+  "citations": 382,
+  "rfcs": 63,
+  "obsolete_rfcs": 16,
+  "obsolete_citations": 137,
   "top_obsolete": [
    [
     "RFC8446",
-    80,
+    81,
     [
      "RFC9846"
     ]
@@ -467,6 +467,13 @@
    [
     "RFC7627",
     10,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC4492",
+    9,
     [
      "RFC9846"
     ]
@@ -484,13 +491,6 @@
     [
      "RFC9525"
     ]
-   ],
-   [
-    "RFC6962",
-    5,
-    [
-     "RFC9162"
-    ]
    ]
   ]
  },
@@ -500,10 +500,10 @@
   "path": "",
   "commit": "245306dc31b22316600bc963120f34714ebcdd0a",
   "all_matches": 269,
-  "citations": 219,
-  "rfcs": 37,
-  "obsolete_rfcs": 8,
-  "obsolete_citations": 64,
+  "citations": 220,
+  "rfcs": 38,
+  "obsolete_rfcs": 9,
+  "obsolete_citations": 65,
   "top_obsolete": [
    [
     "RFC1738",
@@ -553,10 +553,10 @@
   "path": "lib",
   "commit": "b663e55882511aed0079aa8adc8333860d76031e",
   "all_matches": 134,
-  "citations": 131,
+  "citations": 134,
   "rfcs": 47,
   "obsolete_rfcs": 14,
-  "obsolete_citations": 71,
+  "obsolete_citations": 73,
   "top_obsolete": [
    [
     "RFC7231",
@@ -583,17 +583,17 @@
     ]
    ],
    [
+    "RFC2396",
+    3,
+    [
+     "RFC3986"
+    ]
+   ],
+   [
     "RFC7540",
     3,
     [
      "RFC9113"
-    ]
-   ],
-   [
-    "RFC2518",
-    2,
-    [
-     "RFC4918"
     ]
    ]
   ]
@@ -604,8 +604,8 @@
   "path": "",
   "commit": "55247767429fb29753f724b467869aa6203db532",
   "all_matches": 34,
-  "citations": 32,
-  "rfcs": 8,
+  "citations": 33,
+  "rfcs": 9,
   "obsolete_rfcs": 4,
   "obsolete_citations": 21,
   "top_obsolete": [
@@ -770,10 +770,10 @@
   "path": "",
   "commit": "0e0c6edd90593a43d05ef921c046cf284035b1ed",
   "all_matches": 123,
-  "citations": 116,
-  "rfcs": 22,
-  "obsolete_rfcs": 9,
-  "obsolete_citations": 33,
+  "citations": 118,
+  "rfcs": 24,
+  "obsolete_rfcs": 10,
+  "obsolete_citations": 34,
   "top_obsolete": [
    [
     "RFC8941",
@@ -819,10 +819,10 @@
   "path": "",
   "commit": "47521745280e2570f68b8a1ef1153a26acc5cb81",
   "all_matches": 1126,
-  "citations": 875,
-  "rfcs": 111,
-  "obsolete_rfcs": 24,
-  "obsolete_citations": 234,
+  "citations": 891,
+  "rfcs": 112,
+  "obsolete_rfcs": 25,
+  "obsolete_citations": 237,
   "top_obsolete": [
    [
     "RFC7540",
@@ -839,18 +839,18 @@
     ]
    ],
    [
+    "RFC7230",
+    21,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
     "RFC7231",
     21,
     [
      "RFC9110"
-    ]
-   ],
-   [
-    "RFC7230",
-    20,
-    [
-     "RFC9110",
-     "RFC9112"
     ]
    ],
    [
@@ -869,10 +869,10 @@
   "path": "",
   "commit": "2c112b259312115ff6a880cf6a3cf47acc7f8b8d",
   "all_matches": 2551,
-  "citations": 1603,
-  "rfcs": 204,
-  "obsolete_rfcs": 39,
-  "obsolete_citations": 217,
+  "citations": 1726,
+  "rfcs": 226,
+  "obsolete_rfcs": 44,
+  "obsolete_citations": 247,
   "top_obsolete": [
    [
     "RFC2253",
@@ -883,6 +883,13 @@
     ]
    ],
    [
+    "RFC822",
+    28,
+    [
+     "RFC5322"
+    ]
+   ],
+   [
     "RFC8446",
     28,
     [
@@ -890,22 +897,15 @@
     ]
    ],
    [
-    "RFC822",
-    25,
-    [
-     "RFC5322"
-    ]
-   ],
-   [
     "RFC6962",
-    20,
+    21,
     [
      "RFC9162"
     ]
    ],
    [
     "RFC3280",
-    18,
+    19,
     [
      "RFC5280"
     ]
@@ -1045,7 +1045,7 @@
   "path": "",
   "commit": "c451e6d1238678231ee21e31964cc8ce34474a37",
   "all_matches": 1359,
-  "citations": 468,
+  "citations": 465,
   "rfcs": 48,
   "obsolete_rfcs": 4,
   "obsolete_citations": 13,
@@ -1090,7 +1090,7 @@
   "path": "",
   "commit": "b2d6c9f4480a71247e0df4ce709122852a2849cf",
   "all_matches": 265,
-  "citations": 238,
+  "citations": 241,
   "rfcs": 80,
   "obsolete_rfcs": 16,
   "obsolete_citations": 24,
@@ -1142,8 +1142,8 @@
   "path": "",
   "commit": "095a30eee6f9128eec540a4af27fb1872d4307da",
   "all_matches": 455,
-  "citations": 351,
-  "rfcs": 93,
+  "citations": 353,
+  "rfcs": 94,
   "obsolete_rfcs": 7,
   "obsolete_citations": 14,
   "top_obsolete": [

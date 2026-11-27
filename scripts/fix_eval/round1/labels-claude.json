@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "correct",
+"note": "HEADERS frame, same section in RFC 9113"
+},
+{
+"i": 1,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 4.3.3 is unverifiable"
+},
+{
+"i": 2,
+"label": "correct",
+"note": "Structured Fields byte sequence, RFC 9651 obsoletes 8941"
+},
+{
+"i": 3,
+"label": "correct",
+"note": "emailAddress OID reference, RFC 5280 supersedes 3280"
+},
+{
+"i": 4,
+"label": "keep",
+"note": "Quotation from RFC 8446; appendix number in 9846 unverified"
+},
+{
+"i": 5,
+"label": "correct",
+"note": "OCSP, RFC 6960 obsoletes 2560"
+},
+{
+"i": 6,
+"label": "correct",
+"note": "410 Gone is 15.5.11 in RFC 9110"
+},
+{
+"i": 7,
+"label": "correct",
+"note": "RFC 9598 obsoletes 8398"
+},
+{
+"i": 8,
+"label": "correct",
+"note": "Message body length, RFC 9112 section 6.3"
+},
+{
+"i": 9,
+"label": "correct",
+"note": "Method definitions, RFC 9110 section 9.3"
+},
+{
+"i": 10,
+"label": "keep",
+"note": "Historical discussion comparing RFC2965 with RFC2109"
+},
+{
+"i": 11,
+"label": "correct",
+"note": "Body length rules map to RFC 9112 6.3"
+},
+{
+"i": 12,
+"label": "keep",
+"note": "DTLS 1.0/1.2 cookie specifically cites RFC4347"
+},
+{
+"i": 13,
+"label": "correct",
+"note": "Date header recommendation now in RFC 9110"
+},
+{
+"i": 14,
+"label": "correct",
+"note": "414 URI Too Long is 15.5.15"
+},
+{
+"i": 15,
+"label": "correct",
+"note": "Connection preface is 3.4 in RFC 9113"
+},
+{
+"i": 16,
+"label": "correct",
+"note": "Expect 100-continue is 10.1.1 in RFC 9110"
+},
+{
+"i": 17,
+"label": "wrong",
+"note": "RFC 9846 does not define these ECC ciphersuites"
+},
+{
+"i": 18,
+"label": "wrong",
+"note": "RFC 9844 changes zone identifier handling; not equivalent"
+},
+{
+"i": 19,
+"label": "correct",
+"note": "Content-Length guidance is RFC 9112 section 6.2"
+},
+{
+"i": 20,
+"label": "correct",
+"note": "RFC 8187 obsoletes 5987"
+},
+{
+"i": 21,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 unverifiable"
+},
+{
+"i": 22,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 unverifiable"
+},
+{
+"i": 23,
+"label": "correct",
+"note": "CRC32c is Appendix B in RFC 9260"
+},
+{
+"i": 24,
+"label": "correct",
+"note": "SNI is RFC 6066 section 3"
+},
+{
+"i": 25,
+"label": "correct",
+"note": "RFC 5280 obsoletes 3280"
+},
+{
+"i": 26,
+"label": "correct",
+"note": "Authorization scheme syntax now in RFC 9110"
+},
+{
+"i": 27,
+"label": "correct",
+"note": "Frame size, same section in RFC 9113"
+},
+{
+"i": 28,
+"label": "correct",
+"note": "SubjectPublicKeyInfo defined in RFC 5280"
+},
+{
+"i": 29,
+"label": "correct",
+"note": "202 Accepted is 15.3.3"
+},
+{
+"i": 30,
+"label": "correct",
+"note": "GET method is 9.3.1 in RFC 9110"
+},
+{
+"i": 31,
+"label": "keep",
+"note": "Quoted RFC text with bracketed citation"
+},
+{
+"i": 32,
+"label": "correct",
+"note": "Content-Type absence, RFC 9110 section 8.3"
+},
+{
+"i": 33,
+"label": "correct",
+"note": "RFC 8259 obsoletes 7159"
+},
+{
+"i": 34,
+"label": "correct",
+"note": "DATA frame, same section in RFC 9113"
+},
+{
+"i": 35,
+"label": "keep",
+"note": "Quoted RFC text citing RFC7231 inside"
+},
+{
+"i": 36,
+"label": "wrong",
+"note": "RFC 5932 defines different Camellia suites than RFC 4132"
+},
+{
+"i": 37,
+"label": "correct",
+"note": "TLS 1.3 ticket lifetime, RFC 9846 retains one week"
+},
+{
+"i": 38,
+"label": "keep",
+"note": "Code follows RFC 8446; section number unverified in 9846"
+},
+{
+"i": 39,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 unverifiable"
+},
+{
+"i": 40,
+"label": "keep",
+"note": "List of related RFCs; 9904 not clearly equivalent"
+},
+{
+"i": 41,
+"label": "correct",
+"note": "RFC 3986 obsoletes 2732 for IPv6 literals"
+},
+{
+"i": 42,
+"label": "correct",
+"note": "Pipelining, RFC 9112 section 9.3.2"
+},
+{
+"i": 43,
+"label": "wrong",
+"note": "RFC 9162 is CT 2.0, not compatible with 6962"
+},
+{
+"i": 44,
+"label": "wrong",
+"note": "Transcript hash section mapping inconsistent with other shifts"
+},
+{
+"i": 45,
+"label": "correct",
+"note": "SETTINGS flags, same section in RFC 9113"
+},
+{
+"i": 46,
+"label": "correct",
+"note": "Body length rules, RFC 9112 section 6.3"
+},
+{
+"i": 47,
+"label": "correct",
+"note": "Status code section 15.1 in RFC 9110"
+},
+{
+"i": 48,
+"label": "correct",
+"note": "Body length rules, RFC 9112 section 6.3"
+},
+{
+"i": 49,
+"label": "correct",
+"note": "205 Reset Content is 15.3.6"
+},
+{
+"i": 50,
+"label": "correct",
+"note": "Flow-control window rule same in RFC 9113"
+},
+{
+"i": 51,
+"label": "correct",
+"note": "Cookie value syntax now in RFC 6265"
+},
+{
+"i": 52,
+"label": "wrong",
+"note": "TCP-AO (5925) is different from TCP MD5 (2385)"
+},
+{
+"i": 53,
+"label": "correct",
+"note": "Section 6 integer interoperability kept in RFC 8259"
+},
+{
+"i": 54,
+"label": "keep",
+"note": "Quotes RFC 2396 text specifically"
+},
+{
+"i": 55,
+"label": "correct",
+"note": "Relative Location allowed in RFC 9110"
+},
+{
+"i": 56,
+"label": "keep",
+"note": "Historical file format style, RFC 822 deliberate"
+},
+{
+"i": 57,
+"label": "correct",
+"note": "Server push is 8.4 in RFC 9113"
+},
+{
+"i": 58,
+"label": "wrong",
+"note": "Quotes RFC 6962; RFC 9162 is a different protocol"
+},
+{
+"i": 59,
+"label": "keep",
+"note": "Names RFC 822 date format; flag is RFC822"
+},
+{
+"i": 60,
+"label": "correct",
+"note": "RFC 8659 obsoletes 6844 for CAA"
+},
+{
+"i": 61,
+"label": "wrong",
+"note": "Creates duplicate reference with the next line"
+},
+{
+"i": 62,
+"label": "keep",
+"note": "OID arc source comment; replacement unclear"
+},
+{
+"i": 63,
+"label": "keep",
+"note": "Conformance to TLS 1.3 as implemented, RFC 8446"
+},
+{
+"i": 64,
+"label": "correct",
+"note": "Loopback address is 2.5.3 in RFC 4291"
+},
+{
+"i": 65,
+"label": "wrong",
+"note": "AES suites are not defined in RFC 9846"
+},
+{
+"i": 66,
+"label": "correct",
+"note": "HTTP-date is 5.6.7 in RFC 9110"
+},
+{
+"i": 67,
+"label": "correct",
+"note": "Transfer-Encoding, RFC 9112 section 6.1"
+},
+{
+"i": 68,
+"label": "correct",
+"note": "504 Gateway Timeout is 15.6.5"
+},
+{
+"i": 69,
+"label": "wrong",
+"note": "RFC 5932 defines different Camellia suites than RFC 4132"
+},
+{
+"i": 70,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 unverifiable"
+},
+{
+"i": 71,
+"label": "correct",
+"note": "GMT date rule now in RFC 9110"
+},
+{
+"i": 72,
+"label": "correct",
+"note": "RFC 8187 obsoletes 5987 attr-char"
+},
+{
+"i": 73,
+"label": "keep",
+"note": "Refers to legacy RFC 2965 cookies deliberately"
+},
+{
+"i": 74,
+"label": "correct",
+"note": "Policy node, RFC 5280 obsoletes 3280"
+},
+{
+"i": 75,
+"label": "wrong",
+"note": "Ticket extension for TLS 1.2 is RFC 5077, not 9846"
+},
+{
+"i": 76,
+"label": "correct",
+"note": "Persistence is 9.3 in RFC 9112"
+},
+{
+"i": 77,
+"label": "correct",
+"note": "AlgorithmIdentifier same section in RFC 5280"
+},
+{
+"i": 78,
+"label": "correct",
+"note": "Cipher block list is in RFC 9113"
+},
+{
+"i": 79,
+"label": "correct",
+"note": "EHLO syntax now RFC 5321"
+},
+{
+"i": 80,
+"label": "correct",
+"note": "Dictionary parsing 4.2.2 same in RFC 9651"
+},
+{
+"i": 81,
+"label": "wrong",
+"note": "RFC 2854 is text/html, not form uploads"
+},
+{
+"i": 82,
+"label": "correct",
+"note": "Expect header is 10.1.1 in RFC 9110"
+},
+{
+"i": 83,
+"label": "correct",
+"note": "Matches adjacent RFC 9110 citations"
+},
+{
+"i": 84,
+"label": "correct",
+"note": "417 Expectation Failed is 15.5.18"
+},
+{
+"i": 85,
+"label": "correct",
+"note": "Range requests are 14.2 in RFC 9110"
+},
+{
+"i": 86,
+"label": "correct",
+"note": "RFC 7578 obsoletes 2388"
+},
+{
+"i": 87,
+"label": "wrong",
+"note": "Link reference definition likely left pointing at RFC 7230"
+},
+{
+"i": 88,
+"label": "correct",
+"note": "Server push is 8.4 in RFC 9113"
+},
+{
+"i": 89,
+"label": "wrong",
+"note": "Section renumbering to RFC 9846 unverifiable"
+},
+{
+"i": 90,
+"label": "wrong",
+"note": "Named curves are RFC 8422, not 9846"
+},
+{
+"i": 91,
+"label": "keep",
+"note": "Describes RFC 2965 behaviour deliberately"
+},
+{
+"i": 92,
+"label": "keep",
+"note": "Detects RFC 2965 style cookies deliberately"
+},
+{
+"i": 93,
+"label": "wrong",
+"note": "Leaves adjacent RFC 8941 mention inconsistent"
+},
+{
+"i": 94,
+"label": "correct",
+"note": "MAX_CONCURRENT_STREAMS, same section in RFC 9113"
+},
+{
+"i": 95,
+"label": "correct",
+"note": "RFC 9562 obsoletes 4122; v4 UUID"
+},
+{
+"i": 96,
+"label": "wrong",
+"note": "Structure from RFC 6962; 9162 differs"
+},
+{
+"i": 97,
+"label": "correct",
+"note": "RFC 8659 obsoletes 6844"
+},
+{
+"i": 98,
+"label": "correct",
+"note": "Body allowed by status, RFC 9112 section 6"
+},
+{
+"i": 99,
+"label": "correct",
+"note": "HTTP-date is 5.6.7 in RFC 9110"
+}
+]

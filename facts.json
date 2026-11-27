@@ -1,15 +1,15 @@
 {
   "sections": {
-    "cited": 284,
-    "mapped": 218,
-    "exact": 204
+    "cited": 292,
+    "mapped": 223,
+    "exact": 208
   },
   "nodes": {
     "Section": 51730,
+    "RFC": 9869,
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
-    "RFC": 9869,
     "Series": 377,
     "Project": 26,
     "File": 2372
@@ -29,9 +29,9 @@
     "CITES": 4664
   },
   "showcase": {
-    "citations": 7484,
-    "obsolete": 1580,
-    "old_version": 292,
+    "citations": 7667,
+    "obsolete": 1640,
+    "old_version": 283,
     "projects": 26,
     "affected": 24,
     "obsolete_pct": 21
@@ -56,7 +56,7 @@
   ],
   "rfc8446_cited": {
     "projects": 7,
-    "citations": 129
+    "citations": 130
   },
   "store_bytes": 8007680
 }

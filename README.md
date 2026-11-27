@@ -27,23 +27,24 @@ and coding agents, whose training data predates recent replacements.
 
 **How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
-OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,484** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,580 (21%)** point at an RFC
+OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,667** RFC citations in source
+and docs (tests and identifiers such as `time.RFC1123` excluded), **1,640 (21%)** point at an RFC
 that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
 an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849, the retired TLS 1.0 and 1.1;
-292 more) are not counted: they are reported as `old-version`, or `historic` when that version was
+283 more) are not counted: they are reported as `old-version`, or `historic` when that version was
 itself retired. The most common: RFC 2616 (17 projects), RFC 7230
 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
 per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. We took 100 of the 1,580, the first by a seeded hash
+Not every one of these is a mistake. We took 100 of the 1,640, the first by a seeded hash
 ([`scripts/audit/draw.py`](scripts/audit/draw.py)), and had two models label each from its code
 context, independently, with the same [instructions](scripts/audit/LABELING.md) and no tools:
-Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **62 of 100** as citing
-the old RFC as the specification the code follows, worth updating; 18 (Claude) and 31 (GPT) as
-deliberate references to the old text (compatibility, history, a list of supported RFCs); 11 and 3
-as scanner errors (an identifier or not a citation at all). The labelers agree on 79% of items
-(Cohen's κ 0.56). These are model labels, not human ones. [`scripts/audit/label.py`](scripts/audit/label.py)
+Claude Sonnet 5.5 and GPT-6 Luna (through GitHub Copilot). Both labelled **54 of 100** as citing
+the old RFC as the specification the code follows, worth updating (61 Claude, 58 GPT); 31 and 36 as
+deliberate references to the old text (compatibility, history, a list of supported RFCs); 8 and 6
+as scanner errors (an identifier or not a citation at all). The labelers agree on 83% of items
+(Cohen's κ 0.68). These are model labels, not human ones, and they vary between runs: an earlier run
+on a sample sharing 96 of these items gave 62 (git history of `scripts/audit/`). [`scripts/audit/label.py`](scripts/audit/label.py)
 reruns a labeler into new files, `raw/` keeps each full prompt, reply and model (the instructions
 still name the earlier population, 1,645, as given to the labelers), and
 [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports; a person
@@ -63,8 +64,9 @@ others one part of a split (RFC 9112 alone for HTTP/1.1). One sample per questio
 answers vary between runs (5 of Haiku's 10 no-tool misses were right, without a tool call, in the web
 arm); turns, not tool traces, are recorded. The answer key is the RFC Editor's own `OBSOLETES`
 data read from the graph (the documents in force at the end of the chain from each topic's classic
-RFC); [`check_key.py`](scripts/agent_eval/check_key.py) confirms all 34 keys against the RFC Editor's
-per-RFC records (`obsoleted_by`), outside the graph. Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/agent_eval/).
+RFC); [`check_key.py`](scripts/agent_eval/check_key.py) checks, against the RFC Editor's per-RFC
+records (`obsoleted_by`) outside the graph, that no RFC in any of the 34 keys is obsoleted and that each
+seed RFC not in its key is. It does not check that a key lists every part of a split. Prompt, questions, answers and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
 **Which relationships matter:**
 
@@ -230,16 +232,19 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them).
 - Sections are mapped by heading: a section continues as the section of the replacement with the
-  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 284
-  distinct obsolete (RFC, section) pairs cited in the 26 projects, 218 have a home in a current RFC
-  (204 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
+  same heading (a near-identical one is marked `~`/reworded and never rewritten by `fix`). Of the 292
+  distinct obsolete (RFC, section) pairs cited in the 26 projects, 223 have a home in a current RFC
+  (208 by identical heading; `facts.json` `sections`); a section whose content moved under a new heading
   gets none, and about 1% of headings parsed from the plain text are noise (addresses, ASN.1 lines). The
   headings come from the RFC Editor's plain-text RFCs (`data/raw/txt`, fetched by `specrot build`).
 - `specrot fix` rewrites only unambiguous citations and prints a diff; it leaves code names
   (`RFC_4122`, `rfc_822`), protocol strings (`RFC822.TEXT`), quoted examples, lines that already talk
   about history or the replacement, and files that are not UTF-8 alone, and `--write` changes only the
-  lines in the diff; about a third of stale
-  citations are deliberate (see the audit above), so a person reviews it before committing.
+  lines in the diff. It also skips chains that change protocol version and appendices named in prose.
+  Of 100 sampled edits on the 26 projects, both labelers called **67** mergeable as is; Claude called 13
+  wrong, and a hand check found 3 of them real (stale appendices, fixed since)
+  ([`scripts/fix_eval/RESULTS.md`](scripts/fix_eval/RESULTS.md)). 31 to 36 of 100 stale citations are
+  deliberate (the audit above), so a person reviews the diff before committing.
 - The Datatracker records references for most RFCs, but not for every early one (pre-1990s RFCs
   mostly have none).
 - The store reflects the sources on the day it was built (see `git log store/rfc.rl`).

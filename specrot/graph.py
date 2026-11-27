@@ -96,14 +96,21 @@ KIND_TEXT = {
 
 
 def path_kind(kinds: list[str]) -> str:
-    """Summarise a chain: a version hop anywhere makes it a version change; a retiring last hop wins."""
+    """Summarise a chain by its first hop: TLS 1.2 -> 1.3 -> 1.3bis is a version change, but RFC 4492 -> 8422
+    (new edition) -> 9846 (TLS 1.3) is a replaced edition. A retiring last hop wins."""
     if kinds and kinds[-1] == "retired":
         return "retired"
-    if "version" in kinds:
+    if kinds and kinds[0] == "version":
         return "version"
     if "split" in kinds:
         return "split"
     return "edition"
+
+
+def same_version(r: dict) -> str | None:
+    """The newest edition before a later version hop (4492 -> 8422 -> 9846 gives 8422), for code that stays on the old version."""
+    j = next((i for i, k in enumerate(r["kinds"]) if k == "version"), None)
+    return r["chain"][j] if j else None
 
 
 @dataclass
@@ -193,7 +200,7 @@ def _check(conn, x: str | int) -> Verdict:
         shortest: dict[str, dict] = {}  # one shortest chain per current replacement
         for r in conn.execute(REPLACEMENTS, {"id": rid}):
             if r["current"] not in shortest or len(r["chain"]) < len(shortest[r["current"]]["chain"]):
-                shortest[r["current"]] = {**dict(r), "kind": path_kind(r["kinds"])}
+                shortest[r["current"]] = {**dict(r), "kind": path_kind(r["kinds"]), "same_version": same_version(r)}
         v.replaced_by = list(shortest.values())
     v.updated_by = [dict(r) for r in conn.execute(UPDATES, {"id": rid})]
     v.deprecations = [u for u in v.updated_by if DEPRECATING.search(u["title"] or "")]

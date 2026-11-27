@@ -1,7 +1,9 @@
 """Rewrite stale RFC citations to the current document and section, as a unified diff a person reviews.
 
 Only unambiguous cases are rewritten:
-  - level `obsolete` (not old-version or historic: those need a decision, not a rename);
+  - level `obsolete` (not old-version or historic: those need a decision, not a rename), and no protocol
+    version change anywhere in the chain (RFC 4492 -> 8422 -> TLS 1.3: stay on 8422 or move?), and no
+    version number in the replacement's title that the old title lacks (RFC 6962 -> CT Version 2.0);
   - with a section: exactly one current section whose heading matches the old one exactly;
   - without a section: exactly one current replacement (a split such as RFC 2616 is left alone);
   - links only on RFC hosts, with no anchor or a #section-/#appendix- anchor.
@@ -15,10 +17,12 @@ from dataclasses import dataclass
 from pathlib import Path
 
 from . import graph, scan
+from .build import _versions
 
 HISTORY = re.compile(r"(?i)\b(obsolet\w*|supersed\w*|replac\w*|deprecat\w*|formerly|previously|historic\w*|legacy|"
                      r"older|earlier|original\w*|was updated|updated by|backward\w*|compatib\w*|released|introduced|"
-                     r"(?:in|since|from) (?:19|20)\d\d)\b")
+                     r"follow-?on|successor|predecessor|instead of|copyright|contributed|written by|modified by|author|"
+                     r"(?:19|20)\d\d)\b")  # a year anywhere: dated notes and attributions describe their time
 RFC_HOSTS = re.compile(r"(?i)(rfc-editor\.org/rfc/|tools\.ietf\.org/html/|datatracker\.ietf\.org/doc/html/|ietf\.org/rfc/)$")
 
 
@@ -35,6 +39,11 @@ def _target(c: scan.Citation, v: graph.Verdict) -> tuple[str, str | None] | str:
     """(new rfc id, new section) or the reason to skip."""
     if v.level != "obsolete":
         return f"level {v.level}"
+    if sv := next((r["same_version"] for r in v.replaced_by if r.get("same_version")), None):
+        return f"a newer protocol version is in the chain: {sv} (same version) or {', '.join(v.current)}?"
+    vo = _versions(v.title or "")
+    if any((vn := _versions(r["title"] or "")) and not vo & vn for r in v.replaced_by):
+        return "the replacement names a version the old title does not (CT -> CT 2.0, TLS 1.2 extension -> TLS 1.3)"
     if c.section:
         exact = [h for h in c.section_now if h["exact"]]
         if len(exact) != 1:
@@ -58,9 +67,17 @@ def _rewrite(line: str, col: int, new_rfc: str, new_section: str | None) -> str 
             return None  # a string literal in code ("rfc2109": ...), not prose
         if re.search(rf"(?i)rfc_0*{m.group(1).lstrip('0')}(?!\d)", line):
             return None  # the line explains a name built from this RFC (the rfc_822 format vs RFC 822)
-        if head.count('"') % 2 or head.count("`") % 2:
+        if head.rfind("[") > head.rfind("]") and re.match(r"[^\]]*\]\[", tail):
+            return None  # the label of a Markdown reference link: its definition elsewhere would no longer match
+        if head.count('"') % 2 or head.count("`") % 2 or head.count("'") % 2:
             return None  # inside a quoted example or quotation
-        if HISTORY.search(line) or re.search(rf"(?i)rfc[ \t_#-]{{0,2}}0*{n_new}(?!\d)", line):
+        if re.match(r"\s*[:#,]?\s*\d+(\.\d+)+", tail) and not m.group(2):
+            return None  # a section number the pattern did not capture ("RFC 7231: 6.3.6") would go stale
+        if re.search(r"(?i)\bappendix\s+[A-Z]\b", line) and not m.group(2):
+            return None  # an appendix named in prose ("Appendix E.6 of RFC 8446" is F.6 in RFC 9846)
+        if re.match(r"\s*:\s+[A-Z][\w/'-]*(\s+[\w/'()-]+){2,}", tail):
+            return None  # a reference-list entry with the old document's title ("RFC 2732: Format for Literal ...")
+        if HISTORY.search(line) or re.search(rf"(?<!\d){n_new}(?!\d)", line):
             return None  # the line already talks about the replacement or the history: rewording needs a person
         if not head.endswith("/") and re.fullmatch(r"rfc\d+", line[m.start():m.end(1)]):
             return None  # lower-case and unspaced outside a link: a code name (enum rfc822, fmt == rfc850)
@@ -119,6 +136,10 @@ def plan(conn, root: Path, include_history: bool = False) -> tuple[list[Edit], l
                 continue
             new = r
             notes.append(f"{c.rfc}{'§' + c.section if c.section else ''} → {t[0]}{'§' + t[1] if t[1] else ''}")
+        olds = {c.rfc for c, _ in pairs}
+        news = {t[0] for c, v in pairs if not isinstance(t := _target(c, v), str)}
+        if len(olds) > len(news) and not why:
+            why = "two cited RFCs would become the same one"
         if why or new == old:
             skipped += [(c, why or "unchanged") for c, _ in pairs]
             continue

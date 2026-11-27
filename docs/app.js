@@ -100,7 +100,9 @@ const DEPRECATING = /deprecat|prohibit|obsolet|historic|retir|removing|sunset/i;
 // Kinds of OBSOLETES edges, computed when the store is built (specrot/build.py).
 const KIND_TEXT = { edition: "new edition of the same specification", version: "newer protocol version: the old RFC still defines the old version",
   split: "content split across several documents", retired: "retired without a replacement" };
-const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k.includes("version") ? "version" : k.includes("split") ? "split" : "edition";
+// same rule as graph.py path_kind: the first hop decides (4492 -> 8422 -> 9846 is a replaced edition)
+const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k[0] === "version" ? "version" : k.includes("split") ? "split" : "edition";
+const sameVersion = (r) => { const j = r.kinds.indexOf("version"); return j > 0 ? r.chain[j] : null; };
 
 function showQuery(el, q = lastQuery) {
   if (!q) return;
@@ -109,6 +111,7 @@ function showQuery(el, q = lastQuery) {
 
 // ---------- check tab ----------
 let renderSeq = 0;  // render token: a newer check or search makes slower, older ones drop their output
+let scanSeq = 0;    // the same for the scan tab, which renders into its own pane
 async function check(input) {
   const out = $("#check-out");
   const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})(?:\s*(?:#|§|,?\s*sec(?:tion)?\.?)\s*([A-Z](?:\.\d+)*|\d+(?:\.\d+)*))?\.?\s*$/i);
@@ -141,7 +144,7 @@ async function check(input) {
     <div class="meta">${esc(info.date)} · ${esc((info.status || "").toLowerCase())}${info.wg && info.wg !== "NON WORKING GROUP" ? " · " + esc(info.wg) + " WG" : ""}${info.series.length ? " · part of " + info.series.join(", ") : ""} · <a href="https://www.rfc-editor.org/rfc/rfc${n}" target="_blank" rel="noopener">read it</a></div>`;
   if (Object.keys(shortest).length) {
     html += `<h3>Replaced by</h3><ul class="chains">` + Object.values(shortest).map((r) =>
-      `<li>${r.chain.map((c, i) => i === r.chain.length - 1 ? `<b class="${r.kind === "retired" ? "dim" : "ok"}">${rfcLink(c)}</b>` : rfcLink(c)).join(' <span class="arrow">→</span> ')} ${esc(r.title)} <span class="dim">(${r.date}) · ${KIND_TEXT[r.kind]}</span></li>`).join("") + `</ul>`;
+      `<li>${r.chain.map((c, i) => i === r.chain.length - 1 ? `<b class="${r.kind === "retired" ? "dim" : "ok"}">${rfcLink(c)}</b>` : rfcLink(c)).join(' <span class="arrow">→</span> ')} ${esc(r.title)} <span class="dim">(${r.date}) · ${KIND_TEXT[r.kind]}${sameVersion(r) ? ` · staying on the older protocol version? ${sameVersion(r)} is its newest edition` : ""}</span></li>`).join("") + `</ul>`;
   }
   if (deps.length) html += `<h3>Partly deprecated by</h3><ul>` + deps.map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + `</ul>`;
   if (others.length) html += `<h3>Updated by ${others.length} document${others.length > 1 ? "s" : ""} still in force</h3><ul>` + others.slice(0, 10).map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + (others.length > 10 ? `<li class="dim">… ${others.length - 10} more</li>` : "") + `</ul>`;
@@ -219,7 +222,7 @@ async function search(text) {
 }
 
 // ---------- scan tab ----------
-// Same rules as specrot/scan.py: optional section ("RFC 2616, section 4.4", "rfc7230#section-5.3.3",
+// Port of the line rules in specrot/scan.py (pasted text has no path, so no test or changelog filter): optional section ("RFC 2616, section 4.4", "rfc7230#section-5.3.3",
 // "RFC7540#4.1", "RFC 7231 6.3.6", "Section 4.2.8.1 of RFC 8446"); names like RFC_4122 or RFC822.TEXT are skipped.
 const CITATION = /(?<![a-z0-9])rfc([ \t_#-]{0,2})(\d{1,5})(?!\d)(?:(?:\.html|\.txt)?(?:[ \t]*,?[ \t]*(?:section|sec\.?|§|par\.)[ \t]*(\d+(?:\.\d+)*)|[ \t]*#[ \t]*(?:section-|sec)?(\d+(?:\.\d+)*)|#appendix-([a-z](?:\.\d+)*)|[ \t]+(?=\d+\.\d)(\d+(?:\.\d+)*)))?/gi;
 const SECTION_OF = /(?:section|§)[ \t]*(\d+(?:\.\d+)*),?[ \t]+of[ \t]+\[?rfc/gi;
@@ -232,7 +235,8 @@ function citationsIn(text) {
     for (const m of line.matchAll(CITATION)) {
       const before = line.slice(0, m.index), after = line.slice(m.index + 3 + m[1].length + m[2].length);
       if (/(message|text|x-)\/$/i.test(before) || Number(m[2]) === 0) continue;
-      if (/[._]$/.test(before) || /^[A-Za-z_]/.test(after) || m[1].includes("_") || /^\.[A-Za-z]/.test(after)) continue;  // a name
+      if (/[._]$/.test(before) || /^[A-Za-z_]/.test(after) || m[1].includes("_") || /^\.[A-Za-z]/.test(after)
+          || /^\s*(import|from)\s[\w., ]*$/.test(before)) continue;  // a name, or a module in an import line
       const sec = m[3] || m[4] || (m[5] && m[5].toUpperCase()) || m[6] || before_[m.index] || null;
       out.push({ n: Number(m[2]), line: i + 1, sec });
     }
@@ -241,19 +245,22 @@ function citationsIn(text) {
 }
 
 async function scanText() {
+  const my = ++scanSeq;  // a newer scan drops this one's output
   const cites = citationsIn($("#code").value);
   const ns = [...new Set(cites.map((c) => c.n))];
   const rows = await cypher(Q.judge, { ns });
+  if (my !== scanSeq) return;
   const scanQuery = lastQuery;
   const byN = Object.fromEntries(rows.map((r) => [r.n, r]));
   const ids = [...new Set(cites.filter((c) => c.sec && byN[c.n]?.obsolete).map((c) => `RFC${c.n}#${c.sec}`))];
   const homes = {};
   if (ids.length) for (const h of await cypher(Q.sections, { ids }, false, "sections")) (homes[h.id] ||= []).some((x) => x.rfc === h.rfc && x.section === h.section) || homes[h.id].push(h);
+  if (my !== scanSeq) return;
   const order = { obsolete: 0, historic: 1, "old-version": 2, amended: 3, ok: 4, unknown: 5 };
   const found = ns.map((n) => ({ n, r: byN[n] ?? null, lines: cites.filter((c) => c.n === n).map((c) => c.line),
     secs: [...new Set(cites.filter((c) => c.n === n && c.sec).map((c) => c.sec))] }))
     .map((x) => ({ ...x, lvl: level(x.r) })).sort((a, b) => order[a.lvl] - order[b.lvl]);
-  const moved = (f) => f.r?.obsolete ? f.secs.map((s) => `<br><span class="dim">§${esc(s)} → ${(homes[`RFC${f.n}#${s}`] || []).map((h) => `${h.rfc} §${esc(h.section)}${h.exact ? "" : " ~"}`).join(", ") || "?"}</span>`).join("") : "";
+  const moved = (f) => f.r?.obsolete ? f.secs.map((s) => `<br><span class="dim">§${esc(s)} → ${(homes[`RFC${f.n}#${s}`] || []).map((h) => `${h.rfc} §${esc(h.section)}${h.exact ? "" : " ~"}`).join(", ") || "no heading carries over"}</span>`).join("") : "";
   const counts = {};
   found.forEach((f) => (counts[f.lvl] = (counts[f.lvl] || 0) + 1));
   $("#scan-out").innerHTML = `<div class="card"><p>${cites.length} citations of ${ns.length} RFCs · ${Object.entries(counts).map(([k, v]) => `${badge(k)} ${v}`).join(" ")}</p>

@@ -48,13 +48,17 @@ def _verdict_tree(v: graph.Verdict) -> Tree:
         for p in v.replaced_by:
             colour = "dim" if p["kind"] == "retired" else "bold green"
             r.add(" → ".join(p["chain"][:-1] + [f"[{colour}]{p['current']}[/]"]) + f"  {p['title']}"
-                  + f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]")
+                  + f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]"
+                  + (f"\n  [dim]staying on the older protocol version? {p['same_version']} is its newest edition[/]"
+                     if p.get("same_version") else ""))
     if v.section and v.obsolete:
         s = t.add(f"[bold]section {v.section}[/] {v.section_now[0]['was'] if v.section_now else ''} (CONTINUES_AS, by heading)")
         for h in v.section_now:
             s.add(f"[bold green]{h['rfc']} §{h['section']}[/]  {h['title']}" + ("" if h["exact"] else "  [dim](reworded heading)[/]"))
         if not v.section_now:
             s.add(f"[dim]no section of the replacement has this heading, or {v.id} has no section {v.section}; see the change log[/]")
+    elif v.section:
+        t.add(f"[dim]section {v.section}: {v.id} is not obsolete, so the citation stays as it is[/]")
     if v.deprecations:
         d = t.add("[bold]partly deprecated by[/]")
         for u in v.deprecations:

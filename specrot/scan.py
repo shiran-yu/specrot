@@ -25,7 +25,8 @@ SKIP_DIRS = {".git", "node_modules", "vendor", "third_party", "dist", "build", "
 HISTORY_FILES = re.compile(r"(?i)^(changelog|changes|history|news|releases?)([._-].*)?$")
 # Media types and module names that contain "rfc822" but cite nothing.
 NOT_A_CITATION = re.compile(r"(?i)(message|text|x-)/$")
-IMPORT = re.compile(r"(import|from)\s+$")
+# a module name in an import statement (import rfc822 / from email import rfc822), not "quote from RFC 7231"
+IMPORT = re.compile(r"^\s*(import|from)\s[\w., ]*$")
 TEST_PATH = re.compile(r"(?i:(^|/)(tests?|testdata|testing|__tests__|spec|fixtures?)(/|$)|(^|/)test_[^/]*$|_test\.[a-z]+$|\.test\.[a-z]+$)"
                        r"|(^|/)[a-z]+Tests?(/|$)|Tests?\.(kt|java|scala|cs|swift)$")
 MAX_BYTES = 2_000_000

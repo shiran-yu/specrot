@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "correct",
+"note": ""
+},
+{
+"i": 1,
+"label": "correct",
+"note": ""
+},
+{
+"i": 2,
+"label": "correct",
+"note": ""
+},
+{
+"i": 3,
+"label": "correct",
+"note": ""
+},
+{
+"i": 4,
+"label": "correct",
+"note": ""
+},
+{
+"i": 5,
+"label": "correct",
+"note": ""
+},
+{
+"i": 6,
+"label": "correct",
+"note": ""
+},
+{
+"i": 7,
+"label": "correct",
+"note": ""
+},
+{
+"i": 8,
+"label": "correct",
+"note": ""
+},
+{
+"i": 9,
+"label": "correct",
+"note": ""
+},
+{
+"i": 10,
+"label": "keep",
+"note": "Discusses RFC2965\u2019s ambiguity and compares it with RFC2109."
+},
+{
+"i": 11,
+"label": "correct",
+"note": ""
+},
+{
+"i": 12,
+"label": "correct",
+"note": ""
+},
+{
+"i": 13,
+"label": "correct",
+"note": ""
+},
+{
+"i": 14,
+"label": "correct",
+"note": ""
+},
+{
+"i": 15,
+"label": "correct",
+"note": ""
+},
+{
+"i": 16,
+"label": "correct",
+"note": ""
+},
+{
+"i": 17,
+"label": "correct",
+"note": ""
+},
+{
+"i": 18,
+"label": "correct",
+"note": ""
+},
+{
+"i": 19,
+"label": "correct",
+"note": ""
+},
+{
+"i": 20,
+"label": "correct",
+"note": ""
+},
+{
+"i": 21,
+"label": "correct",
+"note": ""
+},
+{
+"i": 22,
+"label": "correct",
+"note": ""
+},
+{
+"i": 23,
+"label": "correct",
+"note": ""
+},
+{
+"i": 24,
+"label": "correct",
+"note": ""
+},
+{
+"i": 25,
+"label": "correct",
+"note": ""
+},
+{
+"i": 26,
+"label": "correct",
+"note": ""
+},
+{
+"i": 27,
+"label": "correct",
+"note": ""
+},
+{
+"i": 28,
+"label": "correct",
+"note": ""
+},
+{
+"i": 29,
+"label": "correct",
+"note": ""
+},
+{
+"i": 30,
+"label": "correct",
+"note": ""
+},
+{
+"i": 31,
+"label": "correct",
+"note": ""
+},
+{
+"i": 32,
+"label": "correct",
+"note": ""
+},
+{
+"i": 33,
+"label": "correct",
+"note": ""
+},
+{
+"i": 34,
+"label": "correct",
+"note": ""
+},
+{
+"i": 35,
+"label": "correct",
+"note": ""
+},
+{
+"i": 36,
+"label": "correct",
+"note": ""
+},
+{
+"i": 37,
+"label": "correct",
+"note": ""
+},
+{
+"i": 38,
+"label": "correct",
+"note": ""
+},
+{
+"i": 39,
+"label": "correct",
+"note": ""
+},
+{
+"i": 40,
+"label": "correct",
+"note": ""
+},
+{
+"i": 41,
+"label": "correct",
+"note": ""
+},
+{
+"i": 42,
+"label": "correct",
+"note": ""
+},
+{
+"i": 43,
+"label": "correct",
+"note": ""
+},
+{
+"i": 44,
+"label": "correct",
+"note": ""
+},
+{
+"i": 45,
+"label": "correct",
+"note": ""
+},
+{
+"i": 46,
+"label": "correct",
+"note": ""
+},
+{
+"i": 47,
+"label": "correct",
+"note": ""
+},
+{
+"i": 48,
+"label": "keep",
+"note": "RFC2385 specifically identifies the TCP MD5 signature option."
+},
+{
+"i": 49,
+"label": "correct",
+"note": ""
+},
+{
+"i": 50,
+"label": "keep",
+"note": "The warning is attributed to RFC2396 and quoted from that source."
+},
+{
+"i": 51,
+"label": "correct",
+"note": ""
+},
+{
+"i": 52,
+"label": "keep",
+"note": "\u201cRFC 822 style\u201d is a historical description of the format."
+},
+{
+"i": 53,
+"label": "correct",
+"note": ""
+},
+{
+"i": 54,
+"label": "keep",
+"note": "RFC822 is the named date-format flag used by this function."
+},
+{
+"i": 55,
+"label": "correct",
+"note": ""
+},
+{
+"i": 56,
+"label": "correct",
+"note": ""
+},
+{
+"i": 57,
+"label": "keep",
+"note": "The comment identifies the original source of these OID assignments."
+},
+{
+"i": 58,
+"label": "correct",
+"note": ""
+},
+{
+"i": 59,
+"label": "correct",
+"note": ""
+},
+{
+"i": 60,
+"label": "correct",
+"note": ""
+},
+{
+"i": 61,
+"label": "correct",
+"note": ""
+},
+{
+"i": 62,
+"label": "correct",
+"note": ""
+},
+{
+"i": 63,
+"label": "correct",
+"note": ""
+},
+{
+"i": 64,
+"label": "correct",
+"note": ""
+},
+{
+"i": 65,
+"label": "correct",
+"note": ""
+},
+{
+"i": 66,
+"label": "correct",
+"note": ""
+},
+{
+"i": 67,
+"label": "keep",
+"note": "This specifically describes legacy RFC2965 versioned cookies."
+},
+{
+"i": 68,
+"label": "correct",
+"note": ""
+},
+{
+"i": 69,
+"label": "correct",
+"note": ""
+},
+{
+"i": 70,
+"label": "correct",
+"note": ""
+},
+{
+"i": 71,
+"label": "correct",
+"note": ""
+},
+{
+"i": 72,
+"label": "correct",
+"note": ""
+},
+{
+"i": 73,
+"label": "correct",
+"note": ""
+},
+{
+"i": 74,
+"label": "keep",
+"note": "RFC1867-posting is explicitly presented as a historical name."
+},
+{
+"i": 75,
+"label": "correct",
+"note": ""
+},
+{
+"i": 76,
+"label": "correct",
+"note": ""
+},
+{
+"i": 77,
+"label": "correct",
+"note": ""
+},
+{
+"i": 78,
+"label": "correct",
+"note": ""
+},
+{
+"i": 79,
+"label": "correct",
+"note": ""
+},
+{
+"i": 80,
+"label": "correct",
+"note": ""
+},
+{
+"i": 81,
+"label": "correct",
+"note": ""
+},
+{
+"i": 82,
+"label": "keep",
+"note": "Preserves RFC2965 behavior for returning the legacy $Domain value."
+},
+{
+"i": 83,
+"label": "keep",
+"note": "The code explicitly handles RFC2965 versioned-cookie syntax."
+},
+{
+"i": 84,
+"label": "correct",
+"note": ""
+},
+{
+"i": 85,
+"label": "correct",
+"note": ""
+},
+{
+"i": 86,
+"label": "correct",
+"note": ""
+},
+{
+"i": 87,
+"label": "correct",
+"note": ""
+},
+{
+"i": 88,
+"label": "correct",
+"note": ""
+},
+{
+"i": 89,
+"label": "correct",
+"note": ""
+},
+{
+"i": 90,
+"label": "correct",
+"note": ""
+},
+{
+"i": 91,
+"label": "keep",
+"note": "Describes a historical difference from RFC822 date syntax."
+},
+{
+"i": 92,
+"label": "correct",
+"note": ""
+},
+{
+"i": 93,
+"label": "correct",
+"note": ""
+},
+{
+"i": 94,
+"label": "correct",
+"note": ""
+},
+{
+"i": 95,
+"label": "keep",
+"note": "This is a bibliographic entry giving RFC2396\u2019s title and date."
+},
+{
+"i": 96,
+"label": "correct",
+"note": ""
+},
+{
+"i": 97,
+"label": "keep",
+"note": "Explicitly labels the passage as a quotation from RFC2616."
+},
+{
+"i": 98,
+"label": "correct",
+"note": ""
+},
+{
+"i": 99,
+"label": "correct",
+"note": ""
+}
+]
