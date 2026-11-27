@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import functools
+import multiprocessing
 import re
 import threading
 from pathlib import Path
@@ -40,6 +41,9 @@ def explained(fn):
                             + ("The store is read-only. " if write else "")
                             + "get_schema lists labels, relationship types and properties.)") from e
     return wrapper
+
+
+CYPHER_SECONDS = 20  # read_cypher stops a longer query
 
 
 def _conn():
@@ -148,16 +152,41 @@ def _plain(v):
 @explained
 def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200) -> dict:
     """Run a read-only Cypher 25 statement against the store (Relate dialect, no APOC). Returns {rows,
-    truncated}: truncated is true when the query had more than `limit` rows (raise limit, or aggregate)."""
+    truncated}: truncated is true when the query had more than `limit` rows (raise limit, or aggregate).
+    A query running longer than 20 s is stopped with an error: bound variable-length paths."""
     if not 1 <= int(limit) <= 5000:
         raise graph.InputError(f"limit must be 1..5000, got {limit}")
-    rows, truncated = [], False
-    for i, r in enumerate(_conn().execute(statement, parameters or {})):
-        if i >= limit:
-            truncated = True
-            break
-        rows.append({k: _plain(v) for k, v in dict(r).items()})
-    return {"rows": rows, "truncated": truncated}
+    # Relate has no cancel: the query runs in a child process that is killed after CYPHER_SECONDS
+    ctx = multiprocessing.get_context("spawn")
+    recv, send = ctx.Pipe(duplex=False)
+    child = ctx.Process(target=_cypher_child, args=(statement, parameters or {}, int(limit), send), daemon=True)
+    child.start()
+    send.close()
+    try:
+        kind, value = recv.recv() if recv.poll(CYPHER_SECONDS) else ("timeout", None)
+    except EOFError:  # the child died without an answer
+        kind, value = "relate", "the query process exited without a result"
+    child.kill()
+    child.join(5)
+    if kind == "timeout":
+        raise graph.InputError(f"query stopped after {CYPHER_SECONDS} s: add a LIMIT, aggregate, or bound the path "
+                               f"length (e.g. -[:NORMATIVE_REF]->{{1,3}})")
+    if kind == "relate":
+        raise relate.Error(value)
+    return value
+
+
+def _cypher_child(statement, parameters, limit, send):
+    try:
+        rows, truncated = [], False
+        for i, r in enumerate(graph.connect().execute(statement, parameters)):
+            if i >= limit:
+                truncated = True
+                break
+            rows.append({k: _plain(v) for k, v in dict(r).items()})
+        send.send(("ok", {"rows": rows, "truncated": truncated}))
+    except relate.Error as e:
+        send.send(("relate", str(e)))
 
 
 def _brief(f: scan.Finding) -> dict:

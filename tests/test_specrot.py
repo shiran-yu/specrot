@@ -170,6 +170,15 @@ def test_mcp_read_cypher_returns_node_properties():
     assert row["r"]["labels"] == ["RFC"] and row["r"]["properties"]["id"] == "RFC2616"
 
 
+def test_mcp_read_cypher_stops_a_runaway_query(monkeypatch):
+    from mcp.server.mcpserver.exceptions import ToolError
+    from specrot import mcp_server as m
+    monkeypatch.setattr(m, "CYPHER_SECONDS", 3)
+    with pytest.raises(ToolError, match="stopped after 3 s"):
+        m.read_cypher("MATCH (a:RFC)-[:NORMATIVE_REF]->+(b:RFC) RETURN count(*)")
+    assert m.read_cypher("RETURN 1 AS x")["rows"] == [{"x": 1}]  # the server still answers
+
+
 def test_search_operator_words():
     from specrot import mcp_server as m
     assert m.search_rfcs("MUST NOT") is not None  # NOT is a query operator unless lower-cased
