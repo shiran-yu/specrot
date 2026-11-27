@@ -417,3 +417,18 @@ def test_fix_leaves_a_list_of_rfcs_with_titles(conn, tmp_path):
     (tmp_path / "codes.py").write_text('"""Status codes:\n\n    * RFC 7238: Permanent Redirect\n"""\n')
     edits, skipped = fix.plan(conn, tmp_path)
     assert not edits and skipped
+
+
+def test_mcp_save_scan_writes_a_session_copy_and_read_cypher_sees_it():
+    import hashlib
+    from specrot import mcp_server as m
+    before = hashlib.sha256(graph.DEFAULT_STORE.read_bytes()).hexdigest()
+    out = m.save_scan(str(ROOT / "tests" / "fixtures" / "stale"), "fixture")
+    assert out["citations"] > 0 and out["store"] == "session copy"
+    rows = m.read_cypher("MATCH (:Project {name:'fixture'})-[:HAS_FILE]->(f:File)-[:CITES]->(r:RFC) "
+                         "RETURN count(DISTINCT r) AS n")["rows"]
+    assert rows[0]["n"] > 0
+    m.save_scan(str(ROOT / "tests" / "fixtures" / "stale"), "fixture")  # saving again replaces, not duplicates
+    again = m.read_cypher("MATCH (p:Project {name:'fixture'}) RETURN count(p) AS n")["rows"]
+    assert again == [{"n": 1}]
+    assert hashlib.sha256(graph.DEFAULT_STORE.read_bytes()).hexdigest() == before  # committed store untouched

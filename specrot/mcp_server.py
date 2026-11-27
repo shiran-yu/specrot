@@ -21,7 +21,8 @@ INSTRUCTIONS = """specrot holds every IETF RFC and how they relate (OBSOLETES, U
 informative references, BCP/STD series, errata) in a Relate graph built from the RFC Editor index.
 Before you cite, implement or quote an RFC, call check_rfcs: your training data may predate the
 replacement (e.g. RFC 8446 for TLS 1.3 was obsoleted by RFC 9846 in 2026). Use scan_path on a
-repository to find stale citations, reading_list for what an implementation must read, and
+repository to find stale citations, save_scan to put a repository's citations into the graph (a
+session copy) and query them with read_cypher, reading_list for what an implementation must read, and
 read_cypher for anything else (schema: get_schema)."""
 
 server = MCPServer(name="specrot", instructions=INSTRUCTIONS)
@@ -53,18 +54,64 @@ def _close_connections():
             c.close()
         except Exception:
             pass
+    if _session["store"] is not None:  # the session copy save_scan wrote to
+        import shutil
+        shutil.rmtree(_session["store"].parent, ignore_errors=True)
 
 
 _all_conns: list = []
 atexit.register(_close_connections)  # before interpreter shutdown, or relate's finalizer panics
 
 
+_session: dict = {"store": None}  # a private copy of the store once save_scan has written to it
+_write_lock = threading.Lock()
+
+
+def _store() -> Path:
+    return _session["store"] or graph.DEFAULT_STORE
+
+
 def _conn():
-    # Relate connections are thread-affine: one read-only connection per worker thread.
-    if getattr(_local, "conn", None) is None:
-        _local.conn = graph.connect()
+    # Relate connections are thread-affine: one read-only connection per worker thread, reopened after a save
+    if getattr(_local, "conn", None) is None or _local.store != _store():
+        _local.conn, _local.store = graph.connect(_store()), _store()
         _all_conns.append(_local.conn)
     return _local.conn
+
+
+@server.tool()
+@explained
+def save_scan(path: str, project: str) -> dict:
+    """Scan a repository and write its citations into the graph as (:Project)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC),
+    in one transaction, so read_cypher can then ask graph questions about your own code (e.g. which of my files
+    cite a document RFC 9110 replaced, any number of hops back). Writes go to a private copy of the store for
+    this session; the committed store is never changed. Saving the same project name again replaces it."""
+    import shutil
+    import tempfile
+    if not re.fullmatch(r"[\w.@/-]{1,80}", project):
+        raise graph.InputError("project: 1-80 characters of letters, digits and . _ - / @")
+    root = Path(path)
+    cites = scan.find_citations(root)
+    with _write_lock:
+        if _session["store"] is None:
+            copy = Path(tempfile.mkdtemp(prefix="specrot-")) / "session.rl"
+            shutil.copy(graph.DEFAULT_STORE, copy)
+            _session["store"] = copy
+        w = graph.connect(_session["store"], read_only=False)
+        try:
+            w.autocommit = False
+            scan.save(w, project, root.resolve() if root.is_dir() else root.resolve().parent, cites)
+            w.commit()
+        except Exception:
+            w.rollback()
+            raise
+        finally:
+            w.close()
+    reader = sum(1 for c in cites if c.actionable)
+    return {"project": project, "files": len({c.path for c in cites}), "citations": len(cites),
+            "reader_facing": reader, "store": "session copy",
+            "try": "MATCH (:RFC {id:'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(f:File)<-[:HAS_FILE]-"
+                   f"(:Project {{name:'{project}'}}) RETURN old.id, f.path, c.readerLines"}
 
 
 @server.tool()
@@ -173,7 +220,8 @@ def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200
     # Relate has no cancel: the query runs in a child process that is killed after CYPHER_SECONDS
     ctx = multiprocessing.get_context("spawn")
     recv, send = ctx.Pipe(duplex=False)
-    child = ctx.Process(target=_cypher_child, args=(statement, parameters or {}, int(limit), send), daemon=True)
+    child = ctx.Process(target=_cypher_child, args=(statement, parameters or {}, int(limit), send, str(_store())),
+                        daemon=True)
     child.start()
     send.close()
     try:
@@ -190,10 +238,10 @@ def read_cypher(statement: str, parameters: dict | None = None, limit: int = 200
     return value
 
 
-def _cypher_child(statement, parameters, limit, send):
+def _cypher_child(statement, parameters, limit, send, store):
     try:
         rows, truncated = [], False
-        for i, r in enumerate(graph.connect().execute(statement, parameters)):
+        for i, r in enumerate(graph.connect(store).execute(statement, parameters)):
             if i >= limit:
                 truncated = True
                 break

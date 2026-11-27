@@ -180,8 +180,11 @@ time, so a new stale citation there fails the build.
 ### For coding agents
 
 MCP server (tools `check_rfcs`, `scan_path`, `scan_text`, `reading_list`, `dependents`,
-`search_rfcs`, `get_schema`, `read_cypher`; bad input comes back as an error message that says how
-to fix the call):
+`search_rfcs`, `get_schema`, `read_cypher`, `save_scan`; bad input comes back as an error message that says how
+to fix the call). `save_scan` writes the agent's own repository into the graph in one transaction (to a
+private session copy; the committed store never changes), so `read_cypher` can then ask graph questions
+about that code, such as which of its files cite a document RFC 9110 replaced, any number of hops back.
+`read_cypher` stops a query after 20 s.
 
 ```bash
 claude mcp add specrot -- uv run --directory "$PWD" specrot mcp
