@@ -7,8 +7,8 @@ if not, what replaced it?"
 ```console
 $ uv run specrot check 8446
 ✗ OBSOLETE  RFC8446  The Transport Layer Security (TLS) Protocol Version 1.3  (2018-08, Proposed Standard)
-├── replaced by (follow OBSOLETES to documents still in force)
-│   └── RFC8446 → RFC9846  The Transport Layer Security (TLS) Protocol Version 1.3
+├── replaced by (OBSOLETES chains to documents still in force)
+│   └── RFC8446 → RFC9846  The Transport Layer Security (TLS) Protocol Version 1.3  (new edition of the same specification)
 └── 11 verified technical errata  https://www.rfc-editor.org/errata/rfc8446
 ```
 
@@ -25,26 +25,38 @@ starts pointing a reader, a reviewer or an AI coding agent at the wrong text.
 mail, OAuth/JWT), security reviewers checking that an implementation follows the current spec,
 and coding agents, whose training data predates recent replacements.
 
-**How big is the problem?** We scanned 26 well-known open-source projects at pinned commits
+**How big is the problem in code?** We scanned 26 well-known open-source projects at pinned commits
 (curl, CPython's `Lib`, Go's `net` and `crypto`, Node, undici, OpenSSL, nginx, HAProxy, Netty,
 OkHttp, hyper, requests, Django, oauthlib, dnspython, ...). Of **7,596** RFC citations in source
-and docs (tests and identifiers such as `time.RFC1123` excluded), **1,917 (25%)** point at an RFC
-that has since been obsoleted, in **24 of 26** projects. The most common: RFC 2616 (17 projects),
-RFC 7230 (16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with
-`uv run python scripts/showcase.py`; per-project numbers in
-[`scripts/showcase-results.json`](scripts/showcase-results.json).
+and docs (tests and identifiers such as `time.RFC1123` excluded), **1,626 (21%)** point at an RFC
+that a newer edition of the same specification has replaced, in **24 of 26** projects. Citations of
+an older *protocol version* (TLS 1.2's RFC 5246, OAuth 1.0's RFC 5849; 291 more) are reported
+separately as `old-version` and not counted. The most common: RFC 2616 (17 projects), RFC 7230
+(16), RFC 7231 (15), RFC 7540 / HTTP/2 (13). Reproduce with `uv run python scripts/showcase.py`;
+per-project numbers in [`scripts/showcase-results.json`](scripts/showcase-results.json).
 
-Not every one of these is a mistake. In an audit of 100 random flagged citations (each classified
-from its surrounding code by a Claude subagent, labels in [`scripts/audit/`](scripts/audit/)),
-among those specrot counts by default, 58% cite an old RFC as the spec the code follows (worth
-updating) and 33% deliberately describe legacy behaviour (an OAuth 1.0 module citing RFC 5849, a
-TLS 1.2 code path citing RFC 5246). specrot reports; a person decides. See [Limits](#limits).
+Not every one of these is a mistake. We drew 100 of the 1,626 at random (seed 2026,
+[`scripts/audit/draw.py`](scripts/audit/draw.py)) and had two models label each from its code
+context, independently and with the same [instructions](scripts/audit/LABELING.md): Claude and a GPT
+model (through GitHub Copilot). Both labelled **62 of 100** as citing the old RFC as the
+specification the code follows, worth updating; Claude labelled 30 and GPT 17 as deliberate
+references to the old text (compatibility, history, a list of supported RFCs); none was a false
+match. The labelers agree on 83% of items (Cohen's κ 0.65). These are model labels, not human
+ones; [`scripts/audit/score.py`](scripts/audit/score.py) recomputes the summary. specrot reports;
+a person decides, and `.specrot-ignore` records the decision.
+
+**How big is the problem for coding agents?** We asked Claude Haiku 5.5 and Claude Sonnet 5.5 (via
+`claude -p`, no tools) "which RFC is the current specification for X?" for 34 protocols. Haiku named
+an obsolete RFC as current for **10 of 34**; Sonnet for **2 of 34**, exactly the two whose
+replacement was published in 2026 (TLS 1.3 → RFC 9846, DHCPv6 → RFC 9915). With the specrot MCP
+server attached, both answered **34 of 34** correctly. One sample per question, answer key computed
+from the graph; questions, transcripts and script in [`scripts/agent_eval/`](scripts/agent_eval/).
 
 **Which relationships matter:**
 
 | Question | Graph walk |
 |---|---|
-| What replaced this RFC? | follow `OBSOLETES` backwards, any length, to documents nobody obsoletes (`2616 → 7230 → 9112`) |
+| What replaced this RFC? | follow `OBSOLETES` backwards, any length, to documents nobody obsoletes (`2616 → 7230 → 9112`); each edge has a `kind`: new *edition*, newer protocol *version*, *split* into several documents, or *retired* by a deprecation notice |
 | Is it still in force but changed? | `UPDATES` from documents still in force; titles saying *Deprecating/Prohibiting* are flagged; verified technical `Erratum` nodes |
 | What must I read to implement it? | `NORMATIVE_REF` closure, references to `BCP`/`STD` series resolved to member RFCs, obsolete targets swapped for replacements |
 | Who is affected if it changes? | `NORMATIVE_REF` backwards from documents still in force |
@@ -60,15 +72,18 @@ TLS 1.2 code path citing RFC 5246). specrot reports; a person decides. See [Limi
 - **What the graph models:** 9,869 `RFC`s, 377 `Series` (BCP/STD/FYI), 8,215 `Erratum`, 532
   `WorkingGroup`s in 16 `Area`s, and 26 scanned `Project`s with 2,372 `File`s.
   Relationships: 1,546 `OBSOLETES`, 2,172 `UPDATES`, 58,954 `NORMATIVE_REF`, 69,790 `INFORMATIVE_REF`,
-  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`.
+  `INCLUDES`, `AMENDS`, `FROM_WG`, `IN_AREA`, `HAS_FILE`, `CITES`. Of the normative references,
+  42,164 are RFC→RFC as recorded by the Datatracker, 8,112 point at a BCP/STD series, and 8,678 are
+  derived from those series' members (marked `{via: 'BCP14'}`).
 - **Relate features used:** embedded Python API (`relate-db`), Cypher 25 quantified path patterns
-  (`(r)<-[:OBSOLETES]-+(n)`, `-[:NORMATIVE_REF]->{1,2}`), `EXISTS {}` / `COUNT {}` subqueries,
+  (`(r)<-[:OBSOLETES]-+(n)`), hop-by-hop traversal over id sets for the normative closure,
+  `EXISTS {}` / `COUNT {}` subqueries,
   uniqueness constraints and indexes, a BM25 `FULLTEXT INDEX` with the `SEARCH` clause, the
   `relate` CLI (`clone` to compact the store, `serve --mcp` / `--bolt` for exploration), and an MCP
   server of our own for agents.
 
 ```
-(:RFC)-[:OBSOLETES|UPDATES]->(:RFC)          (:Series)-[:INCLUDES]->(:RFC)
+(:RFC)-[:OBSOLETES {kind}]->(:RFC)           (:RFC)-[:UPDATES]->(:RFC)        (:Series)-[:INCLUDES]->(:RFC)
 (:RFC)-[:NORMATIVE_REF|INFORMATIVE_REF]->(:RFC|:Series)
 (:Erratum)-[:AMENDS]->(:RFC)                 (:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)
 (:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, readerLines, sections}]->(:RFC)
@@ -86,11 +101,14 @@ uv run specrot check 2616 8446 6749     # first run installs dependencies (~10 s
 
 Without uv: `python -m venv .venv && . .venv/bin/activate && pip install -e . && specrot check 2616`.
 
-**No install at all:** open the [in-browser explorer](https://shiran-yu.github.io/specrot/). It runs
-the Relate WebAssembly build in the tab, loads the same graph (exported to
-[`docs/data/graph.json`](docs/data/graph.json) by `scripts/export_web.py`, because the WASM build
-cannot open a `.rl` file) and offers check, paste-and-scan, the 26-project table with links to the
-exact lines on GitHub, and a Cypher console.
+**No install at all:** open the [in-browser explorer](https://shiran-yu.github.io/specrot/) (or
+`python3 -m http.server -d docs 8000` in a clone). It runs the Relate WebAssembly build in the tab
+and rebuilds a subset of the graph there in about 3 s: RFCs, series, `OBSOLETES` with kinds,
+`UPDATES`, the 50,842 RFC-level normative references and the 26 projects (no errata, working groups
+or informative references), from [`docs/data/graph.json`](docs/data/graph.json), which
+`scripts/export_web.py` exports because the WASM build cannot open a `.rl` file. It offers check
+with a lineage graph, paste-and-scan, the 26-project table with links to the exact lines on
+GitHub, and a Cypher console.
 
 Then:
 
@@ -98,8 +116,9 @@ Then:
 uv run specrot scan /path/to/any/repo          # stale RFC citations, with file:line and the fix
 uv run specrot scan . --markdown               # a table to paste into a PR
 uv run specrot scan . --fail-on obsolete       # CI gate: exit 1 on obsolete citations
-uv run specrot read 9110                       # normative reading list for an implementation
-uv run specrot impact 5280                     # what still in force depends on RFC 5280
+uv run specrot read 9110 --depth 2             # normative reading list for an implementation (depth 1-3)
+uv run specrot impact 5280                     # what still in force depends on RFC 5280 (depth 1-3)
+uv run specrot check "BCP 14" "STD 66"         # series resolve to their member RFCs
 uv run specrot search "token revocation"       # full-text search over titles and abstracts
 uv run specrot cypher "MATCH (p:Project)-[:HAS_FILE]->()-[:CITES]->(r:RFC {id:'RFC2616'}) RETURN DISTINCT p.name"
 ```
@@ -127,7 +146,8 @@ RFC5246                      # we still ship TLS 1.2
 ### For coding agents
 
 MCP server (tools `check_rfcs`, `scan_path`, `scan_text`, `reading_list`, `dependents`,
-`search_rfcs`, `get_schema`, `read_cypher`):
+`search_rfcs`, `get_schema`, `read_cypher`; bad input comes back as an error message that says how
+to fix the call):
 
 ```bash
 claude mcp add specrot -- uv run --directory "$PWD" specrot mcp
@@ -177,9 +197,11 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
 
 ## Limits
 
-- "Obsolete" is the RFC Editor's relation, not a judgement of the code: implementing TLS 1.2 still
-  means reading RFC 5246, even though RFC 8446 obsoleted it. Citations that deliberately describe
-  legacy behaviour are reported like any other.
+- "Obsolete" is the RFC Editor's relation, not a judgement of the code. The edge `kind` (edition,
+  version, split, retired) is inferred from the two titles at build time (version numbers in the
+  titles, deprecation wording, number of successors), so it can be wrong for an unusual title.
+  Citations that deliberately describe legacy behaviour are reported like any other; list them in
+  `.specrot-ignore`.
 - Citations are found with a regular expression. Media types such as `message/rfc822` are skipped;
   identifiers (`time.RFC1123`, `rfc2822_date`) and test files are excluded by default
   (`--all-kinds` includes them). Section numbers are kept but not mapped to the new document.
@@ -187,11 +209,16 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10;
   mostly have none).
 - The store reflects the sources on the day it was built (see `git log store/rfc.rl`).
 
+Levels used everywhere (CLI, MCP, CI, browser): `obsolete` (a newer edition replaced it, or it was
+retired), `old-version` (only a newer protocol version exists), `historic`, `amended` (in force,
+updated or with verified technical errata), `ok`, `unknown` (not in the index).
+
 ## Built with
 
 Relate 1.3 (`relate-db` Python package, Relate CLI), Python, rich, the MCP Python SDK.
-AI tools: the code, data pipeline and docs were written with Claude Code (Anthropic); a Claude
-subagent classified the 100 audited citations.
+AI tools: the code, data pipeline and docs were written with Claude Code (Anthropic). The audit
+labels come from two models (Claude and a GPT model through GitHub Copilot), not from people; the
+agent evaluation runs Claude models through the `claude` CLI.
 This is a new project started for the Relate by Neo4j Hackathon; no earlier code is reused.
 
 MIT licence. RFC metadata © IETF Trust, used under the IETF Trust Legal Provisions.

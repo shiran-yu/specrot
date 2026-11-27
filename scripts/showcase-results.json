@@ -7,37 +7,9 @@
   "all_matches": 971,
   "citations": 729,
   "rfcs": 145,
-  "obsolete_rfcs": 40,
-  "obsolete_citations": 199,
+  "obsolete_rfcs": 36,
+  "obsolete_citations": 110,
   "top_obsolete": [
-   [
-    "RFC5246",
-    36,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC8422",
-    26,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC6347",
-    18,
-    [
-     "RFC9147"
-    ]
-   ],
-   [
-    "RFC4346",
-    9,
-    [
-     "RFC9846"
-    ]
-   ],
    [
     "RFC1738",
     8,
@@ -45,6 +17,34 @@
      "RFC4248",
      "RFC4266"
     ]
+   ],
+   [
+    "RFC3501",
+    3,
+    [
+     "RFC9051"
+    ]
+   ],
+   [
+    "RFC5019",
+    1,
+    [
+     "RFC9919"
+    ]
+   ],
+   [
+    "RFC2616",
+    15,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2831",
+    8,
+    []
    ]
   ]
  },
@@ -454,42 +454,42 @@
   "all_matches": 579,
   "citations": 374,
   "rfcs": 62,
-  "obsolete_rfcs": 19,
-  "obsolete_citations": 156,
+  "obsolete_rfcs": 13,
+  "obsolete_citations": 122,
   "top_obsolete": [
-   [
-    "RFC5246",
-    12,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC2246",
-    4,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC4346",
-    4,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC8422",
-    3,
-    [
-     "RFC9846"
-    ]
-   ],
    [
     "RFC8446",
     80,
     [
      "RFC9846"
+    ]
+   ],
+   [
+    "RFC7627",
+    10,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC5077",
+    6,
+    [
+     "RFC9846"
+    ]
+   ],
+   [
+    "RFC6125",
+    5,
+    [
+     "RFC9525"
+    ]
+   ],
+   [
+    "RFC6962",
+    5,
+    [
+     "RFC9162"
     ]
    ]
   ]
@@ -670,16 +670,9 @@
   "all_matches": 243,
   "citations": 186,
   "rfcs": 50,
-  "obsolete_rfcs": 19,
-  "obsolete_citations": 70,
+  "obsolete_rfcs": 18,
+  "obsolete_citations": 69,
   "top_obsolete": [
-   [
-    "RFC4346",
-    1,
-    [
-     "RFC9846"
-    ]
-   ],
    [
     "RFC2818",
     8,
@@ -706,6 +699,15 @@
     8,
     [
      "RFC9113"
+    ]
+   ],
+   [
+    "RFC2616",
+    6,
+    [
+     "RFC9110",
+     "RFC9111",
+     "RFC9112"
     ]
    ]
   ]
@@ -819,30 +821,9 @@
   "all_matches": 1126,
   "citations": 875,
   "rfcs": 111,
-  "obsolete_rfcs": 28,
-  "obsolete_citations": 244,
+  "obsolete_rfcs": 24,
+  "obsolete_citations": 234,
   "top_obsolete": [
-   [
-    "RFC2246",
-    3,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC5246",
-    3,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC8422",
-    2,
-    [
-     "RFC9846"
-    ]
-   ],
    [
     "RFC7540",
     73,
@@ -856,6 +837,29 @@
     [
      "RFC5424"
     ]
+   ],
+   [
+    "RFC7231",
+    21,
+    [
+     "RFC9110"
+    ]
+   ],
+   [
+    "RFC7230",
+    20,
+    [
+     "RFC9110",
+     "RFC9112"
+    ]
+   ],
+   [
+    "RFC2253",
+    19,
+    [
+     "RFC4510",
+     "RFC4514"
+    ]
    ]
   ]
  },
@@ -867,42 +871,43 @@
   "all_matches": 2551,
   "citations": 1619,
   "rfcs": 204,
-  "obsolete_rfcs": 48,
-  "obsolete_citations": 287,
+  "obsolete_rfcs": 37,
+  "obsolete_citations": 227,
   "top_obsolete": [
    [
-    "RFC5246",
-    21,
+    "RFC822",
+    41,
+    [
+     "RFC5322"
+    ]
+   ],
+   [
+    "RFC2253",
+    29,
+    [
+     "RFC4510",
+     "RFC4514"
+    ]
+   ],
+   [
+    "RFC8446",
+    28,
     [
      "RFC9846"
     ]
    ],
    [
-    "RFC2246",
-    11,
+    "RFC6962",
+    20,
     [
-     "RFC9846"
+     "RFC9162"
     ]
    ],
    [
-    "RFC6347",
-    7,
+    "RFC3280",
+    18,
     [
-     "RFC9147"
-    ]
-   ],
-   [
-    "RFC8422",
-    3,
-    [
-     "RFC9846"
-    ]
-   ],
-   [
-    "RFC4346",
-    1,
-    [
-     "RFC9846"
+     "RFC5280"
     ]
    ]
   ]
@@ -990,16 +995,9 @@
   "all_matches": 669,
   "citations": 425,
   "rfcs": 27,
-  "obsolete_rfcs": 9,
-  "obsolete_citations": 116,
+  "obsolete_rfcs": 7,
+  "obsolete_citations": 37,
   "top_obsolete": [
-   [
-    "RFC5849",
-    73,
-    [
-     "RFC6749"
-    ]
-   ],
    [
     "RFC2616",
     14,
@@ -1019,17 +1017,24 @@
     ]
    ],
    [
-    "RFC3447",
-    6,
-    [
-     "RFC8017"
-    ]
-   ],
-   [
     "RFC2818",
     3,
     [
      "RFC9110"
+    ]
+   ],
+   [
+    "RFC4627",
+    3,
+    [
+     "RFC8259"
+    ]
+   ],
+   [
+    "RFC4634",
+    3,
+    [
+     "RFC6234"
     ]
    ]
   ]
@@ -1042,16 +1047,9 @@
   "all_matches": 1359,
   "citations": 496,
   "rfcs": 48,
-  "obsolete_rfcs": 5,
-  "obsolete_citations": 31,
+  "obsolete_rfcs": 4,
+  "obsolete_citations": 13,
   "top_obsolete": [
-   [
-    "RFC5849",
-    18,
-    [
-     "RFC6749"
-    ]
-   ],
    [
     "RFC2616",
     6,

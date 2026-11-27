@@ -152,6 +152,47 @@ def load(conn, rfcs, series, rels, errata):
     run("""MATCH (r:RFC) SET r.verifiedTechnicalErrata =
            COUNT { (r)<-[:AMENDS]-(e:Erratum) WHERE e.status = 'Verified' AND e.type = 'Technical' }""")
     run("CREATE FULLTEXT INDEX rfc_text IF NOT EXISTS FOR (r:RFC) ON EACH [r.title, r.abstract]")
+    classify_obsoletes(conn)
+
+
+VERSION = re.compile(r"(?i)(?:version\s*|/)(\d+(?:\.\d+)?)|\b(\d+\.\d+)\b")
+WORD = re.compile(r"[a-z0-9]+")
+
+
+def _versions(title: str) -> set[str]:
+    return {re.sub(r"\.0$", "", next(g for g in m.groups() if g)) for m in VERSION.finditer(title or "")}
+
+
+def obsoletes_kind(old_title: str, new_title: str, n_successors: int) -> str:
+    """Why an RFC was obsoleted, from the two titles: 'retired' (a deprecation notice, no replacement),
+    'version' (a different protocol version: TLS 1.2 -> 1.3, OAuth 1.0 -> 2.0), 'split' (content moved
+    into several documents), else 'edition' (a revised edition of the same specification)."""
+    if DEPRECATING_TITLE.search(new_title or ""):
+        return "retired"
+    vo, vn = _versions(old_title), _versions(new_title)
+    if vo and vn and vo != vn and not (vo & vn):
+        return "version"
+    if n_successors > 1:
+        return "split"
+    return "edition"
+
+
+DEPRECATING_TITLE = re.compile(r"(?i)\b(formally )?deprecat|\bmoving .* to historic|\bobsoleting\b|\bretir")
+
+
+def classify_obsoletes(conn) -> None:
+    rows = [dict(r) for r in conn.execute("""
+        MATCH (n:RFC)-[:OBSOLETES]->(o:RFC)
+        RETURN o.id AS old, o.title AS ot, n.id AS new, n.title AS nt, COUNT { (o)<-[:OBSOLETES]-() } AS k""")]
+    edits = [{"old": r["old"], "new": r["new"], "kind": obsoletes_kind(r["ot"], r["nt"], r["k"])} for r in rows]
+    conn.execute("""UNWIND $rows AS x MATCH (:RFC {id: x.new})-[e:OBSOLETES]->(:RFC {id: x.old})
+                    SET e.kind = x.kind""", {"rows": edits})
+    # oldVersion: obsolete only because a newer protocol version exists (TLS 1.2, OAuth 1.0)
+    from . import graph
+    old = [r["id"] for r in conn.execute("MATCH (r:RFC) WHERE r.obsolete RETURN r.id AS id")]
+    flags = [{"id": i, "v": graph.check(conn, i).level == "old-version"} for i in old]
+    conn.execute("MATCH (r:RFC) SET r.oldVersion = false")
+    conn.execute("UNWIND $rows AS x MATCH (r:RFC {id: x.id}) SET r.oldVersion = x.v", {"rows": flags})
 
 
 def build(raw: Path, store: Path) -> dict:

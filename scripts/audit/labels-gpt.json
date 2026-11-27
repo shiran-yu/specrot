@@ -1,0 +1,502 @@
+[
+{
+"i": 0,
+"label": "legacy",
+"note": "Supports old Libwww-perl cookie format deliberately."
+},
+{
+"i": 1,
+"label": "update",
+"note": "ASN.1 implementation follows RFC 5208 syntax."
+},
+{
+"i": 2,
+"label": "update",
+"note": "Code comments implement replaced HTTP/2 sections."
+},
+{
+"i": 3,
+"label": "update",
+"note": "RST_STREAM loop behavior follows replaced specification."
+},
+{
+"i": 4,
+"label": "update",
+"note": "Documentation directs users to old TLS 1.3 specification."
+},
+{
+"i": 5,
+"label": "update",
+"note": "Domain matching is defined according to RFC 2965."
+},
+{
+"i": 6,
+"label": "update",
+"note": "Header validation follows replaced HTTP/2 rules."
+},
+{
+"i": 7,
+"label": "legacy",
+"note": "Historical comparison of two old cookie specifications."
+},
+{
+"i": 8,
+"label": "identifier",
+"note": "rfc_822 is a date-format name; citation is explicit legacy context."
+},
+{
+"i": 9,
+"label": "update",
+"note": "Grammar follows replaced HTTP/1.1 specification."
+},
+{
+"i": 10,
+"label": "update",
+"note": "Documentation implements old Happy Eyeballs specification."
+},
+{
+"i": 11,
+"label": "update",
+"note": "DNAME RR implementation refers to RFC 2672."
+},
+{
+"i": 12,
+"label": "update",
+"note": "Cache comparison behavior follows replaced specification."
+},
+{
+"i": 13,
+"label": "update",
+"note": "Status-code cacheability follows replaced specification."
+},
+{
+"i": 14,
+"label": "identifier",
+"note": "no-rfc7540-pri is a named command-line option."
+},
+{
+"i": 15,
+"label": "update",
+"note": "TSIG wire formatting follows replaced specification."
+},
+{
+"i": 16,
+"label": "update",
+"note": "ABNF definitions drive the URI validation implementation."
+},
+{
+"i": 17,
+"label": "update",
+"note": "Priority parsing follows old HTTP/2 specification."
+},
+{
+"i": 18,
+"label": "update",
+"note": "Request URI validation follows replaced HTTP rules."
+},
+{
+"i": 19,
+"label": "update",
+"note": "Realm interpretation follows replaced authentication specification."
+},
+{
+"i": 20,
+"label": "legacy",
+"note": "Changelog records historical RFC 5077 support."
+},
+{
+"i": 21,
+"label": "update",
+"note": "Code links RFC 7230 section for behavior."
+},
+{
+"i": 22,
+"label": "update",
+"note": "Status-code validation follows replaced specification."
+},
+{
+"i": 23,
+"label": "update",
+"note": "FTP path behavior follows RFC 1738."
+},
+{
+"i": 24,
+"label": "identifier",
+"note": "rfc822 is a parameter and function-name token."
+},
+{
+"i": 25,
+"label": "update",
+"note": "Authority-form parsing cites replaced specification."
+},
+{
+"i": 26,
+"label": "identifier",
+"note": "strict_rfc2965_unverifiable is a configuration identifier."
+},
+{
+"i": 27,
+"label": "update",
+"note": "TLS extension validation follows replaced specification."
+},
+{
+"i": 28,
+"label": "update",
+"note": "Multipart upload documentation cites old specification."
+},
+{
+"i": 29,
+"label": "update",
+"note": "Multiple Content-Length handling follows old specification."
+},
+{
+"i": 30,
+"label": "update",
+"note": "Connection-close behavior follows replaced HTTP rules."
+},
+{
+"i": 31,
+"label": "legacy",
+"note": "Lists historical extension specifications, including compatibility references."
+},
+{
+"i": 32,
+"label": "update",
+"note": "Frame handling follows replaced HTTP/2 specification."
+},
+{
+"i": 33,
+"label": "update",
+"note": "OCSP object naming follows old OCSP specification."
+},
+{
+"i": 34,
+"label": "update",
+"note": "Distinguished Name formatting follows old LDAP specification."
+},
+{
+"i": 35,
+"label": "update",
+"note": "Setting identifier implementation cites old HTTP/2 specification."
+},
+{
+"i": 36,
+"label": "update",
+"note": "CUBIC documentation references replaced specification."
+},
+{
+"i": 37,
+"label": "legacy",
+"note": "Preserves old hop-by-hop behavior explicitly for compatibility."
+},
+{
+"i": 38,
+"label": "legacy",
+"note": "Recognizes obsolete RFC 850 date format."
+},
+{
+"i": 39,
+"label": "update",
+"note": "Status-code descriptions follow replaced HTTP specification."
+},
+{
+"i": 40,
+"label": "update",
+"note": "Response body termination follows replaced HTTP rules."
+},
+{
+"i": 41,
+"label": "update",
+"note": "Signed Certificate Timestamp configuration cites old spec."
+},
+{
+"i": 42,
+"label": "update",
+"note": "INITIAL_WINDOW_SIZE handling follows replaced specification."
+},
+{
+"i": 43,
+"label": "identifier",
+"note": "ASN1_STRFLGS_ESC_2253 is an escape-option identifier."
+},
+{
+"i": 44,
+"label": "update",
+"note": "Header concatenation follows replaced HTTP specification."
+},
+{
+"i": 45,
+"label": "update",
+"note": "Library messaging validation follows old HTTP/2 specification."
+},
+{
+"i": 46,
+"label": "update",
+"note": "Response body parsing follows replaced HTTP rules."
+},
+{
+"i": 47,
+"label": "legacy",
+"note": "Lists historical date formats for compatibility parsing."
+},
+{
+"i": 48,
+"label": "update",
+"note": "Transfer-Encoding handling follows replaced specification."
+},
+{
+"i": 49,
+"label": "test",
+"note": "Regression test fixture explicitly targets RFC3164 logging."
+},
+{
+"i": 50,
+"label": "update",
+"note": "TLS signature algorithm requirement follows replaced specification."
+},
+{
+"i": 51,
+"label": "update",
+"note": "TLS 1.3 extension validation follows old specification."
+},
+{
+"i": 52,
+"label": "update",
+"note": "Date-header formatting links to old HTTP specification."
+},
+{
+"i": 53,
+"label": "legacy",
+"note": "Describes legacy RFC-822-style header syntax."
+},
+{
+"i": 54,
+"label": "update",
+"note": "TLS signature-algorithm mappings cite old specification."
+},
+{
+"i": 55,
+"label": "legacy",
+"note": "Conformance section lists several historical digest specifications."
+},
+{
+"i": 56,
+"label": "update",
+"note": "CRC-24 implementation follows replaced OpenPGP specification."
+},
+{
+"i": 57,
+"label": "update",
+"note": "Signature-algorithm setting documentation cites old specification."
+},
+{
+"i": 58,
+"label": "update",
+"note": "Certificate identity matching follows old RFC 6125 rules."
+},
+{
+"i": 59,
+"label": "update",
+"note": "RTSP body parsing follows replaced specification."
+},
+{
+"i": 60,
+"label": "update",
+"note": "LDAP field escaping follows old RFC 2254 rules."
+},
+{
+"i": 61,
+"label": "update",
+"note": "Status-code descriptions follow replaced HTTP specification."
+},
+{
+"i": 62,
+"label": "update",
+"note": "Status-code descriptions follow replaced HTTP specification."
+},
+{
+"i": 63,
+"label": "update",
+"note": "Date-header formatting links to old HTTP specification."
+},
+{
+"i": 64,
+"label": "update",
+"note": "Challenge implementation references replaced authentication specification."
+},
+{
+"i": 65,
+"label": "legacy",
+"note": "Deprecated RFC 2617 is listed behind the newer primary reference."
+},
+{
+"i": 66,
+"label": "legacy",
+"note": "Explains deprecated practice historically replaced by SAN names."
+},
+{
+"i": 67,
+"label": "legacy",
+"note": "Defines compatibility behavior for obsolete timestamp format."
+},
+{
+"i": 68,
+"label": "update",
+"note": "Persistent connection behavior follows replaced specification."
+},
+{
+"i": 69,
+"label": "update",
+"note": "HTTP/2 frame definitions cite replaced specification sections."
+},
+{
+"i": 70,
+"label": "identifier",
+"note": "rfc2965_hdrs and rfc2965 are implementation identifiers."
+},
+{
+"i": 71,
+"label": "update",
+"note": "Protocol implementation documents old framing specification."
+},
+{
+"i": 72,
+"label": "update",
+"note": "Header-name validation follows replaced HTTP/2 rules."
+},
+{
+"i": 73,
+"label": "identifier",
+"note": "RFC 5077 names the session-ticket configuration area."
+},
+{
+"i": 74,
+"label": "update",
+"note": "Cookie handling follows old RFC 2109 rules."
+},
+{
+"i": 75,
+"label": "legacy",
+"note": "Describes historically deprecated common-name practice."
+},
+{
+"i": 76,
+"label": "update",
+"note": "GOAWAY behavior follows replaced HTTP/2 specification."
+},
+{
+"i": 77,
+"label": "legacy",
+"note": "Describes deprecated IPv6 site-local address behavior."
+},
+{
+"i": 78,
+"label": "update",
+"note": "Happy Eyeballs implementation cites replaced specification."
+},
+{
+"i": 79,
+"label": "identifier",
+"note": "rfc2253 is a supported LDAP formatting option name."
+},
+{
+"i": 80,
+"label": "update",
+"note": "Strict Structured Fields parsing follows replaced specification."
+},
+{
+"i": 81,
+"label": "update",
+"note": "SETTINGS frame handling follows replaced HTTP/2 specification."
+},
+{
+"i": 82,
+"label": "update",
+"note": "HEADERS frame handling follows replaced HTTP/2 specification."
+},
+{
+"i": 83,
+"label": "update",
+"note": "RTSP Content-Length behavior follows replaced specification."
+},
+{
+"i": 84,
+"label": "update",
+"note": "Cacheability rules follow replaced HTTP specification."
+},
+{
+"i": 85,
+"label": "update",
+"note": "Request-target handling follows replaced HTTP specification."
+},
+{
+"i": 86,
+"label": "update",
+"note": "JSON media-type documentation cites old RFC 4627."
+},
+{
+"i": 87,
+"label": "update",
+"note": "Header splitting follows replaced Internet Message Format."
+},
+{
+"i": 88,
+"label": "update",
+"note": "Documentation indexes replaced URI specification."
+},
+{
+"i": 89,
+"label": "update",
+"note": "Conformance documentation cites old MD4 specification."
+},
+{
+"i": 90,
+"label": "update",
+"note": "GOAWAY behavior follows replaced HTTP/2 specification."
+},
+{
+"i": 91,
+"label": "legacy",
+"note": "Table maps OIDs to historical RFC 3280 identifiers."
+},
+{
+"i": 92,
+"label": "update",
+"note": "JSON encoder documentation cites old JSON specification."
+},
+{
+"i": 93,
+"label": "identifier",
+"note": "rfc_822 is a named date-format identifier."
+},
+{
+"i": 94,
+"label": "update",
+"note": "Permanent redirect status behavior cites replaced RFC 7538."
+},
+{
+"i": 95,
+"label": "legacy",
+"note": "Explicitly maintains support for old RFC2965 cookies."
+},
+{
+"i": 96,
+"label": "identifier",
+"note": "RFC822.SIZE, HEADER, and TEXT are IMAP command identifiers."
+},
+{
+"i": 97,
+"label": "update",
+"note": "Priority parameter parsing follows replaced specification."
+},
+{
+"i": 98,
+"label": "update",
+"note": "Header-element parsing follows replaced HTTP specification."
+},
+{
+"i": 99,
+"label": "legacy",
+"note": "Explains two-digit-year compatibility across historical RFC editions."
+}
+]

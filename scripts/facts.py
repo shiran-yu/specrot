@@ -16,12 +16,12 @@ def main():
     rels = {r["t"]: r["c"] for r in c.execute("MATCH ()-[r]->() RETURN type(r) AS t, count(*) AS c")}
     show = one("""MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC)
                   WITH p, sum(size(c.readerLines)) AS cites,
-                       sum(CASE WHEN r.obsolete THEN size(c.readerLines) ELSE 0 END) AS stale
+                       sum(CASE WHEN r.obsolete AND NOT r.oldVersion THEN size(c.readerLines) ELSE 0 END) AS stale
                   RETURN sum(cites) AS citations, sum(stale) AS obsolete, count(p) AS projects,
                          sum(CASE WHEN stale > 0 THEN 1 ELSE 0 END) AS affected""")
     show["obsolete_pct"] = round(100 * show["obsolete"] / show["citations"])
     top = [dict(r) for r in c.execute("""
-        MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND size(c.readerLines) > 0
+        MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND NOT r.oldVersion AND size(c.readerLines) > 0
         RETURN r.id AS rfc, count(DISTINCT p) AS projects ORDER BY projects DESC, rfc LIMIT 4""")]
     tls = one("""MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(:RFC {id: 'RFC8446'}) WHERE size(c.readerLines) > 0
                  RETURN count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS citations""")

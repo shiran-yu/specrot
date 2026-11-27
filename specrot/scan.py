@@ -25,7 +25,7 @@ IMPORT = re.compile(r"(import|from)\s+$")
 TEST_PATH = re.compile(r"(?i:(^|/)(tests?|testdata|testing|__tests__|spec|fixtures?)(/|$)|(^|/)test_[^/]*$|_test\.[a-z]+$|\.test\.[a-z]+$)"
                        r"|(^|/)[a-z]+Tests?(/|$)|Tests?\.(kt|java|scala|cs|swift)$")
 MAX_BYTES = 2_000_000
-LEVELS = ["obsolete", "historic", "amended", "ok", "unknown"]
+LEVELS = graph.LEVELS
 
 
 @dataclass
@@ -58,7 +58,9 @@ class Finding:
 def _files(root: Path, include_history: bool = False) -> list[Path]:
     """Tracked files when root is a git checkout (respects .gitignore), else a filtered walk."""
     try:
-        out = subprocess.run(["git", "-C", str(root), "ls-files", "-z"], capture_output=True, check=True)
+        # tracked and untracked-but-not-ignored files, so code an agent just wrote is scanned too
+        out = subprocess.run(["git", "-C", str(root), "ls-files", "-z", "--cached", "--others", "--exclude-standard"],
+                             capture_output=True, check=True)
         files = [root / p for p in out.stdout.decode(errors="replace").split("\0") if p]
     except (subprocess.CalledProcessError, FileNotFoundError):
         files = [p for p in root.rglob("*") if p.is_file()]
@@ -69,6 +71,8 @@ def _files(root: Path, include_history: bool = False) -> list[Path]:
 
 
 def find_citations(root: Path, include_history: bool = False) -> list[Citation]:
+    if not root.exists():
+        raise graph.InputError(f"no such file or directory: {root}")
     root = root.resolve()
     targets = [root] if root.is_file() else _files(root, include_history)
     base = root.parent if root.is_file() else root
@@ -78,9 +82,12 @@ def find_citations(root: Path, include_history: bool = False) -> list[Citation]:
             data = p.read_bytes()
         except OSError:
             continue
-        if b"\0" in data[:4096]:  # binary
+        if data[:2] in (b"\xff\xfe", b"\xfe\xff"):  # UTF-16 with a byte-order mark
+            text = data.decode("utf-16", errors="replace")
+        elif b"\0" in data[:4096]:  # binary
             continue
-        text = data.decode("utf-8", errors="replace")
+        else:
+            text = data.decode("utf-8", errors="replace")
         if "rfc" not in text.lower():
             continue
         out += find_in_text(text, str(p.relative_to(base)))

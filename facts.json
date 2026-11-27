@@ -22,10 +22,10 @@
   },
   "showcase": {
     "citations": 7596,
-    "obsolete": 1917,
+    "obsolete": 1626,
     "projects": 26,
     "affected": 24,
-    "obsolete_pct": 25
+    "obsolete_pct": 21
   },
   "top_obsolete": [
     {
@@ -49,5 +49,5 @@
     "projects": 7,
     "citations": 129
   },
-  "store_bytes": 5398528
+  "store_bytes": 5447680
 }

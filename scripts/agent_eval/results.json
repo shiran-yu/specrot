@@ -1,0 +1,2722 @@
+{
+ "date": "2026-11-27T01:05:55+00:00",
+ "prompt": "Which RFC is the current IETF specification for {topic}? If several RFCs together form the current specification, list them. Reply with only the RFC number(s), for example 'RFC 1234' or 'RFC 1234, RFC 5678'.",
+ "summary": {
+  "haiku": {
+   "correct": 24,
+   "of": 34,
+   "named_an_obsolete_rfc": 10,
+   "correct_where_spec_was_replaced": "16/25"
+  },
+  "haiku + specrot": {
+   "correct": 34,
+   "of": 34,
+   "named_an_obsolete_rfc": 0,
+   "correct_where_spec_was_replaced": "25/25"
+  },
+  "sonnet": {
+   "correct": 32,
+   "of": 34,
+   "named_an_obsolete_rfc": 2,
+   "correct_where_spec_was_replaced": "23/25"
+  },
+  "sonnet + specrot": {
+   "correct": 34,
+   "of": 34,
+   "named_an_obsolete_rfc": 0,
+   "correct_where_spec_was_replaced": "25/25"
+  }
+ },
+ "rows": [
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP/1.1 message syntax and connection management",
+   "seed": "RFC7230",
+   "key": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "text": "RFC 9110, RFC 9112",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP semantics (methods, status codes, header fields)",
+   "seed": "RFC7231",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP caching",
+   "seed": "RFC7234",
+   "key": [
+    "RFC9111"
+   ],
+   "text": "RFC 9111",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9111"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP range requests",
+   "seed": "RFC7233",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP/2",
+   "seed": "RFC7540",
+   "key": [
+    "RFC9113"
+   ],
+   "text": "RFC 9113",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9113"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "TLS 1.3",
+   "seed": "RFC8446",
+   "key": [
+    "RFC9846"
+   ],
+   "text": "RFC 8446",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8446"
+   ],
+   "obsolete_named": [
+    "RFC8446"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the JSON data interchange format",
+   "seed": "RFC7159",
+   "key": [
+    "RFC8259"
+   ],
+   "text": "RFC 8259, RFC 7159",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC7159",
+    "RFC8259"
+   ],
+   "obsolete_named": [
+    "RFC7159"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP cookies (HTTP state management)",
+   "seed": "RFC2965",
+   "key": [
+    "RFC6265"
+   ],
+   "text": "RFC 6265",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6265"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the Internet Message Format (email message syntax)",
+   "seed": "RFC2822",
+   "key": [
+    "RFC5322"
+   ],
+   "text": "RFC 5322, RFC 6532",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5322",
+    "RFC6532"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "SMTP",
+   "seed": "RFC2821",
+   "key": [
+    "RFC5321"
+   ],
+   "text": "RFC 5321, RFC 5322",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5321",
+    "RFC5322"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "IMAP",
+   "seed": "RFC3501",
+   "key": [
+    "RFC9051"
+   ],
+   "text": "RFC 3501, RFC 9051",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC3501",
+    "RFC9051"
+   ],
+   "obsolete_named": [
+    "RFC3501"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "UUIDs",
+   "seed": "RFC4122",
+   "key": [
+    "RFC9562"
+   ],
+   "text": "RFC 9562",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9562"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "Problem Details for HTTP APIs (application/problem+json)",
+   "seed": "RFC7807",
+   "key": [
+    "RFC9457"
+   ],
+   "text": "RFC 9457",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9457"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "Structured Field Values for HTTP",
+   "seed": "RFC8941",
+   "key": [
+    "RFC9651"
+   ],
+   "text": "RFC 9651",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9651"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "Certificate Transparency",
+   "seed": "RFC6962",
+   "key": [
+    "RFC9162"
+   ],
+   "text": "RFC 6962, RFC 9162",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6962",
+    "RFC9162"
+   ],
+   "obsolete_named": [
+    "RFC6962"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "TCP",
+   "seed": "RFC793",
+   "key": [
+    "RFC9293"
+   ],
+   "text": "RFC 793, RFC 9293",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC793",
+    "RFC9293"
+   ],
+   "obsolete_named": [
+    "RFC793"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "verifying a TLS server's identity (hostname) against its certificate",
+   "seed": "RFC6125",
+   "key": [
+    "RFC9525"
+   ],
+   "text": "RFC 9525, RFC 6125",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6125",
+    "RFC9525"
+   ],
+   "obsolete_named": [
+    "RFC6125"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "writing the IANA Considerations section of an RFC",
+   "seed": "RFC5226",
+   "key": [
+    "RFC8126"
+   ],
+   "text": "RFC 8126",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8126"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the CUBIC congestion control algorithm",
+   "seed": "RFC8312",
+   "key": [
+    "RFC9438"
+   ],
+   "text": "RFC 8312, RFC 9438",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8312",
+    "RFC9438"
+   ],
+   "obsolete_named": [
+    "RFC8312"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the HTTP Link header (Web Linking)",
+   "seed": "RFC5988",
+   "key": [
+    "RFC8288"
+   ],
+   "text": "RFC 8288",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8288"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "media type specifications and registration procedures",
+   "seed": "RFC4288",
+   "key": [
+    "RFC6838"
+   ],
+   "text": "RFC 6838, RFC 4288",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC4288",
+    "RFC6838"
+   ],
+   "obsolete_named": [
+    "RFC4288"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "IPv6",
+   "seed": "RFC2460",
+   "key": [
+    "RFC8200"
+   ],
+   "text": "RFC 8200, RFC 8201",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8200",
+    "RFC8201"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "DHCPv6",
+   "seed": "RFC3315",
+   "key": [
+    "RFC9915"
+   ],
+   "text": "RFC 8415",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8415"
+   ],
+   "obsolete_named": [
+    "RFC8415"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "SDP (Session Description Protocol)",
+   "seed": "RFC4566",
+   "key": [
+    "RFC8866"
+   ],
+   "text": "RFC 8866",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8866"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the HTTP Basic authentication scheme",
+   "seed": "RFC2617",
+   "key": [
+    "RFC7616",
+    "RFC7617",
+    "RFC9110"
+   ],
+   "text": "RFC 7617, RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC7617",
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "URI generic syntax",
+   "seed": "RFC3986",
+   "key": [
+    "RFC3986"
+   ],
+   "text": "RFC 3986, RFC 6874",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC3986",
+    "RFC6874"
+   ],
+   "obsolete_named": [
+    "RFC6874"
+   ],
+   "correct": false
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the WebSocket protocol",
+   "seed": "RFC6455",
+   "key": [
+    "RFC6455"
+   ],
+   "text": "RFC 6455, RFC 7692",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6455",
+    "RFC7692"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "JSON Web Token (JWT)",
+   "seed": "RFC7519",
+   "key": [
+    "RFC7519"
+   ],
+   "text": "RFC 7519",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC7519"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the OAuth 2.0 authorization framework",
+   "seed": "RFC6749",
+   "key": [
+    "RFC6749"
+   ],
+   "text": "RFC 6749, RFC 6750",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6749",
+    "RFC6750"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "Base64 encoding",
+   "seed": "RFC4648",
+   "key": [
+    "RFC4648"
+   ],
+   "text": "RFC 4648",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC4648"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "ABNF grammar notation",
+   "seed": "RFC5234",
+   "key": [
+    "RFC5234"
+   ],
+   "text": "RFC 5234, RFC 7405",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5234",
+    "RFC7405"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "the QUIC transport protocol",
+   "seed": "RFC9000",
+   "key": [
+    "RFC9000"
+   ],
+   "text": "RFC 9000, RFC 9001, RFC 9002",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9000",
+    "RFC9001",
+    "RFC9002"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "HTTP/3",
+   "seed": "RFC9114",
+   "key": [
+    "RFC9114"
+   ],
+   "text": "RFC 9114, RFC 9204, RFC 9218",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9114",
+    "RFC9204",
+    "RFC9218"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": false,
+   "topic": "NTPv4",
+   "seed": "RFC5905",
+   "key": [
+    "RFC5905"
+   ],
+   "text": "RFC 5905, RFC 7822",
+   "turns": 1,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5905",
+    "RFC7822"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP/1.1 message syntax and connection management",
+   "seed": "RFC7230",
+   "key": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "text": "RFC 9112",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9112"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP semantics (methods, status codes, header fields)",
+   "seed": "RFC7231",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP caching",
+   "seed": "RFC7234",
+   "key": [
+    "RFC9111"
+   ],
+   "text": "RFC 9111",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9111"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP range requests",
+   "seed": "RFC7233",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP/2",
+   "seed": "RFC7540",
+   "key": [
+    "RFC9113"
+   ],
+   "text": "RFC 9113",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9113"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "TLS 1.3",
+   "seed": "RFC8446",
+   "key": [
+    "RFC9846"
+   ],
+   "text": "RFC 9846",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9846"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the JSON data interchange format",
+   "seed": "RFC7159",
+   "key": [
+    "RFC8259"
+   ],
+   "text": "RFC 8259",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8259"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP cookies (HTTP state management)",
+   "seed": "RFC2965",
+   "key": [
+    "RFC6265"
+   ],
+   "text": "RFC 6265",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6265"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the Internet Message Format (email message syntax)",
+   "seed": "RFC2822",
+   "key": [
+    "RFC5322"
+   ],
+   "text": "RFC 5322, RFC 6854",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5322",
+    "RFC6854"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "SMTP",
+   "seed": "RFC2821",
+   "key": [
+    "RFC5321"
+   ],
+   "text": "RFC 5321, RFC 7504",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5321",
+    "RFC7504"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "IMAP",
+   "seed": "RFC3501",
+   "key": [
+    "RFC9051"
+   ],
+   "text": "RFC 9051",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9051"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "UUIDs",
+   "seed": "RFC4122",
+   "key": [
+    "RFC9562"
+   ],
+   "text": "RFC 9562",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9562"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "Problem Details for HTTP APIs (application/problem+json)",
+   "seed": "RFC7807",
+   "key": [
+    "RFC9457"
+   ],
+   "text": "RFC 9457",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9457"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "Structured Field Values for HTTP",
+   "seed": "RFC8941",
+   "key": [
+    "RFC9651"
+   ],
+   "text": "RFC 9651",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9651"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "Certificate Transparency",
+   "seed": "RFC6962",
+   "key": [
+    "RFC9162"
+   ],
+   "text": "RFC 9162",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9162"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "TCP",
+   "seed": "RFC793",
+   "key": [
+    "RFC9293"
+   ],
+   "text": "RFC 9293",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9293"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "verifying a TLS server's identity (hostname) against its certificate",
+   "seed": "RFC6125",
+   "key": [
+    "RFC9525"
+   ],
+   "text": "RFC 9525",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9525"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "writing the IANA Considerations section of an RFC",
+   "seed": "RFC5226",
+   "key": [
+    "RFC8126"
+   ],
+   "text": "RFC 8126, RFC 9907",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8126",
+    "RFC9907"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the CUBIC congestion control algorithm",
+   "seed": "RFC8312",
+   "key": [
+    "RFC9438"
+   ],
+   "text": "RFC 9438",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9438"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the HTTP Link header (Web Linking)",
+   "seed": "RFC5988",
+   "key": [
+    "RFC8288"
+   ],
+   "text": "RFC 8288",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8288"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "media type specifications and registration procedures",
+   "seed": "RFC4288",
+   "key": [
+    "RFC6838"
+   ],
+   "text": "RFC 6838, RFC 9694",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6838",
+    "RFC9694"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "IPv6",
+   "seed": "RFC2460",
+   "key": [
+    "RFC8200"
+   ],
+   "text": "RFC 8200, RFC 9673",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8200",
+    "RFC9673"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "DHCPv6",
+   "seed": "RFC3315",
+   "key": [
+    "RFC9915"
+   ],
+   "text": "RFC 9915",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9915"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "SDP (Session Description Protocol)",
+   "seed": "RFC4566",
+   "key": [
+    "RFC8866"
+   ],
+   "text": "RFC 8866",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC8866"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the HTTP Basic authentication scheme",
+   "seed": "RFC2617",
+   "key": [
+    "RFC7616",
+    "RFC7617",
+    "RFC9110"
+   ],
+   "text": "RFC 7617",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC7617"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "URI generic syntax",
+   "seed": "RFC3986",
+   "key": [
+    "RFC3986"
+   ],
+   "text": "RFC 3986",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC3986"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the WebSocket protocol",
+   "seed": "RFC6455",
+   "key": [
+    "RFC6455"
+   ],
+   "text": "RFC 6455",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6455"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "JSON Web Token (JWT)",
+   "seed": "RFC7519",
+   "key": [
+    "RFC7519"
+   ],
+   "text": "RFC 7519",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC7519"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the OAuth 2.0 authorization framework",
+   "seed": "RFC6749",
+   "key": [
+    "RFC6749"
+   ],
+   "text": "RFC 6749",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC6749"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "Base64 encoding",
+   "seed": "RFC4648",
+   "key": [
+    "RFC4648"
+   ],
+   "text": "RFC 4648",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC4648"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "ABNF grammar notation",
+   "seed": "RFC5234",
+   "key": [
+    "RFC5234"
+   ],
+   "text": "RFC 5234, RFC 7405",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5234",
+    "RFC7405"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "the QUIC transport protocol",
+   "seed": "RFC9000",
+   "key": [
+    "RFC9000"
+   ],
+   "text": "RFC 9000, RFC 9001, RFC 9002",
+   "turns": 2,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9000",
+    "RFC9001",
+    "RFC9002"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "HTTP/3",
+   "seed": "RFC9114",
+   "key": [
+    "RFC9114"
+   ],
+   "text": "RFC 9114",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC9114"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "haiku",
+   "with_specrot": true,
+   "topic": "NTPv4",
+   "seed": "RFC5905",
+   "key": [
+    "RFC5905"
+   ],
+   "text": "RFC 5905",
+   "turns": 3,
+   "model_id": [
+    "claude-haiku-5-5"
+   ],
+   "named": [
+    "RFC5905"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP/1.1 message syntax and connection management",
+   "seed": "RFC7230",
+   "key": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "text": "RFC 9112",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9112"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP semantics (methods, status codes, header fields)",
+   "seed": "RFC7231",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP caching",
+   "seed": "RFC7234",
+   "key": [
+    "RFC9111"
+   ],
+   "text": "RFC 9111",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9111"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP range requests",
+   "seed": "RFC7233",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110, RFC 9111\n\nRange requests are defined in RFC 9110 (HTTP Semantics, Section 14), and RFC 9111 (HTTP Caching) covers how caches handle partial content and range responses.",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9110",
+    "RFC9111"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP/2",
+   "seed": "RFC7540",
+   "key": [
+    "RFC9113"
+   ],
+   "text": "RFC 9113",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9113"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "TLS 1.3",
+   "seed": "RFC8446",
+   "key": [
+    "RFC9846"
+   ],
+   "text": "RFC 8446",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8446"
+   ],
+   "obsolete_named": [
+    "RFC8446"
+   ],
+   "correct": false
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the JSON data interchange format",
+   "seed": "RFC7159",
+   "key": [
+    "RFC8259"
+   ],
+   "text": "RFC 8259",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8259"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP cookies (HTTP state management)",
+   "seed": "RFC2965",
+   "key": [
+    "RFC6265"
+   ],
+   "text": "RFC 6265",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6265"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the Internet Message Format (email message syntax)",
+   "seed": "RFC2822",
+   "key": [
+    "RFC5322"
+   ],
+   "text": "RFC 5322",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5322"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "SMTP",
+   "seed": "RFC2821",
+   "key": [
+    "RFC5321"
+   ],
+   "text": "RFC 5321, RFC 5322",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5321",
+    "RFC5322"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "IMAP",
+   "seed": "RFC3501",
+   "key": [
+    "RFC9051"
+   ],
+   "text": "RFC 9051",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9051"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "UUIDs",
+   "seed": "RFC4122",
+   "key": [
+    "RFC9562"
+   ],
+   "text": "RFC 9562",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9562"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "Problem Details for HTTP APIs (application/problem+json)",
+   "seed": "RFC7807",
+   "key": [
+    "RFC9457"
+   ],
+   "text": "RFC 9457",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9457"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "Structured Field Values for HTTP",
+   "seed": "RFC8941",
+   "key": [
+    "RFC9651"
+   ],
+   "text": "RFC 9651",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9651"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "Certificate Transparency",
+   "seed": "RFC6962",
+   "key": [
+    "RFC9162"
+   ],
+   "text": "RFC 9162",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9162"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "TCP",
+   "seed": "RFC793",
+   "key": [
+    "RFC9293"
+   ],
+   "text": "RFC 9293",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9293"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "verifying a TLS server's identity (hostname) against its certificate",
+   "seed": "RFC6125",
+   "key": [
+    "RFC9525"
+   ],
+   "text": "RFC 9525",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9525"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "writing the IANA Considerations section of an RFC",
+   "seed": "RFC5226",
+   "key": [
+    "RFC8126"
+   ],
+   "text": "RFC 8126",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8126"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the CUBIC congestion control algorithm",
+   "seed": "RFC8312",
+   "key": [
+    "RFC9438"
+   ],
+   "text": "RFC 9438",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9438"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the HTTP Link header (Web Linking)",
+   "seed": "RFC5988",
+   "key": [
+    "RFC8288"
+   ],
+   "text": "RFC 8288",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8288"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "media type specifications and registration procedures",
+   "seed": "RFC4288",
+   "key": [
+    "RFC6838"
+   ],
+   "text": "RFC 6838",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6838"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "IPv6",
+   "seed": "RFC2460",
+   "key": [
+    "RFC8200"
+   ],
+   "text": "RFC 8200",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8200"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "DHCPv6",
+   "seed": "RFC3315",
+   "key": [
+    "RFC9915"
+   ],
+   "text": "RFC 8415",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8415"
+   ],
+   "obsolete_named": [
+    "RFC8415"
+   ],
+   "correct": false
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "SDP (Session Description Protocol)",
+   "seed": "RFC4566",
+   "key": [
+    "RFC8866"
+   ],
+   "text": "RFC 8866",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8866"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the HTTP Basic authentication scheme",
+   "seed": "RFC2617",
+   "key": [
+    "RFC7616",
+    "RFC7617",
+    "RFC9110"
+   ],
+   "text": "RFC 7617, RFC 9110, RFC 9111, RFC 9112\n\nCorrection: the Basic scheme itself is defined by RFC 7617, and the general HTTP authentication framework it builds on is RFC 9110. RFC 9111 and RFC 9112 are not part of the authentication specification, so the answer is:\n\nRFC 7617, RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC7617",
+    "RFC9110",
+    "RFC9111",
+    "RFC9112"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "URI generic syntax",
+   "seed": "RFC3986",
+   "key": [
+    "RFC3986"
+   ],
+   "text": "RFC 3986",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC3986"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the WebSocket protocol",
+   "seed": "RFC6455",
+   "key": [
+    "RFC6455"
+   ],
+   "text": "RFC 6455, RFC 7692",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6455",
+    "RFC7692"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "JSON Web Token (JWT)",
+   "seed": "RFC7519",
+   "key": [
+    "RFC7519"
+   ],
+   "text": "RFC 7519, RFC 7515, RFC 7516, RFC 7517, RFC 7518",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC7515",
+    "RFC7516",
+    "RFC7517",
+    "RFC7518",
+    "RFC7519"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the OAuth 2.0 authorization framework",
+   "seed": "RFC6749",
+   "key": [
+    "RFC6749"
+   ],
+   "text": "RFC 6749, RFC 6750",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6749",
+    "RFC6750"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "Base64 encoding",
+   "seed": "RFC4648",
+   "key": [
+    "RFC4648"
+   ],
+   "text": "RFC 4648",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC4648"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "ABNF grammar notation",
+   "seed": "RFC5234",
+   "key": [
+    "RFC5234"
+   ],
+   "text": "RFC 5234, RFC 7405",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5234",
+    "RFC7405"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "the QUIC transport protocol",
+   "seed": "RFC9000",
+   "key": [
+    "RFC9000"
+   ],
+   "text": "RFC 9000, RFC 9001, RFC 9002",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9000",
+    "RFC9001",
+    "RFC9002"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "HTTP/3",
+   "seed": "RFC9114",
+   "key": [
+    "RFC9114"
+   ],
+   "text": "RFC 9114, RFC 9204, RFC 9000, RFC 9001, RFC 9002, RFC 9110",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9000",
+    "RFC9001",
+    "RFC9002",
+    "RFC9110",
+    "RFC9114",
+    "RFC9204"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": false,
+   "topic": "NTPv4",
+   "seed": "RFC5905",
+   "key": [
+    "RFC5905"
+   ],
+   "text": "RFC 5905",
+   "turns": 1,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5905"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP/1.1 message syntax and connection management",
+   "seed": "RFC7230",
+   "key": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "text": "RFC 9112, RFC 9110",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9110",
+    "RFC9112"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP semantics (methods, status codes, header fields)",
+   "seed": "RFC7231",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP caching",
+   "seed": "RFC7234",
+   "key": [
+    "RFC9111"
+   ],
+   "text": "RFC 9111",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9111"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP range requests",
+   "seed": "RFC7233",
+   "key": [
+    "RFC9110"
+   ],
+   "text": "RFC 9110",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP/2",
+   "seed": "RFC7540",
+   "key": [
+    "RFC9113"
+   ],
+   "text": "RFC 9113",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9113"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "TLS 1.3",
+   "seed": "RFC8446",
+   "key": [
+    "RFC9846"
+   ],
+   "text": "RFC 9846",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9846"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the JSON data interchange format",
+   "seed": "RFC7159",
+   "key": [
+    "RFC8259"
+   ],
+   "text": "RFC 8259",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8259"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP cookies (HTTP state management)",
+   "seed": "RFC2965",
+   "key": [
+    "RFC6265"
+   ],
+   "text": "RFC 6265",
+   "turns": 3,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6265"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the Internet Message Format (email message syntax)",
+   "seed": "RFC2822",
+   "key": [
+    "RFC5322"
+   ],
+   "text": "RFC 5322, RFC 6854",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5322",
+    "RFC6854"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "SMTP",
+   "seed": "RFC2821",
+   "key": [
+    "RFC5321"
+   ],
+   "text": "RFC 5321, RFC 7504",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5321",
+    "RFC7504"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "IMAP",
+   "seed": "RFC3501",
+   "key": [
+    "RFC9051"
+   ],
+   "text": "RFC 9051",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9051"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "UUIDs",
+   "seed": "RFC4122",
+   "key": [
+    "RFC9562"
+   ],
+   "text": "RFC 9562",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9562"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "Problem Details for HTTP APIs (application/problem+json)",
+   "seed": "RFC7807",
+   "key": [
+    "RFC9457"
+   ],
+   "text": "RFC 9457",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9457"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "Structured Field Values for HTTP",
+   "seed": "RFC8941",
+   "key": [
+    "RFC9651"
+   ],
+   "text": "RFC 9651",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9651"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "Certificate Transparency",
+   "seed": "RFC6962",
+   "key": [
+    "RFC9162"
+   ],
+   "text": "RFC 9162",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9162"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "TCP",
+   "seed": "RFC793",
+   "key": [
+    "RFC9293"
+   ],
+   "text": "RFC 9293",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9293"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "verifying a TLS server's identity (hostname) against its certificate",
+   "seed": "RFC6125",
+   "key": [
+    "RFC9525"
+   ],
+   "text": "RFC 9525",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9525"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "writing the IANA Considerations section of an RFC",
+   "seed": "RFC5226",
+   "key": [
+    "RFC8126"
+   ],
+   "text": "RFC 8126, RFC 9907",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8126",
+    "RFC9907"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the CUBIC congestion control algorithm",
+   "seed": "RFC8312",
+   "key": [
+    "RFC9438"
+   ],
+   "text": "RFC 9438",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9438"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the HTTP Link header (Web Linking)",
+   "seed": "RFC5988",
+   "key": [
+    "RFC8288"
+   ],
+   "text": "RFC 8288",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8288"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "media type specifications and registration procedures",
+   "seed": "RFC4288",
+   "key": [
+    "RFC6838"
+   ],
+   "text": "RFC 6838, RFC 9694",
+   "turns": 3,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6838",
+    "RFC9694"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "IPv6",
+   "seed": "RFC2460",
+   "key": [
+    "RFC8200"
+   ],
+   "text": "RFC 8200",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8200"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "DHCPv6",
+   "seed": "RFC3315",
+   "key": [
+    "RFC9915"
+   ],
+   "text": "RFC 9915",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9915"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "SDP (Session Description Protocol)",
+   "seed": "RFC4566",
+   "key": [
+    "RFC8866"
+   ],
+   "text": "RFC 8866",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC8866"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the HTTP Basic authentication scheme",
+   "seed": "RFC2617",
+   "key": [
+    "RFC7616",
+    "RFC7617",
+    "RFC9110"
+   ],
+   "text": "RFC 7617, RFC 9110",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC7617",
+    "RFC9110"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "URI generic syntax",
+   "seed": "RFC3986",
+   "key": [
+    "RFC3986"
+   ],
+   "text": "RFC 3986",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC3986"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the WebSocket protocol",
+   "seed": "RFC6455",
+   "key": [
+    "RFC6455"
+   ],
+   "text": "RFC 6455, RFC 7936, RFC 8307, RFC 8441",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6455",
+    "RFC7936",
+    "RFC8307",
+    "RFC8441"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "JSON Web Token (JWT)",
+   "seed": "RFC7519",
+   "key": [
+    "RFC7519"
+   ],
+   "text": "RFC 7519, RFC 8725",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC7519",
+    "RFC8725"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the OAuth 2.0 authorization framework",
+   "seed": "RFC6749",
+   "key": [
+    "RFC6749"
+   ],
+   "text": "RFC 6749, RFC 6750, RFC 8252, RFC 9700",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC6749",
+    "RFC6750",
+    "RFC8252",
+    "RFC9700"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "Base64 encoding",
+   "seed": "RFC4648",
+   "key": [
+    "RFC4648"
+   ],
+   "text": "RFC 4648",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC4648"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "ABNF grammar notation",
+   "seed": "RFC5234",
+   "key": [
+    "RFC5234"
+   ],
+   "text": "RFC 5234, RFC 7405",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5234",
+    "RFC7405"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "the QUIC transport protocol",
+   "seed": "RFC9000",
+   "key": [
+    "RFC9000"
+   ],
+   "text": "RFC 9000, RFC 9001, RFC 9002",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9000",
+    "RFC9001",
+    "RFC9002"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "HTTP/3",
+   "seed": "RFC9114",
+   "key": [
+    "RFC9114"
+   ],
+   "text": "RFC 9114, RFC 9204",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC9114",
+    "RFC9204"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  },
+  {
+   "model": "sonnet",
+   "with_specrot": true,
+   "topic": "NTPv4",
+   "seed": "RFC5905",
+   "key": [
+    "RFC5905"
+   ],
+   "text": "RFC 5905, RFC 7822, RFC 8573, RFC 9109, RFC 9748, RFC 9769",
+   "turns": 2,
+   "model_id": [
+    "claude-sonnet-5-5"
+   ],
+   "named": [
+    "RFC5905",
+    "RFC7822",
+    "RFC8573",
+    "RFC9109",
+    "RFC9748",
+    "RFC9769"
+   ],
+   "obsolete_named": [],
+   "correct": true
+  }
+ ]
+}

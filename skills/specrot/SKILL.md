@@ -20,7 +20,9 @@ uv run specrot check 8446 7540 6749        # level, replacement chain, live upda
 uv run specrot check 2616 --json           # machine-readable
 ```
 
-Levels: `obsolete` (cite the replacement named in `current`), `historic`, `amended` (still in force,
+Levels: `obsolete` (a newer edition replaced it: cite the RFC in `current`; if `current` is empty
+it was retired without a replacement), `old-version` (only a newer protocol version exists, e.g. TLS
+1.2's RFC 5246: still right if you implement that version), `historic`, `amended` (still in force,
 but read the listed updates; deprecations are flagged), `ok`, `unknown` (no such RFC).
 
 ## In a repository
@@ -39,15 +41,15 @@ citing RFC 5849, a parser accepting RFC 2822 obsolete syntax).
 ## Other questions
 
 ```bash
-uv run specrot read 9110 --depth 1     # what must I read to implement it (normative closure)
+uv run specrot read 9110 --depth 1     # what must I read to implement it (normative closure, depth 1-3)
 uv run specrot impact 5280             # what still in force depends on it
 uv run specrot search "token revocation"
 uv run specrot cypher "MATCH (r:RFC {id:'RFC6749'})<-[:UPDATES]-(u) RETURN u.id, u.title"
 ```
 
-Graph schema: `(:RFC)-[:OBSOLETES|UPDATES|NORMATIVE_REF|INFORMATIVE_REF]->(:RFC)`,
+Graph schema: `(:RFC)-[:OBSOLETES {kind: edition|version|split|retired}]->(:RFC)`, `(:RFC)-[:UPDATES|NORMATIVE_REF|INFORMATIVE_REF]->(:RFC)`,
 `(:Series {id:'BCP14'})-[:INCLUDES]->(:RFC)`, `(:Erratum)-[:AMENDS]->(:RFC)`,
 `(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)`,
 `(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines}]->(:RFC)` for 26 scanned open-source projects.
-RFC properties: `id`, `number`, `title`, `date`, `status`, `obsolete`, `verifiedTechnicalErrata`, `url`.
+RFC properties: `id`, `number`, `title`, `date`, `status`, `obsolete`, `oldVersion`, `verifiedTechnicalErrata`, `url`.
 Cypher is Relate's Cypher 25 (no APOC); `(r)<-[:OBSOLETES]-+(n)` follows a chain of any length.

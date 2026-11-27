@@ -10,11 +10,14 @@ from rich.console import Console
 from rich.table import Table
 from rich.tree import Tree
 
+import relate
+
 from . import graph, scan
 
 console = Console(highlight=False)
-STYLE = {"obsolete": "bold red", "historic": "red", "amended": "yellow", "ok": "green", "unknown": "dim"}
-ICON = {"obsolete": "✗", "historic": "✗", "amended": "!", "ok": "✓", "unknown": "?"}
+STYLE = {"obsolete": "bold red", "old-version": "magenta", "historic": "red", "amended": "yellow", "ok": "green",
+         "unknown": "dim"}
+ICON = {"obsolete": "✗", "old-version": "↑", "historic": "✗", "amended": "!", "ok": "✓", "unknown": "?"}
 
 
 def _label(v: graph.Verdict) -> str:
@@ -23,15 +26,22 @@ def _label(v: graph.Verdict) -> str:
 
 def _verdict_tree(v: graph.Verdict) -> Tree:
     head = f"{_label(v)}  [bold]{v.id}[/]"
-    if v.known:
+    if v.members:
+        head += f"  {v.title}"
+    elif v.known:
         head += f"  {v.title}  [dim]({v.date}, {v.status.title() if v.status else '?'})[/]"
     else:
         head += "  [dim]no such RFC in the index[/]"
     t = Tree(head)
+    for m in v.members:
+        t.add(f"{m}")
     if v.replaced_by:
-        r = t.add("[bold]replaced by[/] (follow OBSOLETES to documents still in force)")
+        retired = all(p["kind"] == "retired" for p in v.replaced_by)
+        r = t.add(f"[bold]{'retired by' if retired else 'replaced by'}[/] (OBSOLETES chains to documents still in force)")
         for p in v.replaced_by:
-            r.add(" → ".join(p["chain"][:-1] + [f"[bold green]{p['current']}[/]"]) + f"  [dim]{p['title']}[/]")
+            colour = "dim" if p["kind"] == "retired" else "bold green"
+            r.add(" → ".join(p["chain"][:-1] + [f"[{colour}]{p['current']}[/]"]) + f"  {p['title']}"
+                  + f"  [dim]({graph.KIND_TEXT[p['kind']]})[/]")
     if v.deprecations:
         d = t.add("[bold]partly deprecated by[/]")
         for u in v.deprecations:
@@ -60,7 +70,7 @@ def cmd_check(a, conn):
 
 
 def _markdown(findings, root) -> str:
-    lines = [f"## specrot report for `{root}`", "", "| RFC | Status | Use instead / amended by | Cited at |", "|---|---|---|---|"]
+    lines = [f"## specrot report for `{root}`", "", "| RFC | Status | Replaced by / amended by | Cited at |", "|---|---|---|---|"]
     for f in findings:
         v = f.verdict
         if v.level == "ok":
@@ -73,13 +83,16 @@ def _markdown(findings, root) -> str:
 
 def cmd_scan(a, conn):
     root = Path(a.path)
+    fail = {x.strip() for x in (a.fail_on or "").split(",") if x.strip()}
+    if fail - set(graph.LEVELS):
+        raise graph.InputError(f"--fail-on takes {', '.join(graph.LEVELS)}; got {', '.join(sorted(fail - set(graph.LEVELS)))}")
     found = scan.find_citations(root, a.include_history)
     citations = found if a.all_kinds else [c for c in found if c.actionable]
     rules = scan.load_ignore(root)
     n_accepted = sum(1 for c in citations if scan.accepted(c, rules))
     citations = [c for c in citations if not scan.accepted(c, rules)]
     findings = scan.judge(conn, citations)
-    counts = {lvl: sum(1 for f in findings if f.verdict.level == lvl) for lvl in scan.LEVELS}
+    counts = {lvl: sum(1 for f in findings if f.verdict.level == lvl) for lvl in graph.LEVELS}
     if a.save:
         conn.close()
         wconn = graph.connect(a.store, read_only=False)
@@ -96,7 +109,7 @@ def cmd_scan(a, conn):
         console.print("  ".join(f"[{STYLE[k]}]{ICON[k]} {k} {n}[/]" for k, n in counts.items() if n)
                       + (f"  [dim]{n_accepted} accepted by {scan.IGNORE_FILE}[/]" if n_accepted else ""))
         tab = Table(show_lines=False, header_style="bold")
-        for col in ("status", "RFC", "title", "use instead / amended by", "cited at"):
+        for col in ("status", "RFC", "title", "replaced by / amended by", "cited at"):
             tab.add_column(col, overflow="fold")
         for f in findings:
             v = f.verdict
@@ -112,7 +125,6 @@ def cmd_scan(a, conn):
         console.print(tab)
         if a.save:
             console.print(f"saved as (:Project {{name: '{a.save}'}}) in {a.store}")
-    fail = {x.strip() for x in (a.fail_on or "").split(",") if x.strip()}
     if fail and any(counts.get(k) for k in fail):
         sys.exit(1)
 
@@ -122,11 +134,11 @@ def cmd_read(a, conn):
     if a.json:
         print(json.dumps(rows, indent=2))
         return
-    tab = Table(title=f"Normative reading list for {graph.rfc_id(a.rfc)} (depth ≤ {a.depth})", header_style="bold")
+    tab = Table(title=f"Normative reading list for {graph.rfc_id(a.rfc)} (depth ≤ {graph.clamp_depth(a.depth)})", header_style="bold")
     for col in ("hop", "RFC", "title", "note"):
         tab.add_column(col, overflow="fold")
     for r in rows:
-        note = f"[red]obsolete → read {', '.join(r['current'])}[/]" if r["obsolete"] else ""
+        note = f"[red]obsolete → {', '.join(r['current']) or 'retired'}[/]" if r["obsolete"] else ""
         tab.add_row(str(r["depth"]), r["id"], r["title"] or "", note)
     console.print(tab)
     stale = sum(1 for r in rows if r["obsolete"])
@@ -138,7 +150,8 @@ def cmd_impact(a, conn):
     if a.json:
         print(json.dumps(rows, indent=2))
         return
-    tab = Table(title=f"Documents still in force that normatively depend on {graph.rfc_id(a.rfc)}", header_style="bold")
+    tab = Table(title=f"Documents still in force that normatively depend on {graph.rfc_id(a.rfc)} "
+                      f"(depth ≤ {graph.clamp_depth(a.depth)})", header_style="bold")
     for col in ("hop", "RFC", "title", "date", "status"):
         tab.add_column(col, overflow="fold")
     for r in rows[: a.limit]:
@@ -240,9 +253,20 @@ def main(argv=None):
     s.set_defaults(fn=cmd_mcp)
 
     a = p.parse_args(argv)
-    conn = None if a.cmd in ("build", "mcp") else graph.connect(a.store)
+    conn = None
     try:
+        conn = None if a.cmd in ("build", "mcp") else graph.connect(a.store)
         a.fn(a, conn)
+    except graph.InputError as e:
+        console.print(f"[red]error:[/] {e}")
+        sys.exit(2)
+    except json.JSONDecodeError as e:
+        console.print(f"[red]error:[/] --params is not valid JSON: {e}")
+        sys.exit(2)
+    except relate.Error as e:
+        hint = " (another process has the store open for writing; close it or use --store)" if "lock" in str(e).lower() else ""
+        console.print(f"[red]Relate error:[/] {e}{hint}")
+        sys.exit(2)
     finally:
         if conn is not None:
             try:

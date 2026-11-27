@@ -25,15 +25,16 @@ async function load() {
     const rows = G.rfcs.slice(i, i + 5000);
     steps.push([`RFC nodes ${i + rows.length}`, () => run(
       "UNWIND $rows AS x CREATE (:RFC {number: x[0], id: 'RFC' + toString(x[0]), title: x[1], date: x[2], " +
-      "status: x[3], obsolete: x[4] = 1, errata: x[5], wg: x[6]})", { rows })]);
+      "status: x[3], obsolete: x[4] = 1, errata: x[5], wg: x[6], oldVersion: x[7] = 1})", { rows })]);
   }
   const later = [];  // normative references load after the page is usable
   for (const [type, all] of Object.entries(G.edges)) {
     const list = type === "NORMATIVE_REF" ? later : steps;
     for (let i = 0; i < all.length; i += 10000) {
       const rows = all.slice(i, i + 10000);
+      const props = type === "OBSOLETES" ? " {kind: x[2]}" : "";
       list.push([`${type} ${i + rows.length}`, () => run(
-        `UNWIND $rows AS x MATCH (a:RFC {number: x[0]}), (b:RFC {number: x[1]}) CREATE (a)-[:${type}]->(b)`, { rows })]);
+        `UNWIND $rows AS x MATCH (a:RFC {number: x[0]}), (b:RFC {number: x[1]}) CREATE (a)-[:${type}${props}]->(b)`, { rows })]);
     }
   }
   steps.push(["series", () => run(

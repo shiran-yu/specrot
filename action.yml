@@ -1,5 +1,5 @@
 name: specrot
-description: Flag RFC citations in your repository that point at obsoleted RFCs, with the replacement to cite.
+description: Flag RFC citations in your repository that point at obsoleted RFCs, with the RFC that replaced them.
 branding:
   icon: book-open
   color: red
@@ -16,7 +16,12 @@ runs:
     - uses: astral-sh/setup-uv@v6
     - name: specrot report
       shell: bash
-      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/${{ inputs.path }}" --markdown >> "$GITHUB_STEP_SUMMARY"
+      env:
+        SCAN_PATH: ${{ inputs.path }}
+      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/$SCAN_PATH" --markdown >> "$GITHUB_STEP_SUMMARY"
     - name: specrot gate
       shell: bash
-      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/${{ inputs.path }}" --fail-on "${{ inputs.fail-on }}"
+      env:
+        SCAN_PATH: ${{ inputs.path }}
+        FAIL_ON: ${{ inputs.fail-on }}
+      run: uv run --directory "$GITHUB_ACTION_PATH" specrot scan "$GITHUB_WORKSPACE/$SCAN_PATH" --fail-on "$FAIL_ON"

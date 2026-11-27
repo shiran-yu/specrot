@@ -101,3 +101,45 @@ def test_ignore_file_accepts_legacy(tmp_path):
     cmd = [sys.executable, "-m", "specrot.cli", "scan", str(tmp_path), "--json"]
     out = json.loads(subprocess.run(cmd, capture_output=True, text=True, cwd=ROOT).stdout)
     assert out["accepted"] == 2 and out["counts"]["obsolete"] == 1
+
+
+def test_replacement_kinds(conn):
+    assert graph.check(conn, 5849).level == "old-version"      # OAuth 1.0 -> 2.0 is a new protocol version
+    assert graph.check(conn, 5246).level == "old-version"      # TLS 1.2 -> 1.3
+    v = graph.check(conn, 8446)                                # TLS 1.3 -> RFC 9846, same protocol
+    assert v.level == "obsolete" and v.current == ["RFC9846"]
+    r = graph.check(conn, 1788)                                # retired by a deprecation notice
+    assert r.level == "obsolete" and r.current == [] and r.replaced_by[0]["kind"] == "retired"
+
+
+def test_series_ids(conn):
+    assert graph.check(conn, "BCP 14").members == ["RFC2119", "RFC8174"]
+    assert graph.check(conn, "std66").members == ["RFC3986"]
+
+
+@pytest.mark.parametrize("bad", ["abc", "", "RFC2616x", "-1"])
+def test_bad_ids_raise_input_error(bad):
+    with pytest.raises(graph.InputError):
+        graph.rfc_id(bad)
+
+
+def test_depth_is_capped(conn):
+    with pytest.raises(graph.InputError):
+        graph.reading(conn, 9110, 0)
+    assert max(r["depth"] for r in graph.impact(conn, 9110, 9)) <= graph.MAX_DEPTH
+
+
+def test_scan_untracked_and_utf16(tmp_path):
+    subprocess.run(["git", "init", "-q", str(tmp_path)], check=True)
+    (tmp_path / "new.c").write_text("/* RFC 2616 */\n")                       # untracked, not ignored
+    (tmp_path / "w.txt").write_bytes("see RFC 7540\n".encode("utf-16"))     # UTF-16 with BOM
+    assert {c.rfc for c in scan.find_citations(tmp_path)} == {"RFC2616", "RFC7540"}
+
+
+def test_cli_errors_exit_2(tmp_path):
+    run = lambda *a: subprocess.run([sys.executable, "-m", "specrot.cli", *a], capture_output=True, text=True, cwd=ROOT)
+    assert run("check", "abc").returncode == 2
+    assert run("scan", str(tmp_path / "missing"), "--fail-on", "obsolete").returncode == 2
+    assert run("scan", str(tmp_path), "--fail-on", "obsolte").returncode == 2
+    r = run("cypher", "MATCH (n) DETACH DELETE n")
+    assert r.returncode == 2 and "read-only" in r.stdout

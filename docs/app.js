@@ -38,10 +38,11 @@ const Q = {
   info: `MATCH (r:RFC {number: $n})
 OPTIONAL MATCH (s:Series)-[:INCLUDES]->(r)
 RETURN r.id AS id, r.title AS title, r.date AS date, r.status AS status, r.obsolete AS obsolete,
-       r.errata AS errata, r.wg AS wg, collect(s.id) AS series`,
+       r.oldVersion AS oldVersion, r.errata AS errata, r.wg AS wg, collect(s.id) AS series`,
   replacements: `MATCH (r:RFC {number: $n})
 MATCH p = (r)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete
-RETURN [x IN nodes(p) | x.id] AS chain, cur.id AS current, cur.title AS title, cur.date AS date
+RETURN [x IN nodes(p) | x.id] AS chain, [e IN relationships(p) | e.kind] AS kinds,
+       cur.id AS current, cur.title AS title, cur.date AS date
 ORDER BY size(chain)`,
   updates: `MATCH (r:RFC {number: $n})<-[:UPDATES]-(u:RFC) WHERE NOT u.obsolete
 RETURN u.id AS id, u.title AS title, u.date AS date ORDER BY u.date DESC`,
@@ -63,26 +64,31 @@ RETURN p.name AS project, p.repo AS repo, p.url AS url, f.path AS path, c.lines 
 RETURN r.number AS n, r.id AS id, r.title AS title, r.date AS date, r.status AS status, r.obsolete AS obsolete
 ORDER BY score DESC`,
   judge: `UNWIND $ns AS n MATCH (r:RFC {number: n})
-OPTIONAL MATCH (r)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete
+OPTIONAL MATCH p = (r)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete AND last(relationships(p)).kind <> 'retired'
 WITH r, collect(DISTINCT cur.id) AS current
-RETURN r.number AS n, r.id AS id, r.title AS title, r.obsolete AS obsolete, r.status AS status, current,
+RETURN r.number AS n, r.id AS id, r.title AS title, r.obsolete AS obsolete, r.oldVersion AS oldVersion,
+       r.status AS status, current,
        COLLECT { MATCH (r)<-[:UPDATES]-(u:RFC) WHERE NOT u.obsolete RETURN u.id } AS updates,
        r.errata AS errata`,
   projects: `MATCH (p:Project)
 OPTIONAL MATCH (p)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC)
-WITH p, sum(size(c.lines)) AS cites, sum(CASE WHEN r.obsolete THEN size(c.lines) ELSE 0 END) AS stale
+WITH p, sum(size(c.lines)) AS cites, sum(CASE WHEN r.obsolete AND NOT r.oldVersion THEN size(c.lines) ELSE 0 END) AS stale
 RETURN p.name AS name, p.repo AS repo, p.url AS url, cites, stale ORDER BY toFloat(stale) / cites DESC`,
-  projectStale: `MATCH (p:Project {name: $name})-[:HAS_FILE]->(f:File)-[c:CITES]->(r:RFC) WHERE r.obsolete
-OPTIONAL MATCH (r)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete
+  projectStale: `MATCH (p:Project {name: $name})-[:HAS_FILE]->(f:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND NOT r.oldVersion
+OPTIONAL MATCH q = (r)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete AND last(relationships(q)).kind <> 'retired'
 RETURN r.id AS id, r.title AS title, f.path AS path, c.lines AS lines, collect(DISTINCT cur.id) AS current
 ORDER BY id, path`,
 };
 
-const level = (r) => r === null ? "unknown" : r.obsolete ? "obsolete" : r.status === "HISTORIC" ? "historic"
+const level = (r) => r === null ? "unknown" : r.obsolete ? (r.oldVersion ? "old-version" : "obsolete") : r.status === "HISTORIC" ? "historic"
   : (r.updates?.length || r.errata) ? "amended" : "ok";
-const badge = (lvl) => `<span class="badge ${lvl}">${{ obsolete: "✗ obsolete", historic: "✗ historic", amended: "! amended", ok: "✓ current", unknown: "? unknown" }[lvl]}</span>`;
+const badge = (lvl) => `<span class="badge ${lvl}">${{ obsolete: "✗ obsolete", "old-version": "↑ old version", historic: "✗ historic", amended: "! amended", ok: "✓ current", unknown: "? unknown" }[lvl]}</span>`;
 const rfcLink = (id) => `<a href="#rfc=${id.replace("RFC", "")}" class="rfc">${id}</a>`;
 const DEPRECATING = /deprecat|prohibit|obsolet|historic|retir|removing|sunset/i;
+// Kinds of OBSOLETES edges, computed when the store is built (specrot/build.py).
+const KIND_TEXT = { edition: "new edition of the same specification", version: "newer protocol version: the old RFC still defines the old version",
+  split: "content split across several documents", retired: "retired without a replacement" };
+const pathKind = (k) => k.at(-1) === "retired" ? "retired" : k.includes("version") ? "version" : k.includes("split") ? "split" : "edition";
 
 function showQuery(el) {
   if (!lastQuery) return;
@@ -95,15 +101,16 @@ async function check(input) {
   const m = String(input).match(/^\s*(?:rfc)?\s*[-#]?\s*0*(\d{1,5})\s*$/i);
   if (!m) return search(input);
   const n = Number(m[1]);
-  location.hash = `rfc=${n}`;
+  rendered = `rfc=${n}`;
+  if (location.hash.slice(1) !== rendered) location.hash = rendered;  // the hashchange handler skips it
   $("#q").value = `RFC ${n}`;
   const [info] = await cypher(Q.info, { n });
   if (!info) { out.innerHTML = `<div class="card">${badge("unknown")} RFC ${n} is not in the RFC index.</div>`; return; }
   const repl = info.obsolete ? await cypher(Q.replacements, { n }) : [];
   const ups = await cypher(Q.updates, { n });
-  const lvl = info.obsolete ? "obsolete" : info.status === "HISTORIC" ? "historic" : (ups.length || info.errata) ? "amended" : "ok";
+  const lvl = info.obsolete ? (info.oldVersion ? "old-version" : "obsolete") : info.status === "HISTORIC" ? "historic" : (ups.length || info.errata) ? "amended" : "ok";
   const shortest = {};
-  for (const r of repl) if (!shortest[r.current] || r.chain.length < shortest[r.current].chain.length) shortest[r.current] = r;
+  for (const r of repl) if (!shortest[r.current] || r.chain.length < shortest[r.current].chain.length) shortest[r.current] = { ...r, kind: pathKind(r.kinds) };
   const deps = ups.filter((u) => DEPRECATING.test(u.title));
   const others = ups.filter((u) => !DEPRECATING.test(u.title));
   let html = `<div class="card verdict ${lvl}">
@@ -111,7 +118,7 @@ async function check(input) {
     <div class="meta">${esc(info.date)} · ${esc((info.status || "").toLowerCase())}${info.wg && info.wg !== "NON WORKING GROUP" ? " · " + esc(info.wg) + " WG" : ""}${info.series.length ? " · part of " + info.series.join(", ") : ""} · <a href="https://www.rfc-editor.org/rfc/rfc${n}" target="_blank" rel="noopener">read it</a></div>`;
   if (Object.keys(shortest).length) {
     html += `<h3>Replaced by</h3><ul class="chains">` + Object.values(shortest).map((r) =>
-      `<li>${r.chain.map((c, i) => i === r.chain.length - 1 ? `<b class="ok">${rfcLink(c)}</b>` : rfcLink(c)).join(' <span class="arrow">→</span> ')} <span class="dim">${esc(r.title)} (${r.date})</span></li>`).join("") + `</ul>`;
+      `<li>${r.chain.map((c, i) => i === r.chain.length - 1 ? `<b class="${r.kind === "retired" ? "dim" : "ok"}">${rfcLink(c)}</b>` : rfcLink(c)).join(' <span class="arrow">→</span> ')} ${esc(r.title)} <span class="dim">(${r.date}) · ${KIND_TEXT[r.kind]}</span></li>`).join("") + `</ul>`;
   }
   if (deps.length) html += `<h3>Partly deprecated by</h3><ul>` + deps.map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + `</ul>`;
   if (others.length) html += `<h3>Updated by ${others.length} document${others.length > 1 ? "s" : ""} still in force</h3><ul>` + others.slice(0, 10).map((u) => `<li>${rfcLink(u.id)} ${esc(u.title)} <span class="dim">(${u.date})</span></li>`).join("") + (others.length > 10 ? `<li class="dim">… ${others.length - 10} more</li>` : "") + `</ul>`;
@@ -192,13 +199,13 @@ async function scanText() {
   const ns = [...new Set(cites.map((c) => c.n))];
   const rows = await cypher(Q.judge, { ns });
   const byN = Object.fromEntries(rows.map((r) => [r.n, r]));
-  const order = { obsolete: 0, historic: 1, amended: 2, ok: 3, unknown: 4 };
+  const order = { obsolete: 0, "old-version": 1, historic: 2, amended: 3, ok: 4, unknown: 5 };
   const found = ns.map((n) => ({ n, r: byN[n] ?? null, lines: cites.filter((c) => c.n === n).map((c) => c.line) }))
     .map((x) => ({ ...x, lvl: level(x.r) })).sort((a, b) => order[a.lvl] - order[b.lvl]);
   const counts = {};
   found.forEach((f) => (counts[f.lvl] = (counts[f.lvl] || 0) + 1));
   $("#scan-out").innerHTML = `<div class="card"><p>${cites.length} citations of ${ns.length} RFCs · ${Object.entries(counts).map(([k, v]) => `${badge(k)} ${v}`).join(" ")}</p>
-    <table><tr><th>status</th><th>RFC</th><th>title</th><th>use instead / amended by</th><th>lines</th></tr>` +
+    <table><tr><th>status</th><th>RFC</th><th>title</th><th>replaced by / amended by</th><th>lines</th></tr>` +
     found.map((f) => `<tr><td>${badge(f.lvl)}</td><td>${f.r ? rfcLink(f.r.id) : "RFC" + f.n}</td><td>${esc(f.r?.title ?? "not in the RFC index")}</td><td>${f.r ? (f.r.current.length ? f.r.current.map(rfcLink).join(", ") : f.r.updates.slice(0, 4).map(rfcLink).join(", ")) : ""}</td><td>${f.lines.join(", ")}</td></tr>`).join("") +
     `</table><div class="q" id="q-scan"></div></div>`;
   showQuery($("#q-scan"));
@@ -208,7 +215,7 @@ async function scanText() {
 async function projects() {
   const rows = await cypher(Q.projects);
   const total = rows.reduce((a, r) => a + r.cites, 0), stale = rows.reduce((a, r) => a + r.stale, 0);
-  $("#projects-out").innerHTML = `<div class="card"><p><b>${stale.toLocaleString()}</b> of <b>${total.toLocaleString()}</b> RFC citations (${Math.round(100 * stale / total)}%) in the source and docs of 26 projects point at an obsolete RFC (tests and identifiers excluded). Click a project.</p>
+  $("#projects-out").innerHTML = `<div class="card"><p><b>${stale.toLocaleString()}</b> of <b>${total.toLocaleString()}</b> RFC citations (${Math.round(100 * stale / total)}%) in the source and docs of 26 projects point at an RFC that a newer edition has replaced (tests, identifiers and older protocol versions such as TLS 1.2 excluded). Click a project.</p>
   <table class="bars">` + rows.map((r) => `<tr data-p="${esc(r.name)}"><td><b>${esc(r.name)}</b><br><span class="dim">${esc(r.repo)}</span></td><td class="barcell"><div class="bar"><div style="width:${(100 * r.stale / Math.max(1, r.cites)).toFixed(1)}%"></div></div></td><td>${r.stale} / ${r.cites}</td></tr>`).join("") +
     `</table><div class="q" id="q-p"></div></div><div id="project-detail"></div>`;
   showQuery($("#q-p"));
@@ -219,7 +226,7 @@ async function project(name, meta) {
   const rows = await cypher(Q.projectStale, { name });
   const by = {};
   for (const r of rows) (by[r.id] ||= { ...r, files: [] }).files.push(r);
-  $("#project-detail").innerHTML = `<div class="card"><h3>${esc(name)}: obsolete RFCs cited</h3><table><tr><th>RFC</th><th>use instead</th><th>cited at (pinned commit)</th></tr>` +
+  $("#project-detail").innerHTML = `<div class="card"><h3>${esc(name)}: obsolete RFCs cited</h3><table><tr><th>RFC</th><th>replaced by</th><th>cited at (pinned commit)</th></tr>` +
     Object.values(by).map((x) => `<tr><td>${rfcLink(x.id)} <span class="dim">${esc(x.title)}</span></td><td>${x.current.map(rfcLink).join(", ")}</td><td>${x.files.slice(0, 5).map((f) => ghLink(meta.url, f.path, f.lines[0])).join("<br>")}${x.files.length > 5 ? `<br><span class="dim">+${x.files.length - 5} files</span>` : ""}</td></tr>`).join("") +
     `</table><div class="q" id="q-pd"></div></div>`;
   showQuery($("#q-pd"));
@@ -233,7 +240,7 @@ WHERE NOT new.obsolete AND NOT EXISTS { (old)-[:OBSOLETES]->() }
 RETURN length(p) AS hops, old.id, new.id, new.title ORDER BY hops DESC LIMIT 5`,
   "In-force RFCs citing obsolete ones": `MATCH (a:RFC)-[:NORMATIVE_REF]->(b:RFC) WHERE NOT a.obsolete AND b.obsolete
 RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10`,
-  "Most-cited obsolete RFCs in the 26 projects": `MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC) WHERE r.obsolete
+  "Most-cited obsolete RFCs in the 26 projects": `MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND NOT r.oldVersion
 RETURN r.id, r.title, count(DISTINCT p) AS projects, sum(size(c.lines)) AS citations
 ORDER BY projects DESC, citations DESC LIMIT 10`,
   "What TLS 1.3 must read": `MATCH (r:RFC {id: 'RFC9846'})-[:NORMATIVE_REF]->(d:RFC)
@@ -265,7 +272,8 @@ function route() {
   else if (h === "cypher") { tab("cypher"); }
   else { tab("check"); check("8446"); }
 }
-window.addEventListener("hashchange", () => document.body.classList.contains("ready") && route());
+let rendered = "";
+window.addEventListener("hashchange", () => document.body.classList.contains("ready") && decodeURIComponent(location.hash.slice(1)) !== rendered && route());
 document.querySelectorAll("nav button").forEach((b) => (b.onclick = () => {
   if (b.dataset.tab === "check") location.hash = "rfc=" + ($("#q").value.match(/\d+/)?.[0] ?? "8446");
   else location.hash = b.dataset.tab;
