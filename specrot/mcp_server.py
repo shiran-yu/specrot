@@ -65,6 +65,7 @@ atexit.register(_close_connections)  # before interpreter shutdown, or relate's 
 
 _session: dict = {"store": None}  # a private copy of the store once save_scan has written to it
 _write_lock = threading.Lock()
+_SEEDED: set[str] = set()  # the showcase project names, read once from the committed store
 
 
 def _store() -> Path:
@@ -72,9 +73,11 @@ def _store() -> Path:
 
 
 def _conn():
-    # Relate connections are thread-affine: one read-only connection per worker thread, reopened after a save
-    if getattr(_local, "conn", None) is None or _local.store != _store():
-        _local.conn, _local.store = graph.connect(_store()), _store()
+    # Relate connections are thread-affine: one read-only connection per worker thread, on the committed store
+    # (RFC data only). Only read_cypher reads the session copy, from a short-lived child, so a held reader never
+    # locks the copy against the next save_scan.
+    if getattr(_local, "conn", None) is None:
+        _local.conn = graph.connect()
         _all_conns.append(_local.conn)
     return _local.conn
 
@@ -91,7 +94,14 @@ def save_scan(path: str, project: str) -> dict:
     if not re.fullmatch(r"[\w.@/-]{1,80}", project):
         raise graph.InputError("project: 1-80 characters of letters, digits and . _ - / @")
     root = Path(path)
-    cites = scan.find_citations(root)
+    too_big: list[str] = []
+    cites = scan.find_citations(root, skipped=too_big)
+    if not _SEEDED:
+        c = graph.connect()
+        _SEEDED.update(r["n"] for r in c.execute("MATCH (p:Project) RETURN p.name AS n"))
+        c.close()
+    if project in _SEEDED:
+        raise graph.InputError(f"project {project!r} is one of the 26 showcase projects; pick another name")
     with _write_lock:
         if _session["store"] is None:
             copy = Path(tempfile.mkdtemp(prefix="specrot-")) / "session.rl"
@@ -107,9 +117,12 @@ def save_scan(path: str, project: str) -> dict:
             raise
         finally:
             w.close()
+    known = {r["id"] for r in _conn().execute("UNWIND $ids AS i MATCH (r:RFC {id: i}) RETURN r.id AS id",
+                                              {"ids": sorted({c.rfc for c in cites})})}
     reader = sum(1 for c in cites if c.actionable)
     return {"project": project, "files": len({c.path for c in cites}), "citations": len(cites),
-            "reader_facing": reader, "store": "session copy",
+            "reader_facing": reader, "not_in_graph": sum(1 for c in cites if c.rfc not in known),
+            "skipped_large_files": too_big, "store": "session copy",
             "try": "MATCH (:RFC {id:'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(f:File)<-[:HAS_FILE]-"
                    f"(:Project {{name:'{project}'}}) RETURN old.id, f.path, c.readerLines"}
 

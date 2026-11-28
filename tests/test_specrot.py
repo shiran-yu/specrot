@@ -421,6 +421,7 @@ def test_fix_leaves_a_list_of_rfcs_with_titles(conn, tmp_path):
 
 def test_mcp_save_scan_writes_a_session_copy_and_read_cypher_sees_it():
     import hashlib
+    from mcp.server.mcpserver.exceptions import ToolError
     from specrot import mcp_server as m
     before = hashlib.sha256(graph.DEFAULT_STORE.read_bytes()).hexdigest()
     out = m.save_scan(str(ROOT / "tests" / "fixtures" / "stale"), "fixture")
@@ -428,7 +429,13 @@ def test_mcp_save_scan_writes_a_session_copy_and_read_cypher_sees_it():
     rows = m.read_cypher("MATCH (:Project {name:'fixture'})-[:HAS_FILE]->(f:File)-[:CITES]->(r:RFC) "
                          "RETURN count(DISTINCT r) AS n")["rows"]
     assert rows[0]["n"] > 0
+    count = "MATCH (p:Project {name:'fixture'})-[:HAS_FILE]->(f)-[c:CITES]->() RETURN count(DISTINCT p) AS p, count(DISTINCT f) AS f, count(c) AS c"
+    first = m.read_cypher(count)["rows"]
     m.save_scan(str(ROOT / "tests" / "fixtures" / "stale"), "fixture")  # saving again replaces, not duplicates
-    again = m.read_cypher("MATCH (p:Project {name:'fixture'}) RETURN count(p) AS n")["rows"]
-    assert again == [{"n": 1}]
+    assert m.read_cypher(count)["rows"] == first and first[0]["p"] == 1
+    with pytest.raises(ToolError, match="showcase"):
+        m.save_scan(str(ROOT / "tests" / "fixtures" / "stale"), "curl")
+    with pytest.raises(ToolError):  # a failing write leaves the session copy as it was (rollback)
+        m.save_scan("/no/such/path", "fixture")
+    assert m.read_cypher(count)["rows"] == first
     assert hashlib.sha256(graph.DEFAULT_STORE.read_bytes()).hexdigest() == before  # committed store untouched
