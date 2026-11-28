@@ -51,6 +51,8 @@ uv run specrot cypher "MATCH (r:RFC {id:'RFC6749'})<-[:UPDATES]-(u) RETURN u.id,
 Graph schema: `(:RFC)-[:OBSOLETES {kind: edition|version|split|retired|redesign}]->(:RFC)`, `(:RFC)-[:UPDATES|NORMATIVE_REF|INFORMATIVE_REF]->(:RFC)`,
 `(:Series {id:'BCP14'})-[:INCLUDES]->(:RFC)`, `(:Erratum)-[:AMENDS]->(:RFC)`,
 `(:RFC)-[:FROM_WG]->(:WorkingGroup)-[:IN_AREA]->(:Area)`,
-`(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines}]->(:RFC)` for 26 scanned open-source projects.
+`(:Project)-[:HAS_FILE]->(:File)-[:CITES {lines, readerLines, sections}]->(:RFC)` for 26 scanned open-source projects
+(`readerLines`: the lines outside tests and identifiers).
 RFC properties: `id`, `number`, `title`, `date`, `status`, `obsolete`, `oldVersion`, `verifiedTechnicalErrata`, `url`.
-Cypher is Relate's Cypher 25 (no APOC); `(r)<-[:OBSOLETES]-+(n)` follows a chain of any length.
+Cypher is Relate's Cypher 25 (no APOC); `(r)<-[:OBSOLETES]-+(n)` follows a chain of any length. An RFC can be
+reached by several paths: add `WITH DISTINCT n` before counting or summing what hangs off it, or it is counted once per path.

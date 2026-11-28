@@ -20,7 +20,7 @@ def test_readme_matches_facts():
                    f"{f['sections']['mapped']} have a home", f"({f['sections']['exact']} by identical heading"]:
         assert needle in readme, needle
     b = f["blast_radius"]["RFC9110"]
-    assert f"**{b['citations']:,}** times in **{b['projects']}** of the 26" in readme and f"replaces {b['replaced']} documents" in readme
+    assert f"**{b['citations']:,}** times in **{b['projects']}** of the 26" in readme and f"replaces {b['replaced_all']} documents" in readme and f"{b['replaced']} of them are\nstill cited" in readme
     b = f["blast_radius"]["RFC9846"]
     assert f"gives {b['citations']:,} citations in {b['projects']} projects" in readme
     t = f["top_obsolete"]

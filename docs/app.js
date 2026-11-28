@@ -182,7 +182,7 @@ async function check(input) {
       : `<li class="dim">No section of the replacement has this heading, or there is no such section; see the change log.</li>`) + `</ul><div class="q" id="q-sec"></div>`;
   }
   html += `<div class="q" id="q-info"></div></div>`;
-  html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions and UPDATES (one hop). Each node shows its verdict. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>✗ obsolete or historic <span class="dot old"></span>↑ old version <span class="dot amended"></span>! amended <span class="dot ok"></span>✓ current <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;
+  html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions (up to 6 hops; the CLI follows any length) and UPDATES (one hop). Each node shows its verdict. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>✗ obsolete or historic <span class="dot old"></span>↑ old version <span class="dot amended"></span>! amended <span class="dot ok"></span>✓ current <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;
   html += `<div class="card" id="citing"></div>`;
   out.innerHTML = html;
   showQuery($("#q-info"), infoQuery);
@@ -214,13 +214,28 @@ async function drawLineage(n, rootId, my) {
   el.style.height = Math.min(560, 160 + ids.length * 18) + "px";
   const css = getComputedStyle(document.documentElement);
   const color = (v) => css.getPropertyValue(v).trim();
+  // rows by the longest OBSOLETES path, so an RFC always sits below every RFC that replaced it;
+  // RFCs linked to the subject only by UPDATES sit half a row above (updaters) or below (updated)
+  const obs = edges.filter((r) => r.type === "OBSOLETES"), row = {};
+  for (const r of obs) { row[r.a] ??= 0; row[r.b] ??= 0; }
+  row[rootId] ??= 0;
+  for (let k = 0; k < ids.length; k++) for (const r of obs) row[r.b] = Math.max(row[r.b], row[r.a] + 1);
+  for (const r of edges) if (r.type === "UPDATES") {
+    if (r.b === rootId && !(r.a in row)) row[r.a] = row[rootId] - 0.5;
+    if (r.a === rootId && !(r.b in row)) row[r.b] = row[rootId] + 0.5;
+  }
+  const date = Object.fromEntries(nodes.map((x) => [x.id, x.date])), pos = {};
+  for (const y of new Set(Object.values(row))) {
+    const inRow = ids.filter((i) => row[i] === y).sort((a, b) => (date[a] || "").localeCompare(date[b] || "") || a.localeCompare(b));
+    inRow.forEach((i, k) => { pos[i] = { x: (k - (inRow.length - 1) / 2) * 112, y: y * 132 }; });
+  }
   const cy = cytoscape({
     container: el,
     elements: [
-      ...nodes.map((x) => ({ data: { id: x.id, label: `${GLYPH[level(x)]} ${x.id}\n${x.date.slice(0, 4)}`, title: x.title, cls: level(x), root: x.id === rootId } })),
+      ...nodes.map((x) => ({ position: pos[x.id], data: { id: x.id, label: `${GLYPH[level(x)]} ${x.id}\n${x.date.slice(0, 4)}`, title: x.title, cls: level(x), root: x.id === rootId } })),
       ...edges.map((r, i) => ({ data: { id: "e" + i, source: r.a, target: r.b, type: r.type } })),
     ],
-    layout: { name: "preset" },
+    layout: { name: "preset", fit: true, padding: 16 },
     style: [
       { selector: "node", style: { label: "data(label)", "text-wrap": "wrap", "text-valign": "center", "font-size": 12, "font-family": "Plex Mono, monospace", color: color("--fg"), width: 84, height: 40, shape: "rectangle", "background-color": color("--bg"), "border-width": 1, "border-color": color("--fg") } },
       { selector: "node[cls = 'obsolete'], node[cls = 'historic']", style: { "border-width": 2, "border-style": "dashed", "border-color": color("--bad"), color: color("--bad") } },
@@ -232,8 +247,7 @@ async function drawLineage(n, rootId, my) {
       { selector: "edge[type = 'UPDATES']", style: { width: 1, "line-style": "dashed", "line-color": color("--line-strong"), "target-arrow-color": color("--line-strong") } },
     ],
   });
-  // layers from OBSOLETES only (UPDATES would pull an old RFC up beside the RFCs that replaced it)
-  cy.elements().not("edge[type = 'UPDATES']").layout({ name: "breadthfirst", directed: true, spacingFactor: 1.1, padding: 12 }).run();
+  if (el.clientWidth < 600) { cy.zoom(Math.max(cy.zoom(), 0.8)); cy.center(cy.$id(rootId)); }  // phones: readable, subject in view
   cy.on("tap", "node", (e) => check(e.target.id().replace("RFC", "")))
     .on("mouseover", "node", (e) => { el.title = e.target.data("title"); });
 }

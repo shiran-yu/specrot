@@ -39,7 +39,7 @@ and coding agents, whose training data predates recent replacements.
 |---|---|
 | Does real code cite obsolete RFCs? | **1,603 of 8,034** RFC citations in 26 major codebases (20%), in 24 of the 26 (25 repositories: Go's `net` and `crypto` are counted apart) |
 | Are they worth fixing? | About half, by model labels (no human labels): two models labelling 100 of them agree on 49; they call 34 and 42 deliberate references, 8 and 5 scanner errors, and disagree on 22 |
-| Do maintainers fix them? | Yes, by hand: 17 merged PRs replaced 106 obsolete citations; `fix` proposes 50 of those edits, 47 with the maintainers' RFC |
+| Do maintainers fix them? | Yes, by hand: 17 merged PRs replaced 106 obsolete citations; `fix` proposes 50 of those edits, 47 with the maintainers' RFC (rules refined on these PRs, each change tested; it would also edit 49 lines they left: [details](scripts/maintainer_eval/RESULTS.md)) |
 | Do coding agents get it right? | Without tools Claude Haiku 5.5 names an obsolete RFC for 8 of 34 protocols and Sonnet 5.5 for 2 (the two replaced in 2026); with web search 1 and 2; with the specrot MCP server, 0 |
 | Upstream | PRs open (not merged) at [nginx#2051](https://github.com/nginx/nginx/pull/2051) and [httpx#3874](https://github.com/encode/httpx/pull/3874) |
 
@@ -69,8 +69,8 @@ MATCH (old)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project) WHERE size(c.readerLines
 RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS citations
 ```
 
-RFC 9110 (HTTP Semantics, 2022) replaces 13 documents through chains such as 2616 → 7231 → 9110; they are
-still cited **558** times in **20** of the 26 projects (reader-facing citations: tests and identifiers left
+RFC 9110 (HTTP Semantics, 2022) replaces 15 documents through chains such as 2616 → 7231 → 9110; 13 of them are
+still cited, **558** times in **20** of the 26 projects (reader-facing citations: tests and identifiers left
 out). The same query for TLS 1.3's new RFC 9846 (July 2026) gives 358 citations in 8 projects, older TLS
 versions included. One edge type answers "what replaced it",
 another "which section", a third "who cites it", and the question chains them:

@@ -37,6 +37,8 @@ def main():
                            MATCH (old)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project) WHERE size(c.readerLines) > 0
                            RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects,
                                   sum(size(c.readerLines)) AS citations""") for rid in ("RFC9110", "RFC9846")}
+    for rid in blast:  # all documents replaced, cited or not
+        blast[rid]["replaced_all"] = one(f"MATCH (:RFC {{id: '{rid}'}})-[:OBSOLETES]->+(old:RFC) RETURN count(DISTINCT old) AS n")["n"]
     facts = {"blast_radius": blast, "sections": sections, "nodes": labels, "relationships": rels, "showcase": show, "top_obsolete": top, "rfc8446_cited": tls,
              "store_bytes": graph.DEFAULT_STORE.stat().st_size}
     OUT.write_text(json.dumps(facts, indent=2) + "\n")
