@@ -91,8 +91,8 @@ CALL (r) {
 UNWIND relationships(p) AS rel
 RETURN DISTINCT startNode(rel).id AS a, endNode(rel).id AS b, type(rel) AS type`,
   nodes: `UNWIND $ids AS id MATCH (r:RFC {id: id})
-RETURN r.id AS id, r.title AS title, r.date AS date, r.obsolete AS obsolete,
-       EXISTS { (r)<-[:UPDATES]-(u:RFC) WHERE NOT u.obsolete } AS amended`,
+RETURN r.id AS id, r.title AS title, r.date AS date, r.obsolete AS obsolete, r.oldVersion AS oldVersion,
+       r.status AS status, r.errata AS errata, COLLECT { MATCH (r)<-[:UPDATES]-(u:RFC) WHERE NOT u.obsolete RETURN u.id } AS updates`,
   projectsCiting: `MATCH (p:Project)-[:HAS_FILE]->(f:File)-[c:CITES]->(r:RFC {number: $n})
 RETURN p.name AS project, p.repo AS repo, p.url AS url, f.path AS path, c.lines AS lines ORDER BY project, path`,
   search: `MATCH (r:RFC) SEARCH r IN (FULLTEXT INDEX rfc_title FOR $q LIMIT 25) SCORE AS score
@@ -116,6 +116,7 @@ ORDER BY id, path`,
 };
 
 // same order as graph.py Verdict.level: a retired protocol version (TLS 1.0) is historic, not old-version
+const GLYPH = { obsolete: "✗", historic: "✗", "old-version": "↑", amended: "!", ok: "✓", unknown: "?" };
 const level = (r) => r === null ? "unknown" : r.obsolete && !r.oldVersion ? "obsolete" : r.status === "HISTORIC" ? "historic"
   : r.obsolete ? "old-version" : (r.updates?.length || r.errata) ? "amended" : "ok";
 const badge = (lvl) => `<span class="badge ${lvl}">${{ obsolete: "✗ obsolete", "old-version": "↑ old version", historic: "✗ historic", amended: "! amended", ok: "✓ current", unknown: "? unknown" }[lvl]}</span>`;
@@ -181,7 +182,7 @@ async function check(input) {
       : `<li class="dim">No section of the replacement has this heading, or there is no such section; see the change log.</li>`) + `</ul><div class="q" id="q-sec"></div>`;
   }
   html += `<div class="q" id="q-info"></div></div>`;
-  html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions and live UPDATES. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>✗ obsolete <span class="dot amended"></span>in force, amended <span class="dot ok"></span>✓ in force <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;
+  html += `<div class="card"><h3>Lineage</h3><p class="dim">OBSOLETES chains in both directions and UPDATES (one hop). Each node shows its verdict. Click a node to open it.</p><div id="cy"></div><div class="legend"><span class="dot obsolete"></span>✗ obsolete or historic <span class="dot old"></span>↑ old version <span class="dot amended"></span>! amended <span class="dot ok"></span>✓ current <span class="line obs"></span>obsoletes <span class="line upd"></span>updates</div><div class="q" id="q-lineage"></div></div>`;
   html += `<div class="card" id="citing"></div>`;
   out.innerHTML = html;
   showQuery($("#q-info"), infoQuery);
@@ -191,7 +192,7 @@ async function check(input) {
   if (my !== renderSeq) return;
   const by = {};
   for (const c of cites) (by[c.project] ||= []).push(c);
-  $("#citing").innerHTML = `<h3>Cited by ${Object.keys(by).length} of 26 scanned projects</h3>` + (cites.length ? `<ul>` + Object.entries(by).map(([p, cs]) =>
+  $("#citing").innerHTML = `<h3>Cited outside tests and identifiers by ${Object.keys(by).length} of 26 scanned projects</h3>` + (cites.length ? `<ul>` + Object.entries(by).map(([p, cs]) =>
     `<li><b>${esc(p)}</b> ${cs.slice(0, 4).map((c) => ghLink(c.url, c.path, c.lines[0])).join(", ")}${cs.length > 4 ? ` <span class="dim">+${cs.length - 4} files</span>` : ""}</li>`).join("") + `</ul>` : `<p class="dim">none</p>`);
 }
 
@@ -213,23 +214,27 @@ async function drawLineage(n, rootId, my) {
   el.style.height = Math.min(560, 160 + ids.length * 18) + "px";
   const css = getComputedStyle(document.documentElement);
   const color = (v) => css.getPropertyValue(v).trim();
-  cytoscape({
+  const cy = cytoscape({
     container: el,
     elements: [
-      ...nodes.map((x) => ({ data: { id: x.id, label: `${x.obsolete ? "✗ " : ""}${x.id}\n${x.date.slice(0, 4)}`, title: x.title, cls: x.obsolete ? "obsolete" : x.amended ? "amended" : "ok", root: x.id === rootId } })),
+      ...nodes.map((x) => ({ data: { id: x.id, label: `${GLYPH[level(x)]} ${x.id}\n${x.date.slice(0, 4)}`, title: x.title, cls: level(x), root: x.id === rootId } })),
       ...edges.map((r, i) => ({ data: { id: "e" + i, source: r.a, target: r.b, type: r.type } })),
     ],
-    layout: { name: "breadthfirst", directed: true, spacingFactor: 1.1, padding: 12 },
+    layout: { name: "preset" },
     style: [
       { selector: "node", style: { label: "data(label)", "text-wrap": "wrap", "text-valign": "center", "font-size": 12, "font-family": "Plex Mono, monospace", color: color("--fg"), width: 84, height: 40, shape: "rectangle", "background-color": color("--bg"), "border-width": 1, "border-color": color("--fg") } },
-      { selector: "node[cls = 'obsolete']", style: { "border-width": 2, "border-style": "dashed", "border-color": color("--bad"), color: color("--bad") } },
+      { selector: "node[cls = 'obsolete'], node[cls = 'historic']", style: { "border-width": 2, "border-style": "dashed", "border-color": color("--bad"), color: color("--bad") } },
       { selector: "node[cls = 'amended']", style: { "border-color": color("--warn") } },
+      { selector: "node[cls = 'old-version']", style: { "border-color": color("--fg2"), color: color("--fg2") } },
       { selector: "node[cls = 'ok']", style: { "border-color": color("--ok") } },
       { selector: "node[?root]", style: { "border-width": 3 } },
       { selector: "edge", style: { width: 2, "curve-style": "bezier", "target-arrow-shape": "triangle", "line-color": color("--accent"), "target-arrow-color": color("--accent") } },
       { selector: "edge[type = 'UPDATES']", style: { width: 1, "line-style": "dashed", "line-color": color("--line-strong"), "target-arrow-color": color("--line-strong") } },
     ],
-  }).on("tap", "node", (e) => check(e.target.id().replace("RFC", "")))
+  });
+  // layers from OBSOLETES only (UPDATES would pull an old RFC up beside the RFCs that replaced it)
+  cy.elements().not("edge[type = 'UPDATES']").layout({ name: "breadthfirst", directed: true, spacingFactor: 1.1, padding: 12 }).run();
+  cy.on("tap", "node", (e) => check(e.target.id().replace("RFC", "")))
     .on("mouseover", "node", (e) => { el.title = e.target.data("title"); });
 }
 
@@ -328,9 +333,11 @@ async function project(name, meta) {
 // ---------- cypher tab ----------
 const EXAMPLES = {
   "Blast radius of RFC 9110 (why a graph)": `// every document RFC 9110 replaces, any number of hops back, still cited in the 26 projects
-MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project)
-RETURN old.id AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS lines
-ORDER BY lines DESC`,
+MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)
+WITH DISTINCT old  // reached by several paths, counted once
+MATCH (old)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project) WHERE size(c.readerLines) > 0
+RETURN old.id AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS citations
+ORDER BY citations DESC`,
   "Section lineage: RFC 2616 §14.20 today": `MATCH p = (:Section {id: 'RFC2616#14.20'})-[:CONTINUES_AS]->+(t:Section)
 RETURN [x IN nodes(p) | x.id + ' ' + x.title] AS lineage`,
   "Longest replacement chains": `MATCH p = (old:RFC)<-[:OBSOLETES]-+(new:RFC)

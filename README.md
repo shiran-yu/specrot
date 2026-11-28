@@ -59,17 +59,20 @@ and coding agents, whose training data predates recent replacements.
 Every answer specrot gives is a walk of unknown length across several kinds of node, which a lookup table
 cannot hold and SQL needs a recursive CTE plus a join per hop for:
 
-[![The blast-radius query running in the browser's Cypher tab, 13 replaced documents with projects and lines](docs/img/blast-radius.png)](https://shiran-yu.github.io/specrot/#cypher)
+[![The blast-radius query running in the browser's Cypher tab, 13 replaced documents with projects and citations](docs/img/blast-radius.png)](https://shiran-yu.github.io/specrot/#cypher)
 
 ```cypher
 // Blast radius of a new RFC: every document it replaces, any number of hops back, still cited in the projects
-MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project)
-RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS lines
+MATCH (:RFC {id: 'RFC9110'})-[:OBSOLETES]->+(old:RFC)
+WITH DISTINCT old  // an RFC reached by several OBSOLETES paths counts once
+MATCH (old)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project) WHERE size(c.readerLines) > 0
+RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects, sum(size(c.readerLines)) AS citations
 ```
 
 RFC 9110 (HTTP Semantics, 2022) replaces 13 documents through chains such as 2616 → 7231 → 9110; they are
-still cited on **1,183** lines in **20** of the 26 projects. The same query for TLS 1.3's new RFC 9846 (July
-2026) gives 518 lines in 8 projects, older TLS versions included. One edge type answers "what replaced it",
+still cited **558** times in **20** of the 26 projects (reader-facing citations: tests and identifiers left
+out). The same query for TLS 1.3's new RFC 9846 (July 2026) gives 358 citations in 8 projects, older TLS
+versions included. One edge type answers "what replaced it",
 another "which section", a third "who cites it", and the question chains them:
 
 ```cypher

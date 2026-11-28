@@ -31,11 +31,12 @@ def main():
     homes = [graph.section_now(c, x["rfc"], x["s"]) for x in cited]
     sections = {"cited": len(cited), "mapped": sum(bool(h) for h in homes),
                 "exact": sum(any(y["exact"] for y in h) for h in homes)}
-    # blast radius of a new RFC: everything it replaces, any number of hops back, still cited in the projects
-    blast = {rid: one(f"""MATCH (:RFC {{id: '{rid}'}})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project)
-                           WHERE size(c.readerLines) > 0
+    # blast radius of a new RFC: everything it replaces, any number of hops back, still cited in the projects.
+    # WITH DISTINCT old: an RFC reached by several OBSOLETES paths must count its citations once.
+    blast = {rid: one(f"""MATCH (:RFC {{id: '{rid}'}})-[:OBSOLETES]->+(old:RFC) WITH DISTINCT old
+                           MATCH (old)<-[c:CITES]-(:File)<-[:HAS_FILE]-(p:Project) WHERE size(c.readerLines) > 0
                            RETURN count(DISTINCT old) AS replaced, count(DISTINCT p) AS projects,
-                                  sum(size(c.readerLines)) AS lines""") for rid in ("RFC9110", "RFC9846")}
+                                  sum(size(c.readerLines)) AS citations""") for rid in ("RFC9110", "RFC9846")}
     facts = {"blast_radius": blast, "sections": sections, "nodes": labels, "relationships": rels, "showcase": show, "top_obsolete": top, "rfc8446_cited": tls,
              "store_bytes": graph.DEFAULT_STORE.stat().st_size}
     OUT.write_text(json.dumps(facts, indent=2) + "\n")

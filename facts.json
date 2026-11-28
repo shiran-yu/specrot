@@ -3,12 +3,12 @@
     "RFC9110": {
       "replaced": 13,
       "projects": 20,
-      "lines": 1183
+      "citations": 558
     },
     "RFC9846": {
       "replaced": 13,
       "projects": 8,
-      "lines": 518
+      "citations": 358
     }
   },
   "sections": {
@@ -17,10 +17,10 @@
     "exact": 207
   },
   "nodes": {
-    "Section": 51653,
     "Erratum": 8215,
     "WorkingGroup": 532,
     "Area": 16,
+    "Section": 51653,
     "RFC": 9869,
     "Project": 26,
     "File": 2442,

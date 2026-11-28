@@ -123,7 +123,7 @@ def save_scan(path: str, project: str) -> dict:
     return {"project": project, "files": len({c.path for c in cites}), "citations": len(cites),
             "reader_facing": reader, "not_in_graph": sum(1 for c in cites if c.rfc not in known),
             "skipped_large_files": too_big, "store": "session copy",
-            "try": "MATCH (:RFC {id:'RFC9110'})-[:OBSOLETES]->+(old:RFC)<-[c:CITES]-(f:File)<-[:HAS_FILE]-"
+            "try": "MATCH (:RFC {id:'RFC9110'})-[:OBSOLETES]->+(old:RFC) WITH DISTINCT old MATCH (old)<-[c:CITES]-(f:File)<-[:HAS_FILE]-"
                    f"(:Project {{name:'{project}'}}) RETURN old.id, f.path, c.readerLines"}
 
 
