@@ -58,6 +58,10 @@ startWorker();
 let lastQuery = null;
 
 // ---------- queries (same as specrot/graph.py) ----------
+// From the pasted file through each stale RFC's replacement chain to the RFC in force (also a Cypher-tab example)
+const PASTE_WALK = `MATCH (:Paste)-[:HAS_FILE]->(f:File)-[c:CITES]->(old:RFC) WHERE old.obsolete AND NOT old.oldVersion
+MATCH p = (old)<-[:OBSOLETES]-+(cur:RFC) WHERE NOT cur.obsolete AND last(relationships(p)).kind <> 'retired'
+RETURN f.path AS file, old.id AS old, c.lines AS lines, c.sections AS sections, [n IN nodes(p) | n.id] AS chain`;
 const Q = {
   // where a section of an obsolete RFC lives now: CONTINUES_AS (matched headings) to a document in force
   section: `MATCH (s:Section {id: $id})
@@ -65,6 +69,11 @@ MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
 MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
 RETURN r.id AS rfc, t.number AS section, t.title AS title, s.title AS was,
        all(e IN relationships(p) WHERE e.exact) AS exact, size(relationships(p)) AS hops ORDER BY hops`,
+  pasteClear: `OPTIONAL MATCH (x:Paste) OPTIONAL MATCH (x)-[:HAS_FILE]->(f:File) DETACH DELETE x, f`,
+  pasteSave: `CREATE (x:Paste {name: 'your paste'})-[:HAS_FILE]->(f:File {path: $path})
+WITH f UNWIND $rows AS c MATCH (r:RFC {number: c.n})
+CREATE (f)-[:CITES {lines: c.lines, readerLines: c.lines, sections: c.secs}]->(r)`,
+  pasteWalk: PASTE_WALK,
   sections: `UNWIND $ids AS id MATCH (s:Section {id: id})
 MATCH p = (s)-[:CONTINUES_AS]->+(t:Section)
 MATCH (r:RFC {id: t.rfc}) WHERE NOT r.obsolete
@@ -320,6 +329,67 @@ async function scanText() {
     found.map((f) => `<tr><td>${badge(f.lvl)}</td><td>${f.r ? rfcLink(f.r.id) : "RFC" + f.n}</td><td>${esc(f.r?.title ?? "not in the RFC index")}</td><td>${f.r ? (f.r.current.length ? f.r.current.map(rfcLink).join(", ") : f.r.updates.slice(0, 4).map(rfcLink).join(", ")) : ""}${moved(f)}</td><td>${f.lines.join(", ")}</td></tr>`).join("") +
     `</table><p class="dim">§ old → new: the cited section's heading in the replacement (CONTINUES_AS); ~ marks a reworded heading.</p><div class="q" id="q-scan"></div></div>`;
   showQuery($("#q-scan"), scanQuery);
+  await savePaste(cites, homes, my);
+}
+
+// Writes the scan into this tab's graph as (:Paste)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC), then walks it.
+async function savePaste(cites, homes, my) {
+  const path = $("#code").value.match(/^\s*(?:\/\/|#|--)\s*([\w./-]+\.\w+)/)?.[1] ?? "pasted text";
+  const rows = [...new Set(cites.map((c) => c.n))].map((n) => ({ n, lines: cites.filter((c) => c.n === n).map((c) => c.line),
+    secs: [...new Set(cites.filter((c) => c.n === n && c.sec).map((c) => c.sec))] }));
+  await cypher(Q.pasteClear);
+  await cypher(Q.pasteSave, { path, rows });
+  const saveQuery = lastQuery;
+  const walk = await cypher(Q.pasteWalk);
+  if (my !== scanSeq) return;
+  const walkQuery = lastQuery;
+  const shortest = {};  // one chain per stale RFC: the shortest to each RFC in force
+  for (const w of walk) { const k = w.old + ">" + w.chain.at(-1); if (!shortest[k] || w.chain.length < shortest[k].chain.length) shortest[k] = w; }
+  const chains = Object.values(shortest);
+  const box = document.createElement("div");
+  box.className = "card";
+  box.innerHTML = `<h3>Written into the graph, then walked</h3><p class="dim">The scan is now <code>(:Paste)-[:HAS_FILE]->(:File {path: '${esc(path)}'})-[:CITES]->(:RFC)</code> in this tab's Relate graph. One query follows each stale citation through OBSOLETES to the RFC in force; the section node is where the cited heading lives now (CONTINUES_AS).</p>` +
+    (chains.length ? `<div id="cy-scan"></div><div class="legend"><span class="dot"></span>your file <span class="dot obsolete"></span>✗ stale RFC you cite <span class="dot ok"></span>✓ in force <span class="line obs"></span>replaced by</div>` : `<p>No citation of an obsolete RFC: nothing to walk.</p>`) +
+    `<details><summary>Cypher · write ${saveQuery.ms.toFixed(1)} ms, walk ${walkQuery.ms.toFixed(1)} ms in Relate WASM</summary><pre>${esc(Q.pasteSave)}</pre><pre>${esc(Q.pasteWalk)}</pre></details>`;
+  $("#scan-out").append(box);
+  if (!chains.length) return;
+  const nodes = {}, edges = {};
+  const node = (id, label, cls) => (nodes[id] ??= { data: { id, label, cls } });
+  const edge = (a, b, type) => (edges[a + ">" + b] ??= { data: { id: a + ">" + b, source: a, target: b, type } });
+  node("file", path, "file");
+  for (const w of chains) {
+    w.chain.forEach((id, i) => node(id, `${i === 0 ? "✗" : i === w.chain.length - 1 ? "✓" : "✗"} ${id}`, i === w.chain.length - 1 ? "ok" : "obsolete"));
+    edge("file", w.old, "CITES");
+    w.chain.slice(1).forEach((id, i) => edge(w.chain[i], id, "REPLACED_BY"));
+    for (const sec of w.sections) for (const h of homes[`${w.old}#${sec}`] || []) if (h.rfc === w.chain.at(-1)) {
+      const sid = `${h.rfc}#${h.section}`;
+      node(sid, `${h.rfc} §${h.section}\n(was ${w.old} §${sec})`, "section");
+      edge(h.rfc, sid, "SECTION");
+    }
+  }
+  // rows by the longest path from the file, so a replacement always sits below what it replaced
+  const row = { file: 0 }, E = Object.values(edges).map((e) => e.data), ids = Object.keys(nodes);
+  for (let k = 0; k < ids.length; k++) for (const e of E) row[e.target] = Math.max(row[e.target] ?? 0, (row[e.source] ?? 0) + 1);
+  for (const y of [...new Set(Object.values(row))].sort((a, b) => a - b)) {  // each row ordered under its parents
+    const px = (i) => { const xs = E.filter((e) => e.target === i && nodes[e.source].position).map((e) => nodes[e.source].position.x); return xs.length ? xs.reduce((a, b) => a + b) / xs.length : 0; };
+    const inRow = ids.filter((i) => row[i] === y).sort((a, b) => px(a) - px(b));
+    inRow.forEach((i, k) => { nodes[i].position = { x: (k - (inRow.length - 1) / 2) * 180, y: y * 110 }; });
+  }
+  const el = $("#cy-scan");
+  el.style.height = Math.min(520, 200 + Object.keys(nodes).length * 14) + "px";
+  const css = getComputedStyle(document.documentElement), color = (v) => css.getPropertyValue(v).trim();
+  cytoscape({
+    container: el, elements: [...Object.values(nodes), ...Object.values(edges)],
+    layout: { name: "preset", fit: true, padding: 16 },
+    style: [
+      { selector: "node", style: { label: "data(label)", "text-wrap": "wrap", "text-valign": "center", "font-size": 12, "font-family": "Plex Mono, monospace", color: color("--fg"), width: "label", height: "label", padding: 8, shape: "rectangle", "background-color": color("--bg"), "border-width": 1, "border-color": color("--fg") } },
+      { selector: "node[cls = 'obsolete']", style: { "border-width": 2, "border-style": "dashed", "border-color": color("--bad"), color: color("--bad") } },
+      { selector: "node[cls = 'ok']", style: { "border-color": color("--ok"), "border-width": 2 } },
+      { selector: "node[cls = 'section']", style: { "border-color": color("--ok") } },
+      { selector: "edge", style: { width: 2, "curve-style": "bezier", "target-arrow-shape": "triangle", "line-color": color("--accent"), "target-arrow-color": color("--accent") } },
+      { selector: "edge[type = 'CITES'], edge[type = 'SECTION']", style: { width: 1, "line-color": color("--line-strong"), "target-arrow-color": color("--line-strong") } },
+    ],
+  }).on("tap", "node", (e) => /^RFC\d+$/.test(e.target.id()) && (location.hash = "rfc=" + e.target.id().slice(3)));
 }
 
 // ---------- projects tab ----------
@@ -362,6 +432,7 @@ RETURN b.id, b.title, count(a) AS citedBy ORDER BY citedBy DESC LIMIT 10`,
   "Most-cited obsolete RFCs in the 26 projects": `MATCH (p:Project)-[:HAS_FILE]->(:File)-[c:CITES]->(r:RFC) WHERE r.obsolete AND NOT r.oldVersion
 RETURN r.id, r.title, count(DISTINCT p) AS projects, sum(size(c.lines)) AS citations
 ORDER BY projects DESC, citations DESC LIMIT 10`,
+  "Your last scan: file → stale RFC → in force": PASTE_WALK,
   "What TLS 1.3 must read": `MATCH (r:RFC {id: 'RFC9846'})-[:NORMATIVE_REF]->(d:RFC)
 RETURN d.id, d.title, d.obsolete ORDER BY d.number`,
 };

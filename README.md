@@ -137,7 +137,10 @@ and only series with a member RFC), from [`docs/data/graph.json`](docs/data/grap
 `CONTINUES_AS` load from `docs/data/sections.json` on the first section lookup
 ([`#rfc=7231&s=6.5.1`](https://shiran-yu.github.io/specrot/#rfc=7231&s=6.5.1)). It offers check
 with a lineage graph and section lookup, paste-and-scan, the 26-project table with links to the exact lines on
-GitHub, and a Cypher console.
+GitHub, and a Cypher console. A scan is written into the tab's graph as
+`(:Paste)-[:HAS_FILE]->(:File)-[:CITES]->(:RFC)` and one query walks it from your file through each stale RFC's
+OBSOLETES chain to the RFC and section in force ([`#scan`](https://shiran-yu.github.io/specrot/#scan); the
+Cypher tab's "Your last scan" example runs the same walk).
 
 Then:
 
